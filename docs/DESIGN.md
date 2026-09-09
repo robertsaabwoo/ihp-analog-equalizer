@@ -171,7 +171,55 @@ sky130 pair is drawn at L = 1 µm, and shortening it moves the whole curve:
 
 (Below about 0.3 µm the ring runs at 3–5 GHz with a swing under 100 mV: it is
 past the point where a stage has enough gain to sustain oscillation cleanly,
-and the "frequency" reported there is not a usable oscillation.)
+and the "frequency" reported there is not a usable oscillation. That is why
+every measurement here is filtered on differential swing above 300 mV — a
+`meas` on a node that is barely moving still returns a number.)
+
+L = 0.9 µm was chosen over anything shorter because the range is narrow either
+way and **centring matters more than headroom**: 0.8 µm gives 613–723 MHz,
+which puts the baud rate below the point where the ring starts oscillating at
+all, and a ring that cannot run slowly enough fails just as completely as one
+that cannot run fast enough.
+
+### The tuning range does not cover PVT, and here is by how much
+
+`sim/results/vco_pvt_tt.log`, typical process, usable points only:
+
+| corner | usable range | ceiling margin over 600.6 MHz |
+|---|---|---|
+| tt / −40 °C / 1.32 V | 525 – 680 MHz | 13 % |
+| tt / −40 °C / 1.20 V | 513 – 650 MHz | 8 % |
+| tt / −40 °C / 1.08 V | 501 – 618 MHz | 3 % |
+| tt / +27 °C / 1.08 V | 467 – **602** MHz | **0.3 %** |
+
+The ceiling falls about 15 % between −40 °C and +27 °C at fixed supply. The
+125 °C rows and the ss/ff corners were still running when this was written and
+are not in the table; on the trend above, 125 °C will not reach the baud rate.
+
+The conclusion does not need those rows. The tuning range is **1.3:1** and the
+corner spread is wider than that, so **no single sizing of this ring covers the
+corner box** — the ceiling and the floor cannot both be placed correctly at
+once. This is the same wall the sky130 project hit and accepted; the difference
+here is that the number is quantified rather than described.
+
+### What would fix it, and what was not done
+
+Coarse tuning. Two candidates, neither built:
+
+- **A switchable load-resistor leg per stage**, under one digital control bit.
+  The frequency is set by the load resistance, so paralleling a second resistor
+  roughly doubles the reachable range. The Chipalooza harness gives every slot
+  digital control lines, so the pin is free. The cost is plumbing one signal
+  through four levels of hierarchy and ten devices, and it is the lower-risk
+  option because the stage topology does not change.
+- **Diode-connected pMOS loads** in place of the poly resistors. A diode load's
+  small-signal resistance is 1/gm, and gm follows the tail current, so the
+  delay falls as the current rises and the range widens with no control pin at
+  all. A first attempt is in `sim/decks/ring_pm.inc` and did not oscillate: the
+  stage gain of a CML pair with a diode load is roughly
+  √(µn(W/L)n / µp(W/L)p), and a 2 µm/0.13 µm pMOS load makes it about 1, below
+  the ≈1.24 a five-stage ring needs. The load has to be *weaker* — a longer
+  channel — and that sweep has not been run.
 
 ## 5. Not measured
 

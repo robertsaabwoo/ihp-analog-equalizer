@@ -105,9 +105,9 @@ A bang-bang phase detector is phase-only: it has **no frequency acquisition**,
 so a ring that cannot reach the baud rate never locks at any control voltage.
 The tuning range is a functional requirement, not a performance number.
 
-| ring | range at tt/27 °C | 600.6 MHz reachable? |
+| ring | range at tt/27 °C/1.2 V | 600.6 MHz reachable? |
 |---|---|---|
-| sky130 original at 1.8 V | 514 – 621 MHz | yes, with 3 % margin |
+| sky130 original at 1.8 V | 514 – 621 MHz | yes, 3 % margin |
 | this design, ported unchanged to 1.2 V | 424 – 554 MHz | **no** |
 | this design, input pair re-sized to L = 0.9 µm | **538 – 630 MHz** | yes, at vctrl = 0.60 V |
 
@@ -117,8 +117,33 @@ its own load resistor** rather than current-starved — the same conclusion the
 sky130 project reached. The frequency is therefore set by the load resistance
 against the capacitance on the output node, and that capacitance is dominated
 by the input pair's gate. Shortening the pair from 1.0 µm to 0.9 µm moves the
-whole curve up by about 100 MHz and puts the baud rate near the middle of the
-usable range instead of above the top of it.
+whole curve up by about 100 MHz and puts the baud rate inside the usable range
+instead of above the top of it.
+
+**That is enough at nominal and it is not enough over PVT**, and the numbers
+say so before anyone has to find out the hard way
+(`sim/results/vco_pvt_tt.log`, usable points only — swing above 300 mV):
+
+| corner | usable range | margin over 600.6 MHz |
+|---|---|---|
+| tt / −40 °C / 1.32 V | 525 – 680 MHz | 13 % |
+| tt / −40 °C / 1.20 V | 513 – 650 MHz | 8 % |
+| tt / −40 °C / 1.08 V | 501 – 618 MHz | 3 % |
+| tt / +27 °C / 1.08 V | 467 – **602** MHz | **0.3 %** |
+
+The ceiling falls about 15 % from −40 °C to +27 °C at fixed supply, and 125 °C
+was still running when this was written — it will not reach the baud rate. The
+tuning range is 1.3:1 and the PVT spread is wider than that, so **no single
+sizing of this ring covers the corner box.** The sky130 project reached the
+same wall, characterised it, and accepted it; this port has re-centred the ring
+so it works at nominal, which the direct port did not, and has quantified how
+far that gets.
+
+The fix is coarse tuning, and it has not been built. Two candidates: a
+switchable load-resistor leg per stage under one digital control bit — the
+harness provides the control lines — or diode-connected pMOS loads in place of
+the poly resistors, whose small-signal resistance follows the tail current and
+would widen the range without needing a control pin at all.
 
 ### Size
 

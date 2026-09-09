@@ -4,7 +4,7 @@
 #### PDK_ROOT must contain both ihp-sg13cmos5l and ihp-sg13g2: the CMOS5L PDK
 #### is an overlay that symlinks most of its models and symbols into the
 #### SG13G2 tree, so a checkout of CMOS5L on its own has ~500 dangling links.
-#### See docs/TOOLCHAIN.md.
+#### See docs/SIMULATION_TRAPS.md section 1.1, and tools/setup_pdk.sh.
 
 ###########################################################################
 #### LIBRARY PATH

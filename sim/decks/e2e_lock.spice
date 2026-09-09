@@ -1,0 +1,104 @@
+* End-to-end acquisition: does the loop lock on this process?
+*
+*   0101 data at 600.6 Mb/s, 200 mVpp differential
+*     -> channel: 500 ohm series, 5 pF shunt on both legs (63.7 MHz pole)
+*     -> the whole ctle_cdr_rx macro: CTLE, Alexander PD, charge pump,
+*        loop filter, ring VCO, startup precharge, output buffers
+*     -> recovered clock
+*
+* 0101 is the easiest input a bang-bang phase detector can be given: a
+* transition every UI, so the detector is never blind. If the loop does not
+* lock on this it will not lock on anything, which is why it is the first
+* closed-loop run rather than PRBS7.
+*
+* 200 mVpp and not a rail-to-rail input on purpose: driven hard the CTLE
+* limits instead of equalising, and the equalisation cannot show up in the
+* measurement at all. The sky130 project spent a session on that.
+*
+* HEAVY: ~75000 timepoints over 225 devices, expect 10-20 minutes.
+* Run only under tools/safe_ngspice.sh, and never alongside another ngspice.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+
+.global sub!
+Vsub sub! 0 0
+
+.options method=gear reltol=1e-3 abstol=1e-12
+
+.param vcm=0.70         ; CTLE input common mode
+.param amp=0.2          ; 200 mVpp differential at the source
+.param rpad=500 cpad=5p ; the specified worst-case channel
+.param ui=1.665n        ; 600.6 Mb/s
+
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Iref Vdd ibias 25u
+
+* Differential 0101 at the baud rate.  The period is two UI because 0101 is a
+* square wave at half the baud rate -- getting this factor of two wrong cost
+* the sky130 project three sessions.
+Vdraw draw 0 PULSE(0 1 0 10p 10p 'ui' '2*ui')
+Edinp dinp 0 vol='vcm + 0.5*amp*(v(draw)-0.5)'
+Edinm dinm 0 vol='vcm - 0.5*amp*(v(draw)-0.5)'
+
+Rpadp dinp cinp 'rpad'
+Cpadp cinp 0    'cpad'
+Rpadm dinm cinm 'rpad'
+Cpadm cinm 0    'cpad'
+
+x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
+
+* The startup precharge is a one-shot fired by an RC whose capacitor .op
+* treats as an open circuit.  Without this the cell never fires, the control
+* voltage starts at zero, the ring never starts, and the result looks like a
+* broken circuit rather than a broken testbench.
+.ic v(x1.x2.x20.nrc)=0
+
+.control
+* Explicit save list.  A bare `write` stores every node at every timepoint and
+* is what exhausted this machine's memory once already.
+save v(x1.x2.net1) v(clkoutp) v(clkoutm) v(x1.eq_p) v(x1.eq_m)
++    v(cinp) v(cinm) v(x1.x2.x20.pre)
+tran 20p 1500n
+
+let vctrl  = v(x1.x2.net1)
+let ctle_d = v(x1.eq_p) - v(x1.eq_m)
+let cin_d  = v(cinp) - v(cinm)
+
+* Did it lock?  Three separate questions: the control voltage has settled,
+* the recovered clock is a real full-swing clock, and its frequency is the
+* baud rate.  Any one of them alone can look right while the loop is broken.
+meas tran vctrl_lock AVG vctrl FROM=1300n TO=1400n
+meas tran vctrl_ripp PP  vctrl FROM=1300n TO=1400n
+meas tran vctrl_e1   AVG vctrl FROM=1000n TO=1100n
+meas tran vctrl_e2   AVG vctrl FROM=1400n TO=1500n
+meas tran rclk_swing PP  v(clkoutp) FROM=1300n TO=1400n
+meas tran t_release  WHEN v(x1.x2.x20.pre)=0.6 FALL=1
+
+meas tran cin_swing  PP cin_d  FROM=1300n TO=1400n
+meas tran ctle_swing PP ctle_d FROM=1300n TO=1400n
+
+* Frequency over 60 cycles inside the settled window.  Counting many cycles
+* rather than measuring one period: a loop that is still acquiring gives a
+* period that drifts, and a single-period measurement reports that drift as
+* the frequency.  The edge indices are chosen well inside the window -- a
+* .measure on an edge index that does not exist fails silently, taking every
+* `let` derived from it with it.
+meas tran c600 WHEN v(clkoutp)=0.6 RISE=600
+meas tran c660 WHEN v(clkoutp)=0.6 RISE=660
+let f_MHz = 60/(c660-c600)/1e6
+print f_MHz
+print vctrl_lock vctrl_ripp vctrl_e1 vctrl_e2 rclk_swing ctle_swing cin_swing
+quit
+.endc
+.end
