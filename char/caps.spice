@@ -1,0 +1,56 @@
+* SG13CMOS5L passive characterization: capacitor density and resistor sheet
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13g2/libs.tech/ngspice/osdi/mosvar.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomi.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+
+Vsub sub! 0 0
+
+* --- MOM caps, 10x10 um ---
+Vi1 i1 0 dc 0 ac 1
+XCi  i1 0 cap_cmomi w=10e-6 l=10e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+Vi2 i2 0 dc 0 ac 1
+XCf  i2 0 cap_cmomf w=10e-6 l=10e-6 mmin=1 mmax=4 subblock=0 m=1
+
+* --- MOS caps, 10x10 um, biased at 0.6 V and 1.2 V ---
+Vi3 i3 0 dc 0.6 ac 1
+XCn  i3 0 sg13_moscap_n w=10e-6 l=10e-6 m=1
+Vi4 i4 0 dc 1.2 ac 1
+XCn2 i4 0 sg13_moscap_n w=10e-6 l=10e-6 m=1
+Vi5 i5 0 dc 0.6 ac 1
+XCp  i5 0 sg13_moscap_p w=10e-6 l=10e-6 m=1
+
+* --- resistors, W=1u L=10u ---
+Vr1 r1 0 1
+XRh r1 0 sub! rhigh w=1e-6 l=10e-6 m=1 b=0
+Vr2 r2 0 1
+XRp r2 0 sub! rppd  w=1e-6 l=10e-6 m=1 b=0
+Vr3 r3 0 1
+XRs r3 0 sub! rsil  w=1e-6 l=10e-6 m=1
+
+.control
+op
+echo "--- resistor sheet (ohm for W=1u L=10u -> /10 = ohm/sq) ---"
+let Rh = 1/abs(i(vr1))
+let Rp = 1/abs(i(vr2))
+let Rs = 1/abs(i(vr3))
+print Rh Rp Rs
+ac lin 1 1e9 1e9
+echo "--- cap density: C = |I|/(2*pi*f) for 1 V ac, 10x10um = 100 um2 ---"
+let w2pi = 2*3.14159265358979*1e9
+let Ccmomi = abs(i(vi1))/w2pi
+let Ccmomf = abs(i(vi2))/w2pi
+let Cmoscapn06 = abs(i(vi3))/w2pi
+let Cmoscapn12 = abs(i(vi4))/w2pi
+let Cmoscapp06 = abs(i(vi5))/w2pi
+print Ccmomi Ccmomf Cmoscapn06 Cmoscapn12 Cmoscapp06
+quit
+.endc
+.end

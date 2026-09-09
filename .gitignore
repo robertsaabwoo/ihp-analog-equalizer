@@ -1,0 +1,26 @@
+# Waveform dumps: large, and regenerable from the decks.
+*.raw
+*.out
+
+# Netlists are generated from the schematics by tools/netlist.sh.  They are
+# derived files, and a stale committed copy is worse than no copy: it is what
+# a testbench would silently simulate.
+sim/netlists/*.spice
+sim/netlists/*.inc
+
+# sim/results/*.log is NOT ignored.  Those logs are the evidence behind every
+# number in the README, they are small text, and a claim you cannot point at a
+# run for should not be in the README in the first place.
+
+# ngspice scratch
+tmp.dat
+*.tmp
+
+# xschem
+*.sch.bak
+*.sym.bak
+.xschem_*
+
+__pycache__/
+*.pyc
+.pytest_cache/

@@ -1,0 +1,57 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  # The repository-consistency suite: no PDK, no simulator, no network.
+  # It runs in a couple of seconds and catches the failure mode that matters
+  # most here -- a schematic that references a device this process does not
+  # have, or a hierarchy that xschem would resolve silently and wrongly.
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: install test dependencies
+        run: pip install -r test/requirements.txt
+      - name: pytest
+        run: pytest test/ -v
+
+  # The port is reproducible: re-running it against the sky130 source must
+  # produce exactly the schematics that are committed here.  If it does not,
+  # someone hand-edited a generated file and the next port run would silently
+  # discard their work.
+  port-is-reproducible:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: fetch the sky130 source design
+        run: |
+          git clone --depth 1 https://github.com/robertsaabwoo/ttsky-analog-equalizer.git /tmp/ttsky
+      - name: re-run the port
+        run: |
+          python3 tools/port_from_sky130.py --src /tmp/ttsky/xschem --dst /tmp/ported \
+            > /tmp/port.log
+      - name: compare against what is committed
+        run: |
+          fail=0
+          for f in /tmp/ported/*.sch /tmp/ported/*.sym; do
+            name=$(basename "$f")
+            # Cells native to this repository are not generated.
+            case "$name" in
+              inv_cp.*|ibias_mirror.*) continue ;;
+            esac
+            if ! diff -q "$f" "xschem/$name" > /dev/null 2>&1; then
+              echo "::error file=xschem/$name::differs from a fresh port run"
+              diff -u "xschem/$name" "$f" | head -40 || true
+              fail=1
+            fi
+          done
+          exit $fail

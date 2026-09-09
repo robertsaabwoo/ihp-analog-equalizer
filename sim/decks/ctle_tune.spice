@@ -1,0 +1,93 @@
+* CTLE tuning at VDD = 1.2 V: find a tail size and bias that leave the stage
+* in a usable operating point, and report what the AC response does there.
+*
+* The first port of the sky130 sizes onto 1.2 V does not work, and the reason
+* is worth writing down: with Wtail = 20 um / L = 0.5 um the tail device is so
+* large that any gate voltage above ~0.45 V pushes it into triode.  It stops
+* being a current source -- the tail drain sits at 30-135 mV -- and the bias
+* current is then set by the input pair and the resistors rather than by
+* vbias.  On 1.8 V there was enough headroom to hide that; on 1.2 V there is
+* not.  So this sweeps the tail geometry as well as its gate.
+*
+* Reported per point:
+*   itail   total supply current (both sides plus the tail)
+*   voutcm  output common mode
+*   vst     tail drain -- the number that says whether the tail is saturated
+*   gdc     CTLE differential gain at 1 MHz
+*   gnyq    CTLE differential gain at 300 MHz (Nyquist for 600.6 Mb/s)
+*   boost   gnyq - gdc, i.e. how much peaking the degeneration RC actually buys
+*   gchan   the channel's own loss at Nyquist, for reference
+* all driven through the spec-worst channel, 500 ohm series / 5 pF shunt.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ctle_p.inc
+
+.global sub!
+Vsub sub! 0 0
+
+.param vcm=0.65
+.param cload=50f
+.param rch=500 cch=5p
+
+VDD  VDD 0 1.2
+VSS  VSS 0 0
+Vb   vbias 0 0.45
+
+Vsp  srcp 0 dc 'vcm' ac 0.5 0
+Vsm  srcm 0 dc 'vcm' ac 0.5 180
+Rchp srcp inp 'rch'
+Rchm srcm inm 'rch'
+Cchp inp 0 'cch'
+Cchm inm 0 'cch'
+
+x1 outp outm inp inm VDD VSS vbias ctle_p
+Clp outp 0 'cload'
+Clm outm 0 'cload'
+
+.options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
+
+.control
+* One line per point, printed by ngspice itself.  A `shell echo` label would
+* be buffered separately from ngspice's stdout and land somewhere else in the
+* output entirely -- that is how the first version of this deck produced 21
+* headers followed by 21 unlabelled results.
+foreach wt 2 4 6 8 12
+  alterparam Wtail = $wt
+  reset
+  foreach vb 0.40 0.45 0.50 0.55 0.60 0.70
+    alter Vb dc = $vb
+    op
+    * Print the operating point here, not after the ac: `ac` opens a new plot
+    * and the vectors defined against the op plot are not visible from it.
+    let wtail  = $wt
+    let vbias_ = $vb
+    let itail  = -i(vdd)
+    let voutcm = v(outp)
+    let vst    = v(x1.st)
+    print wtail vbias_ itail voutcm vst
+    ac dec 20 1e6 1e10
+    * Gain is measured from the CTLE's own input, not from the source: the
+    * channel costs 13.7 dB at Nyquist all by itself, and folding that into
+    * the CTLE's number hides whether the equaliser is peaking at all.
+    let gout = db(v(outp) - v(outm))
+    let gin  = db(v(inp) - v(inm))
+    let gctle = gout - gin
+    meas ac gdc  find gctle at=1e6
+    meas ac gnyq find gctle at=3e8
+    meas ac gchan find gin at=3e8
+    let boost = gnyq - gdc
+    print gdc gnyq boost gchan
+  end
+end
+quit
+.endc
+.end

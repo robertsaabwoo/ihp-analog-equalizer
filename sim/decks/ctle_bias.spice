@@ -1,0 +1,67 @@
+* CTLE operating point vs bias, IHP SG13CMOS5L at VDD = 1.2 V.
+*
+* The sky130 original ran on 1.8 V with vcm = vb = 0.9 V.  Two thirds of the
+* supply is gone, and the stack inside the CTLE is unchanged: tail device,
+* degeneration resistor, input pair, load resistor.  This deck finds what is
+* left to bias with, by sweeping the tail gate and reporting the four voltages
+* that decide whether the stage is usable:
+*
+*   voutcm   output common mode -- has to leave the load resistor enough drop
+*            to make gain, and the next stage enough headroom to sample
+*   vs       input pair source node -- sets how much input common mode the
+*            stage can accept before the pair leaves saturation
+*   vtd      tail drain -- must stay above the tail's Vdsat or the tail stops
+*            being a current source and the CTLE's gain follows the supply
+*   itail    the current everything else is scaled against
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+
+* rhigh and cap_cmomf carry their body/substrate on the global node sub!.
+* xschem does not emit a .global for it, so without this line the resistor
+* bodies are floating local nodes inside each subcircuit and the op fails with
+* "singular matrix: check node sub!".
+.global sub!
+Vsub sub! 0 0
+
+.param vcm=0.65
+.param cload=50f
+
+VDD  VDD 0 1.2
+VSS  VSS 0 0
+Vb   vbias 0 0.6
+
+Vsp  inp 0 dc 'vcm' ac 0.5 0
+Vsm  inm 0 dc 'vcm' ac 0.5 180
+
+x1 outp outm inp inm VDD VSS vbias CTLE
+Clp outp 0 'cload'
+Clm outm 0 'cload'
+
+.control
+foreach vb 0.45 0.50 0.55 0.60 0.65 0.70 0.80
+  alter Vb dc = $vb
+  foreach vc 0.55 0.65 0.75
+    alter Vsp dc = $vc
+    alter Vsm dc = $vc
+    op
+    let voutcm = v(outp)
+    let vs     = v(x1.net1)
+    let vtd    = v(x1.net2)
+    let itail  = -i(vdd)
+    shell echo "#OP vb=$vb vcm=$vc"
+    print voutcm vs vtd itail
+  end
+end
+quit
+.endc
+.end

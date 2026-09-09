@@ -1,0 +1,100 @@
+* CTLE sizing search 2: trade load resistance against tail current at fixed
+* headroom, and input width against transconductance efficiency.
+*
+* What the first search established.  With the sky130 sizes carried over
+* unchanged (Win 20, Rload 6.4k, Rdeg 1.6k, Ccap 648f) the best usable point
+* on 1.2 V gives +10.6 dB at Nyquist with +4.4 dB of boost, against sky130's
+* +13.32 dB and +6.3..+7.9 dB.  The channel costs 13.7 dB at Nyquist, so
+* +10.6 dB leaves 3.1 dB of residual loss -- the equaliser no longer cancels
+* the channel, which is the whole job.
+*
+* Why, and what to do about it.  Gain at the output is
+*
+*     gm * Rload  =  (gm/Id) * (Id * Rload)  =  (gm/Id) * dVload
+*
+* and dVload is fixed at about 0.35 V by headroom: VDD 1.2, output common mode
+* no lower than ~0.85 V if the next stage is to have anything to sample.  So
+* the only free variable in the DC gain is gm/Id, which rises as the input
+* pair moves toward weak inversion -- bigger Win at the same current.
+*
+* Bandwidth pushes the other way.  The output pole is 1/(2*pi*Rload*Cload),
+* and at Rload = 6.4k with ~80 fF hanging on the node it sits at 310 MHz,
+* barely above the 300 MHz Nyquist: 3 dB of the missing gain is simply the
+* stage rolling off.  Lowering Rload and raising Id in proportion keeps dVload
+* and therefore the DC gain, and moves the pole up.  It costs current, and
+* current is the one thing this design has to spare: the whole CTLE at 200 uA
+* on 1.2 V is 0.24 mW against a 6 mW budget.
+*
+* So the sweep is over (Win, Rload) with the tail gate adjusted to land the
+* output common mode near 0.85 V, and Rdeg tracking Rload to hold the boost.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ctle_p.inc
+
+.global sub!
+Vsub sub! 0 0
+
+.param vcm=0.75
+.param cload=50f
+.param rch=500 cch=5p
+
+VDD  VDD 0 1.2
+VSS  VSS 0 0
+Vb   vbias 0 0.55
+
+Vsp  srcp 0 dc 'vcm' ac 0.5 0
+Vsm  srcm 0 dc 'vcm' ac 0.5 180
+Rchp srcp inp 'rch'
+Rchm srcm inm 'rch'
+Cchp inp 0 'cch'
+Cchm inm 0 'cch'
+
+x1 outp outm inp inm VDD VSS vbias ctle_p
+Clp outp 0 'cload'
+Clm outm 0 'cload'
+
+.options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
+
+.control
+foreach vc 0.70 0.75 0.80 0.85
+  foreach rl 5000 6400 8000
+    alterparam Win   = 20
+    alterparam Rload = $rl
+    alterparam Wtail = 8
+    alterparam Ltail = 1.0
+    reset
+    alter Vsp dc = $vc
+    alter Vsm dc = $vc
+    foreach vb 0.45 0.50 0.55 0.60 0.65
+      alter Vb dc = $vb
+      op
+      let p_vcm    = $vc
+      let p_rload  = $rl
+      let p_vb     = $vb
+      let itail    = -i(vdd)
+      let voutcm   = v(outp)
+      let vst      = v(x1.st)
+      print p_vcm p_rload p_vb itail voutcm vst
+      ac dec 20 1e6 1e10
+      let gctle = db(v(outp) - v(outm)) - db(v(inp) - v(inm))
+      let gtot  = db(v(outp) - v(outm)) - db(v(srcp) - v(srcm))
+      meas ac gdc   find gctle at=1e6
+      meas ac gnyq  find gctle at=3e8
+      meas ac gsys  find gtot  at=3e8
+      let boost = gnyq - gdc
+      print gdc gnyq boost gsys
+    end
+  end
+end
+quit
+.endc
+.end

@@ -1,0 +1,66 @@
+#### xschemrc for the IHP SG13CMOS5L CTLE + CDR receiver
+####
+#### Start xschem from this directory, or pass --rcfile pointing here.
+#### PDK_ROOT must contain both ihp-sg13cmos5l and ihp-sg13g2: the CMOS5L PDK
+#### is an overlay that symlinks most of its models and symbols into the
+#### SG13G2 tree, so a checkout of CMOS5L on its own has ~500 dangling links.
+#### See docs/TOOLCHAIN.md.
+
+###########################################################################
+#### LIBRARY PATH
+###########################################################################
+set XSCHEM_LIBRARY_PATH {}
+#### xschem's own devices/ (ipin, opin, iopin, lab_wire, ...)
+append XSCHEM_LIBRARY_PATH ${XSCHEM_SHAREDIR}/xschem_library
+#### this repository's cells.  [file dirname [info script]] is this directory,
+#### so the path does not depend on where xschem was launched from.
+append XSCHEM_LIBRARY_PATH :[file dirname [info script]]
+append XSCHEM_LIBRARY_PATH :$USER_CONF_DIR/xschem_library
+
+###########################################################################
+#### PDK
+###########################################################################
+if { [info exists env(PDK_ROOT)] && $env(PDK_ROOT) ne {} } {
+  set PDK_ROOT $env(PDK_ROOT)
+} elseif {[file isdir /usr/local/share/pdk]} {
+  set PDK_ROOT /usr/local/share/pdk
+} else {
+  puts stderr {PDK_ROOT is not set.  source ./env.sh first.}
+}
+
+if {[info exists env(PDK)]} { set PDK $env(PDK) } else { set PDK ihp-sg13cmos5l }
+
+if {[info exists PDK_ROOT]} {
+  if {![file isdir ${PDK_ROOT}/${PDK}]} {
+    puts stderr "PDK ${PDK_ROOT}/${PDK} not found."
+  }
+  #### gives us sg13cmos5l_pr/*.sym (and sg13cmos5l_stdcells, unused here)
+  append XSCHEM_LIBRARY_PATH :${PDK_ROOT}/${PDK}/libs.tech/xschem
+  set IHP_MODELS ${PDK_ROOT}/${PDK}/libs.tech/ngspice/models
+  set IHP_OSDI   ${PDK_ROOT}/${PDK}/libs.tech/ngspice/osdi
+}
+
+array unset dircolor
+set dircolor(sg13cmos5l_pr$) blue
+set dircolor(xschem_library$) red
+set dircolor(devices$) red
+
+###########################################################################
+#### NETLISTING
+###########################################################################
+#### Netlists land next to the schematic that produced them, which keeps a
+#### netlist and the .sch it came from from drifting apart across sessions.
+set netlist_dir [file dirname [info script]]/../sim/netlists
+set netlist_type spice
+
+set zoom_full_center 1
+set toolbar_visible 1
+set tabbed_interface 1
+set to_pdf {ps2pdf -dAutoRotatePages=/None}
+
+set tcl_files {}
+lappend tcl_files ${XSCHEM_SHAREDIR}/ngspice_backannotate.tcl
+
+if { [info exists ::env(XSCHEM_USER_LIBRARY_PATH) ] } {
+    append XSCHEM_LIBRARY_PATH :$env(XSCHEM_USER_LIBRARY_PATH)
+}

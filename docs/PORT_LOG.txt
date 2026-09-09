@@ -1,0 +1,132 @@
+CDR.sch:
+CTLE.sch:
+  CTLE.M1: nfet_01v8.sym -> sg13_lv_nmos w=30u l=0.2u ng=1
+  CTLE.M2: nfet_01v8.sym -> sg13_lv_nmos w=40u l=1u ng=1
+  CTLE.M4: nfet_01v8.sym -> sg13_lv_nmos w=30u l=0.2u ng=1
+  CTLE.R1: res_high_po.sym -> rhigh w=1.000000e-06 l=2.357647e-06  (3500 ohm)
+  CTLE.R2: res_high_po.sym -> rhigh w=1.000000e-06 l=2.357647e-06  (3500 ohm)
+  CTLE.R3: res_high_po.sym -> rhigh w=1.000000e-06 l=5.223529e-07  (900 ohm)
+  CTLE.CS: cap_mim_m3_1 -> cap_cmomf w=l=3.525906e-05  (1600.0 fF)
+  CTLE.R4: res_high_po.sym -> rhigh w=1.000000e-06 l=5.223529e-07  (900 ohm)
+alexander_phase_detector.sch:
+ctle_cdr_rx.sch:
+ctle_cdr_rx_lvs.sch:
+d_flip_flop.sch:
+d_latch.sch:
+  d_latch.M1: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
+  d_latch.M2: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.13u ng=1
+  d_latch.M4: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
+  d_latch.M3: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
+  d_latch.M5: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
+  d_latch.M6: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
+  d_latch.M7: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
+  d_latch.M8: pfet_01v8.sym -> sg13_lv_pmos w=3u l=0.13u ng=1
+  d_latch.M9: nfet_01v8.sym -> sg13_lv_nmos w=1u l=0.13u ng=1
+  d_latch.M10: pfet_01v8.sym -> sg13_lv_pmos w=3u l=0.13u ng=1
+  d_latch.M11: nfet_01v8.sym -> sg13_lv_nmos w=1u l=0.13u ng=1
+  d_latch.R3: res_high_po_0p69.sym -> rhigh w=1.000000e-06 l=1.467247e-06  (2239 ohm)
+  d_latch.R1: res_high_po_0p69.sym -> rhigh w=1.000000e-06 l=1.467247e-06  (2239 ohm)
+diff_amp_inv.sch:
+  diff_amp_inv.M2: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.13u ng=1
+  diff_amp_inv.M3: nfet_01v8.sym -> sg13_lv_nmos w=2u l=1u ng=1
+  diff_amp_inv.M6: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.13u ng=1
+  diff_amp_inv.R3: res_high_po.sym -> rhigh w=1.000000e-06 l=4.401882e-06  (6396 ohm)
+  diff_amp_inv.R4: res_high_po.sym -> rhigh w=1.000000e-06 l=4.401882e-06  (6396 ohm)
+  diff_amp_inv.M1: nfet_01v8.sym -> sg13_lv_nmos w=6u l=0.5u ng=1
+  diff_amp_inv.M4: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.13u ng=4
+  diff_amp_inv.M5: nfet_01v8.sym -> sg13_lv_nmos w=6u l=0.5u ng=1
+  diff_amp_inv.R1: res_high_po.sym -> rhigh w=1.000000e-06 l=3.837529e-06  (5596 ohm)
+  diff_amp_inv.R2: res_high_po.sym -> rhigh w=1.000000e-06 l=3.837529e-06  (5596 ohm)
+inverter_buffer.sch:
+  inverter_buffer.M3: pfet_01v8.sym -> sg13_lv_pmos w=6u l=0.13u ng=4
+  inverter_buffer.M4: nfet_01v8.sym -> sg13_lv_nmos w=7u l=0.13u ng=2
+  inverter_buffer.M5: pfet_01v8.sym -> sg13_lv_pmos w=16u l=0.13u ng=8
+  inverter_buffer.M6: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.13u ng=4
+inverter_chain.sch:
+  inverter_chain.M1: pfet_01v8.sym -> sg13_lv_pmos w=2u l=0.13u ng=1
+  inverter_chain.M2: nfet_01v8.sym -> sg13_lv_nmos w=1u l=0.13u ng=1
+  inverter_chain.M3: pfet_01v8.sym -> sg13_lv_pmos w=6u l=0.13u ng=4
+  inverter_chain.M4: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.13u ng=2
+  inverter_chain.M5: pfet_01v8.sym -> sg13_lv_pmos w=16u l=0.13u ng=8
+  inverter_chain.M6: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.13u ng=4
+ring_inverter.sch:
+  ring_inverter.M4: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.9u ng=1
+  ring_inverter.M5: nfet_01v8.sym -> sg13_lv_nmos w=9u l=0.13u ng=1
+  ring_inverter.M1: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.9u ng=1
+  ring_inverter.R1: res_high_po.sym -> rhigh w=1.000000e-06 l=5.079106e-06  (7355 ohm)
+  ring_inverter.R2: res_high_po.sym -> rhigh w=1.000000e-06 l=5.079106e-06  (7355 ohm)
+ring_oscillator.sch:
+robs_xor.sch:
+  robs_xor.M5: pfet_01v8.sym -> sg13_lv_pmos w=2u l=0.13u ng=1
+  robs_xor.M6: nfet_01v8.sym -> sg13_lv_nmos w=2u l=0.13u ng=1
+  robs_xor.M1: pfet_01v8.sym -> sg13_lv_pmos w=2u l=0.13u ng=1
+  robs_xor.M2: pfet_01v8.sym -> sg13_lv_pmos w=2u l=0.13u ng=1
+  robs_xor.M3: pfet_01v8.sym -> sg13_lv_pmos w=2u l=0.13u ng=1
+  robs_xor.M4: nfet_01v8.sym -> sg13_lv_nmos w=2u l=0.13u ng=1
+  robs_xor.M7: nfet_01v8.sym -> sg13_lv_nmos w=2u l=0.13u ng=1
+  robs_xor.M8: nfet_01v8.sym -> sg13_lv_nmos w=2u l=0.13u ng=1
+single_inverter.sch:
+  single_inverter.M1: pfet_01v8.sym -> sg13_lv_pmos w=16u l=0.13u ng=8
+  single_inverter.M2: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.13u ng=4
+tiny_pll_bias_gen.sch:
+  tiny_pll_bias_gen.MNMIR: bulk 'VNB' rewired to the new B pin at (0,170)
+  tiny_pll_bias_gen.MNMIR: nfet3_01v8.sym -> sg13_lv_nmos w=1u l=1u ng=1
+  tiny_pll_bias_gen.MNDIO: bulk 'VNB' rewired to the new B pin at (320,170)
+  tiny_pll_bias_gen.MNDIO: nfet3_01v8.sym -> sg13_lv_nmos w=1u l=1u ng=1
+  tiny_pll_bias_gen.MPDIO: bulk 'VPB' rewired to the new B pin at (0,-90)
+  tiny_pll_bias_gen.MPDIO: pfet3_01v8.sym -> sg13_lv_pmos w=2u l=1u ng=1
+  tiny_pll_bias_gen.MPMIR: bulk 'VPB' rewired to the new B pin at (320,-90)
+  tiny_pll_bias_gen.MPMIR: pfet3_01v8.sym -> sg13_lv_pmos w=2u l=1u ng=1
+  tiny_pll_bias_gen.MNEN1: bulk 'VNB' rewired to the new B pin at (120,230)
+  tiny_pll_bias_gen.MNEN1: nfet3_01v8.sym -> sg13_lv_nmos w=0.5u l=0.13u ng=1
+  tiny_pll_bias_gen.MPEN1: bulk 'VPB' rewired to the new B pin at (120,-150)
+  tiny_pll_bias_gen.MPEN1: pfet3_01v8.sym -> sg13_lv_pmos w=0.5u l=0.13u ng=1
+  tiny_pll_bias_gen.MNSU1: bulk 'VNB' rewired to the new B pin at (-160,170)
+  tiny_pll_bias_gen.MNSU1: nfet3_01v8.sym -> sg13_lv_nmos w=1u l=1u ng=1
+  tiny_pll_bias_gen.MNSU2: bulk 'VNB' rewired to the new B pin at (-320,70)
+  tiny_pll_bias_gen.MNSU2: nfet3_01v8.sym -> sg13_lv_nmos w=0.5u l=0.13u ng=1
+  tiny_pll_bias_gen.MNEN2: bulk 'VNB' rewired to the new B pin at (-320,230)
+  tiny_pll_bias_gen.MNEN2: nfet3_01v8.sym -> sg13_lv_nmos w=0.5u l=0.13u ng=1
+  tiny_pll_bias_gen.MPEN2: bulk 'VPB' rewired to the new B pin at (-320,-370)
+  tiny_pll_bias_gen.MPEN2: pfet3_01v8.sym -> sg13_lv_pmos w=0.5u l=0.13u ng=1
+  tiny_pll_bias_gen.MPSU2: bulk 'VPB' rewired to the new B pin at (-160,-130)
+  tiny_pll_bias_gen.MPSU2: pfet3_01v8.sym -> sg13_lv_pmos w=0.5u l=0.13u ng=1
+  tiny_pll_bias_gen.MPSU1: bulk 'VPB' rewired to the new B pin at (-160,-370)
+  tiny_pll_bias_gen.MPSU1: pfet3_01v8.sym -> sg13_lv_pmos w=0.5u l=0.13u ng=1
+tiny_pll_bias_gen_res.sch:
+  tiny_pll_bias_gen_res.R[2..0]: res_xhigh_po_0p35.sym -> rhigh w=1.000000e-06 l=2.428235e-06  (3600 ohm)
+tiny_pll_charge_pump.sch:
+  tiny_pll_charge_pump.MNSRC: bulk 'VNB' rewired to the new B pin at (0,-90)
+  tiny_pll_charge_pump.MNSRC: nfet3_01v8.sym -> sg13_lv_nmos w=1u l=1u ng=1
+  tiny_pll_charge_pump.MNSW: bulk 'VNB' rewired to the new B pin at (0,-230)
+  tiny_pll_charge_pump.MNSW: nfet3_01v8.sym -> sg13_lv_nmos w=0.5u l=0.13u ng=1
+  tiny_pll_charge_pump.MPSW: bulk 'VPB' rewired to the new B pin at (0,-370)
+  tiny_pll_charge_pump.MPSW: pfet3_01v8.sym -> sg13_lv_pmos w=1u l=0.13u ng=1
+  tiny_pll_charge_pump.MPSRC: bulk 'VPB' rewired to the new B pin at (0,-510)
+  tiny_pll_charge_pump.MPSRC: pfet3_01v8.sym -> sg13_lv_pmos w=2u l=1u ng=1
+  tiny_pll_charge_pump.XINV: supply 'VPWR'='VPWR' becomes a pin at (-140,-400)
+  tiny_pll_charge_pump.XINV: supply 'VGND'='VGND' becomes a pin at (-140,-340)
+  tiny_pll_charge_pump.XINV: inv_1.sym -> inv_cp.sym
+tiny_pll_loop_filter.sch:
+tiny_pll_loop_filter_cap1.sch:
+  tiny_pll_loop_filter_cap1.MCAP: bulk 'VNB' rewired to the new B pin at (0,30)
+  tiny_pll_loop_filter_cap1.MCAP: nfet3_01v8.sym -> sg13_lv_nmos w=4u l=0.6u ng=1
+tiny_pll_loop_filter_cap2.sch:
+  tiny_pll_loop_filter_cap2.MCAP: bulk 'VNB' rewired to the new B pin at (0,30)
+  tiny_pll_loop_filter_cap2.MCAP: nfet3_01v8.sym -> sg13_lv_nmos w=1.1u l=2u ng=1
+tiny_pll_loop_filter_res.sch:
+  tiny_pll_loop_filter_res.R: res_xhigh_po_0p35.sym -> rhigh w=1.000000e-06 l=2.106353e-05  (30000 ohm)
+vctrl_precharge.sch:
+  vctrl_precharge.R1: res_xhigh_po_0p35.sym -> rhigh w=1.000000e-06 l=1.692988e-04  (240000 ohm)
+  vctrl_precharge.MCPOR: bulk 'VSS' rewired to the new B pin at (220,0)
+  vctrl_precharge.MCPOR: nfet3_01v8.sym -> sg13_lv_nmos w=8u l=8u ng=1
+  vctrl_precharge.MP1: pfet_01v8.sym -> sg13_lv_pmos w=1u l=1u ng=1
+  vctrl_precharge.MN1: nfet_01v8.sym -> sg13_lv_nmos w=0.5u l=1u ng=1
+  vctrl_precharge.MP2: pfet_01v8.sym -> sg13_lv_pmos w=2u l=0.13u ng=1
+  vctrl_precharge.MN2: nfet_01v8.sym -> sg13_lv_nmos w=1u l=0.13u ng=1
+  vctrl_precharge.MBP: pfet_01v8.sym -> sg13_lv_pmos w=6u l=1u ng=1
+  vctrl_precharge.MBD: nfet_01v8.sym -> sg13_lv_nmos w=6u l=0.13u ng=1
+  vctrl_precharge.MSW: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.6u ng=1
+ctle_cdr_rx.sch: design change applied (add_bias_mirror)
+ctle_cdr_rx_lvs.sch: design change applied (<lambda>)
+ctle_cdr_rx.sym: design change applied (<lambda>)

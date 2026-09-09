@@ -1,0 +1,47 @@
+* SG13CMOS5L lv MOS characterization at VDD = 1.2 V
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+Vsub sub! 0 0
+.param VDD=1.2
+
+Vdd vdd 0 {VDD}
+* NMOS, W=1u, L=0.13u / 0.30u / 1.0u, Vds = VDD/2
+Vgn gn 0 0.6
+Vdn1 dn1 0 0.6
+Vdn2 dn2 0 0.6
+Vdn3 dn3 0 0.6
+XN1 dn1 gn 0 0 sg13_lv_nmos w=1e-6 l=0.13e-6 ng=1 m=1
+XN2 dn2 gn 0 0 sg13_lv_nmos w=1e-6 l=0.30e-6 ng=1 m=1
+XN3 dn3 gn 0 0 sg13_lv_nmos w=1e-6 l=1.0e-6  ng=1 m=1
+* PMOS, source at VDD
+Vgp gp 0 0.6
+Vdp1 dp1 0 0.6
+XP1 dp1 gp vdd vdd sg13_lv_pmos w=1e-6 l=0.13e-6 ng=1 m=1
+Vdp2 dp2 0 0.6
+XP2 dp2 gp vdd vdd sg13_lv_pmos w=1e-6 l=0.30e-6 ng=1 m=1
+
+.control
+* Vth extraction by constant-current (300 nA * W/L)
+dc Vgn 0 1.2 0.005
+let idn1 = -i(vdn1)
+let idn2 = -i(vdn2)
+let idn3 = -i(vdn3)
+meas dc vthn13 when idn1=2.31e-6
+meas dc vthn30 when idn2=1.0e-6
+meas dc vthn100 when idn3=0.3e-6
+meas dc idn13_1v2 find idn1 at=1.2
+meas dc idn30_1v2 find idn2 at=1.2
+print vthn13 vthn30 vthn100 idn13_1v2 idn30_1v2
+dc Vgp 0 1.2 0.005
+let idp1 = i(vdp1)
+let idp2 = i(vdp2)
+meas dc vgp_th13 when idp1=2.31e-6
+meas dc vgp_th30 when idp2=1.0e-6
+meas dc idp13_0v  find idp1 at=0
+meas dc idp30_0v  find idp2 at=0
+print vgp_th13 vgp_th30 idp13_0v idp30_0v
+quit
+.endc
+.end
