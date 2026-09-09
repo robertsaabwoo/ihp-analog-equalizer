@@ -1,0 +1,29 @@
+ihp-analog-equalizer
+Copyright 2026 Robert Solomon Saab
+
+Licensed under the Apache License, Version 2.0.  See LICENSE.
+
+This work is derived from:
+
+  ttsky-analog-equalizer
+  https://github.com/robertsaabwoo/ttsky-analog-equalizer
+  Copyright 2026 Robert Solomon Saab, Apache License 2.0
+
+  The circuit topology, the design methodology and the simulation-trap
+  notes originate there.  The schematics in xschem/ are produced from that
+  repository's schematics by tools/port_from_sky130.py.
+
+It targets, and contains no source from:
+
+  IHP-Open-PDK / ihp-sg13cmos5l
+  https://github.com/IHP-GmbH/ihp-sg13cmos5l
+  Copyright IHP PDK Authors, Apache License 2.0
+
+  Device models, symbols and the PSP 103.6 Verilog-A sources are used at
+  build time from a separate PDK checkout installed by tools/setup_pdk.sh.
+  Nothing from the PDK is redistributed here.
+
+The Chipalooza harness this block is designed to drop into:
+
+  sg13cmos5l_ocd_chipalooza
+  https://github.com/RTimothyEdwards/sg13cmos5l_ocd_chipalooza
