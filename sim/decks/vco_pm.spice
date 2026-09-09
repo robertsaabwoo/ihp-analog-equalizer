@@ -1,6 +1,26 @@
 * Ring variant: DIODE-CONNECTED pMOS loads instead of poly resistors, to see
-* whether the tuning range widens.  This attempt did not oscillate -- the
-* load is too strong, see docs/DESIGN.md.  Kept as a negative result.
+* whether the tuning range widens.
+*
+* Why this might work.  With a poly-resistor load the stage delay is RC and
+* does not care what the tail current is, which is why the resistive ring
+* tunes over only 1.3:1 and cannot cover PVT.  A diode load's small-signal
+* resistance is 1/gm, and gm follows the tail current, so the delay falls as
+* the current rises.  It also needs no control pin, unlike a switchable
+* resistor bank.
+*
+* Why the first attempt failed.  A five-stage ring needs a stage gain of at
+* least 1/cos(36 deg) = 1.24 to sustain oscillation, and for a CML pair with a
+* diode load that gain is roughly
+*
+*     sqrt( mu_n * (W/L)_n  /  ( mu_p * (W/L)_p ) )
+*
+* A 2 um / 0.13 um pMOS load against a 3 um / 0.6 um input pair gives about 1,
+* and the ring sat still.  The load has to be *weaker*, which means a longer
+* channel, not a narrower one -- a narrow short-channel device is still a
+* strong load.  Lpl = 0.5 um here, giving a stage gain around 1.8-2.
+*
+* Not yet run.  Recorded as the next experiment, with the arithmetic that
+* says what to try, so nobody repeats the first attempt.
 *
 .control
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
@@ -34,12 +54,13 @@ x1 VDD VSS vctrl vop vom ring_pm
 * Only these two vectors are stored.  A bare `write` would keep every node at
 * every timepoint and has previously exhausted this machine's memory.
 save v(vop) v(vom) v(vctrl)
-foreach lin 0.60 1.00
- foreach wp 2 4 8
+foreach lin 0.50 0.70 0.90
+ foreach wp 1.5 2.5
   alterparam Win   = 3
   alterparam Lin   = $lin
   alterparam Wtail = 9
   alterparam Wpl   = $wp
+  alterparam Lpl   = 0.5
   reset
   foreach vc 0.40 0.50 0.60 0.70 0.80 0.90 1.00 1.10
    alter Vc dc = $vc

@@ -42,6 +42,19 @@ implementation detail: the ring has **five** stages (the period is ten stage
 delays), and **both** recovered-clock phases are buffered (driving one leg of a
 differential oscillator skews its duty cycle).
 
+**`test_device_geometry.py` — every device inside the model's validated range.**
+
+The PSP model header states its range: `L = (0.13 - 10) um`, `W = (0.15 - 10)
+um`, and the W there is **per finger** — the device subcircuit computes its
+diffusion areas from `w/ng`. ngspice will evaluate a 30 µm single-finger
+transistor perfectly happily and hand back extrapolated numbers, and nothing
+else in the flow objects.
+
+This caught three real devices: the CTLE's input pair at 30 µm and its tail at
+40 µm, all drawn at `ng=1` after being re-sized for 1.2 V. They are now
+fingered to 5 µm per finger, which is also simply what a 30 µm transistor looks
+like in layout.
+
 **`test_port_tool.py` — the port arithmetic.**
 
 Passives are converted by *value*: the tool takes the sky130 resistance or

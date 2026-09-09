@@ -1,8 +1,8 @@
 CDR.sch:
 CTLE.sch:
-  CTLE.M1: nfet_01v8.sym -> sg13_lv_nmos w=30u l=0.2u ng=1
-  CTLE.M2: nfet_01v8.sym -> sg13_lv_nmos w=40u l=1u ng=1
-  CTLE.M4: nfet_01v8.sym -> sg13_lv_nmos w=30u l=0.2u ng=1
+  CTLE.M1: nfet_01v8.sym -> sg13_lv_nmos w=30u l=0.2u ng=6
+  CTLE.M2: nfet_01v8.sym -> sg13_lv_nmos w=40u l=1u ng=8
+  CTLE.M4: nfet_01v8.sym -> sg13_lv_nmos w=30u l=0.2u ng=6
   CTLE.R1: res_high_po.sym -> rhigh w=1.000000e-06 l=2.357647e-06  (3500 ohm)
   CTLE.R2: res_high_po.sym -> rhigh w=1.000000e-06 l=2.357647e-06  (3500 ohm)
   CTLE.R3: res_high_po.sym -> rhigh w=1.000000e-06 l=5.223529e-07  (900 ohm)

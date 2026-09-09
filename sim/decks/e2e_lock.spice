@@ -81,6 +81,23 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * first stage's two outputs.
 .ic v(x1.x2.x1.net1)=0.9 v(x1.x2.x1.net2)=0.3
 
+* ... and seed the control voltage, or the kick above is wasted.
+*
+* The first attempt set only the ring nodes.  The operating point duly came
+* out asymmetric -- net1 at 0.9 V, net2 at 0.3 V, the rest of the ring latched
+* against the rails -- and the ring still did not start, because at t = 0 the
+* loop filter is at zero volts, so the ring has no tail current and is simply
+* off.  It stays off until the startup precharge releases at 76 ns, and by
+* then the asymmetry has long since decayed to nothing.  The kick has to
+* coincide with the ring being powered.
+*
+* Seeding the loop filter at 0.62 V -- roughly where the ring runs at the baud
+* rate -- means the ring is running from the first timestep while the
+* asymmetry is still there.  It is a testbench convenience and it does bypass
+* the cold-start behaviour of the precharge cell, which therefore has to be
+* tested separately rather than as a side effect of this run.
+.ic v(x1.x2.net1)=0.62
+
 .control
 * Explicit save list.  A bare `write` stores every node at every timepoint and
 * is what exhausted this machine's memory once already.

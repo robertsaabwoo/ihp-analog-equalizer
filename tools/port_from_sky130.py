@@ -105,9 +105,15 @@ SIZING: dict[tuple[str, str], dict] = {
     # pair rather than by vbias.  Halving its width and doubling its length,
     # and raising the input common mode to 0.85 V, puts 207 mV across it and
     # makes it a current source again.
-    ("CTLE", "M1"): {"W": 30, "L": 0.2},     # input pair: gm/Id vs Miller
-    ("CTLE", "M4"): {"W": 30, "L": 0.2},
-    ("CTLE", "M2"): {"W": 40, "L": 1.0},     # tail, now actually saturated
+    # Fingered so that w/ng stays inside the PSP model's validated width range,
+    # 0.15-10 um -- W in that header is per finger, because the device
+    # subcircuit computes its diffusion areas from w/ng.  ngspice evaluates a
+    # 30 um single-finger device perfectly happily and returns extrapolated
+    # numbers; nothing in the flow objects.  test_device_geometry.py does.
+    # Fingering is also simply what a 30 um transistor looks like in layout.
+    ("CTLE", "M1"): {"W": 30, "L": 0.2, "nf": 6},   # input pair, 5 um/finger
+    ("CTLE", "M4"): {"W": 30, "L": 0.2, "nf": 6},
+    ("CTLE", "M2"): {"W": 40, "L": 1.0, "nf": 8},   # tail, 5 um/finger
     ("CTLE", "R1"): {"R": 3500},             # load; sets dVload with Itail/2
     ("CTLE", "R2"): {"R": 3500},
     ("CTLE", "R3"): {"R": 900},              # degeneration; sets the boost

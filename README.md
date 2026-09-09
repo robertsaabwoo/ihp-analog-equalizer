@@ -222,6 +222,11 @@ covers the things that fail *silently*:
   unmanufacturable. Nothing else in the flow catches that;
 - **the hierarchy** — xschem resolves a missing symbol silently and emits a
   truncated netlist, which is then what LVS and every simulation trusts;
+- **device geometry** — the PSP models are fitted over `L = 0.13…10 µm` and
+  `W = 0.15…10 µm`, and that W is **per finger**. ngspice evaluates a 30 µm
+  single-finger transistor without complaint and returns extrapolated numbers.
+  This caught three: the CTLE's input pair and tail, after being re-sized for
+  1.2 V;
 - **the port arithmetic** — passives are converted by *value*, solving the IHP
   geometry from the PDK's own expressions. One of these tests exists because
   the capacitor solver had a stray factor of 10⁶ and produced a 22 pm
