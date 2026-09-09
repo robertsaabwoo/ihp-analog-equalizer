@@ -1,6 +1,5 @@
-* Ring sizing search 3: input pair length 0.7/0.8/0.9 um against load
-* resistance, finely in vctrl.  This is the run that chose L = 0.9 um.
-* (Derived from vco_tune2; the loop below is what it actually runs.)
+* Ring-VCO tuning range across PVT, coarse vctrl grid (4 points) so three
+* process corners fit in about half an hour.  Same measurement as vco_pvt.
 *
 .control
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
@@ -14,7 +13,6 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
 
 .include ../netlists/blocks.inc
-.include ring_p.inc
 
 .global sub!
 Vsub sub! 0 0
@@ -23,7 +21,7 @@ VDD VDD 0 1.2
 VSS VSS 0 0
 Vc  vctrl 0 0.6
 
-x1 VDD VSS vctrl vop vom ring_p
+x1 VDD VSS vctrl vop vom ring_oscillator
 
 * Break the ring's symmetry so it starts.
 .ic v(vop)=1.0 v(vom)=0.4
@@ -34,19 +32,16 @@ x1 VDD VSS vctrl vop vom ring_p
 * Only these two vectors are stored.  A bare `write` would keep every node at
 * every timepoint and has previously exhausted this machine's memory.
 save v(vop) v(vom) v(vctrl)
-foreach lin 0.70 0.80 0.90
- foreach rl 5500 7355
-  alterparam Win   = 3
-  alterparam Lin   = $lin
-  alterparam Wtail = 9
-  alterparam Rload = $rl
-  reset
-  foreach vc 0.40 0.50 0.60 0.70 0.80 0.90 1.00 1.10
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  foreach vc 0.50 0.60 0.80 1.10
    alter Vc dc = $vc
   * 120 ns is ~70 cycles at 600 MHz; the first 40 ns is discarded as startup.
   tran 5p 120n
-   let p_lin   = $lin
-   let p_rload = $rl
+   let p_temp  = $tmp
+   let p_vdd   = $vd
    let p_vctrl = $vc
   * Count rising crossings of the midpoint in the settled window and divide by
   * the elapsed time, rather than trusting a single period: a ring that is
@@ -58,7 +53,7 @@ foreach lin 0.70 0.80 0.90
   meas tran vmax max v(vop) from=60n to=120n
   meas tran vmin min v(vop) from=60n to=120n
    let swing = vmax - vmin
-  print p_lin p_rload p_vctrl fosc swing
+  print p_temp p_vdd p_vctrl fosc swing
   end
  end
 end

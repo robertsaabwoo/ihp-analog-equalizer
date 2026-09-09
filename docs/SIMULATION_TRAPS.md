@@ -178,11 +178,32 @@ times.
 ### 2.6 A ring oscillator started from a symmetric state never starts
 
 All nodes equal is a valid DC solution and the simulator has no noise to break
-it. Kick one node:
+it. Real silicon starts on thermal noise; the simulator has none unless you ask.
+Kick one node:
 
 ```spice
 .ic v(vop)=1.0 v(vom)=0.4
 ```
+
+**Inside a closed loop this does not look like a dead oscillator, it looks like
+a locked one.** The first end-to-end run of `e2e_lock.spice` finished cleanly
+and reported:
+
+```
+vctrl_lock  = 0.6608 V        control voltage settled
+vctrl_ripp  = 0.0010 V        one millivolt of ripple -- beautifully quiet
+ctle_swing  = 0.2773 V        CTLE equalising correctly, 63 mV in
+rclk_swing  = 4.9e-08 V       ... the recovered clock is 49 nanovolts
+```
+
+Three of those four numbers are what a working receiver looks like. The control
+voltage is quiet *because* there is no clock for the phase detector to compare
+against, so the charge pump never fires and nothing perturbs the loop filter.
+
+The lesson generalises past ring oscillators: **a settled control voltage is
+not evidence of lock.** Measure the clock's amplitude and its frequency as
+separate criteria, and treat any one of the three agreeing on its own as
+meaningless.
 
 ### 2.7 `.op` treats a capacitor as an open circuit
 

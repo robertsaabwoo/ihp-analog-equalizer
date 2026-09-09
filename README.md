@@ -189,10 +189,11 @@ them.
 ## Getting it running
 
 ```console
-$ tools/setup_pdk.sh     # both IHP PDKs + the Verilog-A models
+$ tools/setup_pdk.sh       # both IHP PDKs + the Verilog-A models
 $ . ./env.sh
-$ tools/netlist.sh       # schematics -> sim/netlists/blocks.inc
-$ sim/run_ctle_ac.sh     # 27 corners, ~10 minutes
+$ tools/set_pdk_paths.sh   # point the decks at your PDK_ROOT
+$ tools/netlist.sh         # schematics -> sim/netlists/blocks.inc
+$ sim/run_ctle_ac.sh       # 27 corners, ~10 minutes
 ```
 
 `setup_pdk.sh` installs **two** PDKs, which is not redundancy: `ihp-sg13cmos5l`

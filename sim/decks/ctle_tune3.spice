@@ -1,32 +1,7 @@
-* CTLE sizing search 2: trade load resistance against tail current at fixed
-* headroom, and input width against transconductance efficiency.
+* CTLE sizing search 3: sweep the INPUT COMMON MODE as well, to find out
+* whether the tail can be given enough headroom to saturate at 1.2 V.
+* (Derived from ctle_tune2 by tools; the loop below is what it actually runs.)
 *
-* What the first search established.  With the sky130 sizes carried over
-* unchanged (Win 20, Rload 6.4k, Rdeg 1.6k, Ccap 648f) the best usable point
-* on 1.2 V gives +10.6 dB at Nyquist with +4.4 dB of boost, against sky130's
-* +13.32 dB and +6.3..+7.9 dB.  The channel costs 13.7 dB at Nyquist, so
-* +10.6 dB leaves 3.1 dB of residual loss -- the equaliser no longer cancels
-* the channel, which is the whole job.
-*
-* Why, and what to do about it.  Gain at the output is
-*
-*     gm * Rload  =  (gm/Id) * (Id * Rload)  =  (gm/Id) * dVload
-*
-* and dVload is fixed at about 0.35 V by headroom: VDD 1.2, output common mode
-* no lower than ~0.85 V if the next stage is to have anything to sample.  So
-* the only free variable in the DC gain is gm/Id, which rises as the input
-* pair moves toward weak inversion -- bigger Win at the same current.
-*
-* Bandwidth pushes the other way.  The output pole is 1/(2*pi*Rload*Cload),
-* and at Rload = 6.4k with ~80 fF hanging on the node it sits at 310 MHz,
-* barely above the 300 MHz Nyquist: 3 dB of the missing gain is simply the
-* stage rolling off.  Lowering Rload and raising Id in proportion keeps dVload
-* and therefore the DC gain, and moves the pole up.  It costs current, and
-* current is the one thing this design has to spare: the whole CTLE at 200 uA
-* on 1.2 V is 0.24 mW against a 6 mW budget.
-*
-* So the sweep is over (Win, Rload) with the tail gate adjusted to land the
-* output common mode near 0.85 V, and Rdeg tracking Rload to hold the boost.
 .control
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi

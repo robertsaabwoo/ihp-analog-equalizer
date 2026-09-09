@@ -64,6 +64,23 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * broken circuit rather than a broken testbench.
 .ic v(x1.x2.x20.nrc)=0
 
+* Break the ring's symmetry, or it never starts.  All five stages sitting at
+* the same voltage is a valid DC solution and the simulator has no noise to
+* leave it with; real silicon starts on thermal noise.
+*
+* Without these two lines this deck runs to completion and reports a perfectly
+* plausible-looking result: the CTLE equalises correctly, the control voltage
+* settles to 0.661 V with 1 mV of ripple, and the recovered clock has a swing
+* of 49 nanovolts.  The loop is not locked, it is asleep -- the control voltage
+* is quiet precisely *because* there is no clock for the phase detector to
+* compare against, so the charge pump never fires.  A settled control voltage
+* is not evidence of lock on its own, which is why this deck measures the
+* clock swing and the frequency separately.
+*
+* x1.x2.x1 is ctle_cdr_rx -> CDR -> ring_oscillator; net1 and net2 are the
+* first stage's two outputs.
+.ic v(x1.x2.x1.net1)=0.9 v(x1.x2.x1.net2)=0.3
+
 .control
 * Explicit save list.  A bare `write` stores every node at every timepoint and
 * is what exhausted this machine's memory once already.

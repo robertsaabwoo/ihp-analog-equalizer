@@ -1,22 +1,7 @@
-* Ring-VCO tuning range: frequency against control voltage, per PVT corner.
+* Ring variant: DIODE-CONNECTED pMOS loads instead of poly resistors, to see
+* whether the tuning range widens.  This attempt did not oscillate -- the
+* load is too strong, see docs/DESIGN.md.  Kept as a negative result.
 *
-* This is the measurement that decided the sky130 design's one accepted
-* limitation.  There, the ring reached 514-621 MHz at tt/27 C, and could not
-* reach the 600.6 MHz baud rate at 125 C or at a 1.62 V supply -- the loop
-* has no frequency acquisition of its own (a bang-bang phase detector is
-* phase-only), so a ring that cannot reach the baud rate is a ring that never
-* locks.  Six of eleven swept corners passed.
-*
-* The five stages are CML: an NMOS pair with poly load resistors and a tail
-* device whose gate is vctrl, so raising vctrl raises the tail current and the
-* frequency, until the stage stops being current-starved and becomes RC
-* limited by its own load resistor -- above which more vctrl buys nothing.
-* That ceiling is what failed at temperature on sky130.
-*
-* A ring does not start on its own in a transient with a symmetric initial
-* condition: both legs sit at the same voltage, which is a valid DC solution.
-* .ic on one node of the first stage breaks the symmetry.  See
-* docs/SIMULATION_TRAPS.md.
 .control
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
