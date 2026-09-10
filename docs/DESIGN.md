@@ -292,12 +292,69 @@ side of it. The first attempt to work around that with a unity-gain source
 referencing the hierarchical node failed differently and worse; see
 `docs/SIMULATION_TRAPS.md` 2.8b.
 
-**Not yet found:** why an identical `diff_amp_inv` works one level up. The same
-cell, with the same VDD-tied bias, is the output stage *inside*
-`ring_oscillator`, and it is the one producing the healthy 1.93 V differential.
-The difference between the two instances is their load — the ring's copy drives
-a small input pair, the CDR's copy drives a large inverter gate on one output
-and nothing on the other — and that asymmetry is the next thing to look at.
+### The cause: the stage cannot be cascaded with itself at 1.2 V
+
+Probing inside the stage (`sim/results/e2e_diag3.log`) answers the puzzle of
+why an *identical* `diff_amp_inv`, with the same VDD-tied bias, works one level
+up as the ring's own output buffer:
+
+| quantity | measured |
+|---|---|
+| ring's buffered output, common mode | **0.336 V** |
+| ring's buffered output, swing per leg | 0.967 V pk-pk |
+| next stage's first-stage tail node | 0.111 V |
+| next stage's second-stage tail node | 0.033 V |
+
+The next stage's input pair therefore has Vgs = 0.336 − 0.111 = **0.225 V**,
+below threshold. It is off for most of the cycle.
+
+The first instance works because its input is the *ring's internal nodes*,
+whose common mode is high — the ring's load resistors pull toward VDD. The
+second instance is driven by the first one's output, which is 0.34 V, and
+starves. **The cell's output common mode is far below its own input
+common-mode requirement, so it cannot drive a copy of itself.** At 1.8 V the
+same mismatch still left enough Vgs to conduct.
+
+### The fix, and why it took two attempts
+
+The output common mode is set by the drop across the load resistors, so both
+tails shrink. From `sim/decks/d2s_size.spice`, at an 0.85 V input common mode:
+
+| tails | single-ended output swing | common mode |
+|---|---|---|
+| W=2, W=8/L=0.13 (as ported) | 0.07 – 1.13 V | 0.34 V |
+| W=1, W=1/L=1.0 | 0.57 – 1.20 V | 0.885 V |
+| W=1, W=2/L=1.0 | 0.35 – 1.17 V | 0.758 V |
+
+There are **two** conditions and the first attempt met only one. The output has
+to sit high enough to keep the next copy of the cell conducting — the cascade
+condition, which the ported sizing failed. It also has to cross the switching
+threshold of the CMOS inverter it eventually drives, near 0.5 V here.
+`W=1, W=1` fixed the first and broke the second: common mode 0.88 V with the
+low excursion stopping at 0.57 V, so the inverter downstream moved 151 mV and
+never switched — the same static output as before, now stuck at the opposite
+rail. `W=1, W=2` meets both.
+
+Measured through the whole chain afterwards, closed loop, 250–300 ns:
+
+| probe | pk-pk |
+|---|---|
+| ring, stage 1 output | 1.84 V differential |
+| ring's buffered output | 0.75 V per leg, common mode 0.684 V |
+| inside `inverter_buffer` | **1.19 V**, switching about 0.546 V |
+| inside the output `inverter_chain` | 1.26 V |
+| the pin | **1.30 V** |
+
+### The structural point, which is worth more than the fix
+
+One cell is doing two incompatible jobs. As the ring's output stage it must
+hand a *high* common mode to an identical stage; as the CDR's stage it must
+hand a *mid-rail crossing* to CMOS logic. At 1.8 V both fit one sizing
+comfortably, which is why the sky130 design never had to separate them. At
+1.2 V they barely coexist, and the honest recommendation is to split
+`diff_amp_inv` into two cells — one tuned for cascading, one for the CMOS
+interface — rather than keep squeezing a single sizing between two
+constraints that are moving apart as the supply falls.
 
 ## 5. Not measured
 
