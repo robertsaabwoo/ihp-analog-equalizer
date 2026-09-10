@@ -247,6 +247,40 @@ SIZING: dict[tuple[str, str], dict] = {
     ("d_latch", "M2"): {"W": 24, "L": 1.0, "nf": 4},  # tail: MREF's length
     ("d_latch", "R1"): {"R": 6000},           # CML load; sets the swing
     ("d_latch", "R3"): {"R": 6000},
+
+    # ------------------------------------------- charge pump bias reference
+    # Measured, not estimated (sim/decks/cp_current.spice): with the ported
+    # 3.6 kohm reference the pump delivers 7.56 uA up and 7.49 uA down into a
+    # 147.5 fF loop filter, so each bang-bang update moves the control voltage
+    # by I*UI/C = 84.7 mV.  sky130's proven design moved it 17.5 mV.
+    #
+    # 85 mV per update against a VCO slope near 300 MHz/V is 25 MHz of
+    # frequency step per unit interval.  No loop settles on that: measured, the
+    # control voltage goes 0.880 V at 80 ns, 0.486 at 100, 0.964 at 120, 0.447
+    # at 150, and 0.3 mV by 200 ns -- at which point the ring has stopped and
+    # the startup precharge, which fires once at power-up, has long released.
+    #
+    # The fix is to weaken the reference rather than enlarge the filter: it
+    # costs no area and no power, and it lands on the update quantum sky130
+    # demonstrated to be stable with almost the same capacitance.
+    # The instance is an xschem *vector* -- one symbol expanding to three
+    # resistors -- so its name is literally "R[2..0]", not R0/R1/R2.  A
+    # SIZING key that matches nothing is silently ignored, which is exactly
+    # what happened first time: the sweep ran four resistor values and
+    # reported the same current four times.
+    ("tiny_pll_bias_gen_res", "R[2..0]"): {"R": 12000},
+    #
+    # Why 12 kohm, and why not simply copy sky130's update quantum.  What a
+    # bang-bang loop cares about is the *phase* step per update:
+    #
+    #     dphi = 2*pi * Kvco * dV * UI
+    #
+    # sky130 was stable at 17.5 mV with a 357 MHz/V oscillator -- 3.7 degrees
+    # per unit interval.  This ring measures 310 MHz/V between vctrl = 0.6 and
+    # 0.7 V, so the same phase step wants about 20 mV, and 12 kohm gives 20.5.
+    # Copying the voltage instead of the phase step would have been 15 % out.
+    #
+    # Measured at 12 kohm: 1.82 uA up into 147.5 fF, 20.5 mV per update.
 }
 
 # Devices whose L is at the sky130 minimum get the IHP minimum instead.

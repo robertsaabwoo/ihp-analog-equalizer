@@ -12,7 +12,6 @@ Circuit: * end-to-end acquisition: does the loop lock on this process?
 
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
-OSDI(debug) n.x1.x2.x4.xr1.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
 
 Initial Transient Solution
 --------------------------
@@ -39,23 +38,23 @@ x1.x1.xr1.dt                                 0
 x1.x1.xr2.dt                                 0
 x1.x1.xr3.dt                                 0
 x1.x1.xr4.dt                                 0
-x1.x2.x6.src_n                     1.21266e-07
-x1.x2.bias_n                          0.465027
+x1.x2.x6.src_n                      2.8188e-07
+x1.x2.bias_n                          0.331796
 x1.x2.net1                                0.62
 x1.x2.net3                         1.45279e-07
 x1.x2.x6.upb                               1.2
 x1.x2.x6.src_p                             1.2
-x1.x2.bias_p                          0.554203
+x1.x2.bias_p                          0.717885
 x1.x2.net2                         1.67863e-07
-x1.x2.x8.res_bot                       1.11977
-x1.x2.x8.xres.mid1                     1.17326
+x1.x2.x8.res_bot                       1.14603
+x1.x2.x8.xres.mid1                     1.18201
 x1.x2.x8.xres.xr2.dt                         0
-x1.x2.x8.xres.mid0                     1.14651
+x1.x2.x8.xres.mid0                     1.16402
 x1.x2.x8.xres.xr1.dt                         0
 x1.x2.x8.xres.xr0.dt                         0
-x1.x2.x8.kick                        0.0492134
-x1.x2.x8.kick_sw                   4.29876e-08
-x1.x2.x8.dio_mid                      0.659272
+x1.x2.x8.kick                         0.165448
+x1.x2.x8.kick_sw                   9.59665e-07
+x1.x2.x8.dio_mid                       0.71481
 x1.x2.x2.cap_plus                     0.619994
 x1.x2.x2.xr.xr.dt                            0
 x1.x2.x3.x6.net1                      0.189768
@@ -202,8 +201,8 @@ bedinp#branch                                0
 edinm#branch                      -6.21731e-12
 edinp#branch                      -2.98348e-12
 vdraw#branch                                 0
-vss#branch                          0.00320853
-vdd#branch                         -0.00310449
+vss#branch                          0.00319512
+vdd#branch                         -0.00309108
 vsub#branch                                  0
 
- Reference value :  0.00000e+00 Reference value :  2.09840e-10 Reference value :  3.09840e-10 Reference value :  4.09840e-10 Reference value :  5.29840e-10 Reference value :  6.49840e-10 Reference value :  7.69840e-10 Reference value :  8.69840e-10 Reference value :  9.69840e-10 Reference value :  1.06984e-09 Reference value :  1.16984e-09 Reference value :  1.28984e-09 Reference value :  1.40984e-09 Reference value :  1.50984e-09 Reference value :  1.60984e-09 Reference value :  1.67600e-09 Reference value :  1.69060e-09 Reference value :  1.72426e-09 Reference value :  1.75013e-09 Reference value :  1.83977e-09 Reference value :  1.93977e-09 Reference value :  2.05977e-09 Reference value :  2.15977e-09 Reference value :  2.27977e-09 Reference value :  2.33622e-09 Reference value :  2.41049e-09 Reference value :  2.44109e-09
+ Reference value :  0.00000e+00 Reference value :  1.66602e-09 Reference value :  2.29977e-09 Reference value :  3.38948e-09 Reference value :  4.26027e-09 Reference value :  5.12466e-09 Reference value :  6.74656e-09 Reference value :  7.48933e-09 Reference value :  8.41418e-09 Reference value :  9.38646e-09 Reference value :  1.03430e-08

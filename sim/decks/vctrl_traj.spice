@@ -1,0 +1,154 @@
+* Diagnostic: is the ring oscillating inside the closed loop, and if it is,
+* where does the clock stop getting through?
+*
+* The end-to-end run reports a recovered clock of 55 nanovolts at the output
+* pin while the CTLE equalises correctly and the control voltage sits at
+* 0.66 V -- a value the standalone ring runs at 620 MHz on.  Two possibilities
+* and they need different fixes:
+*
+*   (a) the ring is not oscillating at all;
+*   (b) the ring is oscillating and the differential-to-single-ended stage or
+*       the output buffers are not passing it at 1.2 V.
+*
+* So this probes the chain at four points -- a ring node, the ring's own
+* buffered output, the CDR's single-ended clock, and the pin -- and runs for
+* 300 ns instead of 1500 ns, which costs about four minutes instead of thirty.
+*
+* Nodes with '+' in the name are unusable: ngspice parses the '+' as an
+* operator and the vector silently never appears.  rclk+ is therefore reached
+* through a unity-gain source rather than measured directly.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+
+.global sub!
+Vsub sub! 0 0
+
+.options method=gear reltol=1e-3 abstol=1e-12
+
+.param vcm=0.70
+.param amp=0.2
+.param rpad=500 cpad=5p
+.param ui=1.665n
+
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Iref Vdd ibias 40u
+
+Vdraw draw 0 PULSE(0 1 0 10p 10p 'ui' '2*ui')
+Edinp dinp 0 vol='vcm + 0.5*amp*(v(draw)-0.5)'
+Edinm dinm 0 vol='vcm - 0.5*amp*(v(draw)-0.5)'
+
+Rpadp dinp cinp 'rpad'
+Cpadp cinp 0    'cpad'
+Rpadm dinm cinm 'rpad'
+Cpadm cinm 0    'cpad'
+
+x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
+
+* No voltage-controlled sources copying internal nodes out.  The first version
+* of this deck did that, and it does not work: an element's node fields are
+* not hierarchical, so ngspice created five NEW top-level nodes literally named
+* "x1.x2.rclk+" and so on, left them floating, and the operating point failed
+* with "singular matrix: check node x1.x2.rclk+" -- pointing at a node the
+* circuit does not contain.
+*
+* Hierarchical paths are legal in save, print and meas.  So the probes below
+* are chosen to be nodes whose names contain no '+' or '-', which ngspice's
+* expression parser would treat as operators:
+*
+*   x1.x2.x1.net1 / net2   ring stage 1 outputs, inside ring_oscillator
+*   x1.x2.net4 / net5      ring_oscillator's buffered outputs, inside CDR
+*   clkoutp                the pin
+
+.ic v(x1.x2.x20.nrc)=0
+.ic v(x1.x2.x1.net1)=0.9 v(x1.x2.x1.net2)=0.3
+.ic v(x1.x2.net1)=0.62
+
+.control
+save v(x1.x2.net1) v(x1.x2.x1.net1) v(x1.x2.x1.net2)
++    v(x1.x2.net4) v(x1.x2.net5) v(x1.x2.x4.net1) v(x1.x2.x4.net2)
++    v(x1.x2.net2) v(x1.x2.net3) v(x1.x2.bias_n) v(x1.x2.bias_p) v(x1.ibias)
++    v(x1.x2.x11.net1) v(x1.x3.net1) v(x1.x3.net2)
++    v(clkoutp) v(x1.eq_p) v(x1.eq_m) v(x1.x2.x20.pre)
+tran 20p 300n
+
+let vctrl  = v(x1.x2.net1)
+let ring_d = v(x1.x2.x1.net1) - v(x1.x2.x1.net2)
+let raw_d  = v(x1.x2.net4) - v(x1.x2.net5)
+
+* Peak-to-peak in three windows: right after the .ic kick, after the precharge
+* releases, and at the end.  If the ring rings and dies, the three differ.
+meas tran ring_pp1 PP ring_d FROM=5n   TO=25n
+meas tran ring_pp2 PP ring_d FROM=150n TO=200n
+meas tran ring_pp3 PP ring_d FROM=250n TO=300n
+meas tran raw_pp1  PP raw_d  FROM=5n   TO=25n
+meas tran raw_pp   PP raw_d  FROM=250n TO=300n
+* Walk the chain from the ring's buffered output to the pin.  Every one of
+* these node names is free of '+' and '-', which ngspice's expression parser
+* would otherwise treat as operators -- clkraw+ and rclk+ themselves cannot be
+* measured at all, so the probes sit on the internal nodes either side of them:
+*   x1.x2.x11.net1   inside inverter_buffer, driven by clkraw+
+*   x1.x3.net1/net2  inside the output inverter_chain, driven by rclk_p
+* The phase detector and the charge pump.  The full lock run recovers a clean
+* 1.31 V clock and then free-runs at 616 MHz against 600.6 Mb/s data, with
+* 0.98 mV of ripple on the control voltage.  A locked bang-bang loop shows
+* tens of millivolts of dither -- sky130 measured 33.7 mV pk-pk on this same
+* pattern -- so 0.98 mV means the charge pump is delivering almost nothing and
+* the loop is effectively open.
+*
+* x1.x2.net2 and net3 are the charge pump's up and down inputs, straight off
+* the Alexander detector; bias_n and bias_p are its current-source bias.  All
+* four names are free of '+' and '-', so they can actually be measured.
+* The control-voltage trajectory.  With the detector fixed, the loop pulls
+* vctrl to zero and the ring dies.  Pulling down is the *correct* direction --
+* the ring was seeded at 0.62 V and runs at 616 MHz against 600.6 Mb/s data,
+* so a bang-bang detector should slow it -- but it should stop at about
+* 0.605 V, where the measured VCO curve gives 600.6 MHz, not slew past the
+* oscillation threshold near 0.45 V.  Below that the ring stops, the detector
+* goes blind, and nothing brings it back: the startup precharge fires once at
+* power-up and has already released by 76 ns.
+*
+* Sampling the trajectory says which it is -- a slew that overshoots in a few
+* updates, or a slow leak.
+meas tran vc_080  FIND v(x1.x2.net1) AT=80n
+meas tran vc_090  FIND v(x1.x2.net1) AT=90n
+meas tran vc_100  FIND v(x1.x2.net1) AT=100n
+meas tran vc_120  FIND v(x1.x2.net1) AT=120n
+meas tran vc_150  FIND v(x1.x2.net1) AT=150n
+meas tran vc_200  FIND v(x1.x2.net1) AT=200n
+meas tran vc_300  FIND v(x1.x2.net1) AT=300n
+meas tran up_avg   AVG v(x1.x2.net2) FROM=250n TO=300n
+meas tran up_pp    PP  v(x1.x2.net2) FROM=250n TO=300n
+meas tran dn_avg   AVG v(x1.x2.net3) FROM=250n TO=300n
+meas tran dn_pp    PP  v(x1.x2.net3) FROM=250n TO=300n
+meas tran biasn    AVG v(x1.x2.bias_n) FROM=250n TO=300n
+meas tran biasp    AVG v(x1.x2.bias_p) FROM=250n TO=300n
+meas tran vb_avg   AVG v(x1.ibias) FROM=250n TO=300n
+meas tran n4_avg  AVG v(x1.x2.net4) FROM=250n TO=300n
+meas tran n4_pp   PP  v(x1.x2.net4) FROM=250n TO=300n
+meas tran n5_avg  AVG v(x1.x2.net5) FROM=250n TO=300n
+meas tran n5_pp   PP  v(x1.x2.net5) FROM=250n TO=300n
+meas tran x4t1    AVG v(x1.x2.x4.net1) FROM=250n TO=300n
+meas tran x4t2    AVG v(x1.x2.x4.net2) FROM=250n TO=300n
+meas tran buf_pp   PP v(x1.x2.x11.net1) FROM=250n TO=300n
+meas tran ch1_pp   PP v(x1.x3.net1) FROM=250n TO=300n
+meas tran ch2_pp   PP v(x1.x3.net2) FROM=250n TO=300n
+meas tran buf_avg  AVG v(x1.x2.x11.net1) FROM=250n TO=300n
+meas tran ch1_avg  AVG v(x1.x3.net1) FROM=250n TO=300n
+meas tran out_pp   PP v(clkoutp) FROM=250n TO=300n
+meas tran vctrl_end AVG vctrl FROM=250n TO=300n
+meas tran pre_end   AVG v(x1.x2.x20.pre) FROM=250n TO=300n
+print vc_080 vc_090 vc_100 vc_120 vc_150 vc_200 vc_300 up_avg dn_avg out_pp
+quit
+.endc
+.end

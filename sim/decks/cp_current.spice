@@ -1,0 +1,87 @@
+* Charge pump current and loop-filter capacitance, measured rather than
+* estimated.
+*
+* Why.  With the phase detector fixed, the loop is finally active and it slams
+* the control voltage rail to rail: 0.880 V at 80 ns, 0.486 at 100, 0.964 at
+* 120, 0.447 at 150, and 0.3 mV by 200 ns, at which point the ring has stopped
+* and nothing brings it back.  That is not a logic fault, it is loop gain.
+*
+* A bang-bang loop moves the control voltage by one quantum per update:
+*
+*     dV  =  I_pump * UI / C_filter
+*
+* sky130 measured 1.27 uA into 121 fF over a 1.665 ns UI, so 17 mV per update,
+* and that design was stable.  This deck measures the same two quantities here
+* instead of scaling them by hand, because the sky130 project's own most
+* expensive mistake was writing down a mechanism from the schematic and being
+* wrong about its magnitude by 80x.
+*
+* The pump's up and down currents are measured separately: their *difference*
+* is what integrates over runs of identical bits, and their *sum* sets the
+* update quantum.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+
+.include ../netlists/blocks.inc
+
+.global sub!
+Vsub sub! 0 0
+
+VDD Vdd 0 1.2
+VSS Vss 0 0
+
+* --- pump 1: up asserted, down off.  'out' held at the lock point so the
+*     measured current is the one the loop actually sees there.
+Vout1 o1 0 0.6
+Vup1  u1 0 1.2
+Vdn1  d1 0 0
+x1 Vdd Vdd Vss Vss o1 u1 d1 bn bp tiny_pll_charge_pump
+
+* --- pump 2: down asserted, up off.
+Vout2 o2 0 0.6
+Vup2  u2 0 0
+Vdn2  d2 0 1.2
+x2 Vdd Vdd Vss Vss o2 u2 d2 bn bp tiny_pll_charge_pump
+
+* --- pump 3: both off, to see the leakage the loop integrates when the
+*     detector is not asserting either phase.
+Vout3 o3 0 0.6
+Vup3  u3 0 0
+Vdn3  d3 0 0
+x3 Vdd Vdd Vss Vss o3 u3 d3 bn bp tiny_pll_charge_pump
+
+* One bias generator feeds all three, as it does on the chip.
+x9 Vss Vss Vdd Vdd bn Vdd Vss bp tiny_pll_bias_gen
+
+* --- the loop filter, on its own node, measured by charging it with a known
+*     current for a known time: C = I*t/dV.  A .tran rather than an .ac,
+*     because a MOS capacitor's value depends on the voltage across it and the
+*     answer that matters is the one at the lock point.
+Ifill f1 0 -10u
+x4 Vss Vss Vdd Vdd f1 tiny_pll_loop_filter
+
+.control
+op
+let i_up   = i(vout1)
+let i_down = i(vout2)
+let i_leak = i(vout3)
+let bias_n = v(bn)
+let bias_p = v(bp)
+print i_up i_down i_leak bias_n bias_p
+
+* Charge the loop filter from zero with 10 uA and see how long it takes to
+* cross two voltages either side of the lock point.
+tran 10p 40n uic
+meas tran t_lo WHEN v(f1)=0.50 RISE=1
+meas tran t_hi WHEN v(f1)=0.70 RISE=1
+let c_filt = 10e-6 * (t_hi - t_lo) / 0.2
+print c_filt t_lo t_hi
+quit
+.endc
+.end
