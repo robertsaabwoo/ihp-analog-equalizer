@@ -381,17 +381,79 @@ R to 15 kΩ took the total to **25.7 mV**, below the original.
 One pattern, one corner, one operating point. The sky130 project measured a
 great deal more than that.
 
+## 6. PRBS7, and what the charge-pump mismatch actually does
+
+`sim/results/e2e_prbs.log` — 3 µs transient, PRBS7 at 600.6 Mb/s, 200 mVpp
+through the same worst-case channel, tt / 27 °C / 1.2 V.
+
+| quantity | PRBS7 | 0101 | sky130 (PRBS7) |
+|---|---|---|---|
+| recovered clock | **600.581 MHz** | 600.614 MHz | — |
+| frequency error | **−0.0032 %** | +0.0023 % | — |
+| control voltage at lock | 0.59883 V | 0.59896 V | 0.799-0.802 V |
+| control-voltage ripple | **65.3 mV** | 25.7 mV | 93.8 mV |
+| ripple, PRBS7 / 0101 | **2.54×** | — | 2.78× |
+| peak excursion, 1.5-3.0 µs | 68.8 mV | — | — |
+| settled by | **< 1.5 µs** | — | ~3 µs |
+
+Settling is proved rather than assumed: three separated averaging windows —
+1.5-1.7, 2.1-2.3 and 2.7-2.9 µs — agree to **1.11 mV**, so any systematic
+drift is below 0.93 mV/µs across the measurement.
+
+The ripple ratio, 2.54× against sky130's 2.78×, is the expected result and for
+the expected reason: PRBS7 has a transition density of about 0.5 against 0101's
+1.0, so the detector updates half as often, the effective loop bandwidth
+halves, and the dither grows. The absolute figure is lower than the original's
+because the update quantum is (25.7/33.7 of it).
+
+### The mismatch: 11 %, and it does not matter
+
+The pump measures **0.895 µA up against 0.797 µA down — 11.0 % mismatch**,
+where the sky130 original had 1.6 %. That looked like the thing PRBS7 would
+expose, because mismatch is what integrates while the detector is blind.
+
+It does not, and the reason is a number worth measuring rather than assuming:
+**the both-switches-off leakage is 19.7 pA, not nanoamps.** During a run of
+identical bits an Alexander detector deasserts both phases, so the pump sits in
+that state, and over PRBS7's longest run — seven unit intervals — the control
+voltage moves
+
+    7 × 1.665 ns × 19.7 pA / 57.7 fF  =  4.0 µV
+
+against 65 mV of ordinary dither. The mismatch cannot accumulate during a run
+because the pump is not running during a run.
+
+What the mismatch does instead is bias the up/down duty cycle in lock, which a
+bang-bang loop absorbs as a static phase offset rather than a drift. Two
+measurements say it is absorbed: the three settling windows agree to 1.11 mV,
+and the PRBS7 lock point sits at 0.59883 V against 0101's 0.59896 V — **0.13 mV
+apart**, on patterns whose transition densities differ by a factor of two.
+
+The prediction written down before the run was that a detector holding one
+phase through a seven-UI run would move the control voltage 182 mV, and that
+mismatch alone would move it 10 mV. Neither happened, and the reason is that
+both hypotheses assumed the pump was doing *something* during a blind run. It
+is not. Predicting two outcomes and measuring a third is the useful case: it
+was the assumption common to both that was wrong.
+
+### One number that is not comparable
+
+`ctle_swing` and `cin_swing` read 462 mV and 195 mV on PRBS7 against 248 mV and
+63 mV on 0101, and that is not a fourfold improvement in anything. They are
+peak-to-peak over a 200 ns window, and PRBS7 contains runs long enough for the
+channel to settle to the full 200 mVpp input, which 0101 at 300 MHz never
+does. The 0101 numbers are the ones that describe the channel's high-frequency
+loss; these describe its low-frequency pass-through. Comparing them would be
+comparing two different measurements that happen to share a name.
+
 ## 5. Not measured
 
 Stated plainly, because the difference between "measured" and "expected" is the
 most valuable thing the sky130 project's logs carried:
 
-- **Any data pattern but 0101.** Every closed-loop number here is on
-  alternating data, the easiest input a bang-bang detector can be given. The
-  sky130 project found PRBS7 took 3× longer to settle and left 2.8× the dither,
-  and that the charge pump's up/down mismatch is what integrates over runs of
-  identical bits. That mismatch is **6.7 % here against 1.6 % there**, so PRBS
-  is the run most likely to find something.
+- **Any data pattern but 0101 and PRBS7.** PRBS15, 8b/10b and longer
+  consecutive-identical-digit runs are not run. PRBS7's longest run is seven
+  UI; the sky130 design was checked to 15.
 - **Acquisition from a cold start.** The lock runs seed the control voltage at
   0.62 V so the ring is running while the symmetry-breaking kick is still
   present. That deliberately bypasses the startup precharge cell, whose

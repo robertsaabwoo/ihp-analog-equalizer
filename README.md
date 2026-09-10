@@ -26,9 +26,9 @@ different process at 1.2 V.
 |---|---|
 | **Ported and verified** | All 22 cells translated to the SG13CMOS5L device set, netlist-compared against the sky130 source: 21 subcircuits, 121 instances, **every terminal on the same net**. |
 | **Re-designed and measured** | The CTLE, re-sized for 1.2 V and re-biased from a reference current, across 27 PVT corners. The ring oscillator, re-sized so it can reach the baud rate at all. |
-| **The loop locks** | On 0101 data at 600.6 Mb/s through the specified worst-case channel: **600.614 MHz recovered, +0.0023 % error**, 25.7 mV of control-voltage ripple, 1.30 V clock at the pin. Both headline numbers beat the sky130 original. |
+| **The loop locks** | On **0101 and on PRBS7** at 600.6 Mb/s through the specified worst-case channel: 600.614 MHz (+0.0023 %) and 600.581 MHz (−0.0032 %), with 25.7 mV and 65.3 mV of control-voltage ripple. Both beat the sky130 original's figures. |
 | **Known limitation** | The ring's tuning range covers **8 of 27 PVT corners**. Coarse tuning worth +15.2 %/−8.1 % would cover the box; it is specified but not built. The sky130 original hit the same wall and accepted it. |
-| **Not measured** | No eye, no jitter, no BER, no lock time, no PRBS. Every such number in the sky130 README is a sky130 number and none of them are reproduced here. |
+| **Not measured** | No eye diagram, no jitter figure, no BER, no PRBS15. Every such number in the sky130 README is a sky130 number and none of them are reproduced here. |
 | **Not started** | Layout. No DRC, no LVS against a layout, no GDS. |
 
 What exists here is a verified port, five re-designed blocks, and a receiver
@@ -86,6 +86,31 @@ The charge pump and loop filter behind those numbers, measured directly in
 `sim/decks/cp_current.spice`: 0.90 µA per phase, 436 fF of loop filter of
 which 58 fF is the bypass capacitor C2, a 15 kΩ series resistor, and therefore
 10.1 mV per bang-bang update.
+
+### PRBS7, and the charge-pump mismatch
+
+`sim/results/e2e_prbs.log` — 3 µs, PRBS7, same channel and corner.
+
+| quantity | PRBS7 | 0101 | sky130 (PRBS7) |
+|---|---|---|---|
+| recovered clock | **600.581 MHz** | 600.614 MHz | — |
+| frequency error | **−0.0032 %** | +0.0023 % | — |
+| control-voltage ripple | **65.3 mV** | 25.7 mV | 93.8 mV |
+| ripple, PRBS7 / 0101 | 2.54× | — | 2.78× |
+| settled by | **< 1.5 µs** | — | ~3 µs |
+
+Settling is proved, not assumed: three separated windows spanning 1.2 µs agree
+to **1.11 mV**.
+
+**The pump's up/down mismatch is 11.0 %** — 0.895 µA against 0.797 µA, where
+the original had 1.6 % — and it turns out not to matter. Mismatch is what
+integrates while the detector is blind, but the both-switches-off leakage is
+**19.7 pA, not nanoamps**, so over PRBS7's longest run of seven unit intervals
+the control voltage moves 4.0 µV against 65 mV of ordinary dither. The pump is
+not running during a run, so there is nothing to integrate. What the mismatch
+does instead is bias the duty cycle in lock, which a bang-bang loop absorbs as
+a static phase offset — the PRBS7 and 0101 lock points sit **0.13 mV apart**
+despite a 2:1 difference in transition density.
 
 ### CTLE, 27 PVT corners
 
