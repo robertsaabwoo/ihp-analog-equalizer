@@ -345,6 +345,41 @@ Measured through the whole chain afterwards, closed loop, 250–300 ns:
 | inside the output `inverter_chain` | 1.26 V |
 | the pin | **1.30 V** |
 
+### With the clock out, the loop still does not lock
+
+`sim/results/e2e_lock_tt.log`, the full 1.5 µs run on 0101 data at 600.6 Mb/s:
+
+| quantity | measured | what it should be |
+|---|---|---|
+| recovered clock at the pin | **1.31 V pk-pk** | a real clock — this is now right |
+| recovered-clock frequency | **616.33 MHz** | 600.60 MHz — **+2.6 % off** |
+| control voltage | 0.661 V | — |
+| control-voltage ripple | **0.98 mV pk-pk** | tens of mV (sky130: 33.7 mV on this pattern) |
+| control voltage, 1.0–1.1 µs vs 1.4–1.5 µs | 0.6573 → 0.6614 V | flat, if settled |
+| CTLE, in → out | 62.9 mV → 271 mV | as designed |
+| precharge release | 76 ns | as designed |
+
+The signal path is now intact end to end: the channel attenuates 200 mVpp to
+63 mV, the CTLE equalises it back to 271 mV, the ring oscillates, and a
+full-swing clock comes out of the pin. **What is not happening is locking.**
+The ring is free-running 2.6 % above the data rate, and the control voltage is
+drifting upward at about 10 mV/µs rather than dithering about a lock point.
+
+The 0.98 mV of ripple is the diagnostic. A bang-bang loop in lock corrects
+every UI, and each correction moves the control voltage by a quantum — sky130
+measured 17 mV per update and 33.7 mV pk-pk of resulting dither on exactly this
+pattern. One millivolt means **the charge pump is delivering almost nothing**,
+so the loop is open somewhere between the recovered clock and the loop filter:
+the Alexander phase detector, or the charge pump's own bias.
+
+The Alexander detector is the immediate suspect, and for the same reason as the
+last two failures. Its CML latches are biased from `vbias`, which is now the
+current-mirror node at about 0.43 V, where the sky130 design fed them 0.9 V.
+Every failure in this port so far has been the same shape — a stage whose
+operating point was set for 1.8 V and does not survive the supply drop — and
+this one fits the pattern. `sim/decks/pd_diag.spice` measures the detector's
+up/down outputs and the charge pump's bias to confirm or refute it.
+
 ### The structural point, which is worth more than the fix
 
 One cell is doing two incompatible jobs. As the ring's output stage it must
