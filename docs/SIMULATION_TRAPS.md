@@ -219,6 +219,30 @@ appears — no error, no warning. Copy the node through a unity-gain source
 first: `Eclkp clkp 0 clk+ 0 1`. This design has `vo+`, `rclk+`, `B+` and
 several others, so it comes up constantly.
 
+### 2.8b An element cannot reference a subcircuit-internal node
+
+`save`, `print` and `meas` accept hierarchical paths. **Element node fields do
+not.** This looks like a reasonable way to get a `+`-named internal node onto a
+probeable name:
+
+```spice
+Erclkp rclkp 0 x1.x2.rclk+ 0 1
+```
+
+and what ngspice actually does is create a *new top-level node* literally named
+`x1.x2.rclk+`, connected to nothing but that source. The operating point then
+fails with
+
+```
+Warning: singular matrix:  check node x1.x2.rclk+
+Error: Transient op failed, timestep too small
+```
+
+naming a node the circuit does not contain, in a deck where every other line is
+fine. There is no way to bridge a hierarchy boundary with an element; probe
+internal nodes whose names have no `+` or `-` in them, or label the node in the
+schematic so it becomes reachable.
+
 ### 2.9 A `.measure` on an edge index that does not exist fails silently
 
 A 3 µs run at 600 Mb/s looks like it contains 1802 UI, so `RISE=1800` seems
