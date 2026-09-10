@@ -380,8 +380,50 @@ operating point was set for 1.8 V and does not survive the supply drop — and
 this one fits the pattern. `sim/decks/pd_diag.spice` measures the detector's
 up/down outputs and the charge pump's bias to confirm or refute it.
 
+### The phase detector: the same failure, twice over
+
+Reading `d_latch` at 1.2 V before simulating it, there are two problems, and
+they are the same two that broke `diff_amp_inv`:
+
+**The tail is starved.** M2 is drawn at L = 0.13 µm with its gate on `vbias`.
+On sky130 that was 0.9 V against a 0.7 V threshold — 0.2 V of overdrive. Here
+`vbias` is the current-mirror node at about 0.43 V, against a threshold that is
+*higher* at 0.13 µm than at 0.3 µm in this process: `char/mos.spice` measures
+0.314 V at L = 0.30 µm and 0.241 V at L = 1.0 µm, so the roll-off runs the
+opposite way to the usual short-channel intuition. Overdrive is a few tens of
+millivolts and the tail barely conducts.
+
+**The CML swing cannot reach the output inverters.** Nodes n1/n2 sit at
+VDD − I·R and drive CMOS inverters that switch near 0.55 V, so the low
+excursion has to get below that: I·R > ~0.65 V. At the ported 2.24 kΩ that
+needs 290 µA per latch, and there are eight latches in the detector.
+
+The fix follows the same shape as the D2S one: make the tail a **long-channel
+replica of the mirror reference** — L = 1 µm, matching `MREF` — so that it both
+conducts at 0.43 V and mirrors in a predictable ratio, and raise the load
+resistance so the swing crosses the inverter threshold at a sane current.
+`sim/decks/dff_tune.spice` sweeps both against realistic drive: the clock at
+the ring's measured output levels (common mode 0.684 V, 0.75 V per leg) and the
+data at the CTLE's (common mode 0.70 V, 271 mV differential), with the pass
+criteria written into the deck rather than judged afterwards.
+
 ### The structural point, which is worth more than the fix
 
+Three of the four failures in this port are the same failure. A stage was
+biased for 1.8 V — a gate voltage, a tail length, a resistor value chosen so
+that the swing comfortably cleared some threshold — and at 1.2 V the margin it
+was relying on is simply not there. The CTLE tail sat in triode; the D2S stage
+could not drive a copy of itself; the CML latch tail barely conducts and its
+swing cannot reach a CMOS gate. None of them announce themselves: each one
+simulates cleanly and produces a plausible static answer.
+
+That is the general lesson of this port, and it is worth more than any of the
+individual fixes: **porting an analog design to a lower supply is not a
+translation, it is a re-establishment of every operating point.** The netlist
+comparison proves the circuit is the same circuit. It says nothing about
+whether any transistor in it is still in saturation.
+
+The D2S stage has a second, sharper problem on top of that one.
 One cell is doing two incompatible jobs. As the ring's output stage it must
 hand a *high* common mode to an identical stage; as the CDR's stage it must
 hand a *mid-rail crossing* to CMOS logic. At 1.8 V both fit one sizing

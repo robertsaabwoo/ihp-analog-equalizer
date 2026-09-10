@@ -133,6 +133,31 @@ ring that cannot reach the baud rate never locks at any control voltage.
 The fix is available because the devices are faster, and it is the one place
 this port is unambiguously ahead of the original.
 
+## 4.4 The general lesson, which arrived four times
+
+Every functional failure in this port has had the same shape. A stage was
+biased for 1.8 V — a gate voltage, a tail length, a resistor chosen so the
+swing comfortably cleared some threshold — and at 1.2 V the margin it relied on
+is not there:
+
+| stage | what was relied on at 1.8 V | what happened at 1.2 V |
+|---|---|---|
+| CTLE tail | 0.9 V of gate bias | sat in triode; the input pair set the current, not vbias |
+| CTLE bias | a bias *voltage* | 15 dB of gain spread across PVT, collapse at ff |
+| ring oscillator | 3 % of frequency margin | could not reach the baud rate at all |
+| `diff_amp_inv` | output common mode high enough for the next stage | could not drive a copy of itself |
+| `d_latch` tail and swing | 0.2 V of overdrive, swing clearing a CMOS threshold | tail barely conducts, swing cannot reach the gate |
+
+None of them announce themselves. Each simulates cleanly and returns a
+plausible static answer, which is why the diagnostic decks in `sim/decks/`
+measure a *chain* of nodes rather than an endpoint.
+
+So: **porting an analog design to a lower supply is not a translation, it is a
+re-establishment of every operating point.** The netlist comparison in
+`tools/check_port_equivalence.py` proves the circuit is the same circuit. It
+says nothing whatsoever about whether any transistor in it is still saturated,
+and that is the work.
+
 ## 5. What the port does not carry over
 
 - **The Tiny Tapeout wrapper**: `info.yaml`, `src/project.v`, the `tt` GDS

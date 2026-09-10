@@ -1,0 +1,75 @@
+* CML flip-flop sizing at 1.2 V: does the Alexander detector's latch actually
+* latch, and does its output reach logic levels?
+*
+* Driven the way it is driven in the receiver: the clock is the ring's
+* buffered output (common mode 0.684 V, 0.75 V per leg, measured in
+* sim/results/e2e_diag3.log) and the data is the CTLE output (common mode
+* 0.70 V, 271 mV differential, from sim/results/e2e_lock_tt.log).
+*
+* Pass criteria, both of which the ported sizing fails:
+*   cml_lo   the CML node's low excursion must get below about 0.55 V, or the
+*            CMOS inverter it drives never switches
+*   q_pp     the output must be close to rail-to-rail, or the charge pump
+*            downstream sees nothing
+*
+* A flip-flop transient at 600 MHz over 40 ns, so each point costs seconds.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+
+.include dff_p.inc
+
+.global sub!
+Vsub sub! 0 0
+
+.options method=gear reltol=1e-3 abstol=1e-12
+
+.param ui=1.665n
+.param clkcm=0.684 clkamp=0.75
+.param datcm=0.70  datamp=0.271
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+Vb  vbias 0 0.43
+
+* 600.6 MHz differential clock at the ring's output levels.
+Vck ckraw 0 PULSE(0 1 0 100p 100p '0.5*ui' 'ui')
+Eckp clkp 0 vol='clkcm + 0.5*clkamp*(v(ckraw)-0.5)'
+Eckm clkm 0 vol='clkcm - 0.5*clkamp*(v(ckraw)-0.5)'
+
+* 0101 data at half the clock rate, at the CTLE's output levels.
+Vdt dtraw 0 PULSE(0 1 0 100p 100p 'ui' '2*ui')
+Edp  vip 0 vol='datcm + 0.5*datamp*(v(dtraw)-0.5)'
+Edm  vim 0 vol='datcm - 0.5*datamp*(v(dtraw)-0.5)'
+
+x1 VDD VSS Q Qn vip clkp clkm vim vbias d_flip_flop_p
+
+.control
+foreach wt 8 16 24
+ foreach rl 2239 4000 6000
+  alterparam Wtail = $wt
+  alterparam Ltail = 1.0
+  alterparam Rload = $rl
+  reset
+  save v(Q) v(Qn) v(x1.x1.n1) v(x1.x1.n2) v(x1.x1.n4)
+  tran 5p 40n
+  let p_wt = $wt
+  let p_rl = $rl
+  * x1.x1 is the master latch; n1 is one CML output node, n4 its tail node.
+  meas tran cml_lo  MIN v(x1.x1.n1) FROM=20n TO=40n
+  meas tran cml_hi  MAX v(x1.x1.n1) FROM=20n TO=40n
+  meas tran tail_v  AVG v(x1.x1.n4) FROM=20n TO=40n
+  meas tran itot    AVG i(vdd)      FROM=20n TO=40n
+  meas tran q_pp    PP  v(Q)        FROM=20n TO=40n
+  meas tran qn_pp   PP  v(Qn)       FROM=20n TO=40n
+  print p_wt p_rl cml_lo cml_hi tail_v itot q_pp qn_pp
+ end
+end
+quit
+.endc
+.end
