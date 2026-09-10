@@ -109,8 +109,9 @@ whatever gate voltage that current needs at this corner. The Chipalooza harness
 gives every slot bandgap-referenced current sources, so this costs one pin and
 one transistor and no on-chip reference.
 
-Result: tail current holds within ±19 % across all 27 corners and within 2.5 %
-across ±10 % of supply, and the Nyquist gain spread falls from 15 dB to 6 dB.
+Result: tail current holds within ±25 % across all 27 corners and within 1.4 %
+across ±10 % of supply, and the Nyquist gain spread falls from 15.5 dB to
+5.8 dB.
 
 ### 4.2 The CTLE is re-sized around what 1.2 V can afford
 
@@ -118,8 +119,9 @@ See `docs/DESIGN.md`. The short version is that the gain of the stage is
 
     gm · Rload  =  (gm/Id) · (Id · Rload)  =  (gm/Id) · ΔVload
 
-and ΔVload is what the supply buys. The final sizing gives +13.17 dB at Nyquist
-nominally, against the sky130 original's +13.32 dB.
+and ΔVload is what the supply buys. The final sizing gives **+12.79 dB** at
+Nyquist nominally, against the sky130 original's +13.32 dB — half a dB behind,
+after both the load resistance and the reference current were trimmed for it.
 
 ### 4.3 The ring oscillator is re-sized, because the ported one cannot lock
 
@@ -130,8 +132,16 @@ Ported unchanged to 1.2 V it reaches 424–554 MHz, which is not a limitation bu
 a non-starter: a bang-bang phase detector has no frequency acquisition, so a
 ring that cannot reach the baud rate never locks at any control voltage.
 
-The fix is available because the devices are faster, and it is the one place
-this port is unambiguously ahead of the original.
+The fix is available because the devices are faster: shortening the input pair
+from 1.0 µm to 0.9 µm moves the range to 538–630 MHz and puts the baud rate at
+vctrl = 0.60 V.
+
+That is enough at nominal and not enough over PVT. The full corner sweep gives
+**8 of 24 corners** reaching the baud rate, against the sky130 original's 6 of
+11 — the same wall, measured more completely. The failures point in opposite
+directions (too slow at ss/125 °C, unable to go slow enough at ff/−40 °C), so
+re-centring cannot fix both, and the fix is coarse tuning worth about
++16 %/−5 % in two or three steps. See `docs/DESIGN.md`.
 
 ## 4.4 The general lesson, which arrived four times
 
