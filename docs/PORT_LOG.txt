@@ -28,12 +28,12 @@ d_latch.sch:
   d_latch.R1: res_high_po_0p69.sym -> rhigh w=1.000000e-06 l=1.467247e-06  (2239 ohm)
 diff_amp_inv.sch:
   diff_amp_inv.M2: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.13u ng=1
-  diff_amp_inv.M3: nfet_01v8.sym -> sg13_lv_nmos w=2u l=1u ng=1
+  diff_amp_inv.M3: nfet_01v8.sym -> sg13_lv_nmos w=1u l=1u ng=1
   diff_amp_inv.M6: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.13u ng=1
   diff_amp_inv.R3: res_high_po.sym -> rhigh w=1.000000e-06 l=4.401882e-06  (6396 ohm)
   diff_amp_inv.R4: res_high_po.sym -> rhigh w=1.000000e-06 l=4.401882e-06  (6396 ohm)
   diff_amp_inv.M1: nfet_01v8.sym -> sg13_lv_nmos w=6u l=0.5u ng=1
-  diff_amp_inv.M4: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.13u ng=4
+  diff_amp_inv.M4: nfet_01v8.sym -> sg13_lv_nmos w=2u l=1u ng=1
   diff_amp_inv.M5: nfet_01v8.sym -> sg13_lv_nmos w=6u l=0.5u ng=1
   diff_amp_inv.R1: res_high_po.sym -> rhigh w=1.000000e-06 l=3.837529e-06  (5596 ohm)
   diff_amp_inv.R2: res_high_po.sym -> rhigh w=1.000000e-06 l=3.837529e-06  (5596 ohm)

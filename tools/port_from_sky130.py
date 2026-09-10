@@ -92,19 +92,21 @@ SIZING: dict[tuple[str, str], dict] = {
     #
     # and dVload -- the DC drop across the load resistor -- is what the supply
     # buys you.  sky130 spent up to 0.65 V of its 1.8 V on it.  On 1.2 V there
-    # is about 0.54 V available before the input pair's drain falls below its
+    # is about 0.45 V available before the input pair's drain falls below its
     # gate by a threshold and the pair enters triode, at which point the gain
-    # does not degrade gracefully, it collapses.  That single constraint sets
-    # the Nyquist gain at 11.9 dB against sky130's 13.3 dB, and no combination
-    # of Win, Lin, Rload or current recovers it: current was swept from 65 uA
-    # to 620 uA and the Nyquist gain moved by 2 dB across the whole range.
+    # does not degrade gracefully, it collapses.  Current is not the lever:
+    # swept from 65 uA to 620 uA it moved the Nyquist gain by 2 dB.  The load
+    # resistance is, and only together with a current bias -- 2.5k to 3.5k took
+    # it from 11.9 dB to 13.2 dB.  The final figure is 12.79 dB against
+    # sky130's 13.32 dB (see the fingering note below for the last half dB).
     #
-    # What did change materially is the tail.  At the sky130 sizes the tail
+    # What also changed materially is the tail.  At the sky130 sizes the tail
     # device sat in triode at every bias -- drain at 30-135 mV -- so it was a
     # resistor, not a current source, and the bias current was set by the input
-    # pair rather than by vbias.  Halving its width and doubling its length,
-    # and raising the input common mode to 0.85 V, puts 207 mV across it and
-    # makes it a current source again.
+    # pair rather than by vbias.  Halving its width and doubling its length
+    # makes it a current source again; the input common mode that goes with
+    # this sizing is 0.70 V, and raising it further only pushes the pair into
+    # triode from the other side.
     # Fingered so that w/ng stays inside the PSP model's validated width range,
     # 0.15-10 um -- W in that header is per finger, because the device
     # subcircuit computes its diffusion areas from w/ng.  ngspice evaluates a
@@ -152,6 +154,52 @@ SIZING: dict[tuple[str, str], dict] = {
     # which puts the baud rate below the point where the ring starts at all.
     ("ring_inverter", "M1"): {"W": 3, "L": 0.9},
     ("ring_inverter", "M4"): {"W": 3, "L": 0.9},
+
+    # ------------------------------ differential-to-single-ended converter
+    # diff_amp_inv is instantiated twice: once as the ring oscillator's own
+    # output stage, and once in the CDR to turn that differential output into
+    # a single-ended clock.  Its bias pin is tied to VDD in both places, which
+    # on 1.8 V was crude and survivable.
+    #
+    # On 1.2 V it breaks the second instance, and the reason is that the cell
+    # cannot be cascaded with itself.  Measured in the closed loop
+    # (sim/results/e2e_diag3.log):
+    #
+    #   ring's buffered output   common mode 0.336 V, 0.967 V pk-pk per leg
+    #   the next stage's tail    0.111 V
+    #   -> input pair Vgs = 0.336 - 0.111 = 0.225 V, below threshold
+    #
+    # So the stage that must convert 1.93 V of differential swing into a clock
+    # has its input pair switched off for most of the cycle, and its output
+    # sits static.  Everything downstream -- inverter_buffer, the output
+    # inverter chain, the pin -- is then a static level: 67 nV at the pin
+    # while the ring is happily oscillating at 1.84 V pk-pk behind it.
+    #
+    # The cell's own output common mode is what has to move.  It is set by the
+    # drop across its load resistors, so shrinking both tails raises it.  From
+    # sim/decks/d2s_size.spice, at an 0.85 V input common mode:
+    #
+    #   Wt1=2, Wt2=8/L=0.13   (as ported)  swings 0.07 - 1.13, CM 0.34 V
+    #   Wt1=1, Wt2=1/L=1.0                 swings 0.57 - 1.20, CM 0.885 V
+    #   Wt1=1, Wt2=2/L=1.0                 swings 0.35 - 1.17, CM 0.758 V
+    #
+    # There are two conditions to satisfy at once, and the first attempt met
+    # only one of them.  The cell's output has to sit high enough to keep the
+    # *next* copy of the same cell conducting -- that is the cascade condition,
+    # and it is what the ported sizing failed.  But it also has to cross the
+    # switching threshold of the CMOS inverter it eventually drives, roughly
+    # 0.55 V at this supply.  Wt1=1/Wt2=1 fixed the first and broke the second:
+    # the output common mode went to 0.88 V and its low excursion only reached
+    # 0.57 V, so the inverter downstream moved 151 mV and never switched --
+    # the same static output as before, now stuck at the other rail.
+    #
+    # Wt1=1/Wt2=2 meets both: 0.35 - 1.17 V crosses 0.55 V with margin at each
+    # end, and 0.758 V of common mode still leaves the next input pair alive.
+    #
+    # One change fixes both instances, and it helps the first one too: with
+    # less tail current its own input pair sees more Vgs, not less.
+    ("diff_amp_inv", "M3"): {"W": 1, "L": 1.0},            # first-stage tail
+    ("diff_amp_inv", "M4"): {"W": 2, "L": 1.0, "nf": 1},   # second-stage tail
 }
 
 # Devices whose L is at the sky130 minimum get the IHP minimum instead.

@@ -120,7 +120,7 @@ C {devices/ipin.sym} -690 70 0 0 {name=p17 lab=vin-
 }
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} -570 190 0 0 {name=M3
 l=1u
-w=2u
+w=1u
 ng=1
 m=1
 mm_ok=1
@@ -175,9 +175,9 @@ model=sg13_lv_nmos
 spiceprefix=X}
 C {devices/lab_wire.sym} -30 200 0 0 {name=p7 sig_type=std_logic lab=VSS}
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} -30 150 0 0 {name=M4
-l=0.13u
-w=8u
-ng=4
+l=1u
+w=2u
+ng=1
 m=1
 mm_ok=1
 model=sg13_lv_nmos
