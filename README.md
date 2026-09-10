@@ -26,11 +26,13 @@ different process at 1.2 V.
 |---|---|
 | **Ported and verified** | All 22 cells translated to the SG13CMOS5L device set, netlist-compared against the sky130 source: 21 subcircuits, 121 instances, **every terminal on the same net**. |
 | **Re-designed and measured** | The CTLE, re-sized for 1.2 V and re-biased from a reference current, across 27 PVT corners. The ring oscillator, re-sized so it can reach the baud rate at all. |
-| **Not measured** | **The loop has not been closed in simulation on this process.** No lock, no eye, no jitter, no BER. Every such number in the sky130 README is a sky130 number and none of them are reproduced here. |
+| **Simulated, and broken** | The closed loop **does not lock.** The ring oscillator runs correctly inside it — 1.84 V pk-pk, sustained — but the recovered clock is lost at the differential-to-single-ended stage and never reaches the pin. Localised, root cause not yet found: [docs/DESIGN.md §5](docs/DESIGN.md). |
+| **Not measured** | No eye, no jitter, no BER, no lock time. Every such number in the sky130 README is a sky130 number and none of them are reproduced here. |
 | **Not started** | Layout. No DRC, no LVS against a layout, no GDS. |
 
-That third row is the important one. What exists here is a verified port and
-two re-designed blocks, not a characterised receiver.
+The third row is the important one. What exists here is a verified port, two
+re-designed blocks, and a working oscillator inside a loop that does not yet
+close — not a characterised receiver.
 
 ## What the process forced
 
@@ -244,13 +246,15 @@ covers the things that fail *silently*:
 
 ## What comes next, in order
 
-1. **Close the loop.** The CDR has not been simulated on this process. Until it
-   locks, the ring-oscillator centring above is a necessary condition and not a
-   demonstrated one.
-2. **VCO tuning range over PVT.** Measured at tt/27 °C only. The 1.3:1 range is
-   narrow against a corner spread that will be wider, and this is the number
-   most likely to force a design change — a switchable load-resistor leg, or
-   diode-connected loads in place of the poly resistors, would widen it.
+1. **Get the recovered clock out of the CDR.** The ring runs; the clock is lost
+   in the `diff_amp_inv` differential-to-single-ended stage, whose bias pin is
+   tied to VDD. The odd part, and the lead worth following, is that an
+   *identical* instance of that cell one level up — inside `ring_oscillator` —
+   is the one producing the healthy 1.93 V differential. The two differ only in
+   their load. See [docs/DESIGN.md §5](docs/DESIGN.md).
+2. **Coarse frequency tuning for the ring**, to the spec the corner sweep gives:
+   +16 %/−5 % in two or three steps. Without it the block works at 8 corners
+   out of 24.
 3. **End-to-end eye and jitter**, which is where the sky130 project found the
    result worth reading: sampling-phase error of 0.120 UI RMS against ±0.175 UI
    of worst-corner margin.

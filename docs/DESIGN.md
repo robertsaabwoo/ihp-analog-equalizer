@@ -20,8 +20,9 @@ rather than estimating it.
 | CTLE sizing search | what is the best achievable Nyquist gain? | `sim/decks/ctle_tune*.spice` | minutes |
 | CTLE PVT | does it hold across 27 corners? | `sim/decks/ctle_ac.spice` via `sim/run_ctle_ac.sh` | ~10 min |
 | VCO tuning range | can the ring reach the baud rate? | `sim/decks/vco_range.spice` | ~10 min |
-| CDR acquisition | does the loop lock? | not yet run | 7-20 min |
-| end-to-end eye and jitter | is there an eye at the sampling instant? | not yet run | 20-25 min |
+| CDR closed loop | does the ring run, and does the clock reach the pin? | `sim/decks/e2e_lock.spice`, `e2e_diag*.spice` | 5-30 min |
+| CDR acquisition | does the loop *lock*? | blocked -- see §5 | 7-20 min |
+| end-to-end eye and jitter | is there an eye at the sampling instant? | blocked -- see §5 | 20-25 min |
 
 The last two rows are the honest state of this repository. See §6.
 
@@ -246,14 +247,66 @@ Coarse tuning. Two candidates, neither built:
   the ≈1.24 a five-stage ring needs. The load has to be *weaker* — a longer
   channel — and that sweep has not been run.
 
+## 5. The CDR: the ring runs, the clock does not reach the pin
+
+The first closed-loop run reported a recovered clock of 55 nanovolts at the
+output pin while the CTLE equalised correctly and the control voltage settled.
+`sim/decks/e2e_diag*.spice` walks the chain to find out where it is lost, over
+300 ns rather than 1500 ns so each attempt costs four minutes instead of thirty.
+
+`sim/results/e2e_diag2.log`, differential where the signal is differential:
+
+| probe | node | pk-pk |
+|---|---|---|
+| ring, stage 1 output | `x1.x2.x1.net1/net2` | **1.84 V** |
+| ring's buffered output | `x1.x2.net4/net5` | **1.93 V** |
+| inside `inverter_buffer` | `x1.x2.x11.net1` | 11.8 mV, sitting at 1.1999 V |
+| inside the output `inverter_chain` | `x1.x3.net1` | 18 µV |
+| the pin | `clkoutp` | 67 nV |
+
+So **the ring oscillates, and it oscillates properly**: 1.84 V pk-pk, sustained
+across three separated windows (5-25 ns, 150-200 ns, 250-300 ns), with the
+startup precharge released and the control voltage at 0.614 V. The oscillator,
+the loop filter, the precharge cell and the CTLE all work.
+
+The clock dies at the **differential-to-single-ended stage in the CDR** — the
+second `diff_amp_inv`, whose bias pin is tied to VDD. `inverter_buffer`'s first
+inverter output sits at 1.1999 V, i.e. hard at the rail, which means its input
+`clkraw+` is stuck below the inverter's switching threshold. A 1.93 V pk-pk
+differential goes in and a static level comes out.
+
+Two things about this are worth recording rather than tidying away.
+
+**The first hypothesis was wrong.** Working the stage out on paper said its
+first-stage load resistors would drop 0.9 V at 1.2 V and strand the second
+stage's input pair below ground. Measured — `sim/decks/d2s_size.spice` — the
+stage delivers a healthy 1.05 V differential output at a 0.85 V input common
+mode. The arithmetic identified the right stage for the wrong reason, which is
+the sort of thing that only shows up if you measure the block you suspect
+instead of only the system.
+
+**`clkraw+` cannot be measured directly.** Its name contains a `+`, which
+ngspice's expression parser treats as an operator, so `v(x1.x2.clkraw+)` yields
+nothing at all — no error. The probes above sit on the internal nodes either
+side of it. The first attempt to work around that with a unity-gain source
+referencing the hierarchical node failed differently and worse; see
+`docs/SIMULATION_TRAPS.md` 2.8b.
+
+**Not yet found:** why an identical `diff_amp_inv` works one level up. The same
+cell, with the same VDD-tied bias, is the output stage *inside*
+`ring_oscillator`, and it is the one producing the healthy 1.93 V differential.
+The difference between the two instances is their load — the ring's copy drives
+a small input pair, the CDR's copy drives a large inverter gate on one output
+and nothing on the other — and that asymmetry is the next thing to look at.
+
 ## 5. Not measured
 
 Stated plainly, because the difference between "measured" and "expected" is the
 most valuable thing the sky130 project's logs carried:
 
-- **CDR acquisition.** The loop has not been closed in simulation on this
-  process. The testbench pattern from the original is portable and the harness
-  is in place; the run has not been done.
+- **CDR acquisition.** The loop has been simulated and does **not** lock,
+  because the recovered clock never reaches the phase detector's output stage —
+  see §5. The ring itself is verified oscillating inside the closed loop.
 - **End-to-end eye and jitter.** No eye height, no eye width, no jitter number
   on IHP. Every jitter figure in the sky130 README is a sky130 measurement and
   none of them are reproduced here.
