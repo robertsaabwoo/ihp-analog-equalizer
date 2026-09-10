@@ -269,6 +269,37 @@ SIZING: dict[tuple[str, str], dict] = {
     # what happened first time: the sweep ran four resistor values and
     # reported the same current four times.
     ("tiny_pll_bias_gen_res", "R[2..0]"): {"R": 24000},
+
+    # ------------------------------------------------------- loop filter
+    # The filter is vctl --[R 30k]-- cap_plus --[C1]-- gnd, with C2 straight
+    # from vctl to ground.  The charge pump drives vctl, so on the timescale
+    # of a single bang-bang update C1 is hidden behind the series resistor and
+    # only C2 absorbs the charge:
+    #
+    #     ripple = I * UI / C2
+    #
+    # Both capacitors are MOS caps, so their ratio is the ratio of their gate
+    # areas: cap1 is 4 x 0.6 um x 6 = 14.4 um2 and cap2 is 1.1 x 2 = 2.2 um2,
+    # which splits the 147.5 fF measured across the whole filter into 128 fF
+    # and 19.5 fF.  That predicts 76.7 mV of ripple against 77.9 mV measured
+    # -- 1.5 % -- so the mechanism is settled, and it is C2 that sets it.
+    #
+    # This matters because it is *not* what the earlier reading suggested. The
+    # ripple came out at about 7.7 update quanta at all three pump settings,
+    # which looks exactly like a limit cycle whose amplitude is set by loop
+    # latency.  It is not: 7.7 is just UI/C2 divided by UI/C_total, and the
+    # remedy a latency story would have pointed at -- damping, or shortening
+    # the path around the loop -- would have been a great deal of work for
+    # nothing.
+    #
+    # So both capacitors scale by three, keeping their ratio so the loop's
+    # damping is unchanged: C2 goes to 58 fF and the ripple should fall to
+    # about 26 mV, below the sky130 original's 33.7 mV.  The cost is 43 um2 of
+    # extra MOS capacitor, which is nothing next to the 1243 um2 the CTLE's
+    # degeneration capacitor already occupies.
+    ("tiny_pll_loop_filter_res", "R"): {"R": 15000},
+    ("tiny_pll_loop_filter_cap1", "MCAP"): {"m": 18},
+    ("tiny_pll_loop_filter_cap2", "MCAP"): {"m": 3},
     #
     # Why 12 kohm, and why not simply copy sky130's update quantum.  What a
     # bang-bang loop cares about is the *phase* step per update:
@@ -291,11 +322,9 @@ SIZING: dict[tuple[str, str], dict] = {
     # ripple and costs frequency accuracy and acquisition time, because the
     # loop is then correcting more slowly than the run is long.
     #
-    # The ripple is about 7.7 update quanta at every setting -- 177/20.5,
-    # 78/10.1, 57/7.0 -- so it is a limit cycle whose amplitude is set by loop
-    # delay, not by the quantum.  sky130's was 1.9 quanta.  Closing that gap
-    # means damping (the loop-filter zero) or less latency around the loop,
-    # and it is the obvious next thing to work on.
+    # The remaining ripple is not a loop-delay limit cycle, which is what the
+    # constant 7.7-quanta ratio first suggested.  It is simpler than that, and
+    # the loop filter says so: see the cap1/cap2 entries below.
 }
 
 # Devices whose L is at the sky130 minimum get the IHP minimum instead.

@@ -17,7 +17,7 @@ C {devices/iopin.sym} 0 -220 2 0 {name=p7 lab=VPWR}
 C {devices/iopin.sym} 0 -200 2 0 {name=p8 lab=VPB}
 C {sg13cmos5l_pr/rhigh.sym} 0 30 0 0 {name=R
 w=1.000000e-06
-l=2.106353e-05
+l=1.047529e-05
 model=rhigh
 body=sub!
 spiceprefix=X

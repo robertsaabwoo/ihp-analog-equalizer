@@ -108,6 +108,19 @@ The available capacitors are `cap_cmomi` (1.00 fF/µm²), `cap_cmomf`
 `moscap_p` — all measured in `char/caps.spice`. Nor are there HBTs, inductors,
 deep n-well or Schottky diodes.
 
+### 1.6b A sizing key that matches nothing is silently ignored
+
+Not an ngspice trap, a project one, and it wasted a sweep. `tools/port_from_sky130.py`
+keys its `SIZING` table on `(cell, instance)`. xschem lets one symbol expand to
+several devices as a *vector*, and its instance name is then literally
+`R[2..0]` — not `R0`, `R1`, `R2`. Keying on the latter matches nothing, the
+port applies no override, and the sweep that follows reports **the same result
+for every value it thinks it is sweeping**.
+
+Four resistor values, four identical currents, and no error anywhere. Check the
+port log — it echoes the instance name it actually matched — before trusting a
+sweep that comes back flat.
+
 ### 1.7 `PDK` inherited from a sky130 shell breaks netlisting without saying so
 
 If your shell exports `PDK=sky130A` — which it does if you have been doing
@@ -257,6 +270,20 @@ Run a 6 µs transient against a 3 µs pattern file and the back half of the
 simulation is flat DC: the CDR goes blind, the loop wanders, and the run
 produces a "jitter" number that is really a measurement of the data source
 running out.
+
+### 2.10b A short measurement window reports the dither, not the frequency
+
+The first locked run measured 602.0 MHz on 600.6 Mb/s data — a 0.23 % error
+that looked like a real frequency offset and would have sent the next hour
+into the loop dynamics. It was the measurement. 60 cycles cannot average out
+177 mV of control-voltage dither on a 310 MHz/V oscillator; the window reports
+a *sample* of the instantaneous frequency, not its mean.
+
+The same deck over 350 cycles, entirely inside the settled region, gave
+600.42 MHz — a −0.03 % error. The loop had been locked the whole time.
+
+Rule: make the frequency baseline long compared with the loop's own dither
+period, and quote that one.
 
 ### 2.11 Measuring a loop before it has settled measures the settling
 

@@ -137,11 +137,11 @@ from 1.0 µm to 0.9 µm moves the range to 538–630 MHz and puts the baud rate 
 vctrl = 0.60 V.
 
 That is enough at nominal and not enough over PVT. The full corner sweep gives
-**8 of 24 corners** reaching the baud rate, against the sky130 original's 6 of
-11 — the same wall, measured more completely. The failures point in opposite
-directions (too slow at ss/125 °C, unable to go slow enough at ff/−40 °C), so
-re-centring cannot fix both, and the fix is coarse tuning worth about
-+16 %/−5 % in two or three steps. See `docs/DESIGN.md`.
+**8 of 27 corners** reaching the baud rate, against the sky130 original's 6 of
+11 — the same wall, measured completely. The failures point in opposite
+directions (too slow at ss/125 °C, unable to go slow enough at ff), so
+re-centring cannot fix both, and the fix is coarse tuning spanning +15.2 % to
+−8.1 %: 1.25:1, two digital bits. See `docs/DESIGN.md`.
 
 ## 4.4 The general lesson, which arrived four times
 
@@ -157,6 +157,7 @@ is not there:
 | ring oscillator | 3 % of frequency margin | could not reach the baud rate at all |
 | `diff_amp_inv` | output common mode high enough for the next stage | could not drive a copy of itself |
 | `d_latch` tail and swing | 0.2 V of overdrive, swing clearing a CMOS threshold | tail barely conducts, swing cannot reach the gate |
+| charge pump | 17.5 mV per bang-bang update | 85 mV — the loop slams rail to rail |
 
 None of them announce themselves. Each simulates cleanly and returns a
 plausible static answer, which is why the diagnostic decks in `sim/decks/`
@@ -167,6 +168,15 @@ re-establishment of every operating point.** The netlist comparison in
 `tools/check_port_equivalence.py` proves the circuit is the same circuit. It
 says nothing whatsoever about whether any transistor in it is still saturated,
 and that is the work.
+
+### 4.5 The result
+
+Five of those had to be fixed before the loop would close, and it does:
+**600.614 MHz recovered on 600.60 Mb/s data, +0.0023 % error, 25.7 mV of
+control-voltage ripple** — both better than the 1.8 V original's +0.006 % and
+33.7 mV, on the same pattern through the same channel. `docs/DESIGN.md §5`
+tells the story in the order it was found, because each fix only became visible
+once the one before it was done.
 
 ## 5. What the port does not carry over
 

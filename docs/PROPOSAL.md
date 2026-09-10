@@ -106,9 +106,11 @@ Values marked **measured** cite a run in this repository. Values marked
 | CTLE boost (Nyquist − DC) | +5.1 dB | +6.7 dB | +7.8 dB | **measured**, 27 corners |
 | Channel + CTLE at Nyquist | −4.5 dB | **−1.0 dB** | +1.3 dB | **measured**, 27 corners |
 | Ring VCO range, tt/27 °C/1.2 V | 538 MHz | — | 630 MHz | **measured** |
-| Corners where the ring reaches the baud rate | — | — | — | **8 of 24 measured** — see §7 |
+| Corners where the ring reaches the baud rate | — | — | — | **8 of 27 measured** — see §7 |
 | CTLE supply current | 247 µA | 336 µA | 409 µA | **measured**, 27 corners |
 | Total block current | — | — | — | *not measured* |
+| Recovered clock, tt/27 °C/1.2 V | — | **600.614 MHz** | — | **measured**, +0.0023 % of the data rate |
+| Control-voltage ripple at lock | — | **25.7 mV pk-pk** | — | **measured**, 0101 pattern |
 | Recovered-clock RMS jitter | — | 0.7 % UI *target* | 2 % UI *target* | *not measured on this process* |
 | Lock / acquisition time | — | — | 2 µs *target* | *not measured on this process* |
 | CID tolerance | 15 UI *target* | — | — | *not measured on this process* |
@@ -187,10 +189,14 @@ place of the poly resistors, whose small-signal resistance follows the tail
 current and so widens the range without a control pin. Neither has been
 simulated.
 
-**The loop has not been closed in simulation on this process.** Everything
-above is block-level. Acquisition, eye and jitter on SG13CMOS5L are not yet
-measured, and the repository says so in every place a number would otherwise
-appear.
+**The loop locks, on one pattern at one corner.** 600.614 MHz on 600.60 Mb/s
+0101 data through the specified worst-case channel, +0.0023 % error, 25.7 mV of
+control-voltage ripple — both better than the 1.8 V prototype. What has *not*
+been done is PRBS, any corner but tt/27 °C/1.2 V, acquisition from a cold start
+(the lock runs seed the control voltage, bypassing the startup precharge), and
+any eye or jitter measurement at all. The charge pump's up/down mismatch is
+6.7 % against the prototype's 1.6 %, and mismatch is what integrates over runs
+of identical bits, so PRBS is the run most likely to find something.
 
 **Single-rate by design.** The frequency plan — ring centre, loop filter,
 precharge release timing — is chosen for one baud rate. Supporting others means

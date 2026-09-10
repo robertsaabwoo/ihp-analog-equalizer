@@ -26,14 +26,14 @@ different process at 1.2 V.
 |---|---|
 | **Ported and verified** | All 22 cells translated to the SG13CMOS5L device set, netlist-compared against the sky130 source: 21 subcircuits, 121 instances, **every terminal on the same net**. |
 | **Re-designed and measured** | The CTLE, re-sized for 1.2 V and re-biased from a reference current, across 27 PVT corners. The ring oscillator, re-sized so it can reach the baud rate at all. |
-| **Works end to end** | 200 mVpp in → channel attenuates to 63 mV → CTLE equalises to 271 mV → ring oscillates → **a 1.31 V full-swing recovered clock comes out of the pin.** |
-| **Simulated, and not working** | The loop **does not lock.** The recovered clock free-runs at 616.3 MHz against 600.6 Mb/s data, and the control voltage shows 0.98 mV of ripple where a locked bang-bang loop shows tens of millivolts. The loop is open between the recovered clock and the loop filter. [docs/DESIGN.md §5](docs/DESIGN.md). |
-| **Not measured** | No eye, no jitter, no BER, no lock time. Every such number in the sky130 README is a sky130 number and none of them are reproduced here. |
+| **The loop locks** | On 0101 data at 600.6 Mb/s through the specified worst-case channel: **600.614 MHz recovered, +0.0023 % error**, 25.7 mV of control-voltage ripple, 1.30 V clock at the pin. Both headline numbers beat the sky130 original. |
+| **Known limitation** | The ring's tuning range covers **8 of 27 PVT corners**. Coarse tuning worth +15.2 %/−8.1 % would cover the box; it is specified but not built. The sky130 original hit the same wall and accepted it. |
+| **Not measured** | No eye, no jitter, no BER, no lock time, no PRBS. Every such number in the sky130 README is a sky130 number and none of them are reproduced here. |
 | **Not started** | Layout. No DRC, no LVS against a layout, no GDS. |
 
-The middle rows are the important ones. What exists here is a verified port,
-three re-designed blocks and a complete signal path that produces a recovered
-clock — inside a loop that does not yet close. Not a characterised receiver.
+What exists here is a verified port, five re-designed blocks, and a receiver
+that locks. What does not exist is a *characterised* receiver: no eye diagram,
+no jitter figure, no BER, and only one data pattern.
 
 ## What the process forced
 
@@ -46,7 +46,7 @@ equalizer. sky130 built it from a MIM at 2.0 fF/µm²; the densest *linear*
 option here is `cap_cmomf` at 1.29 fF/µm² (measured — `char/RESULTS.md`). The
 MOS capacitors are six times denser and unusable: a capacitor whose value moves
 with the voltage across it is exactly what a degeneration network must not
-have. So the 1.6 pF capacitor is a 35 µm square and **68 % of the design's
+have. So the 1.6 pF capacitor is a 35 µm square and **58 % of the design's
 drawn device area**.
 
 **The supply.** 1.2 V instead of 1.8 V. The gain of a resistively loaded
@@ -60,6 +60,32 @@ about 0.45 V.
 
 Every number below comes from a log in `sim/results/`, produced by a deck in
 `sim/decks/`. Numbers that were *not* measured say so.
+
+### The loop, locked
+
+`sim/results/e2e_lock_tt.log` — 1.5 µs transient, 0101 data at 600.6 Mb/s,
+200 mVpp differential through 500 Ω / 5 pF, tt / 27 °C / 1.2 V.
+
+| quantity | this design | sky130 original |
+|---|---|---|
+| recovered clock frequency | **600.614 MHz** | 600.64 MHz |
+| frequency error vs the data rate | **+0.0023 %** | +0.006 % |
+| control-voltage ripple | **25.7 mV pk-pk** | 33.7 mV pk-pk |
+| control voltage at lock | 0.599 V | 0.792 V |
+| settled? (1.0-1.1 µs vs 1.4-1.5 µs) | 0.5992 V / 0.5990 V | — |
+| recovered clock at the pin | 1.30 V pk-pk | — |
+| signal at the CTLE input → output | 63 mV → 248 mV | 63.7 mV → 299 mV |
+| startup precharge release | 76 ns | 126 ns |
+
+Frequency accuracy and ripple are both better than the 1.8 V original, on the
+same pattern through the same channel. That is not a general claim of
+superiority — it is one operating point, one pattern, one corner, and the
+sky130 project measured a great deal more than this repository has.
+
+The charge pump and loop filter behind those numbers, measured directly in
+`sim/decks/cp_current.spice`: 0.90 µA per phase, 436 fF of loop filter of
+which 58 fF is the bypass capacitor C2, a 15 kΩ series resistor, and therefore
+10.1 mV per bang-bang update.
 
 ### CTLE, 27 PVT corners
 
@@ -127,36 +153,29 @@ instead of above the top of it.
 
 **That is enough at nominal and it is not enough over PVT.** The full corner
 sweep (`sim/results/vco_pvtf_{tt,ss,ff}.log`, 3 process x 3 temperature x
-3 supply, usable points only) says so plainly: **8 of 24 corners can reach
-600.6 Mb/s.**
+3 supply, usable points only — differential swing above 300 mV) says so
+plainly: **8 of 27 corners can reach 600.6 Mb/s.**
 
 | corner | usable range | 600.6 MHz |
 |---|---|---|
-| tt / −40 °C / 1.20 V | 513 – 650 MHz | reachable |
-| tt / +27 °C / 1.08 V | 531 – **602** MHz | reachable, 0.3 % margin |
-| tt / +125 °C / 1.20 V | 557 – 595 MHz | **too slow** |
-| ss / +125 °C / 1.08 V | 481 – **521** MHz | **too slow by 15 %** |
-| ff / −40 °C / 1.32 V | **626** – 765 MHz | **cannot go slow enough** |
-| ff / +27 °C / 1.08 V | 619 – 673 MHz | **cannot go slow enough** |
+| tt / −40 °C / 1.20 V | 516 – 653 MHz | reachable |
+| tt / +27 °C / 1.08 V | 534 – **604** MHz | reachable, 0.6 % margin |
+| tt / +125 °C / 1.20 V | 559 – 599 MHz | **too slow** |
+| ss / +125 °C / 1.08 V | 482 – **521** MHz | **too slow by 15 %** |
+| ff / −40 °C / 1.32 V | **631** – 769 MHz | **cannot go slow enough** |
+| ff / +125 °C / 1.32 V | **654** – 686 MHz | **cannot go slow enough** |
 
 The sky130 original passed 6 of 11 corners, so this is not a regression — it is
-the same wall, measured more completely. And the failures point in **opposite
+the same wall, measured completely. And the failures point in **opposite
 directions**, which is what settles the question: at the slow corners the ring
 cannot reach the baud rate, and at the fast corners its slowest usable
-frequency is already 620–650 MHz, so it cannot come down to the baud rate
-either. Re-centring cannot fix both. A ring tuning over 1.2:1 cannot span a
-corner box that needs 1.54:1.
+frequency is already 615–654 MHz, so it cannot come down to the baud rate
+either. Re-centring cannot fix both.
 
-The table also specifies the fix. The worst slow corner needs **+15.3 %** and
-the worst fast corner needs **−4.1 %**, so a coarse control that shifts the
-ring's centre by about +16 %/−5 % in two or three steps covers the whole box:
-two digital bits, which the harness supplies.
-
-The fix is coarse tuning, and it has not been built. Two candidates: a
-switchable load-resistor leg per stage under one digital control bit — the
-harness provides the control lines — or diode-connected pMOS loads in place of
-the poly resistors, whose small-signal resistance follows the tail current and
-would widen the range without needing a control pin at all.
+The table also specifies the fix exactly. The worst slow corner needs
+**+15.2 %** and the worst fast corner **−8.1 %**, so a coarse control spanning
+1.25:1 in two or three steps covers the entire box — two digital bits, which
+the harness supplies. It is not built.
 
 ### Size
 
@@ -168,7 +187,7 @@ would widen the range without needing a control pin at all.
 | `sg13_lv_pmos` | 45 | 35 µm² |
 | `rhigh` | 43 | 311 µm² |
 | `cap_cmomf` | 1 | 1243 µm² |
-| **total** | **225** | **1839 µm²** |
+| **total** | **225** | **2131 µm²** |
 
 Drawn device area, not layout area — real layout is several times this. The
 sky130 design flattened to 224 devices; the extra one is the bias mirror.
@@ -247,16 +266,15 @@ covers the things that fail *silently*:
 
 ## What comes next, in order
 
-1. **Close the loop.** The clock is out; the charge pump is delivering almost
-   nothing (0.98 mV of control-voltage ripple against the tens of millivolts a
-   locked bang-bang loop shows), so the break is in the Alexander phase
-   detector or its charge pump. The detector's CML latches are biased from a
-   node now sitting at 0.43 V where sky130 fed them 0.9 V — the same shape of
-   failure as the two already fixed. `sim/decks/pd_diag.spice` is written and
-   queued to confirm it.
-2. **Coarse frequency tuning for the ring**, to the spec the corner sweep gives:
-   +16 %/−5 % in two or three steps. Without it the block works at 8 corners
-   out of 24.
+1. **Coarse frequency tuning for the ring**, to the spec the corner sweep
+   gives: +15.2 %/−8.1 %, a 1.25:1 span, two digital bits. Without it the block
+   locks at 8 corners out of 27. This is the one thing standing between a
+   working receiver and a manufacturable one.
+2. **PRBS7 rather than 0101.** Every closed-loop number here is on alternating
+   data, which is the easiest input a bang-bang detector can be given. The
+   sky130 project found PRBS7 took 3× longer to settle and left 2.8× the
+   dither, and that the charge pump's up/down mismatch — 6.7 % here against
+   1.6 % there — is what integrates over runs of identical bits.
 3. **End-to-end eye and jitter**, which is where the sky130 project found the
    result worth reading: sampling-phase error of 0.120 UI RMS against ±0.175 UI
    of worst-corner margin.
