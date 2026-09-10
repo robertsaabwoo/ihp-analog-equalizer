@@ -72,7 +72,7 @@ logic levels.
 
 | Name | Dir | Description |
 |---|---|---|
-| `ibias` | in | One bandgap-referenced current, 25 µA nominal. Sets the CTLE tail through a 10:1 mirror and the CML tail bias. |
+| `ibias` | in | One bandgap-referenced current, 40 µA nominal. Sets the CTLE tail through a 10:1 mirror and the CML tail bias. |
 
 **Digital outputs (1.2 V)**
 
@@ -102,11 +102,12 @@ Values marked **measured** cite a run in this repository. Values marked
 | Input amplitude, differential pp | 50 mV *target* | 200 mV | 400 mV | ≤ 400 mVpp keeps the CTLE linear |
 | Input common mode | — | 0.70 V | — | set internally; AC coupling recommended |
 | Channel loss compensated at Nyquist | — | 13.7 dB | — | 500 Ω / 5 pF, a 63.7 MHz pole |
-| CTLE gain at Nyquist | +9.4 dB | **+13.2 dB** | +15.5 dB | **measured**, 27 corners |
-| CTLE boost (Nyquist − DC) | +4.9 dB | +6.4 dB | +7.9 dB | **measured**, 27 corners |
-| Channel + CTLE at Nyquist | −4.4 dB | **−0.7 dB** | +1.6 dB | **measured**, 27 corners |
-| Ring VCO range, tt/27 °C | 538 MHz | — | 630 MHz | **measured** |
-| CTLE supply current | — | 351 µA | — | **measured** at 1.2 V |
+| CTLE gain at Nyquist | +9.3 dB | **+12.8 dB** | +15.1 dB | **measured**, 27 corners |
+| CTLE boost (Nyquist − DC) | +5.1 dB | +6.7 dB | +7.8 dB | **measured**, 27 corners |
+| Channel + CTLE at Nyquist | −4.5 dB | **−1.0 dB** | +1.3 dB | **measured**, 27 corners |
+| Ring VCO range, tt/27 °C/1.2 V | 538 MHz | — | 630 MHz | **measured** |
+| Corners where the ring reaches the baud rate | — | — | — | **8 of 24 measured** — see §7 |
+| CTLE supply current | 247 µA | 336 µA | 409 µA | **measured**, 27 corners |
 | Total block current | — | — | — | *not measured* |
 | Recovered-clock RMS jitter | — | 0.7 % UI *target* | 2 % UI *target* | *not measured on this process* |
 | Lock / acquisition time | — | — | 2 µs *target* | *not measured on this process* |
@@ -127,15 +128,15 @@ not expectations.
 ff/−40 °C/1.08 V — a 15 dB spread, with the stage collapsed at the fast corner
 because a fixed gate voltage asks for more current than a 1.2 V stack has
 headroom for. Replacing it with a current mirror from the harness's bandgap
-reference cuts the spread to 6.1 dB and holds the tail current within 2.5 %
+reference cuts the spread to 5.8 dB and holds the tail current within 1.4 %
 across ±10 % of supply. **This is the single most valuable thing the harness
 provides to this block.**
 
 **1.2 V costs about 3 dB of CTLE gain, and the load resistance buys it back.**
 The gain is `(gm/Id) · ΔVload`, and ΔVload is bounded by the input pair's
 saturation. Current was swept from 65 µA to 620 µA and moved the Nyquist gain
-by 2 dB; the load resistance moved it by 5 dB. Final: 3.5 kΩ, 351 µA,
-+13.17 dB — matching the 1.8 V prototype's +13.32 dB.
+by 2 dB; the load resistance moved it by 5 dB. Final: 3.5 kΩ, 336 µA,
++12.79 dB against the 1.8 V prototype's +13.32 dB.
 
 **The ring oscillator had to be re-sized, or the block does not work at all.**
 A bang-bang detector has no frequency acquisition. Ported unchanged the ring

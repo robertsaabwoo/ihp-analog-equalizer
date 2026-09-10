@@ -42,7 +42,7 @@ Vsub sub! 0 0
 
 VDD Vdd 0 1.2
 VSS Vss 0 0
-Iref Vdd ibias 25u
+Iref Vdd ibias 40u
 
 * Differential 0101 at the baud rate.  The period is two UI because 0101 is a
 * square wave at half the baud rate -- getting this factor of two wrong cost

@@ -83,6 +83,15 @@ Roughly 200 operating points, all in `sim/decks/ctle_tune*.spice`:
 - **Load resistance.** This *is* the lever, and only in combination with a
   current bias. 2.5 kΩ → 3.5 kΩ took the Nyquist gain from +11.9 dB to
   +13.2 dB and the channel-plus-CTLE residual from −1.9 dB to −0.71 dB.
+- **Fingering, afterwards.** Splitting the wide devices into fingers to stay
+  inside the PSP model's validated width range changed the mirror ratio, since
+  PSP's width-dependent terms and the diffusion geometry both follow `w/ng`
+  rather than `w`. At the same reference current the tail fell from 351 µA to
+  253 µA. Raising the reference from 25 µA to 40 µA recovers most of it —
+  12.10 dB back up to 12.79 dB — but not all, because the tail drain drops to
+  0.12 V as the current rises and the tail enters triode, so the current stops
+  tracking the reference. That last half dB is the price of the correction and
+  it is the right price to pay.
 
 ### The bias had to stop being a voltage
 
@@ -97,21 +106,21 @@ current needs at the corner in question. The Chipalooza harness provides
 bandgap-referenced current sources to every slot, so this costs one pin and one
 transistor.
 
-Measured effect: tail current holds within **2.5 % across ±10 % of supply** and
-within ±19 % across all 27 corners, and the Nyquist-gain spread falls from
-15 dB to 6.1 dB.
+Measured effect: tail current holds within **1.4 % across ±10 % of supply** and
+within ±25 % across all 27 corners, and the Nyquist-gain spread falls from
+15.5 dB to 5.8 dB.
 
 ### Final sizing and result
 
 | parameter | value |
 |---|---|
-| input pair | W = 30 µm, L = 0.2 µm |
-| tail | W = 40 µm, L = 1.0 µm, mirrored 10:1 from a 25 µA reference |
+| input pair | W = 30 µm, L = 0.2 µm, 6 fingers |
+| tail | W = 40 µm, L = 1.0 µm, 8 fingers, mirrored from a 40 µA reference |
 | load resistors | 3.5 kΩ (`rhigh`, W = 1 µm, L = 2.36 µm) |
 | degeneration resistors | 900 Ω each |
 | degeneration capacitor | 1.6 pF `cap_cmomf`, 35.3 µm square |
 | input common mode | 0.70 V |
-| supply current | 351 µA at 1.2 V (0.42 mW) |
+| supply current | 336 µA at 1.2 V (0.40 mW); 247-409 µA over 27 corners |
 
 `sim/results/ctle_ac_{tt,ss,ff}.log`, 27 corners: 3 process × 3 temperature
 (−40/27/125 °C) × 3 supply (1.08/1.2/1.32 V), with the resistor and capacitor
@@ -119,14 +128,15 @@ corners moved *with* the MOS corner rather than left typical.
 
 | quantity | this design | sky130 original |
 |---|---|---|
-| CTLE gain at Nyquist, nominal | **+13.17 dB** | +13.32 dB |
-| CTLE gain at Nyquist, 27 corners | +9.39 … +15.51 dB | +11.71 … +14.40 dB |
-| Boost (Nyquist − DC) | +4.9 … +7.9 dB | +6.30 … +7.90 dB |
-| Channel + CTLE at Nyquist, nominal | **−0.71 dB** | ≈ −0.4 dB |
-| Channel + CTLE at Nyquist, 27 corners | −4.44 … +1.60 dB | −2.03 … +0.66 dB |
+| CTLE gain at Nyquist, nominal | **+12.79 dB** | +13.32 dB |
+| CTLE gain at Nyquist, 27 corners | +9.35 … +15.10 dB | +11.71 … +14.40 dB |
+| Boost (Nyquist − DC) | +5.05 … +7.80 dB | +6.30 … +7.90 dB |
+| Channel + CTLE at Nyquist, nominal | **−1.03 dB** | ≈ −0.4 dB |
+| Channel + CTLE at Nyquist, 27 corners | −4.45 … +1.26 dB | −2.03 … +0.66 dB |
 
-The nominal number matches. The corner spread is wider, and it is temperature,
-not process or supply: at 125 °C the Nyquist gain falls about 2.5 dB. The
+Nominal is half a dB below the original. The corner spread is wider, and it is
+temperature, not process or supply: at 125 °C the Nyquist gain falls about
+2.4 dB. The
 Chipalooza proposal commits to 0–110 °C, not −40…125 °C; the wider range is
 simulated here because that is what the sky130 numbers were quoted over and a
 comparison has to be like for like.
@@ -181,26 +191,41 @@ which puts the baud rate below the point where the ring starts oscillating at
 all, and a ring that cannot run slowly enough fails just as completely as one
 that cannot run fast enough.
 
-### The tuning range does not cover PVT, and here is by how much
+### The tuning range does not cover PVT: 8 corners out of 24
 
-`sim/results/vco_pvt_tt.log`, typical process, usable points only:
+`sim/results/vco_pvtf_{tt,ss,ff}.log` — 3 process x 3 temperature x 3 supply,
+usable points only (differential swing above 300 mV, because a `meas` on a node
+that is barely moving still returns a number).
 
-| corner | usable range | ceiling margin over 600.6 MHz |
+| corner | usable range | 600.6 MHz |
 |---|---|---|
-| tt / −40 °C / 1.32 V | 525 – 680 MHz | 13 % |
-| tt / −40 °C / 1.20 V | 513 – 650 MHz | 8 % |
-| tt / −40 °C / 1.08 V | 501 – 618 MHz | 3 % |
-| tt / +27 °C / 1.08 V | 467 – **602** MHz | **0.3 %** |
+| tt / −40 °C / 1.08…1.32 V | 501–617 … 525–680 MHz | reachable |
+| tt / +27 °C / 1.08 V | 531 – **602** MHz | reachable, 0.3 % margin |
+| tt / +125 °C / 1.20 V | 557 – 595 MHz | **too slow** |
+| ss / +27 °C / 1.32 V | 443 – 590 MHz | **too slow** |
+| ss / +125 °C / 1.08 V | 481 – **521** MHz | **too slow**, by 15 % |
+| ff / −40 °C / 1.32 V | **626** – 765 MHz | **cannot go slow enough** |
+| ff / +27 °C / 1.08 V | 619 – 673 MHz | **cannot go slow enough** |
 
-The ceiling falls about 15 % between −40 °C and +27 °C at fixed supply. The
-125 °C rows and the ss/ff corners were still running when this was written and
-are not in the table; on the trend above, 125 °C will not reach the baud rate.
+**8 of 24 corners can reach the baud rate.** The sky130 original passed 6 of
+11, so this is not a regression — it is the same wall, measured more
+completely.
 
-The conclusion does not need those rows. The tuning range is **1.3:1** and the
-corner spread is wider than that, so **no single sizing of this ring covers the
-corner box** — the ceiling and the floor cannot both be placed correctly at
-once. This is the same wall the sky130 project hit and accepted; the difference
-here is that the number is quantified rather than described.
+The failures point in *opposite directions*, and that is the part that settles
+the question. At the slow corners the ring cannot reach 600.6 MHz; at the fast
+corners its slowest usable frequency is already 620–650 MHz, so it cannot come
+*down* to the baud rate either. No amount of re-centring fixes both: moving the
+curve up to rescue ss pushes ff further out of reach. A ring whose tuning range
+is 1.2:1 cannot span a corner box that needs 1.54:1.
+
+That last number is the specification for the fix, and it comes straight out of
+the table:
+
+- worst slow corner, ss/125 °C/1.08 V: ceiling 521 MHz, needs **+15.3 %**
+- worst fast corner, ff/−40 °C/1.32 V: floor 626 MHz, needs **−4.1 %**
+
+So a coarse control that moves the ring's centre by about +16 %/−5 % in two or
+three steps covers the whole box. Two digital bits.
 
 ### What would fix it, and what was not done
 

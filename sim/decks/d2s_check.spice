@@ -1,0 +1,108 @@
+* diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 V.
+*
+* Why this deck exists.  Both instances of diff_amp_inv in the design have
+* their tail-bias pin tied straight to VDD -- one inside ring_oscillator, one
+* in CDR.  On 1.8 V that was crude but survivable.  On 1.2 V, working it out
+* on paper:
+*
+*   stage 1 tail  W = 2 um / L = 1 um at Vgs = 1.2 V, Vth = 0.24 V
+*                 -> roughly 280 uA, through 6.4 kohm / 2 per side
+*                 -> about 0.9 V across the load, output common mode ~0.3 V
+*   stage 2 input pair needs Vgs ~ 0.4 V to conduct, so its sources would sit
+*                 below ground.  The stage is crushed.
+*
+*   stage 2 tail  W = 8 um / L = 0.13 um at Vgs = 1.2 V is larger still, and
+*                 its outputs pin near zero.
+*
+* That would explain the end-to-end result exactly: the CTLE equalises, the
+* control voltage settles, and the recovered clock never appears, because the
+* stage that turns the ring's differential output into a clock is saturated
+* into a static state and cannot pass an edge.
+*
+* This measures it rather than trusting the arithmetic, and sweeps the two
+* tail sizes for a combination that leaves both stages in a usable operating
+* point.  A .op sweep, so it costs seconds.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+
+.global sub!
+Vsub sub! 0 0
+
+* Parameterised copy of diff_amp_inv, same topology as the schematic.
+.param Wt1=2   Lt1=1.0
+.param Wt2=8   Lt2=0.13  Nt2=4
+.param Rl1=6396 Rl2=5596
+.param Wres=1u
+.param Ll1='(Rl1 - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
+.param Ll2='(Rl2 - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
+
+.subckt d2s_p VDD VSS vo- vo+ vin- vin+ vctrl
+XM2 vom_t vin- s1 VSS sg13_lv_nmos w=3u l=0.13u ng=1 m=1 mm_ok=1
+XM6 vop_t vin+ s1 VSS sg13_lv_nmos w=3u l=0.13u ng=1 m=1 mm_ok=1
+XM3 s1 vctrl VSS VSS sg13_lv_nmos w='Wt1*1u' l='Lt1*1u' ng=1 m=1 mm_ok=1
+XR3 VDD vop_t sub! rhigh w='Wres' l='Ll1' m=1 b=0 mm_ok=1
+XR4 VDD vom_t sub! rhigh w='Wres' l='Ll1' m=1 b=0 mm_ok=1
+XM1 vo- vom_t s2 VSS sg13_lv_nmos w=6u l=0.5u ng=1 m=1 mm_ok=1
+XM5 vo+ vop_t s2 VSS sg13_lv_nmos w=6u l=0.5u ng=1 m=1 mm_ok=1
+XM4 s2 vctrl VSS VSS sg13_lv_nmos w='Wt2*1u' l='Lt2*1u' ng='Nt2' m=1 mm_ok=1
+XR1 VDD vo+ sub! rhigh w='Wres' l='Ll2' m=1 b=0 mm_ok=1
+XR2 VDD vo- sub! rhigh w='Wres' l='Ll2' m=1 b=0 mm_ok=1
+.ends
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+
+* Driven the way the ring drives it: about 1 V differential around a common
+* mode near the top of the rail, since the ring's outputs are resistor loads
+* pulled up to VDD.
+.param incm=0.85 indiff=0.5
+Vip vinp 0 'incm + indiff/2'
+Vim vinm 0 'incm - indiff/2'
+
+x1 VDD VSS vom vop vinm vinp VDD d2s_p
+
+.control
+* Row 1 is the design exactly as ported: tail 2 at W=8 um / L=0.13 um / ng=4.
+* The rest are candidate replacements.  The sweep that came before this one
+* never tested the design itself -- it overrode Lt2 to 1 um throughout, which
+* is precisely the change being evaluated, so it measured only the fixes.
+foreach cfg 1 2 3 4 5 6
+  if $cfg = 1
+    alterparam Wt1 = 2 ; alterparam Wt2 = 8 ; alterparam Lt2 = 0.13 ; alterparam Nt2 = 4
+  end
+  if $cfg = 2
+    alterparam Wt1 = 2 ; alterparam Wt2 = 8 ; alterparam Lt2 = 1.0 ; alterparam Nt2 = 1
+  end
+  if $cfg = 3
+    alterparam Wt1 = 2 ; alterparam Wt2 = 4 ; alterparam Lt2 = 1.0 ; alterparam Nt2 = 1
+  end
+  if $cfg = 4
+    alterparam Wt1 = 2 ; alterparam Wt2 = 2 ; alterparam Lt2 = 1.0 ; alterparam Nt2 = 1
+  end
+  if $cfg = 5
+    alterparam Wt1 = 1 ; alterparam Wt2 = 4 ; alterparam Lt2 = 1.0 ; alterparam Nt2 = 1
+  end
+  if $cfg = 6
+    alterparam Wt1 = 2 ; alterparam Wt2 = 8 ; alterparam Lt2 = 0.5 ; alterparam Nt2 = 1
+  end
+  reset
+  op
+  let p_cfg = $cfg
+  let itot  = -i(vdd)
+  let s1v   = v(x1.s1)
+  let s2v   = v(x1.s2)
+  let t1cm  = (v(x1.vop_t) + v(x1.vom_t))/2
+  let outp  = v(vop)
+  let outm  = v(vom)
+  let outd  = v(vop) - v(vom)
+  print p_cfg itot s1v s2v t1cm outp outm outd
+end
+quit
+.endc
+.end

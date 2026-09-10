@@ -1,0 +1,112 @@
+* Diagnostic: is the ring oscillating inside the closed loop, and if it is,
+* where does the clock stop getting through?
+*
+* The end-to-end run reports a recovered clock of 55 nanovolts at the output
+* pin while the CTLE equalises correctly and the control voltage sits at
+* 0.66 V -- a value the standalone ring runs at 620 MHz on.  Two possibilities
+* and they need different fixes:
+*
+*   (a) the ring is not oscillating at all;
+*   (b) the ring is oscillating and the differential-to-single-ended stage or
+*       the output buffers are not passing it at 1.2 V.
+*
+* So this probes the chain at four points -- a ring node, the ring's own
+* buffered output, the CDR's single-ended clock, and the pin -- and runs for
+* 300 ns instead of 1500 ns, which costs about four minutes instead of thirty.
+*
+* Nodes with '+' in the name are unusable: ngspice parses the '+' as an
+* operator and the vector silently never appears.  rclk+ is therefore reached
+* through a unity-gain source rather than measured directly.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+
+.global sub!
+Vsub sub! 0 0
+
+.options method=gear reltol=1e-3 abstol=1e-12
+
+.param vcm=0.70
+.param amp=0.2
+.param rpad=500 cpad=5p
+.param ui=1.665n
+
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Iref Vdd ibias 40u
+
+Vdraw draw 0 PULSE(0 1 0 10p 10p 'ui' '2*ui')
+Edinp dinp 0 vol='vcm + 0.5*amp*(v(draw)-0.5)'
+Edinm dinm 0 vol='vcm - 0.5*amp*(v(draw)-0.5)'
+
+Rpadp dinp cinp 'rpad'
+Cpadp cinp 0    'cpad'
+Rpadm dinm cinm 'rpad'
+Cpadm cinm 0    'cpad'
+
+x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
+
+* No voltage-controlled sources copying internal nodes out.  The first version
+* of this deck did that, and it does not work: an element's node fields are
+* not hierarchical, so ngspice created five NEW top-level nodes literally named
+* "x1.x2.rclk+" and so on, left them floating, and the operating point failed
+* with "singular matrix: check node x1.x2.rclk+" -- pointing at a node the
+* circuit does not contain.
+*
+* Hierarchical paths are legal in save, print and meas.  So the probes below
+* are chosen to be nodes whose names contain no '+' or '-', which ngspice's
+* expression parser would treat as operators:
+*
+*   x1.x2.x1.net1 / net2   ring stage 1 outputs, inside ring_oscillator
+*   x1.x2.net4 / net5      ring_oscillator's buffered outputs, inside CDR
+*   clkoutp                the pin
+
+.ic v(x1.x2.x20.nrc)=0
+.ic v(x1.x2.x1.net1)=0.9 v(x1.x2.x1.net2)=0.3
+.ic v(x1.x2.net1)=0.62
+
+.control
+save v(x1.x2.net1) v(x1.x2.x1.net1) v(x1.x2.x1.net2)
++    v(x1.x2.net4) v(x1.x2.net5)
++    v(x1.x2.x11.net1) v(x1.x3.net1) v(x1.x3.net2)
++    v(clkoutp) v(x1.eq_p) v(x1.eq_m) v(x1.x2.x20.pre)
+tran 20p 300n
+
+let vctrl  = v(x1.x2.net1)
+let ring_d = v(x1.x2.x1.net1) - v(x1.x2.x1.net2)
+let raw_d  = v(x1.x2.net4) - v(x1.x2.net5)
+
+* Peak-to-peak in three windows: right after the .ic kick, after the precharge
+* releases, and at the end.  If the ring rings and dies, the three differ.
+meas tran ring_pp1 PP ring_d FROM=5n   TO=25n
+meas tran ring_pp2 PP ring_d FROM=150n TO=200n
+meas tran ring_pp3 PP ring_d FROM=250n TO=300n
+meas tran raw_pp1  PP raw_d  FROM=5n   TO=25n
+meas tran raw_pp   PP raw_d  FROM=250n TO=300n
+* Walk the chain from the ring's buffered output to the pin.  Every one of
+* these node names is free of '+' and '-', which ngspice's expression parser
+* would otherwise treat as operators -- clkraw+ and rclk+ themselves cannot be
+* measured at all, so the probes sit on the internal nodes either side of them:
+*   x1.x2.x11.net1   inside inverter_buffer, driven by clkraw+
+*   x1.x3.net1/net2  inside the output inverter_chain, driven by rclk_p
+meas tran buf_pp   PP v(x1.x2.x11.net1) FROM=250n TO=300n
+meas tran ch1_pp   PP v(x1.x3.net1) FROM=250n TO=300n
+meas tran ch2_pp   PP v(x1.x3.net2) FROM=250n TO=300n
+meas tran buf_avg  AVG v(x1.x2.x11.net1) FROM=250n TO=300n
+meas tran ch1_avg  AVG v(x1.x3.net1) FROM=250n TO=300n
+meas tran out_pp   PP v(clkoutp) FROM=250n TO=300n
+meas tran vctrl_end AVG vctrl FROM=250n TO=300n
+meas tran pre_end   AVG v(x1.x2.x20.pre) FROM=250n TO=300n
+print ring_pp3 raw_pp buf_pp ch1_pp ch2_pp out_pp buf_avg ch1_avg vctrl_end
+quit
+.endc
+.end

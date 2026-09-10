@@ -1,0 +1,113 @@
+[safe_ngspice] d2s_check.spice  memcap=3000MB timeout=600s floor=1200MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Reset re-loads circuit * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Circuit: * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_cfg = 1.000000e+00
+itot = 3.530001e-04
+s1v = 2.437846e-01
+s2v = 1.795837e-02
+t1cm = 7.567420e-01
+outp = 1.125863e+00
+outm = 7.424723e-02
+outd = 1.051616e+00
+Reset re-loads circuit * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Circuit: * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_cfg = 2.000000e+00
+itot = 3.530001e-04
+s1v = 2.437846e-01
+s2v = 1.795837e-02
+t1cm = 7.567420e-01
+outp = 1.125863e+00
+outm = 7.424723e-02
+outd = 1.051616e+00
+Reset re-loads circuit * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Circuit: * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_cfg = 3.000000e+00
+itot = 3.530001e-04
+s1v = 2.437846e-01
+s2v = 1.795837e-02
+t1cm = 7.567420e-01
+outp = 1.125863e+00
+outm = 7.424723e-02
+outd = 1.051616e+00
+Reset re-loads circuit * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Circuit: * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_cfg = 4.000000e+00
+itot = 3.530001e-04
+s1v = 2.437846e-01
+s2v = 1.795837e-02
+t1cm = 7.567420e-01
+outp = 1.125863e+00
+outm = 7.424723e-02
+outd = 1.051616e+00
+Reset re-loads circuit * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Circuit: * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_cfg = 5.000000e+00
+itot = 4.407403e-04
+s1v = 3.849435e-01
+s2v = 2.907381e-02
+t1cm = 8.897052e-01
+outp = 3.912564e-01
+outm = 8.517745e-02
+outd = 3.060789e-01
+Reset re-loads circuit * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Circuit: * diff_amp_inv (the ring's differential-to-single-ended converter) at 1.2 v.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_cfg = 6.000000e+00
+itot = 3.530001e-04
+s1v = 2.437846e-01
+s2v = 1.795837e-02
+t1cm = 7.567420e-01
+outp = 1.125863e+00
+outm = 7.424723e-02
+outd = 1.051616e+00
+ngspice-42 done
+[safe_ngspice] exit rc=0

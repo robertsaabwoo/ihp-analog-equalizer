@@ -30,7 +30,7 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
 Vsub sub! 0 0
 
 .param vcm=0.70
-.param iref=25u
+.param iref=40u
 .param cload=50f
 .param rch=500 cch=5p
 
