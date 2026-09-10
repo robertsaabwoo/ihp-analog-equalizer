@@ -268,7 +268,7 @@ SIZING: dict[tuple[str, str], dict] = {
     # SIZING key that matches nothing is silently ignored, which is exactly
     # what happened first time: the sweep ran four resistor values and
     # reported the same current four times.
-    ("tiny_pll_bias_gen_res", "R[2..0]"): {"R": 12000},
+    ("tiny_pll_bias_gen_res", "R[2..0]"): {"R": 24000},
     #
     # Why 12 kohm, and why not simply copy sky130's update quantum.  What a
     # bang-bang loop cares about is the *phase* step per update:
@@ -276,11 +276,26 @@ SIZING: dict[tuple[str, str], dict] = {
     #     dphi = 2*pi * Kvco * dV * UI
     #
     # sky130 was stable at 17.5 mV with a 357 MHz/V oscillator -- 3.7 degrees
-    # per unit interval.  This ring measures 310 MHz/V between vctrl = 0.6 and
-    # 0.7 V, so the same phase step wants about 20 mV, and 12 kohm gives 20.5.
-    # Copying the voltage instead of the phase step would have been 15 % out.
+    # per unit interval -- and matching that phase step here wants about 20 mV,
+    # which 12 kohm gives.  That reasoning got the loop locking; it did not get
+    # the best answer.  Three full lock runs settled it:
     #
-    # Measured at 12 kohm: 1.82 uA up into 147.5 fF, 20.5 mV per update.
+    #   Rbias   quantum   frequency    error     ripple
+    #   12 k    20.5 mV   600.42 MHz   -0.031 %   177 mV
+    #   24 k    10.1 mV   600.59 MHz   -0.002 %    78 mV
+    #   36 k     7.0 mV   600.36 MHz   -0.040 %    57 mV
+    #
+    # 24 kohm is chosen: the frequency error is -0.002 % against sky130's
+    # +0.006 %, and the dither is less than half what the phase-step argument
+    # predicted was acceptable.  Going further to 36 kohm buys 20 mV less
+    # ripple and costs frequency accuracy and acquisition time, because the
+    # loop is then correcting more slowly than the run is long.
+    #
+    # The ripple is about 7.7 update quanta at every setting -- 177/20.5,
+    # 78/10.1, 57/7.0 -- so it is a limit cycle whose amplitude is set by loop
+    # delay, not by the quantum.  sky130's was 1.9 quanta.  Closing that gap
+    # means damping (the loop-filter zero) or less latency around the loop,
+    # and it is the obvious next thing to work on.
 }
 
 # Devices whose L is at the sky130 minimum get the IHP minimum instead.

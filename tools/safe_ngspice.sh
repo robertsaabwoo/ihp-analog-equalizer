@@ -16,7 +16,24 @@
 #      ngspice (belt-and-suspenders with the ulimit).
 #   4. nice -n 15 : keeps the box responsive.
 set -u
-SPICE="$1"; LOG="$2"; MEMMB="${3:-3000}"; TMO="${4:-900}"; FLOOR="${5:-1200}"
+SPICE="$1"; LOG="$2"; MEMMB="${3:-2500}"; TMO="${4:-900}"; FLOOR="${5:-2000}"
+
+# 5. A global lock.  CLAUDE.md says never run two ngspice at once, and saying
+#    it is not enough: this machine was crashed by exactly that, when two
+#    independently queued background chains -- each of which believed it was
+#    the only thing running -- fired within a few seconds of each other and
+#    their memory caps summed past the 7.8 GB the box has.  The rule is now
+#    enforced here rather than remembered by the caller.
+#
+#    flock waits rather than failing, so a queued run simply starts when the
+#    previous one finishes.  Set SAFE_NGSPICE_NOWAIT=1 to fail fast instead.
+LOCKDIR="${TMPDIR:-/tmp}"
+exec 9>"$LOCKDIR/.safe_ngspice.lock"
+if [ "${SAFE_NGSPICE_NOWAIT:-0}" = "1" ]; then
+    flock -n 9 || { echo "[safe_ngspice] another run holds the lock" >&2; exit 3; }
+else
+    flock 9
+fi
 
 echo "[safe_ngspice] $SPICE  memcap=${MEMMB}MB timeout=${TMO}s floor=${FLOOR}MB" > "$LOG"
 (

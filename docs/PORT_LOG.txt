@@ -94,7 +94,7 @@ tiny_pll_bias_gen.sch:
   tiny_pll_bias_gen.MPSU1: bulk 'VPB' rewired to the new B pin at (-160,-370)
   tiny_pll_bias_gen.MPSU1: pfet3_01v8.sym -> sg13_lv_pmos w=0.5u l=0.13u ng=1
 tiny_pll_bias_gen_res.sch:
-  tiny_pll_bias_gen_res.R[2..0]: res_xhigh_po_0p35.sym -> rhigh w=1.000000e-06 l=8.357647e-06  (12000 ohm)
+  tiny_pll_bias_gen_res.R[2..0]: res_xhigh_po_0p35.sym -> rhigh w=1.000000e-06 l=1.682824e-05  (24000 ohm)
 tiny_pll_charge_pump.sch:
   tiny_pll_charge_pump.MNSRC: bulk 'VNB' rewired to the new B pin at (0,-90)
   tiny_pll_charge_pump.MNSRC: nfet3_01v8.sym -> sg13_lv_nmos w=1u l=1u ng=1

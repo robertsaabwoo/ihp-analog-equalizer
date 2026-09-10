@@ -131,7 +131,17 @@ meas tran ctle_swing PP ctle_d FROM=1300n TO=1400n
 meas tran c600 WHEN v(clkoutp)=0.6 RISE=600
 meas tran c660 WHEN v(clkoutp)=0.6 RISE=660
 let f_MHz = 60/(c660-c600)/1e6
-print f_MHz
+
+* A second estimate over a much longer baseline.  60 cycles is not enough to
+* average out the control-voltage dither: with 177 mV of ripple on a 310 MHz/V
+* oscillator the instantaneous frequency swings by tens of MHz, and a 60-cycle
+* window reports a sample of that rather than the mean.  350 cycles, entirely
+* inside the settled region, is the number to compare against the data rate.
+meas tran c500 WHEN v(clkoutp)=0.6 RISE=500
+meas tran c850 WHEN v(clkoutp)=0.6 RISE=850
+let f_long = 350/(c850-c500)/1e6
+let f_err = 100*(f_long - 600.60)/600.60
+print f_MHz f_long f_err
 print vctrl_lock vctrl_ripp vctrl_e1 vctrl_e2 rclk_swing ctle_swing cin_swing
 quit
 .endc

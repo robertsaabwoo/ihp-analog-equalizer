@@ -13,7 +13,7 @@ N -60 -30 -20 -30 {
 lab=VNB}
 C {sg13cmos5l_pr/rhigh.sym} 0 -30 0 0 {name=R[2..0]
 w=1.000000e-06
-l=8.357647e-06
+l=1.682824e-05
 model=rhigh
 body=sub!
 spiceprefix=X

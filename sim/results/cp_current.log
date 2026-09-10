@@ -1,4 +1,4 @@
-[safe_ngspice] cp_current.spice  memcap=3000MB timeout=240s floor=1200MB
+[safe_ngspice] cp_current.spice  memcap=2500MB timeout=240s floor=2000MB
 Warning: m=xx on .subckt line will override multiplier m hierarchy!
 
 Using SPARSE 1.3 as Direct Linear Solver
@@ -633,20 +633,20 @@ OSDI(debug) n.x4.xr.xr.nr1: WARNING: V(i2,c) voltage is greater than specified b
  Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
 
 No. of Data Rows : 1
-i_up = 1.819027e-06
-i_down = -1.69653e-06
-i_leak = 1.201701e-08
-bias_n = 3.318176e-01
-bias_p = 7.179472e-01
+i_up = 8.964461e-07
+i_down = -7.96934e-07
+i_leak = -1.19168e-08
+bias_n = 2.868265e-01
+bias_p = 7.698260e-01
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
 Using transient initial conditions
- Reference value :  8.76230e-09 Reference value :  2.28223e-08 Reference value :  3.21323e-08
+ Reference value :  4.92263e-09 Reference value :  9.17263e-09 Reference value :  1.41326e-08 Reference value :  1.99026e-08 Reference value :  2.53126e-08 Reference value :  3.11226e-08
 No. of Data Rows : 4014
-t_lo                =  2.437949e-09
-t_hi                =  5.387958e-09
-c_filt = 1.475005e-13
-t_lo = 2.437949e-09
-t_hi = 5.387958e-09
+t_lo                =  2.437884e-09
+t_hi                =  5.387141e-09
+c_filt = 1.474628e-13
+t_lo = 2.437884e-09
+t_hi = 5.387141e-09
 ngspice-42 done
 [safe_ngspice] exit rc=0
