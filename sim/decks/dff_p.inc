@@ -37,7 +37,7 @@
 *      that needs 290 uA per latch, which is a lot for eight latches; raising
 *      Rload gets there at a sane current instead.
 
-.param Wtail=8 Ltail=1.0
+.param Wtail=8 Ltail=1.0 Ngtail=1
 .param Rload=2239
 .param Wres=1u
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
@@ -49,7 +49,7 @@ XM3 n2 n1  n5 VSS sg13_lv_nmos w=5u l=0.13u ng=1 m=1 mm_ok=1
 XM5 n1 n2  n5 VSS sg13_lv_nmos w=5u l=0.13u ng=1 m=1 mm_ok=1
 XM6 n3 clkp n4 VSS sg13_lv_nmos w=5u l=0.13u ng=1 m=1 mm_ok=1
 XM7 n5 clkm n4 VSS sg13_lv_nmos w=5u l=0.13u ng=1 m=1 mm_ok=1
-XM2 n4 vbias VSS VSS sg13_lv_nmos w='Wtail*1u' l='Ltail*1u' ng=1 m=1 mm_ok=1
+XM2 n4 vbias VSS VSS sg13_lv_nmos w='Wtail*1u' l='Ltail*1u' ng='Ngtail' m=1 mm_ok=1
 XR3 VDD n1 sub! rhigh w='Wres' l='Lload' m=1 b=0 mm_ok=1
 XR1 VDD n2 sub! rhigh w='Wres' l='Lload' m=1 b=0 mm_ok=1
 XM8  vop n1 VDD VDD sg13_lv_pmos w=3u l=0.13u ng=1 m=1 mm_ok=1

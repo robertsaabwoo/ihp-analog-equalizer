@@ -14,7 +14,7 @@ ctle_cdr_rx_lvs.sch:
 d_flip_flop.sch:
 d_latch.sch:
   d_latch.M1: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
-  d_latch.M2: nfet_01v8.sym -> sg13_lv_nmos w=8u l=0.13u ng=1
+  d_latch.M2: nfet_01v8.sym -> sg13_lv_nmos w=24u l=1u ng=4
   d_latch.M4: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
   d_latch.M3: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
   d_latch.M5: nfet_01v8.sym -> sg13_lv_nmos w=5u l=0.13u ng=1
@@ -24,8 +24,8 @@ d_latch.sch:
   d_latch.M9: nfet_01v8.sym -> sg13_lv_nmos w=1u l=0.13u ng=1
   d_latch.M10: pfet_01v8.sym -> sg13_lv_pmos w=3u l=0.13u ng=1
   d_latch.M11: nfet_01v8.sym -> sg13_lv_nmos w=1u l=0.13u ng=1
-  d_latch.R3: res_high_po_0p69.sym -> rhigh w=1.000000e-06 l=1.467247e-06  (2239 ohm)
-  d_latch.R1: res_high_po_0p69.sym -> rhigh w=1.000000e-06 l=1.467247e-06  (2239 ohm)
+  d_latch.R3: res_high_po_0p69.sym -> rhigh w=1.000000e-06 l=4.122353e-06  (6000 ohm)
+  d_latch.R1: res_high_po_0p69.sym -> rhigh w=1.000000e-06 l=4.122353e-06  (6000 ohm)
 diff_amp_inv.sch:
   diff_amp_inv.M2: nfet_01v8.sym -> sg13_lv_nmos w=3u l=0.13u ng=1
   diff_amp_inv.M3: nfet_01v8.sym -> sg13_lv_nmos w=1u l=1u ng=1

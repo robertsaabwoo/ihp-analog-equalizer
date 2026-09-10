@@ -50,10 +50,14 @@ Edm  vim 0 vol='datcm - 0.5*datamp*(v(dtraw)-0.5)'
 x1 VDD VSS Q Qn vip clkp clkm vim vbias d_flip_flop_p
 
 .control
-foreach wt 8 16 24
- foreach rl 2239 4000 6000
+* Fingered now: ng=4 keeps w/ng inside the model's 10 um limit, and fingering
+* changes the diffusion geometry, so the winning point has to be re-confirmed
+* rather than assumed to carry over -- it did not for the CTLE tail.
+foreach wt 16 24 32
+ foreach rl 4000 6000 8000
   alterparam Wtail = $wt
   alterparam Ltail = 1.0
+  alterparam Ngtail = 4
   alterparam Rload = $rl
   reset
   save v(Q) v(Qn) v(x1.x1.n1) v(x1.x1.n2) v(x1.x1.n4)

@@ -200,6 +200,53 @@ SIZING: dict[tuple[str, str], dict] = {
     # less tail current its own input pair sees more Vgs, not less.
     ("diff_amp_inv", "M3"): {"W": 1, "L": 1.0},            # first-stage tail
     ("diff_amp_inv", "M4"): {"W": 2, "L": 1.0, "nf": 1},   # second-stage tail
+
+    # ------------------------------------------------- CML latch (d_latch)
+    # The Alexander detector is eight of these.  Measured in the closed loop,
+    # its outputs -- the charge pump's up and down inputs -- sat at 1.2000 V
+    # with 1.6 mV and 4.5 mV of movement: both switches held on, the pump
+    # delivering only its own mismatch current, the loop open.
+    #
+    # Two causes, and they are the two that broke diff_amp_inv:
+    #
+    #   The tail was drawn at L = 0.13 um with its gate on vbias.  On sky130
+    #   that was 0.9 V against a 0.7 V threshold.  Here vbias is the mirror
+    #   node at 0.43 V, against a threshold that is *higher* at 0.13 um than
+    #   at 0.3 um in this process -- char/mos.spice measures 0.314 V at
+    #   0.30 um and 0.241 V at 1.0 um, so the roll-off runs the opposite way
+    #   to the usual intuition.  A few tens of millivolts of overdrive.
+    #   L = 1.0 um makes it a replica of the mirror reference MREF and gives
+    #   it real overdrive at the same 0.43 V.
+    #
+    #   The CML nodes drive CMOS inverters that switch near 0.55 V, and the
+    #   nodes sit at VDD - I*R.  The low excursion has to get below that.
+    #
+    # sim/decks/dff_tune.spice sweeps both against the drive the latch really
+    # sees -- clock at the ring's measured levels, data at the CTLE's -- and
+    # the boundary is sharp:
+    #
+    #   Wtail  Rload   CML low   output swing
+    #      8   2239     1.068 V    4.8 mV      dead
+    #      8   6000     0.842 V    5.6 mV      dead
+    #     16   4000     0.664 V     155 mV     marginal
+    #     16   6000     0.462 V    1.221 V     works
+    #     24   4000     0.432 V    1.232 V     works
+    #     24   6000     0.227 V    1.231 V     works, most margin
+    #
+    # 24/6000 is chosen for the margin rather than the current: 0.227 V leaves
+    # 320 mV below the inverter threshold, against 88 mV for 16/6000, and
+    # margin over PVT is exactly what every failure in this port has been
+    # short of.  It costs about 166 uA per latch, 1.3 mA for the detector.
+    #
+    # The tail still sits at 0.114 V, i.e. in triode, so it does not mirror in
+    # a clean ratio.  For a latch that matters less than for an amplifier --
+    # it needs enough current, not a precise current -- but it is the obvious
+    # thing to improve if the detector ever needs PVT margin of its own.
+    # Fingered to stay inside the model's 10 um per-finger width range; the
+    # geometry test catches this, and it caught this one.
+    ("d_latch", "M2"): {"W": 24, "L": 1.0, "nf": 4},  # tail: MREF's length
+    ("d_latch", "R1"): {"R": 6000},           # CML load; sets the swing
+    ("d_latch", "R3"): {"R": 6000},
 }
 
 # Devices whose L is at the sky130 minimum get the IHP minimum instead.
