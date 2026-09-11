@@ -87,6 +87,14 @@
 * be 1 in anything that claims a silicon number.
 .param Ksweep=1
 .param Wsrc='0.2u*Ksweep'
+* Lsrc lengthens the two devices that set the loop current (the 1:k leg of the
+* second mirror and the pull-up tail, both biased from nb1).  With Lsrc = 5 um
+* the open-loop testbench measured the search running at 48.6 mV/us, which is
+* 6.5 MHz/us of ring frequency and moves the target 1.6 % during the 1.5 us the
+* fine loop needs to settle -- too fast.  15 um brings it to about a third of
+* that.  The two devices that mirror each other (XMB4 and XMTD) stay at 5 um,
+* because what matters there is that they match, not what length they are.
+.param Lsrc=15u
 
 .subckt coarse_loop VDD VSS ibias vctrl vcoarse
 *
@@ -96,7 +104,7 @@
 * 1:40 and 1:50 cost two devices and no area.
 XMB1 nb1 ibias VSS VSS sg13_lv_nmos w=0.5u   l=5u ng=1 m=1 mm_ok=1   $ 1 uA
 XMB2 nb1 nb1   VDD VDD sg13_lv_pmos w=2u     l=1u ng=1 m=1 mm_ok=1
-XMB3 nb2 nb1   VDD VDD sg13_lv_pmos w='Wsrc' l=5u ng=1 m=1 mm_ok=1   $ 20 nA
+XMB3 nb2 nb1   VDD VDD sg13_lv_pmos w='Wsrc' l='Lsrc' ng=1 m=1 mm_ok=1
 XMB4 nb2 nb2   VSS VSS sg13_lv_nmos w='Wsrc' l=5u ng=1 m=1 mm_ok=1
 *
 * === window thresholds ===================================================
@@ -107,7 +115,7 @@ XRLM vh  vl  sub! rhigh w='Wres' l='Lr(Rlk_m)' m=1 b=0 mm_ok=1
 XRLB vl  VSS sub! rhigh w='Wres' l='Lr(Rlk_b)' m=1 b=0 mm_ok=1
 *
 * === pull-up: vctrl < VL, ring too fast, slow it down =====================
-XMTU spu nb1   VDD VDD sg13_lv_pmos w='Wsrc' l=5u ng=1 m=1 mm_ok=1
+XMTU spu nb1   VDD VDD sg13_lv_pmos w='Wsrc' l='Lsrc' ng=1 m=1 mm_ok=1
 XMU1 vcoarse vctrl spu VDD sg13_lv_pmos w=2u l=1u ng=1 m=1 mm_ok=1
 XMU2 VSS     vl    spu VDD sg13_lv_pmos w=2u l=1u ng=1 m=1 mm_ok=1
 *

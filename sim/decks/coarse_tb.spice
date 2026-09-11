@@ -39,22 +39,33 @@ VSS VSS 0 0
 Ib  0 ibias dc 40u
 XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
 
-* vctrl: railed high for 150 us (unlocked -- the loop must search), then the
-* measured locked value of 0.599 V, then +-40 mV of wander (more than the
-* 65 mV pp measured on PRBS7), then 0.45 V, below the window, to prove the
-* pull-up half works.
+* vctrl: railed high for 150 us so the search has to run and wrap several
+* times, then a staircase through the window.
+*
+* The staircase is the real measurement, and it replaces a test that was asking
+* the wrong question.  The window is not a dead zone: at these currents the
+* input pairs are in weak inversion and steer over about 130 mV, so between the
+* thresholds *both* are partly on and the loop settles where they balance.  So
+* "does vcoarse hold at vctrl = 0.599?" has no good answer -- vcoarse holds at
+* whatever vctrl the null happens to be at, and drifts everywhere else, which
+* is the loop working, not failing.  The question worth asking is where that
+* null is, because in the closed loop it is the vctrl the receiver ends up
+* sitting at.  So: step vctrl across the window and measure dvcoarse/dt at each
+* step.  The null is where it changes sign.
 Vct vctrl 0 PWL
 + 0        0.10
 + 5u       1.10
 + 150u     1.10
-+ 150.5u   0.599
-+ 260u     0.599
-+ 270u     0.639
-+ 280u     0.559
-+ 290u     0.639
-+ 340u     0.599
-+ 340.5u   0.450
-+ 420u     0.450
++ 150.5u   0.680
++ 190u     0.680
++ 190.5u   0.640
++ 230u     0.640
++ 230.5u   0.600
++ 270u     0.600
++ 270.5u   0.560
++ 310u     0.560
++ 310.5u   0.520
++ 350u     0.520
 
 x1 VDD VSS ibias vctrl vcoarse coarse_loop
 
@@ -64,34 +75,41 @@ x1 VDD VSS ibias vctrl vcoarse coarse_loop
 
 .control
 save v(vcoarse) v(vctrl) v(x1.rstn) v(x1.rst) v(x1.nlo) v(x1.nhi) v(x1.vh) v(x1.vl)
-tran 50n 420u
+tran 50n 350u
 
-* 1. cold start
+* 1. cold start: the retrace must park at the SLOW end, or the search starts
+*    in the wrong place.
 meas tran v_park   MAX v(vcoarse) FROM=0    TO=5u
-* 2. search: rate over a clean stretch, and the two ends of the ramp
-meas tran vc_a     FIND v(vcoarse) AT=20u
-meas tran vc_b     FIND v(vcoarse) AT=40u
-let search_mV_us = (vc_a - vc_b)*1e3/20
+* 2. search rate, and the span it actually covers.  The first wrap searched
+*    only 0.15-0.40 V because its retrace resistor was mis-solved, which looks
+*    like a working loop in every waveform and silently cannot reach two thirds
+*    of the corners.
+meas tran vc_a     FIND v(vcoarse) AT=60u
+meas tran vc_b     FIND v(vcoarse) AT=70u
+let search_mV_us = (vc_a - vc_b)*1e3/10
 meas tran vc_lo    MIN v(vcoarse) FROM=10u  TO=150u
 meas tran vc_hi    MAX v(vcoarse) FROM=10u  TO=150u
-* The search has to cover the whole trim range, not a slice of it: the first
-* version retraced to 0.40 V instead of 0.85 V because the retrace resistor was
-* mis-solved, and searched only 0.15-0.40 -- which looks like a working loop in
-* every waveform and silently cannot reach two thirds of the corners.
-let search_span = vc_hi - vc_lo
-* 3+4. hold, through the ripple, with no help from a switch
-meas tran hold_a   FIND v(vcoarse) AT=200u
-meas tran hold_b   FIND v(vcoarse) AT=340u
-let hold_drift_mV = (hold_a - hold_b)*1e3
-* How long an unattended hold would take to walk the whole 0.7 V trim range.
-* The MOS-capacitor version of this circuit managed four milliseconds.
-let hold_walk_ms  = 0.70/((hold_a-hold_b)/140e-6)/1e-3
-* 5. the other direction
-meas tran up_a     FIND v(vcoarse) AT=345u
-meas tran up_b     FIND v(vcoarse) AT=415u
-let pullup_mV_us  = (up_b - up_a)*1e3/70
-print v_park vc_a vc_b search_mV_us vc_lo vc_hi search_span
-print hold_a hold_b hold_drift_mV hold_walk_ms up_a up_b pullup_mV_us
+let search_span  = vc_hi - vc_lo
+print v_park search_mV_us vc_lo vc_hi search_span
+* 3. the null.  Each step is sampled 10 us after it lands, to let the pairs
+*    settle, and 35 us later.
+meas tran n68a FIND v(vcoarse) AT=160u
+meas tran n68b FIND v(vcoarse) AT=188u
+meas tran n64a FIND v(vcoarse) AT=200u
+meas tran n64b FIND v(vcoarse) AT=228u
+meas tran n60a FIND v(vcoarse) AT=240u
+meas tran n60b FIND v(vcoarse) AT=268u
+meas tran n56a FIND v(vcoarse) AT=280u
+meas tran n56b FIND v(vcoarse) AT=308u
+meas tran n52a FIND v(vcoarse) AT=320u
+meas tran n52b FIND v(vcoarse) AT=348u
+let d_680 = (n68b-n68a)*1e3/28
+let d_640 = (n64b-n64a)*1e3/28
+let d_600 = (n60b-n60a)*1e3/28
+let d_560 = (n56b-n56a)*1e3/28
+let d_520 = (n52b-n52a)*1e3/28
+* mV/us of vcoarse at each vctrl; the null is where this changes sign.
+print d_680 d_640 d_600 d_560 d_520
 print v(x1.vh)[0] v(x1.vl)[0]
 * Named vectors only -- a bare `write` stores every node at every timepoint and
 * has exhausted this machine's memory before.  Five vectors over 8000 rows is

@@ -29,6 +29,32 @@
 * load and the pMOS is a correction.
 *
 * -------------------------------------------------------------------------
+* The input pair is 0.7 um, not the shipped 0.9 um
+*
+* The first corner sweep of the trimmed ring failed at tt / 125 C / 1.08 V:
+* trim fully on, tail at maximum, 573.7 MHz against a 600.6 MHz baud rate.  Two
+* thirds of the stage delay at that corner is the 61 ps transit term that no
+* amount of load trimming touches, and that term is set by the input pair's
+* channel length -- 0.9 um, inherited from sky130's 1.0 um, seven times the
+* minimum here, and sitting on the very node whose RC sets the ceiling, so it
+* costs twice.  ring_lin.spice sweeps it at both binding corners (hot and
+* low-supply with the trim on; cold and high-supply with the trim off):
+*
+*      Lin     hot/low, trim ON     cold/high, trim OFF
+*      0.9 um     573.7 MHz              367.5 MHz
+*      0.7 um     710.4                  462.7
+*      0.5 um     960.6                  601.2
+*      0.35 um   1275.3                  743.8
+*      0.13 um   1925.5                  962.2
+*
+* The ring has to bracket 600.6 MHz from both sides.  0.9 um cannot reach it
+* from below at the hot corner; 0.5 um and shorter cannot get *under* it at the
+* cold corner, where even with the trim entirely off the ring is already at
+* 601 MHz.  0.7 um clears both with 18 % at the top and 23 % at the bottom, and
+* it is the only value swept that does.  (tt only -- the three-process sweep is
+* vco_ct_pvt.spice.)
+* -------------------------------------------------------------------------
+*
 * Sizing the leg: why it was swept and not calculated
 *
 * The first attempt sized it by arithmetic.  W = 0.5 um, L = 1 um across an
@@ -57,7 +83,7 @@
 * when it is off) and its swing falls to 0.73 V at the strongest setting.
 * -------------------------------------------------------------------------
 
-.param Win=3 Lin=0.9
+.param Win=3 Lin=0.7
 .param Wtail=9 Ltail=0.13
 .param Rload=8000
 .param Wtr=4 Ltr=1.0

@@ -12,12 +12,6 @@ Circuit: * coarse_tb.spice -- the coarse loop on its own, with vctrl driven by h
 
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
-OSDI(debug) n.x1.xrlm.nr1: OSDI(debug) n.x1.xrlb.nr1: WARNING: V(i1,c) voltage is greater than specified by vmax
-WARNING: V(i1,c) voltage is greater than specified by vmax
-OSDI(debug) n.x1.xrlm.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
-OSDI(debug) n.x1.xrlb.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
-OSDI(debug) n.x1.xrlt.nr1: WARNING: V(i1,c) voltage is greater than specified by vmax
-OSDI(debug) n.x1.xrlt.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
 
 Initial Transient Solution
 --------------------------
@@ -30,54 +24,56 @@ vss                                          0
 ibias                                 0.484278
 vctrl                                      0.1
 x1.nb1                                0.743955
-x1.nb2                                0.243518
+x1.nb2                                0.193776
 x1.vh                                 0.719999
 x1.xrlt.dt                                   0
 x1.vl                                 0.479999
 x1.xrlm.dt                                   0
 x1.xrlb.dt                                   0
-x1.spu                                0.503508
+x1.spu                                0.473631
 vcoarse                                      0
-x1.snd                                0.519534
+x1.snd                                0.548284
 x1.nd                                  1.16104
-x1.ne                               0.00260189
+x1.ne                               0.00260197
 x1.nlo                                 1.19898
-x1.nhi                                 1.19943
+x1.nhi                                  1.1998
 x1.nlon                            9.46996e-08
 x1.rst                                     1.2
-x1.rstn                             1.9417e-07
+x1.rstn                            1.93694e-07
 x1.nas                               0.0508975
-x1.nbs                             1.07904e-07
-vct#branch                         1.82593e-12
-vss#branch                         4.41199e-06
-vdd#branch                        -0.000175859
+x1.nbs                             1.07696e-07
+vct#branch                         1.72329e-12
+vss#branch                         4.33537e-06
+vdd#branch                        -0.000175758
 vsub#branch                                  0
 
- Reference value :  3.19172e-08 Reference value :  4.00932e-05 Reference value :  5.86884e-05 Reference value :  6.78802e-05 Reference value :  7.05205e-05 Reference value :  7.08705e-05 Reference value :  7.12205e-05 Reference value :  7.15705e-05 Reference value :  7.19205e-05 Reference value :  7.22705e-05 Reference value :  7.26205e-05 Reference value :  7.29705e-05 Reference value :  7.33205e-05 Reference value :  7.36705e-05 Reference value :  7.39667e-05 Reference value :  7.44654e-05 Reference value :  7.49654e-05 Reference value :  7.54654e-05 Reference value :  7.59654e-05 Reference value :  7.65154e-05 Reference value :  7.70654e-05 Reference value :  8.99654e-05 Reference value :  1.04444e-04 Reference value :  1.19816e-04 Reference value :  1.36812e-04 Reference value :  1.39553e-04 Reference value :  1.48637e-04 Reference value :  1.66425e-04 Reference value :  1.81975e-04 Reference value :  1.94975e-04 Reference value :  2.22275e-04 Reference value :  2.39425e-04 Reference value :  2.61675e-04 Reference value :  2.86325e-04 Reference value :  3.15675e-04 Reference value :  3.36425e-04 Reference value :  3.56925e-04 Reference value :  3.74225e-04 Reference value :  4.01625e-04
-No. of Data Rows : 8730
-v_park              =  1.184862e+00 at=  2.277388e-08
-vc_a                =  1.196126e+00
-vc_b                =  2.237331e-01
-vc_lo               =  1.298031e-01 at=  1.388175e-04
-vc_hi               =  1.203037e+00 at=  4.274352e-05
-hold_a              =  5.759175e-01
-hold_b              =  4.941053e-01
-up_a                =  5.972990e-01
-up_b                =  8.331020e-01
-v_park = 1.184862e+00
-vc_a = 1.196126e+00
-vc_b = 2.237331e-01
-search_mv_us = 4.861965e+01
-vc_lo = 1.298031e-01
-vc_hi = 1.203037e+00
-search_span = 1.073234e+00
-hold_a = 5.759175e-01
-hold_b = 4.941053e-01
-hold_drift_mv = 8.181220e+01
-hold_walk_ms = 1.197865e+00
-up_a = 5.972990e-01
-up_b = 8.331020e-01
-pullup_mv_us = 3.368614e+00
+ Reference value :  0.00000e+00 Reference value :  3.49700e-06 Reference value :  1.84743e-05 Reference value :  3.87243e-05 Reference value :  4.75589e-05 Reference value :  5.82100e-05 Reference value :  8.12100e-05 Reference value :  9.68100e-05 Reference value :  1.08931e-04 Reference value :  1.19486e-04 Reference value :  1.34686e-04 Reference value :  1.37436e-04 Reference value :  1.50015e-04 Reference value :  1.54625e-04 Reference value :  1.59375e-04 Reference value :  1.71775e-04 Reference value :  1.87125e-04 Reference value :  2.05575e-04 Reference value :  2.19475e-04 Reference value :  2.30625e-04 Reference value :  2.40975e-04 Reference value :  2.44425e-04 Reference value :  2.48675e-04 Reference value :  2.49675e-04 Reference value :  2.58475e-04 Reference value :  2.65475e-04 Reference value :  2.80525e-04 Reference value :  2.95525e-04 Reference value :  3.05475e-04 Reference value :  3.14075e-04 Reference value :  3.34875e-04
+No. of Data Rows : 7187
+v_park              =  1.184968e+00 at=  2.081667e-08
+vc_a                =  9.338024e-01
+vc_b                =  7.373142e-01
+vc_lo               =  1.356861e-01 at=  4.757686e-05
+vc_hi               =  1.201727e+00 at=  4.810707e-05
+v_park = 1.184968e+00
+search_mv_us = 1.964882e+01
+vc_lo = 1.356861e-01
+vc_hi = 1.201727e+00
+search_span = 1.066041e+00
+n68a                =  3.838041e-01
+n68b                =  3.142987e-01
+n64a                =  3.013620e-01
+n64b                =  2.819859e-01
+n60a                =  2.799933e-01
+n60b                =  2.806764e-01
+n56a                =  2.870889e-01
+n56b                =  3.068561e-01
+n52a                =  3.303956e-01
+n52b                =  3.936936e-01
+d_680 = -2.48234e+00
+d_640 = -6.92004e-01
+d_600 = 2.439643e-02
+d_560 = 7.059714e-01
+d_520 = 2.260643e+00
 v(x1.vh)[0] = 7.199994e-01
 v(x1.vl)[0] = 4.799994e-01
 ngspice-42 done

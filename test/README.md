@@ -5,10 +5,14 @@ $ pip install -r test/requirements.txt
 $ pytest test/
 ```
 
-No PDK, no ngspice, no xschem, no network. The suite runs in well under a
-second and is safe to run on every push, which is the point: the failures it
-catches are all **silent** ones that the simulation flow would otherwise carry
-forward as plausible wrong answers.
+No PDK, no ngspice, no network. The suite runs in well under a second and is
+safe to run on every push, which is the point: the failures it catches are all
+**silent** ones that the simulation flow would otherwise carry forward as
+plausible wrong answers.
+
+One test does use xschem if it happens to be installed
+(`test_coarse_loop.test_netlist_matches_include`) and skips otherwise, so the
+promise above still holds on a bare checkout.
 
 ## What each file is for
 
@@ -80,3 +84,25 @@ loop's behaviour are measured by the decks in `sim/decks/` and recorded in
 `sim/results/`; they take minutes to hours and need the PDK. CI runs the port
 against the sky130 source and checks the committed schematics match, which is
 the closest thing to a cheap regression test this design has.
+
+**`test_coarse_loop.py` — the coarse loop's schematic must not drift from the
+include it was designed in.**
+
+`sim/decks/coarse_loop.inc` is where the coarse frequency loop was designed and
+debugged, because every question it raised is answered by a transient that
+takes seconds and redrawing a thirty-device schematic between iterations would
+have been the slow part of each one.  `xschem/coarse_loop.sch` is *generated*
+from it by `tools/gen_coarse_loop.py`.
+
+That arrangement fails in two directions and this file tests both: the include
+changes and nobody re-runs the generator, so the schematic -- which is what
+gets fabricated -- is a circuit nobody simulated; or somebody edits the
+schematic by hand and the next generator run silently reverts it.  Same hazard
+as the ported cells in CLAUDE.md section 4, same answer.
+
+It also pins two things that measurement decided and that would be easy to
+undo: that no MOS capacitor appears on the `vcoarse` node (773 pA of gate
+leakage on 384 um2, which is 184 mV/ms on that node -- see
+`docs/RING_DUAL_LOOP.md` section 5), and that the `Ksweep` simulation-only
+current scaling is committed as 1, since any other value would make every
+silicon number in the docs wrong.
