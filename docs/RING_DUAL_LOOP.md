@@ -151,8 +151,18 @@ an order of magnitude.  That is a property of using the same branch for the
 search and the trim, and it was not designed in; it falls out of the window
 comparator being soft.
 
-Whether 2.3 % is inside the fine loop's capture range is still unmeasured, and
-the closed-loop run is the direct test.
+Whether that is inside the fine loop's capture range is the open question, and
+there is now one bound on it. The first closed dual-loop run was seeded 2.7 %
+fast — `vctrl` at 0.57 V, where the new ring runs at about 617 MHz — and it
+**did not lock**: the recovered clock came out at 666.6 MHz with `vctrl`
+climbing at 63 mV/µs, which is §2's out-of-band signature. So the fine loop
+does not capture a 2.7 % step offset from a cold start.
+
+That is a bound on the *step* response, not on the swept one, and the two are
+different in the way that matters here. A search that moves at 0.44 %/µs dwells
+within ±1 % of the target for four and a half microseconds — three acquisition
+times — so it can capture a window a step could not. `e2e_dual_walk.spice` is
+the run that tests the swept case directly.
 
 A closed-loop transient long enough to contain a real acquisition is 40 µs of
 simulated time, and the 1.5 µs lock run already costs a quarter of an hour on
@@ -503,10 +513,15 @@ the largest single object in it.
       and the `coarse_loop` instance wired in through `POST_PORT_EDITS`
 - [x] 27-corner sweep, fast end: worst 692.1 MHz, 15.2 % of margin (§7.1)
 - [ ] 27-corner sweep, slow end: `vco_ct_floor.spice` running (§7.2)
-- [ ] fine loop capture range — **not measured**, and §3.2 depends on it
-      (`tools/capture_range.sh` is written and is an overnight job)
-- [ ] closed dual loop, in-band: must not disturb the locked numbers
-- [ ] closed dual loop, capturing
+- [x] 27-corner sweep, slow end: floors 425.8–566.3 MHz, worst 5.7 % under the
+      baud rate (§7.2)
+- [x] the coarse loop's own nine corners: trips, search rate and null (§6.1)
+- [x] applied to the design — trim legs in `ring_inverter`, `coarse_loop` in
+      `CDR`, decks migrated (`tools/apply_dual_loop.sh`)
+- [ ] fine loop capture range — one bound only: it does **not** capture a 2.7 %
+      step (§3.2). The swept case is the one that matters and is running.
+- [ ] closed dual loop, in-band: must not disturb the locked numbers — running
+- [ ] closed dual loop, handover: `e2e_dual_walk.spice` — running
 - [ ] re-run the closed-loop numbers with the 0.7 µm input pair — the existing
       600.614 MHz / 25.7 mV / 600.581 MHz / 65.3 mV were measured on the 0.9 µm
       ring and do not carry over
