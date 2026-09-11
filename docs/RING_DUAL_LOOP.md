@@ -285,7 +285,56 @@ it there, with a restoring slope of about 28 (µV/µs) per millivolt.  That is
 also what makes leakage a non-issue: this is a closed loop with a stable
 equilibrium, not a capacitor left open-circuit.
 
-## 7. Status
+## 7. The 27 corners
+
+`sim/decks/vco_ct_pvt.spice`, run once per process corner by
+`sim/run_corners.sh`.  Two points per corner rather than a tuning curve: the
+fastest the ring can be made (trim fully on, tail at maximum) and the slowest
+(trim fully off, tail low).  If 600.6 MHz lies between them the corner is
+covered, because the ring is monotonic in both knobs — and that is 18 transients
+per process corner instead of 36, which is what makes a 27-corner answer
+affordable at all.
+
+### 7.1 The fast end: all 27 clear
+
+Trim fully on, `vctrl` at VDD, MHz:
+
+| | −40 °C | | | 27 °C | | | 125 °C | | |
+|---|---|---|---|---|---|---|---|---|---|
+| **VDD** | 1.08 | 1.20 | 1.32 | 1.08 | 1.20 | 1.32 | 1.08 | 1.20 | 1.32 |
+| tt | 913.8 | 1007.4 | 1092.3 | 817.3 | 890.5 | 957.8 | 710.4 | 762.3 | 811.2 |
+| ss | 866.4 | 961.1 | 1047.0 | 784.3 | 858.9 | 927.9 | **692.1** | 744.8 | 794.9 |
+| ff | 958.2 | 1048.8 | 1130.3 | 846.4 | 916.8 | 981.2 | 725.6 | 775.8 | 822.7 |
+
+Worst case **692.1 MHz at ss / 125 °C / 1.08 V — 15.2 % above the baud rate.**
+This is the end that failed before: untrimmed, 19 of 27 corners could not reach
+600.6 MHz at any control voltage, and a bang-bang detector has no frequency
+acquisition, so a ring that cannot reach the baud rate never locks.  With the
+trim and the shorter input pair, none of them fails.
+
+### 7.2 The slow end: five points need a closer look
+
+Trim fully off, `vctrl` held at 0.45 V, MHz:
+
+| | −40 °C | | | 27 °C | | | 125 °C | | |
+|---|---|---|---|---|---|---|---|---|---|
+| tt | 441.7 | 451.4 | 462.7 | 522.1 | 534.2 | 545.4 | 589.4 | 597.4 | **605.1** |
+| ss | — | — | — | — | — | — | — | — | — |
+| ff | 552.5 | 560.9 | 568.4 | 587.5 | 596.7 | **605.1** | **619.9** | **631.2** | **640.9** |
+
+0.45 V is a convention, not the floor, and it is a bad one: it sits near the
+tail device's threshold, and where that threshold is moves a couple of hundred
+millivolts across process and temperature.  That shows up twice here in
+opposite directions — every ss point fails to oscillate at all at 0.45 V (the
+ring is slower than the measurement, so those corners are *more* comfortable
+than the table can show), and five points at tt and ff are above the baud rate
+on this reading and would be below it at a lower `vctrl`.
+
+`sim/decks/vco_ct_floor.spice` sweeps `vctrl` down to 0.30 V and reads the
+lowest frequency that still has a usable ring swing, which is the number this
+row should have contained.  **Running; §8 records it.**
+
+## 8. Status
 
 - [x] band signature measured — refuted the bidirectional-only trim, and
       justified the search (§2)
@@ -293,11 +342,19 @@ equilibrium, not a capacitor left open-circuit.
 - [x] trim leg measured as a resistance, and found to be 43 % as effective as
       that resistance in the ring (§4.1)
 - [x] hold capacitor: MOS ruled out by measurement, `cap_cmomf` chosen (§5)
-- [ ] trim-leg width sweep in the ring — running
-- [ ] open-loop: cold start, search rate, wrap, hold, pull-up — running
+- [x] trim-leg width sweep in the ring: W = 4 µm, 1.292:1 (§4.1)
+- [x] input pair shortened to 0.7 µm — the only swept value that brackets the
+      baud rate from both sides (`ring_lin.spice`)
+- [x] open-loop: cold start, search rate, wrap, and the null (§6)
+- [x] schematic capture: `xschem/coarse_loop.{sch,sym}` generated from the
+      include and checked against it by `test/test_coarse_loop.py`; trim legs
+      and the `coarse_loop` instance wired in through `POST_PORT_EDITS`
+- [x] 27-corner sweep, fast end: worst 692.1 MHz, 15.2 % of margin (§7.1)
+- [ ] 27-corner sweep, slow end: `vco_ct_floor.spice` running (§7.2)
 - [ ] fine loop capture range — **not measured**, and §3.2 depends on it
+      (`tools/capture_range.sh` is written and is an overnight job)
 - [ ] closed dual loop, in-band: must not disturb the locked numbers
-- [ ] closed dual loop, acquiring from a wrong band (scaled `Ksweep`)
-- [ ] PVT corner sweep of the dual loop
-- [ ] schematic capture: `coarse_loop.sch`, and the trim legs into
-      `ring_inverter.sch` via `POST_PORT_EDITS`
+- [ ] closed dual loop, capturing
+- [ ] re-run the closed-loop numbers with the 0.7 µm input pair — the existing
+      600.614 MHz / 25.7 mV / 600.581 MHz / 65.3 mV were measured on the 0.9 µm
+      ring and do not carry over
