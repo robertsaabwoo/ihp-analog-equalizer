@@ -38,6 +38,13 @@ VSS VSS 0 0
 * The chip's bias pad: 40 uA into the diode-connected reference.
 Ib  0 ibias dc 40u
 XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+* 100 fF on the bias node.  In the real macro ibias carries the CTLE's and the
+* CDR's mirrors and the pad; here it carries four gates and an ideal current
+* source, which is numerically stiff -- at -40 C the retrace edge killed the
+* run outright with "Timestep too small, trouble with node ibias".  This is a
+* testbench fix for a testbench artefact; the retrace device was weakened
+* separately, for the part of it that is a real disturbance.
+Cbias ibias 0 100f
 
 * vctrl: railed high for 150 us so the search has to run and wrap several
 * times, then a staircase through the window.

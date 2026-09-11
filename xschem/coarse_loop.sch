@@ -379,8 +379,8 @@ C {devices/lab_wire.sym} -20 800 0 0 {name=MNB4_G sig_type=std_logic lab=rst}
 C {devices/lab_wire.sym} 20 830 0 0 {name=MNB4_S sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 20 800 0 0 {name=MNB4_B sig_type=std_logic lab=VSS}
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} 140 800 0 0 {name=MRST
-l=3.000000e-07
-w=2.000000e-06
+l=1.000000e-06
+w=5.000000e-07
 ng=1
 m=1
 model=sg13_lv_pmos

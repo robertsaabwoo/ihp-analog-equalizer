@@ -173,10 +173,20 @@ XMNB2 rstn rst VDD VDD sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
 XMNB3 rstn nhi nbs VSS sg13_lv_nmos w=2u l=0.13u ng=1 m=1 mm_ok=1
 XMNB4 nbs  rst VSS VSS sg13_lv_nmos w=2u l=0.13u ng=1 m=1 mm_ok=1
 *
-* The retrace device.  W is deliberately small: against ~1 pF the retrace still
-* takes only tens of nanoseconds, and a strong device would couple its own
-* switching edge into vcoarse.
-XMRST vcoarse rstn VDD VDD sg13_lv_pmos w=2u l=0.3u ng=1 m=1 mm_ok=1
+* The retrace device, and it is deliberately weak.
+*
+* W = 2 um / L = 0.3 um pulls about 150 uA, which retraces 1 pF in a couple of
+* nanoseconds -- and at -40 C that step killed the simulation outright:
+* "Timestep too small, trouble with node ibias", at exactly the microsecond the
+* retrace fires.  ibias is a high-impedance node carrying only gate
+* capacitance, and a 150 uA step on the supply is a real disturbance to it, in
+* silicon as well as in the solver.
+*
+* The retrace has no reason to be fast.  It only has to be quick compared with
+* the *search*, which runs at 14 mV/us.  W = 0.5 um / L = 1 um pulls about
+* 10 uA and retraces the full range in roughly 100 ns -- still more than a
+* thousand times faster than the search, and a fifteenth of the disturbance.
+XMRST vcoarse rstn VDD VDD sg13_lv_pmos w=0.5u l=1u ng=1 m=1 mm_ok=1
 *
 * === the integrator ======================================================
 XCC vcoarse VSS cap_cmomf w='Ccrs_S' l='Ccrs_S' mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
