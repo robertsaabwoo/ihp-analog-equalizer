@@ -62,16 +62,15 @@
 * R = 1360*L/(W - 0.04u) + 1.6e-4/W, from the PDK's own expression at b=0.
 .func Lr(rv) '(rv - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
 
-* Window: VH = 0.70 V, VL = 0.52 V.  Locked vctrl is 0.599 V (e2e_lock_tt.log)
+* Window: VH = 0.72 V, VL = 0.48 V.  Locked vctrl is 0.599 V (e2e_lock_tt.log)
 * and the worst measured ripple is 65 mV pp on PRBS7 (e2e_prbs.log), so +-33 mV
-* about 0.599 clears both edges by about 70 mV.
-.param Rlk_t=175000            $ VDD .. vh
-.param Rlk_m=45000             $ vh  .. vl
-.param Rlk_b=180000            $ vl  .. VSS
-* Wrap: trips at 0.15 V, retraces to 0.85 V.
-.param Rwr_t=350000            $ VDD .. vw
-.param Rwr_b=50000             $ vw  .. VSS
-.param Rwr_h=21900             $ VDD .. retrace switch, in parallel with Rwr_t
+* about 0.599 leaves 87 mV of margin above and 86 mV below.  An earlier pass
+* used 0.70/0.52, which measured 0.675/0.540 and left only 26 mV on one side --
+* the arithmetic, not the circuit, was wrong.
+.param Rlk_t=160000            $ VDD .. vh   -> 0.72 V
+.param Rlk_m=80000             $ vh  .. vl   -> 0.48 V
+.param Rlk_b=160000            $ vl  .. VSS
+* The wrap needs no reference: see the comment on it below.
 
 * Ccoarse is cap_cmomf, not a MOS capacitor.  See the header: a MOS capacitor
 * of the same value drifts 184 mV/ms on its own leakage, which walks the whole
@@ -122,21 +121,50 @@ XMN1 ne  ne    VSS VSS sg13_lv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
 XMN2 vcoarse ne VSS VSS sg13_lv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
 *
 * === wrap ================================================================
-XRWT VDD vw  sub! rhigh w='Wres' l='Lr(Rwr_t)' m=1 b=0 mm_ok=1
-XRWB vw  VSS sub! rhigh w='Wres' l='Lr(Rwr_b)' m=1 b=0 mm_ok=1
-XRWH nwh vw  sub! rhigh w='Wres' l='Lr(Rwr_h)' m=1 b=0 mm_ok=1
-XMWH nwh rstn VDD VDD sg13_lv_pmos w=2u l=0.3u ng=1 m=1 mm_ok=1
+* The first version of this compared vcoarse against a resistor-divider tap
+* with a five-transistor comparator and a switched reference for hysteresis.
+* It did not work, and the waveform dump says why: with vcoarse at 1 mV and the
+* reference at 150 mV the comparator output sat at 586 mV -- below the trip of
+* the inverter behind it -- because a 150 mV difference is small next to the
+* input pair's own overdrive, so the pair never fully steered.  Making that
+* comparator honest means a defined tail current, a second gain stage, and a
+* reference divider that has to hold a 150 mV tap.
 *
-* pMOS input pair: the trip point is at the bottom of the vcoarse range, where
-* an nMOS pair has no common-mode room.  nwk goes HIGH when vcoarse < vw.
-XMWT swk nb1 VDD VDD sg13_lv_pmos w=2u l=1u ng=1 m=1 mm_ok=1        $ 1 uA tail
-XMW1 nwk vcoarse swk VDD sg13_lv_pmos w=4u l=0.3u ng=1 m=1 mm_ok=1
-XMW2 nw2 vw      swk VDD sg13_lv_pmos w=4u l=0.3u ng=1 m=1 mm_ok=1
-XMWN1 nw2 nw2 VSS VSS sg13_lv_nmos w=2u l=0.3u ng=1 m=1 mm_ok=1
-XMWN2 nwk nw2 VSS VSS sg13_lv_nmos w=2u l=0.3u ng=1 m=1 mm_ok=1
-* Square it up and invert: rstn is LOW while retracing.
-XMI1N rstn nwk VSS VSS sg13_lv_nmos w=1u l=0.13u ng=1 m=1 mm_ok=1
-XMI1P rstn nwk VDD VDD sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+* None of which is necessary, because the two trip points are at the *rails* of
+* the vcoarse range, and a transistor threshold is already there.  An nMOS with
+* its gate on vcoarse and a current-source load turns off below its own Vth, so
+* it detects "vcoarse near VSS" with full swing and no reference at all; a pMOS
+* the same way detects "vcoarse near VDD".  Two detectors and a latch replace a
+* comparator, a divider and a switched reference, and the three ~300 kohm poly
+* resistors that divider needed were about 100 um2 each.
+*
+* The trip points then move with Vth over temperature -- roughly 165 mV across
+* -40 to 125 C -- which would be unacceptable for the *window* thresholds and
+* is unimportant here: these two only have to land near the ends of the trim
+* range, and the range they bracket shrinks a little at hot.
+*
+* LO detector: ndl is HIGH when vcoarse is below about 0.15 V.
+XMDL nlo vcoarse VSS VSS sg13_lv_nmos w=2u     l=2u ng=1 m=1 mm_ok=1
+XMDLL nlo nb1    VDD VDD sg13_lv_pmos w='Wsrc' l=5u ng=1 m=1 mm_ok=1
+* HI detector: nhi is LOW when vcoarse is above about 0.85 V.
+XMDH nhi vcoarse VDD VDD sg13_lv_pmos w=2u     l=2u ng=1 m=1 mm_ok=1
+XMDHL nhi nb2    VSS VSS sg13_lv_nmos w='Wsrc' l=5u ng=1 m=1 mm_ok=1
+*
+* Cross-coupled NAND latch, active-low inputs.  nhi is already active low and
+* goes straight in as reset; the set input needs nlo inverted.
+XMIVN nlon nlo VSS VSS sg13_lv_nmos w=1u l=0.13u ng=1 m=1 mm_ok=1
+XMIVP nlon nlo VDD VDD sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+* NAND A: rst = nand(nlon, rstn)
+XMNA1 rst  nlon VDD VDD sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XMNA2 rst  rstn VDD VDD sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XMNA3 rst  nlon nas VSS sg13_lv_nmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XMNA4 nas  rstn VSS VSS sg13_lv_nmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+* NAND B: rstn = nand(nhi, rst)
+XMNB1 rstn nhi VDD VDD sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XMNB2 rstn rst VDD VDD sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XMNB3 rstn nhi nbs VSS sg13_lv_nmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XMNB4 nbs  rst VSS VSS sg13_lv_nmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+*
 * The retrace device.  W is deliberately small: against ~1 pF the retrace still
 * takes only tens of nanoseconds, and a strong device would couple its own
 * switching edge into vcoarse.

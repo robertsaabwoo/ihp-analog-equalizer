@@ -63,7 +63,7 @@ x1 VDD VSS ibias vctrl vcoarse coarse_loop
 .options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
 
 .control
-save v(vcoarse) v(vctrl) v(x1.rstn) v(x1.vh) v(x1.vl) v(x1.vw) v(x1.nb2)
+save v(vcoarse) v(vctrl) v(x1.rstn) v(x1.rst) v(x1.nlo) v(x1.nhi) v(x1.vh) v(x1.vl)
 tran 50n 420u
 
 * 1. cold start
@@ -92,7 +92,11 @@ meas tran up_b     FIND v(vcoarse) AT=415u
 let pullup_mV_us  = (up_b - up_a)*1e3/70
 print v_park vc_a vc_b search_mV_us vc_lo vc_hi search_span
 print hold_a hold_b hold_drift_mV hold_walk_ms up_a up_b pullup_mV_us
-print v(x1.vh)[0] v(x1.vl)[0] v(x1.vw)[0]
+print v(x1.vh)[0] v(x1.vl)[0]
+* Named vectors only -- a bare `write` stores every node at every timepoint and
+* has exhausted this machine's memory before.  Five vectors over 8000 rows is
+* a few hundred kilobytes and is what makes the wrap debuggable at all.
+wrdata ../results/coarse_tb.csv v(vcoarse) v(x1.rstn) v(x1.nlo) v(x1.nhi) v(vctrl)
 quit
 .endc
 .end

@@ -23,7 +23,7 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
 .endc
 
-.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_ss
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
 
@@ -53,7 +53,7 @@ foreach tmp -40 27 125
   foreach pt 1 2
    if $pt = 1
      alter Vcrs dc = $vd
-     alter Vc   dc = 0.35
+     alter Vc   dc = 0.45
    else
      alter Vcrs dc = 0.0
      alter Vc   dc = $vd

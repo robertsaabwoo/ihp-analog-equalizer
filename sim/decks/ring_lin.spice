@@ -1,0 +1,86 @@
+* ring_lin.spice -- buying speed from the part of the delay the load cannot
+* reach.
+*
+* vco_rsweep.spice split the ring's stage delay in two:
+*
+*     stage delay = 61.0 ps + 13.100 ps per kilohm of load
+*
+* The coarse trim works on the second term.  The first corner sweep of the
+* trimmed ring (vco_ctpvt_tt.log) says that is not enough: at tt / 125 C /
+* 1.08 V, with the trim fully on and the tail at maximum, the ring reaches
+* 573.7 MHz against a 600.6 MHz baud rate.  Two thirds of the stage delay at
+* that corner is the 61 ps term, and no amount of trim touches it.
+*
+* That 61 ps is the input pair's own transit time, and it is set by the pair's
+* channel length.  L = 0.9 um is inherited from sky130 (where it was 1.0 um);
+* it is seven times the minimum here, and it puts a large gate capacitance on
+* the very node whose RC sets the ceiling -- so it costs twice.
+*
+* This sweeps it, at both of the corners that bind: the hottest, lowest-supply
+* point with the trim fully on (can the ring still reach the baud rate?) and
+* the coldest, highest-supply point with the trim fully off (can it still go
+* slow enough, and does it still swing?).
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+.include ring_ct.inc
+
+.global sub!
+Vsub sub! 0 0
+VDD VDD 0 1.2
+VSS VSS 0 0
+Vc   vctrl   0 0.6
+Vcrs vcoarse 0 1.2
+
+x1 VDD VSS vctrl vcoarse vop vom ring_ct
+.ic v(vop)=1.0 v(vom)=0.4
+.options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
+
+.control
+save v(vop) v(vom) v(x1.net1)
+foreach lin 0.9 0.7 0.5 0.35 0.25 0.13
+ alterparam Lin = $lin
+ reset
+ * pt 1: the fast extreme at the hot, low corner -- the one that fails today.
+ set temp = 125
+ alter VDD = 1.08
+ alter Vcrs dc = 0.0
+ alter Vc   dc = 1.08
+ tran 5p 120n
+ let p_lin = $lin
+ let p_pt  = 1
+ meas tran t1 when v(vop)=v(vom) rise=6
+ meas tran t2 when v(vop)=v(vom) rise=26
+ let fosc = 20 / (t2 - t1)
+ meas tran vmax max v(x1.net1) from=60n to=120n
+ meas tran vmin min v(x1.net1) from=60n to=120n
+ let swing = vmax - vmin
+ print p_lin p_pt fosc swing
+ * pt 2: the slow extreme at the cold, high corner.
+ set temp = -40
+ alter VDD = 1.32
+ alter Vcrs dc = 1.32
+ alter Vc   dc = 0.45
+ tran 5p 120n
+ let p_lin = $lin
+ let p_pt  = 2
+ meas tran t3 when v(vop)=v(vom) rise=6
+ meas tran t4 when v(vop)=v(vom) rise=26
+ let fosc2 = 20 / (t4 - t3)
+ meas tran vmax2 max v(x1.net1) from=60n to=120n
+ meas tran vmin2 min v(x1.net1) from=60n to=120n
+ let swing2 = vmax2 - vmin2
+ print p_lin p_pt fosc2 swing2
+end
+quit
+.endc
+.end
