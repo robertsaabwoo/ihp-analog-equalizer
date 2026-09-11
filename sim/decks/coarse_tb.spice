@@ -1,0 +1,79 @@
+* coarse_tb.spice -- the coarse loop on its own, with vctrl driven by hand.
+*
+* No ring and no CDR here: vctrl is a PWL that plays the part the closed loop
+* would.  That is the whole point of running it this way -- a full closed-loop
+* transient costs twenty minutes and confounds every question, whereas this one
+* answers four separate questions in a few seconds each:
+*
+*   1. does the retrace self-start from a cold 0 V cap, and where does it park?
+*   2. with vctrl held high (unlocked), does vcoarse ramp at the designed
+*      4 mV/us, and does the wrap fire cleanly and restart the sweep?
+*   3. when vctrl drops through the threshold, does the sweep stop and hold?
+*   4. with vctrl then wandering by more than the fine loop's worst ripple,
+*      does the hysteresis keep it stopped?
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib  mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib    res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+
+.include coarse_loop.inc
+
+.global sub!
+Vsub sub! 0 0
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+* The chip's bias pad: 40 uA into the diode-connected reference.
+Ib  0 ibias dc 40u
+XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+
+* vctrl: railed high for 300 us (unlocked, sweeping), then dropped to 0.60 V
+* (the measured locked value), then given +-40 mV of wander -- more than the
+* 65 mV pp measured on PRBS7 -- to prove the hysteresis holds.
+Vct vctrl 0 PWL
++ 0        0.10
++ 20u      1.10
++ 300u     1.10
++ 300.5u   0.60
++ 380u     0.60
++ 390u     0.64
++ 400u     0.56
++ 410u     0.64
++ 500u     0.60
+
+x1 VDD VSS ibias vctrl vcoarse coarse_loop
+
+.ic v(vcoarse)=0
+
+.options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
+
+.control
+save v(vcoarse) v(vctrl) v(x1.swp) v(x1.rst) v(x1.vh) v(x1.vw) v(x1.nb2)
+tran 50n 500u
+
+* Where the retrace parks a cold cap.
+meas tran v_park  MAX v(vcoarse) FROM=0    TO=20u
+* The sweep rate, read over a clean stretch well away from either end.
+meas tran vc_a    FIND v(vcoarse) AT=60u
+meas tran vc_b    FIND v(vcoarse) AT=160u
+let slew_mV_us  = (vc_a - vc_b)*1e3/100
+* Wrap: how many retraces in the 280 us of unlocked sweep, and how deep.
+meas tran vc_lo   MIN v(vcoarse) FROM=30u  TO=300u
+meas tran vc_hi   MAX v(vcoarse) FROM=30u  TO=300u
+* Hold: vcoarse must not move once vctrl is back in range, ripple and all.
+meas tran hold_a  FIND v(vcoarse) AT=320u
+meas tran hold_b  FIND v(vcoarse) AT=500u
+let hold_drift_mV = (hold_a - hold_b)*1e3
+* And the loop must actually be stopped, not merely slow.
+meas tran swp_hold AVG v(x1.swp) FROM=320u TO=500u
+print v_park slew_mV_us vc_lo vc_hi hold_a hold_b hold_drift_mV swp_hold
+print v(x1.vh)[0] v(x1.nb2)[0]
+quit
+.endc
+.end
