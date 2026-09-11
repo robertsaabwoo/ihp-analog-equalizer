@@ -1,0 +1,103 @@
+* coarse_tb_pvt.spice -- the coarse loop's own corners.
+*
+* The wrap's two trip points are transistor thresholds rather than references,
+* which is deliberate: they sit at the rails of the vcoarse range, so what
+* moves over PVT is how much dead travel the search does at each end and not
+* whether it covers the middle.  That is an argument, and this is the
+* measurement.  If the LO trip rises far enough at ss / -40 C the search stops
+* reaching the fast third of the trim, and the corner table in section 7 --
+* which assumes vcoarse can reach 0 -- would be wrong.
+*
+* Also reads the null at each corner.  The null is where the closed loop parks
+* vctrl, so if it moves much with temperature the fine loop is being pushed
+* off-centre exactly when it has least margin.
+*
+* Same shape as coarse_tb.spice with a shorter search phase: one full search
+* and wrap is about 55 us at the nominal rate, so 70 us is enough to see the
+* span, and the staircase is three points instead of five.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib  mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib    res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib    cap_typ
+
+.include coarse_loop.inc
+
+.global sub!
+Vsub sub! 0 0
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+* The chip's bias pad: 40 uA into the diode-connected reference.
+Ib  0 ibias dc 40u
+XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+
+* vctrl: railed high for 150 us so the search has to run and wrap several
+* times, then a staircase through the window.
+*
+* The staircase is the real measurement, and it replaces a test that was asking
+* the wrong question.  The window is not a dead zone: at these currents the
+* input pairs are in weak inversion and steer over about 130 mV, so between the
+* thresholds *both* are partly on and the loop settles where they balance.  So
+* "does vcoarse hold at vctrl = 0.599?" has no good answer -- vcoarse holds at
+* whatever vctrl the null happens to be at, and drifts everywhere else, which
+* is the loop working, not failing.  The question worth asking is where that
+* null is, because in the closed loop it is the vctrl the receiver ends up
+* sitting at.  So: step vctrl across the window and measure dvcoarse/dt at each
+* step.  The null is where it changes sign.
+Vct vctrl 0 PWL
++ 0       0.10
++ 3u      1.10
++ 70u     1.10
++ 70.5u   0.660
++ 95u     0.660
++ 95.5u   0.600
++ 120u    0.600
++ 120.5u  0.540
++ 145u    0.540
+
+x1 VDD VSS ibias vctrl vcoarse coarse_loop
+
+.ic v(vcoarse)=0
+
+.options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
+
+.control
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+
+save v(vcoarse) v(vctrl) v(x1.rstn) v(x1.rst) v(x1.nlo) v(x1.nhi) v(x1.vh) v(x1.vl)
+tran 50n 145u
+
+* Per corner: where the retrace parks, the two trip points the search runs
+* between, the rate, and the null.
+meas tran v_park FIND v(vcoarse) AT=2u
+meas tran vc_lo  MIN  v(vcoarse) FROM=5u TO=70u
+meas tran vc_hi  MAX  v(vcoarse) FROM=5u TO=70u
+meas tran s_a    FIND v(vcoarse) AT=30u
+meas tran s_b    FIND v(vcoarse) AT=40u
+let search_mV_us = (s_a - s_b)*1e3/10
+meas tran n66a FIND v(vcoarse) AT=78u
+meas tran n66b FIND v(vcoarse) AT=94u
+meas tran n60a FIND v(vcoarse) AT=103u
+meas tran n60b FIND v(vcoarse) AT=119u
+meas tran n54a FIND v(vcoarse) AT=128u
+meas tran n54b FIND v(vcoarse) AT=144u
+let d_660 = (n66b-n66a)*1e3/16
+let d_600 = (n60b-n60a)*1e3/16
+let d_540 = (n54b-n54a)*1e3/16
+let p_temp = $tmp
+let p_vdd  = $vd
+print p_temp p_vdd v_park vc_lo vc_hi search_mV_us d_660 d_600 d_540
+ end
+end
+quit
+.endc
+.end
