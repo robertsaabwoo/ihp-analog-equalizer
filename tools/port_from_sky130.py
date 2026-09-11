@@ -760,11 +760,13 @@ def add_coarse_trim(text: str) -> str:
             "l=%gu\nw=%gu\nng=1\nm=1\nmm_ok=1\n"
             "model=sg13_lv_pmos\nspiceprefix=X}\n"
             % (x, name, TRIM_L, TRIM_W))
-        for dx, dy, lab in ((20, -30, "VDD"), (20, 30, out),
-                            (-20, 0, "vcoarse!"), (20, 0, "VDD")):
+        # Named by *pin*, not by net: source and bulk are both VDD, and two
+        # labels called T1_VDD is a duplicate instance name in xschem.
+        for pin, dx, dy, lab in (("S", 20, -30, "VDD"), ("D", 20, 30, out),
+                                 ("G", -20, 0, "vcoarse!"), ("B", 20, 0, "VDD")):
             text += ("C {devices/lab_wire.sym} %d %d 0 0 "
                      "{name=%s_%s sig_type=std_logic lab=%s}\n"
-                     % (x + dx, 240 + dy, name, lab.strip("+-!"), lab))
+                     % (x + dx, 240 + dy, name, pin, lab))
     return text
 
 
