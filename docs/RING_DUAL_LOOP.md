@@ -134,7 +134,25 @@ is 3.8 MHz/µs, so during a 1.5 µs acquisition the target moves 5.8 MHz — abo
 1 % of the baud rate.  **The fine loop's capture range has not been measured**,
 which is the open question this number depends on; §6 lists it.
 
-That is the design point: 20 nA into a 1.05 pF `Ccoarse`, 19 mV/µs.
+That is the design point: 20 nA into a 1.05 pF `Ccoarse`, 19 mV/µs — measured
+at 19.6 (§6).
+
+Two corrections to that arithmetic, one in each direction.  The coarse knob's
+authority at tt / 27 °C / 1.2 V is not 142 MHz but about 356 MHz (534 → 890 MHz
+across the range, §7), so the search moves the ring at **9.2 MHz/µs**, and
+during a 1.5 µs acquisition the target moves 2.3 % rather than 1 %.
+
+Against that, the search **decelerates as it approaches lock**, and by a lot.
+The pull-down current is not constant: it falls as `vctrl` comes down toward
+`VH`, and the null table in §6 measures the shape — 19.6 mV/µs with `vctrl`
+railed, 2.48 mV/µs at `vctrl` = 0.68 V, 0.69 mV/µs at 0.64 V.  So the moment the
+fine loop begins to pull `vctrl` down, the thing it is chasing slows by nearly
+an order of magnitude.  That is a property of using the same branch for the
+search and the trim, and it was not designed in; it falls out of the window
+comparator being soft.
+
+Whether 2.3 % is inside the fine loop's capture range is still unmeasured, and
+the closed-loop run in §9 is the direct test.
 
 A closed-loop transient long enough to contain a real acquisition is 40 µs of
 simulated time, and the 1.5 µs lock run already costs a quarter of an hour on
