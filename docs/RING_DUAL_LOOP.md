@@ -152,7 +152,7 @@ search and the trim, and it was not designed in; it falls out of the window
 comparator being soft.
 
 Whether 2.3 % is inside the fine loop's capture range is still unmeasured, and
-the closed-loop run in §9 is the direct test.
+the closed-loop run is the direct test.
 
 A closed-loop transient long enough to contain a real acquisition is 40 µs of
 simulated time, and the 1.5 µs lock run already costs a quarter of an hour on
@@ -387,10 +387,48 @@ tail device would have moved it.
 
 8000 → 9000 Ω, then: a 12.5 % slower floor takes ss / 125 °C / 1.32 V to about
 540 MHz, and costs the worst ceiling (692.1 MHz at ss / 125 °C / 1.08 V) about
-7 %, leaving roughly 645 MHz.  **Re-running all three sweeps at 9000 Ω; §8
+7 %, leaving roughly 645 MHz.  **Re-running all three sweeps at 9000 Ω; §9
 records the result.**
 
-## 8. Status
+## 8. What this loop is not, and what has not been checked
+
+The repository's habit is to distinguish "measured" from "not measured" rather
+than estimate, so:
+
+**Trim-leg mismatch is not modelled.** Ten pMOS legs share one gate rail, which
+is the good case for matching, but mismatch between them makes the ring's ten
+stage delays unequal and that is deterministic jitter on the recovered clock.
+The instances carry `mm_ok=1` so the PDK's mismatch models *can* be turned on;
+no Monte Carlo has been run, here or anywhere else in this design.
+
+**Link-down behaviour is reasoned, not simulated.** With no data the phase
+detector is blind, the pump integrates its own 11 % mismatch, `vctrl` rails
+high and the coarse loop searches and wraps indefinitely — which is the correct
+thing for it to do, and it re-acquires when data returns. That is the expected
+behaviour of the measured pieces, not an observation.
+
+**The startup precharge is not a factor, by arithmetic.** `vctrl_precharge`
+holds `vctrl` for 76 ns before releasing; at 19.6 mV/µs the coarse loop moves
+1.5 mV in that time.
+
+**The wrap trip points move with threshold voltage.** They are transistor
+thresholds, not references — roughly 165 mV of movement across −40 to 125 °C.
+That is deliberate (§3, the wrap paragraph): both trips sit at the rails of the
+`vcoarse` range, so what moves is how much dead travel the search does at each
+end, not whether it covers the middle. It is not acceptable for the *window*
+thresholds, which is why those still come from a divider.
+
+**`Ksweep` exists and must stay at 1.** It scales the loop's bias currents so a
+closed-loop acquisition can be made to fit in an affordable transient. Anything
+committed with `Ksweep` other than 1 makes every silicon number here wrong;
+`test/test_coarse_loop.py` pins it.
+
+**The area is not free.** `cap_cmomf` at 1.05 pF is 812 µm², against a total
+drawn device area of 2131 µm² before the coarse loop. The loop roughly doubles
+the design's passive area, and the CTLE's degeneration capacitor was already
+the largest single object in it.
+
+## 9. Status
 
 - [x] band signature measured — refuted the bidirectional-only trim, and
       justified the search (§2)
