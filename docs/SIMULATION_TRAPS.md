@@ -308,3 +308,94 @@ exit status. The rcfile flag is `--rcfile`.
 Multiplying that by `1e-6` "to convert to microns" gives a 22 pm capacitor,
 which ngspice simulates without complaint — it just shows no peaking at all,
 and the first hour goes into looking for the mistake in the topology.
+
+### 2.14 A swing filter on a buffered output measures the buffer
+
+`sim/decks/ring_p.inc` and `ring_ct.inc` both end with a `diff_amp_inv` output
+buffer hanging off the last ring stage. Every `meas ... PP v(vop)` therefore
+reports the *buffer's* swing, which is very nearly rail to rail whatever the
+ring is doing.
+
+The first coarse-trim sweep read a swing of 0.752 V with the trim off and
+0.771 V with it fully on, and concluded the trim was barely conducting. A
+direct dc measurement (`sim/decks/trim_r.spice`) then showed the load resistance
+dropping 20.8 %, which is a swing change of the same order in the opposite
+direction. The two numbers were about different nodes.
+
+Rule: filter on `v(x1.net1)` — the first ring stage's own output — and say so in
+the deck. This is the same rule as 2.10b in a different disguise: measure the
+thing whose behaviour is in question, not the thing that is easy to probe.
+
+### 2.15 A MOS capacitor leaks, and on a hold node that is the whole budget
+
+`moscap_n` is six times denser than `cap_cmomf` and `docs/DESIGN.md` rules it
+out of the signal path for its voltage coefficient — which looks like an
+objection that does not apply to an integrator that only sets a rate. It does
+apply, for a different reason. Measured at 384 µm² and a 0.42 V bias
+(`sim/decks/cap_leak.spice`):
+
+| | dc gate current | C | I/C |
+|---|---|---|---|
+| `moscap_n` | 773 pA | 4.19 pF | 184 mV/ms |
+| `moscap_p` | 13.7 pA | 1.20 pF | 11.4 mV/ms |
+| `cap_cmomf` | 0.42 pA | 0.49 pF | 0.85 mV/ms |
+
+`I/C` is volts per second of drift and does not improve by scaling the
+capacitor, because the leakage scales with it. 184 mV/ms walked the coarse
+loop's whole 0.7 V trim range in under four milliseconds.
+
+The symptom was a node drifting 0.17 mV/µs while it was supposed to be holding.
+The first suspect was the series switch, which was rebuilt from one minimum
+device into two long ones — and the drift changed by 0.6 mV. Measuring the
+capacitor directly took ten minutes and should have come first.
+
+### 2.16 A differential pair does not steer on an input smaller than its overdrive
+
+A five-transistor comparator with its trip point at 150 mV, comparing against a
+node at 1 mV — a 149 mV difference, which should be decisive — held its output
+at **586 mV**, just under the trip of the inverter behind it. So the stage it
+was supposed to fire never fired, no `meas` failed, no error appeared, and the
+loop it was part of looked like a working loop that had simply chosen to sit at
+one end of its range.
+
+The pair's tail current was not what its mirror ratio said it was, so its
+overdrive was several hundred millivolts and a 149 mV input barely moved it. A
+5T OTA whose tail is set by a long mirror chain is a plausible-wrong-answer
+generator: it always produces *an* output voltage.
+
+Two rules. Dump the comparator's own output node, not just the node it is
+supposed to control — `wrdata` with an explicit vector list is cheap and the
+answer was one column of it. And where the trip point is at a supply rail,
+prefer a threshold detector to a comparator: an nMOS with its gate on the node
+and a current-source load detects "near VSS" with full swing, no reference, and
+no tail to get wrong. The rewrite that did that also deleted three 300 kΩ poly
+resistors.
+
+### 2.17 A divider tap solved wrong gives a loop that works over a third of its range
+
+The same wrap circuit, once it fired, retraced to 0.40 V instead of 0.85 V,
+because the hysteresis resistor had been solved as if it were in series when it
+is in parallel. The loop then searched 0.15–0.40 V: it started, ramped, wrapped,
+restarted, and did all of it in every waveform exactly as designed, over a third
+of the range it was supposed to cover. Nothing failed.
+
+Measure the span, not the behaviour. `coarse_tb.spice` now asserts
+`vc_hi - vc_lo` explicitly, and the same deck prints the divider taps at t = 0
+(`print v(x1.vh)[0] v(x1.vl)[0]`) — which is how a *second* arithmetic slip was
+caught, thresholds intended as 0.70/0.52 V that were in fact 0.675/0.540.
+
+### 2.18 A pMOS sized as a resistor is not worth its resistance
+
+`trim_r.spice` confirmed the hand arithmetic for a pMOS trim leg across a poly
+load to 1 %: predicted −21 % on the load resistance, measured −20.8 %. In the
+ring, the same leg was worth **+5.6 %** of frequency where a real resistor of
+that value is worth about +13 %.
+
+A pMOS is only a resistor while it stays in triode. At the bottom of a CML
+stage's swing its source-drain voltage approaches its overdrive, it becomes a
+current source, and it stops helping the *rising* edge — which is the edge the
+RC ceiling is made of. About 43 % as effective as the resistance it imitates.
+
+Rule: a device used as a controlled resistance in a switching circuit has to be
+swept in that circuit. Its dc operating point is a different measurement and
+will agree with the arithmetic while the circuit does not.
