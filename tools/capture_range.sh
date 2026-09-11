@@ -16,6 +16,12 @@
 # Reads out f_long (did it reach the baud rate), vctrl_lock (where the fine
 # loop had to sit to do it) and the e1/e2 pair (is vctrl still drifting, which
 # is what "not locked" looks like -- see section 2).
+#
+# IMPORTANT once the coarse loop is in the netlist: this measures the *fine*
+# loop, so the coarse loop has to be held still or it simply corrects the
+# detuning and every point passes.  e2e_lock.spice pins vcoarse! with a voltage
+# source for exactly that reason; check that it is still there before trusting
+# a result from this script.
 set -eu
 cd "$(dirname "$0")/.."
 ROOT=$(pwd)

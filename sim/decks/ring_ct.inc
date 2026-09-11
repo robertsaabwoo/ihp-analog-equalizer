@@ -6,7 +6,7 @@
 * range covers 8 of 27 PVT corners.  The coarse loop drives vcoarse, which sits
 * on the gate of a small pMOS in parallel with each poly load resistor:
 *
-*      VDD --+--[Rload 8000]--+-- vo+
+*      VDD --+--[Rload 9000]--+-- vo+
 *            |                |
 *            +--|MTR (pMOS)---+          gate = vcoarse
 *
@@ -55,6 +55,23 @@
 * vco_ct_pvt.spice.)
 * -------------------------------------------------------------------------
 *
+* The load is 9000 ohm, and the number that set it is the *floor*
+*
+* At low tail current the ring is current-starved, the stage delay is
+* C*swing/I with swing = I*R, and the frequency is therefore 1/RC -- it stops
+* depending on the current at all.  What stops it going slower is the swing
+* dying: below about 0.15 V single-ended the measurement (and the buffer after
+* it) stops meaning anything.  So the lowest frequency the ring can be held at
+* is set by the load resistance and nothing else, and it goes as 1/R.
+*
+* At 8000 ohm that floor was 606.4 MHz at ss / 125 C / 1.32 V -- 1.0 % *above*
+* the baud rate, so the one corner in 27 the coarse loop could not cover was a
+* corner where the ring could not be made slow enough.  vco_ct_centre.spice
+* said the same thing from the other side: at tt / 27 C / 1.2 V with the trim
+* entirely off the ring was already at 685.6 MHz at vctrl = 0.60, so nominal
+* sat at the slow rail with nothing in reserve.  Both are the base resistor
+* being too small for the shorter input pair.
+*
 * Sizing the leg: why it was swept and not calculated
 *
 * The first attempt sized it by arithmetic.  W = 0.5 um, L = 1 um across an
@@ -85,7 +102,7 @@
 
 .param Win=3 Lin=0.7
 .param Wtail=9 Ltail=0.13
-.param Rload=8000
+.param Rload=9000
 .param Wtr=4 Ltr=1.0
 .param Wres=1u
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'

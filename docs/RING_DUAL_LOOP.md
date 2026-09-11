@@ -330,27 +330,65 @@ This is the end that failed before: untrimmed, 19 of 27 corners could not reach
 acquisition, so a ring that cannot reach the baud rate never locks.  With the
 trim and the shorter input pair, none of them fails.
 
-### 7.2 The slow end: five points need a closer look
+### 7.2 The slow end, and why the load resistor is 9000 Ω
 
-Trim fully off, `vctrl` held at 0.45 V, MHz:
+Read at a fixed `vctrl` of 0.45 V the slow end looks like this — trim fully
+off, MHz, with a 9000 Ω load's predecessor at 8000 Ω:
 
 | | −40 °C | | | 27 °C | | | 125 °C | | |
 |---|---|---|---|---|---|---|---|---|---|
+| **VDD** | 1.08 | 1.20 | 1.32 | 1.08 | 1.20 | 1.32 | 1.08 | 1.20 | 1.32 |
 | tt | 441.7 | 451.4 | 462.7 | 522.1 | 534.2 | 545.4 | 589.4 | 597.4 | **605.1** |
 | ss | — | — | — | — | — | — | — | — | — |
 | ff | 552.5 | 560.9 | 568.4 | 587.5 | 596.7 | **605.1** | **619.9** | **631.2** | **640.9** |
 
-0.45 V is a convention, not the floor, and it is a bad one: it sits near the
-tail device's threshold, and where that threshold is moves a couple of hundred
-millivolts across process and temperature.  That shows up twice here in
-opposite directions — every ss point fails to oscillate at all at 0.45 V (the
-ring is slower than the measurement, so those corners are *more* comfortable
-than the table can show), and five points at tt and ff are above the baud rate
-on this reading and would be below it at a lower `vctrl`.
+0.45 V is a convention and a bad one.  It sits near the tail device's
+threshold, and where that threshold is moves a couple of hundred millivolts
+across process and temperature — so the same number means "comfortably above
+the floor" at one corner and "the ring is dead" at another.  That is why every
+ss point is blank (the ring does not oscillate at 0.45 V there at all, which
+means those corners are *more* comfortable than the table can show) while six
+tt and ff points read above the baud rate and would read below it at a lower
+`vctrl`.
 
-`sim/decks/vco_ct_floor.spice` sweeps `vctrl` down to 0.30 V and reads the
-lowest frequency that still has a usable ring swing, which is the number this
-row should have contained.  **Running; §8 records it.**
+`sim/decks/vco_ct_floor.spice` sweeps `vctrl` down to 0.30 V instead and reads
+the lowest frequency that still has a usable ring swing — 0.15 V single-ended,
+the 300 mV differential threshold `docs/DESIGN.md` filters on everywhere else,
+and read on the ring node rather than the buffered output for the reason in
+trap 2.14.  At 8000 Ω:
+
+| corner | floor | at `vctrl` | swing |
+|---|---|---|---|
+| tt / 125 °C / 1.32 V | 582.0 MHz | 0.42 V | 0.303 V |
+| ff / 125 °C / 1.32 V | 570.0 MHz | 0.36 V | 0.295 V |
+| ff / 125 °C / 1.08 V | 576.8 MHz | 0.39 V | 0.375 V |
+| ff / 27 °C / 1.32 V | 532.8 MHz | 0.39 V | 0.318 V |
+| **ss / 125 °C / 1.32 V** | **606.4 MHz** | 0.50 V | 0.429 V |
+
+Five of the six suspect points come back well under the baud rate: the
+convention was the problem, not the ring.  The sixth does not.  **At
+ss / 125 °C / 1.32 V the ring bottoms out at 606.4 MHz, 1.0 % above the baud
+rate**, and below that `vctrl` the swing collapses and it stops oscillating.
+One corner in 27 where the ring cannot be made slow *enough* — the opposite of
+the failure this branch started from.
+
+`sim/decks/vco_ct_centre.spice` said the same thing from the other side.  At
+tt / 27 °C / 1.2 V, trim entirely off, `vctrl` = 0.60 V, the ring was already
+at **685.6 MHz**: nominal sat at the slow rail of the coarse range with nothing
+in reserve, because the coarse trim can only ever speed the ring up.
+
+Both are the base load resistor being too small for the shorter input pair, and
+the floor is the quantity that identifies it.  At low tail current the ring is
+current-starved: the stage delay is `C·swing/I` with `swing = I·R`, so the
+frequency is `1/RC` and stops depending on the current at all.  What stops it
+going slower is the swing dying.  **The floor is set by the load resistance and
+nothing else, and it goes as 1/R** — which is also why no amount of work on the
+tail device would have moved it.
+
+8000 → 9000 Ω, then: a 12.5 % slower floor takes ss / 125 °C / 1.32 V to about
+540 MHz, and costs the worst ceiling (692.1 MHz at ss / 125 °C / 1.08 V) about
+7 %, leaving roughly 645 MHz.  **Re-running all three sweeps at 9000 Ω; §8
+records the result.**
 
 ## 8. Status
 

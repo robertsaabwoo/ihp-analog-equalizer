@@ -189,13 +189,26 @@ SIZING: dict[tuple[str, str], dict] = {
     ("ring_inverter", "M1"): {"W": 3, "L": 0.7},
     ("ring_inverter", "M4"): {"W": 3, "L": 0.7},
 
-    # The load moves from 7355 to 8000 ohm because the trim leg only ever
-    # speeds the ring up: the poly resistor has to sit at the *slow* end of the
-    # span so that vcoarse = VDD is a state in which the trim is absent and the
-    # ring is the untrimmed circuit.  8000 ohm with a 4 um leg gives 1.292:1 of
-    # centre-frequency range against the 1.254:1 the corner sweep asks for.
-    ("ring_inverter", "R1"): {"R": 8000},
-    ("ring_inverter", "R2"): {"R": 8000},
+    # The load moves from 7355 to 9000 ohm.  Two reasons, and the second one is
+    # the one that set the value.
+    #
+    # The trim leg only ever speeds the ring up, so the poly resistor has to
+    # sit at the *slow* end of the span -- vcoarse = VDD then means the trim is
+    # absent and the ring is the untrimmed circuit, and there is no state in
+    # which the trim makes things worse.
+    #
+    # And the load alone sets how slow the ring can be held.  At low tail
+    # current the ring is current-starved, the stage delay is C*swing/I with
+    # swing = I*R, and the frequency is 1/RC -- independent of the current.
+    # What stops it going slower is the swing dying, below about 0.15 V
+    # single-ended.  So the floor goes as 1/R.  At 8000 ohm that floor was
+    # 606.4 MHz at ss / 125 C / 1.32 V, 1.0 % *above* the baud rate: the one
+    # corner in 27 the coarse loop could not cover was one where the ring could
+    # not be made slow *enough*.  vco_ct_centre.spice agreed from the other
+    # side -- at tt / 27 C / 1.2 V with the trim off the ring was already at
+    # 685.6 MHz at vctrl = 0.60, so nominal sat at the slow rail.
+    ("ring_inverter", "R1"): {"R": 9000},
+    ("ring_inverter", "R2"): {"R": 9000},
 
     # ------------------------------ differential-to-single-ended converter
     # diff_amp_inv is instantiated twice: once as the ring oscillator's own
