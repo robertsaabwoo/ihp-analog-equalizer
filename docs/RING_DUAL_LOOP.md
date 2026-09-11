@@ -246,7 +246,46 @@ declining to report a gate current rather than a measurement of one, and the
 threshold, so that number says nothing about its oxide capacitance.  It is here
 because it was tried.
 
-## 6. Status
+## 6. What the loop does, open-loop
+
+`sim/decks/coarse_tb.spice` drives `vctrl` by hand and watches `vcoarse`.  No
+ring and no CDR: a closed-loop transient long enough to contain a real
+acquisition is tens of microseconds, the 1.5 µs lock run already costs a
+quarter of an hour on this machine, and every question would be confounded with
+every other.  Driven open-loop each one is answered in a few seconds.
+
+| what | measured |
+|---|---|
+| cold start, `Ccoarse` at 0 V | retraces and parks at **1.185 V** — the slow end, which is where a search has to start |
+| search rate | **19.6 mV/µs** (design point 19) |
+| search span | 0.136 → 1.202 V, **1.066 V**, the whole trim range |
+| wrap | fires and restarts the search, repeatedly, over 150 µs of railed `vctrl` |
+
+And the measurement that matters most, which took two attempts to even ask
+correctly.  The window is **not** a dead zone: at 20 nA the input pairs are in
+weak inversion and steer over about 130 mV, so between the thresholds both are
+partly on and the loop settles where they balance.  "Does `vcoarse` hold at
+`vctrl` = 0.599 V?" therefore has no good answer — `vcoarse` holds at whatever
+`vctrl` the null is at and drifts everywhere else, which is the loop working,
+not failing.  The question worth asking is where the null is, because in the
+closed loop that is the `vctrl` the receiver ends up sitting at:
+
+| `vctrl` held at | d`vcoarse`/dt |
+|---|---|
+| 0.680 V | −2.48 mV/µs |
+| 0.640 V | −0.69 mV/µs |
+| **0.600 V** | **+0.024 mV/µs** |
+| 0.560 V | +0.71 mV/µs |
+| 0.520 V | +2.26 mV/µs |
+
+The null is at **0.600 V**, and the fine loop's measured locked `vctrl` is
+0.599 V.  So the coarse loop does not merely tolerate the fine loop's operating
+point — it regulates `vctrl` to the middle of the fine loop's range and holds
+it there, with a restoring slope of about 28 (µV/µs) per millivolt.  That is
+also what makes leakage a non-issue: this is a closed loop with a stable
+equilibrium, not a capacitor left open-circuit.
+
+## 7. Status
 
 - [x] band signature measured — refuted the bidirectional-only trim, and
       justified the search (§2)

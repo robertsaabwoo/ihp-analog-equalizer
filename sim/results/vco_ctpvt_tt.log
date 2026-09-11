@@ -656,4 +656,544 @@ vss#branch                          0.00174036
 vdd#branch                         -0.00171932
 vsub#branch                                  0
 
- Reference value :  1.85139e-09 Reference value :  3.69639e-09 Reference value :  5.55639e-09 Reference value :  7.15139e-09 Reference value :  8.90139e-09 Reference value :  1.03664e-08 Reference value :  1.22064e-08 Reference value :  1.38214e-08 Reference value :  1.53914e-08 Reference value :  1.71664e-08 Reference value :  1.89664e-08 Reference value :  2.03414e-08 Reference value :  2.23364e-08 Reference value :  2.40414e-08 Reference value :  2.61564e-08 Reference value :  2.72214e-08 Reference value :  2.90064e-08 Reference value :  3.10814e-08 Reference value :  3.30264e-08 Reference value :  3.61314e-08 Reference value :  3.92264e-08 Reference value :  4.09164e-08 Reference value :  4.28714e-08 Reference value :  4.45414e-08 Reference value :  4.66714e-08 Reference value :  4.89914e-08 Reference value :  5.14414e-08 Reference value :  5.24214e-08 Reference value :  5.43964e-08 Reference value :  5.60264e-08 Reference value :  5.78414e-08 Reference value :  6.00164e-08
+ Reference value :  1.85139e-09 Reference value :  3.69639e-09 Reference value :  5.55639e-09 Reference value :  7.15139e-09 Reference value :  8.90139e-09 Reference value :  1.03664e-08 Reference value :  1.22064e-08 Reference value :  1.38214e-08 Reference value :  1.53914e-08 Reference value :  1.71664e-08 Reference value :  1.89664e-08 Reference value :  2.03414e-08 Reference value :  2.23364e-08 Reference value :  2.40414e-08 Reference value :  2.61564e-08 Reference value :  2.72214e-08 Reference value :  2.90064e-08 Reference value :  3.10814e-08 Reference value :  3.30264e-08 Reference value :  3.61314e-08 Reference value :  3.92264e-08 Reference value :  4.09164e-08 Reference value :  4.28714e-08 Reference value :  4.45414e-08 Reference value :  4.66714e-08 Reference value :  4.89914e-08 Reference value :  5.14414e-08 Reference value :  5.24214e-08 Reference value :  5.43964e-08 Reference value :  5.60264e-08 Reference value :  5.78414e-08 Reference value :  6.00164e-08 Reference value :  6.10564e-08 Reference value :  6.24814e-08 Reference value :  6.41364e-08 Reference value :  6.55314e-08 Reference value :  6.75314e-08 Reference value :  6.86764e-08 Reference value :  7.01064e-08 Reference value :  7.17264e-08 Reference value :  7.32914e-08 Reference value :  7.50464e-08 Reference value :  7.57514e-08 Reference value :  7.63864e-08 Reference value :  7.77564e-08 Reference value :  7.93864e-08 Reference value :  8.13414e-08 Reference value :  8.41014e-08 Reference value :  8.76514e-08 Reference value :  9.12664e-08 Reference value :  9.29114e-08 Reference value :  9.52614e-08 Reference value :  9.63214e-08 Reference value :  9.79264e-08 Reference value :  9.94414e-08 Reference value :  1.00946e-07 Reference value :  1.02456e-07 Reference value :  1.03936e-07 Reference value :  1.05426e-07 Reference value :  1.06946e-07 Reference value :  1.08446e-07 Reference value :  1.10001e-07 Reference value :  1.11481e-07 Reference value :  1.13051e-07 Reference value :  1.14556e-07 Reference value :  1.16076e-07 Reference value :  1.17496e-07 Reference value :  1.18286e-07 Reference value :  1.18956e-07 Reference value :  1.19606e-07
+No. of Data Rows : 24008
+t1                  =  6.786148e-09
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  2.924624e-08
+vmax                =  1.166794e+00 at=  6.436139e-08
+vmin                =  2.058962e-01 at=  6.376139e-08
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_pt = 2.000000e+00
+fosc = 8.904683e+08
+swing = 9.608978e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.32
+vss                                          0
+vctrl                                     0.45
+vcoarse                                   1.32
+x1.net1                                1.14487
+x1.net7                                1.14487
+x1.x1.st                                0.6432
+x1.net2                                1.14487
+x1.net8                                1.14487
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                                1.14487
+x1.x2.st                                0.6432
+x1.net3                                1.14487
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                                1.14487
+x1.x3.st                                0.6432
+x1.net6                                1.14487
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                                1.14487
+x1.x5.st                                0.6432
+x1.net10                               1.14487
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                                0.6432
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                        0.907267
+x1.x6.net1                            0.487837
+x1.x6.vo+_temp                        0.907267
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                             0.33637
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                       -2.56684e-12
+vc#branch                          -2.1427e-12
+vss#branch                         0.000548854
+vdd#branch                        -0.000569526
+vsub#branch                                  0
+
+ Reference value :  2.06400e-10 Reference value :  9.86400e-10 Reference value :  1.78640e-09 Reference value :  2.58140e-09 Reference value :  3.29140e-09 Reference value :  4.01640e-09 Reference value :  4.77640e-09 Reference value :  5.55640e-09 Reference value :  6.35640e-09 Reference value :  7.13140e-09 Reference value :  7.91140e-09 Reference value :  8.67140e-09 Reference value :  9.38140e-09 Reference value :  1.01464e-08 Reference value :  1.09364e-08 Reference value :  1.18364e-08 Reference value :  1.27114e-08 Reference value :  1.35714e-08 Reference value :  1.39914e-08 Reference value :  1.48964e-08 Reference value :  1.71364e-08 Reference value :  1.89664e-08 Reference value :  2.04414e-08 Reference value :  2.22764e-08 Reference value :  2.37114e-08 Reference value :  2.52814e-08 Reference value :  2.69064e-08 Reference value :  2.81714e-08 Reference value :  2.98614e-08 Reference value :  3.16714e-08 Reference value :  3.29064e-08 Reference value :  3.45564e-08 Reference value :  3.61214e-08 Reference value :  3.83864e-08 Reference value :  3.97314e-08 Reference value :  4.23314e-08 Reference value :  4.35064e-08 Reference value :  4.52164e-08 Reference value :  4.68214e-08 Reference value :  4.83214e-08 Reference value :  4.96964e-08 Reference value :  5.19264e-08 Reference value :  5.29314e-08 Reference value :  5.29764e-08 Reference value :  5.30264e-08 Reference value :  5.43214e-08 Reference value :  5.73714e-08 Reference value :  5.82464e-08 Reference value :  5.98364e-08 Reference value :  6.15014e-08 Reference value :  6.47764e-08 Reference value :  6.61164e-08 Reference value :  6.62814e-08 Reference value :  6.77664e-08 Reference value :  6.78114e-08 Reference value :  6.78614e-08 Reference value :  6.79014e-08 Reference value :  6.79514e-08 Reference value :  6.87564e-08 Reference value :  7.08464e-08 Reference value :  7.19264e-08 Reference value :  7.19714e-08 Reference value :  7.20214e-08 Reference value :  7.20714e-08 Reference value :  7.40614e-08 Reference value :  7.63264e-08 Reference value :  7.81264e-08 Reference value :  7.97914e-08 Reference value :  8.18514e-08 Reference value :  8.37914e-08 Reference value :  8.76414e-08 Reference value :  8.84364e-08 Reference value :  8.94064e-08 Reference value :  8.94514e-08 Reference value :  8.95014e-08 Reference value :  8.95514e-08 Reference value :  8.96014e-08 Reference value :  9.04264e-08 Reference value :  9.35114e-08 Reference value :  9.51414e-08 Reference value :  9.67614e-08 Reference value :  9.83064e-08 Reference value :  9.98314e-08 Reference value :  1.01381e-07 Reference value :  1.02696e-07 Reference value :  1.04176e-07 Reference value :  1.05936e-07 Reference value :  1.07606e-07 Reference value :  1.09386e-07 Reference value :  1.11051e-07 Reference value :  1.12696e-07 Reference value :  1.14131e-07 Reference value :  1.15681e-07 Reference value :  1.17251e-07 Reference value :  1.18931e-07
+No. of Data Rows : 24008
+t1                  =  1.106097e-08
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  4.772972e-08
+vmax                =  1.309235e+00 at=  8.492140e-08
+vmin                =  9.761725e-01 at=  6.744640e-08
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_pt = 1.000000e+00
+fosc = 5.454236e+08
+swing = 3.330625e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.32
+vss                                          0
+vctrl                                     1.32
+vcoarse                                      0
+x1.net1                               0.792545
+x1.net7                               0.792545
+x1.x1.st                             0.0218698
+x1.net2                               0.792545
+x1.net8                               0.792545
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                               0.792545
+x1.x2.st                             0.0218698
+x1.net3                               0.792545
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                               0.792545
+x1.x3.st                             0.0218698
+x1.net6                               0.792545
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                               0.792545
+x1.x5.st                             0.0218698
+x1.net10                              0.792545
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                             0.0218698
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                         1.08353
+x1.x6.net1                             0.23819
+x1.x6.vo+_temp                         1.08353
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                            0.410146
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                        2.53062e-09
+vc#branch                         -2.89397e-09
+vss#branch                          0.00211948
+vdd#branch                          -0.0021072
+vsub#branch                                  0
+
+ Reference value :  4.40048e-10 Reference value :  1.80505e-09 Reference value :  3.12005e-09 Reference value :  4.25005e-09 Reference value :  5.48505e-09 Reference value :  6.78505e-09 Reference value :  8.09005e-09 Reference value :  9.38005e-09 Reference value :  1.06500e-08 Reference value :  1.19050e-08 Reference value :  1.29350e-08 Reference value :  1.39950e-08 Reference value :  1.49150e-08 Reference value :  1.60150e-08 Reference value :  1.71950e-08 Reference value :  1.83650e-08 Reference value :  1.96800e-08 Reference value :  2.10400e-08 Reference value :  2.24250e-08 Reference value :  2.38250e-08 Reference value :  2.52200e-08 Reference value :  2.66150e-08 Reference value :  2.80350e-08 Reference value :  2.95150e-08 Reference value :  3.09950e-08 Reference value :  3.25200e-08 Reference value :  3.40050e-08 Reference value :  3.55300e-08 Reference value :  3.70850e-08 Reference value :  3.85100e-08 Reference value :  3.99800e-08 Reference value :  4.15150e-08 Reference value :  4.30550e-08 Reference value :  4.45750e-08 Reference value :  4.60900e-08 Reference value :  4.76050e-08 Reference value :  4.90950e-08 Reference value :  5.02750e-08 Reference value :  5.16050e-08 Reference value :  5.27650e-08 Reference value :  5.40750e-08 Reference value :  5.53950e-08 Reference value :  5.65500e-08 Reference value :  5.79250e-08 Reference value :  5.91250e-08 Reference value :  6.03800e-08 Reference value :  6.17950e-08 Reference value :  6.30950e-08 Reference value :  6.42700e-08 Reference value :  6.57000e-08 Reference value :  6.71200e-08 Reference value :  6.83300e-08 Reference value :  6.95600e-08 Reference value :  7.09600e-08 Reference value :  7.24200e-08 Reference value :  7.37250e-08 Reference value :  7.49150e-08 Reference value :  7.63400e-08 Reference value :  7.77850e-08 Reference value :  7.91500e-08 Reference value :  8.03650e-08 Reference value :  8.17450e-08 Reference value :  8.31600e-08 Reference value :  8.46350e-08 Reference value :  8.59850e-08 Reference value :  8.71850e-08 Reference value :  8.84000e-08 Reference value :  8.96650e-08 Reference value :  9.10150e-08 Reference value :  9.21700e-08 Reference value :  9.34900e-08 Reference value :  9.47850e-08 Reference value :  9.60200e-08 Reference value :  9.74250e-08 Reference value :  9.88200e-08 Reference value :  1.00010e-07 Reference value :  1.01385e-07 Reference value :  1.02825e-07 Reference value :  1.04320e-07 Reference value :  1.05775e-07 Reference value :  1.07310e-07 Reference value :  1.08860e-07 Reference value :  1.10450e-07 Reference value :  1.11930e-07 Reference value :  1.13485e-07 Reference value :  1.14980e-07 Reference value :  1.16465e-07 Reference value :  1.17895e-07 Reference value :  1.19430e-07
+No. of Data Rows : 24008
+t1                  =  6.324349e-09
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  2.720575e-08
+vmax                =  1.280625e+00 at=  8.908005e-08
+vmin                =  2.185999e-01 at=  1.177600e-07
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_pt = 2.000000e+00
+fosc = 9.577901e+08
+swing = 1.062025e+00
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.08
+vss                                          0
+vctrl                                     0.45
+vcoarse                                   1.08
+x1.net1                               0.835936
+x1.net7                               0.835936
+x1.x1.st                               0.31062
+x1.net2                               0.835936
+x1.net8                               0.835936
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                               0.835936
+x1.x2.st                               0.31062
+x1.net3                               0.835936
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                               0.835936
+x1.x3.st                               0.31062
+x1.net6                               0.835936
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                               0.835936
+x1.x5.st                               0.31062
+x1.net10                              0.835936
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                               0.31062
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                        0.948663
+x1.x6.net1                            0.346762
+x1.x6.vo+_temp                        0.948663
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                            0.400564
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                       -6.23146e-12
+vc#branch                          -4.6718e-12
+vss#branch                         0.000551013
+vdd#branch                        -0.000606402
+vsub#branch                                  0
+
+ Reference value :  1.37140e-09 Reference value :  3.40640e-09 Reference value :  5.40140e-09 Reference value :  7.34140e-09 Reference value :  9.35640e-09 Reference value :  1.12464e-08 Reference value :  1.31764e-08 Reference value :  1.51614e-08 Reference value :  1.72064e-08 Reference value :  1.92964e-08 Reference value :  2.12314e-08 Reference value :  2.32414e-08 Reference value :  2.51464e-08 Reference value :  2.69564e-08 Reference value :  2.88564e-08 Reference value :  3.08114e-08 Reference value :  3.28114e-08 Reference value :  3.48864e-08 Reference value :  3.68464e-08 Reference value :  3.88314e-08 Reference value :  4.08214e-08 Reference value :  4.27214e-08 Reference value :  4.46064e-08 Reference value :  4.66414e-08 Reference value :  4.87264e-08 Reference value :  5.08214e-08 Reference value :  5.27964e-08 Reference value :  5.47564e-08 Reference value :  5.67714e-08 Reference value :  5.87114e-08 Reference value :  6.06264e-08 Reference value :  6.26364e-08 Reference value :  6.47414e-08 Reference value :  6.67764e-08 Reference value :  6.87514e-08 Reference value :  7.06964e-08 Reference value :  7.26314e-08 Reference value :  7.45464e-08 Reference value :  7.65064e-08 Reference value :  7.85364e-08 Reference value :  8.06214e-08 Reference value :  8.26014e-08 Reference value :  8.45564e-08 Reference value :  8.64964e-08 Reference value :  8.84214e-08 Reference value :  9.03914e-08 Reference value :  9.23814e-08 Reference value :  9.44114e-08 Reference value :  9.64814e-08 Reference value :  9.84614e-08 Reference value :  1.00386e-07 Reference value :  1.02311e-07 Reference value :  1.04236e-07 Reference value :  1.06196e-07 Reference value :  1.08146e-07 Reference value :  1.10066e-07 Reference value :  1.12101e-07 Reference value :  1.14126e-07 Reference value :  1.16066e-07 Reference value :  1.17951e-07 Reference value :  1.19816e-07
+No. of Data Rows : 24008
+t1                  =  1.001148e-08
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  4.394290e-08
+vmax                =  1.026070e+00 at=  9.021140e-08
+vmin                =  6.375921e-01 at=  1.148014e-07
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_pt = 1.000000e+00
+fosc = 5.894242e+08
+swing = 3.884779e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.08
+vss                                          0
+vctrl                                     1.08
+vcoarse                                      0
+x1.net1                               0.725236
+x1.net7                               0.725236
+x1.x1.st                             0.0210491
+x1.net2                               0.725236
+x1.net8                               0.725236
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                               0.725236
+x1.x2.st                             0.0210491
+x1.net3                               0.725236
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                               0.725236
+x1.x3.st                             0.0210491
+x1.net6                               0.725236
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                               0.725236
+x1.x5.st                             0.0210491
+x1.net10                              0.725236
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                             0.0210491
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                        0.972029
+x1.x6.net1                            0.267982
+x1.x6.vo+_temp                        0.972029
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                            0.409621
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                        1.78704e-09
+vc#branch                         -1.26298e-09
+vss#branch                          0.00126644
+vdd#branch                         -0.00132015
+vsub#branch                                  0
+
+ Reference value :  1.62640e-09 Reference value :  3.64140e-09 Reference value :  5.59140e-09 Reference value :  7.61640e-09 Reference value :  9.50140e-09 Reference value :  1.14064e-08 Reference value :  1.32664e-08 Reference value :  1.50664e-08 Reference value :  1.70414e-08 Reference value :  1.88064e-08 Reference value :  2.07114e-08 Reference value :  2.25814e-08 Reference value :  2.44564e-08 Reference value :  2.61764e-08 Reference value :  2.79814e-08 Reference value :  2.97764e-08 Reference value :  3.16614e-08 Reference value :  3.35214e-08 Reference value :  3.54214e-08 Reference value :  3.73464e-08 Reference value :  3.92164e-08 Reference value :  4.09614e-08 Reference value :  4.27814e-08 Reference value :  4.45514e-08 Reference value :  4.63864e-08 Reference value :  4.82864e-08 Reference value :  5.01564e-08 Reference value :  5.20514e-08 Reference value :  5.34564e-08 Reference value :  5.49664e-08 Reference value :  5.63464e-08 Reference value :  5.78514e-08 Reference value :  5.94564e-08 Reference value :  6.12464e-08 Reference value :  6.29714e-08 Reference value :  6.48164e-08 Reference value :  6.65564e-08 Reference value :  6.83564e-08 Reference value :  7.00764e-08 Reference value :  7.19264e-08 Reference value :  7.37614e-08 Reference value :  7.54114e-08 Reference value :  7.71014e-08 Reference value :  7.87314e-08 Reference value :  8.06564e-08 Reference value :  8.31264e-08 Reference value :  8.48164e-08 Reference value :  8.78714e-08 Reference value :  9.01714e-08 Reference value :  9.27614e-08 Reference value :  9.69764e-08 Reference value :  9.91564e-08 Reference value :  1.01141e-07 Reference value :  1.03591e-07 Reference value :  1.05441e-07 Reference value :  1.07741e-07 Reference value :  1.11281e-07 Reference value :  1.13811e-07 Reference value :  1.16551e-07 Reference value :  1.17676e-07
+No. of Data Rows : 24008
+t1                  =  8.347938e-09
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  3.650132e-08
+vmax                =  1.004029e+00 at=  1.114914e-07
+vmin                =  3.584079e-01 at=  6.289140e-08
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_pt = 2.000000e+00
+fosc = 7.103942e+08
+swing = 6.456211e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                        1.2
+vss                                          0
+vctrl                                     0.45
+vcoarse                                    1.2
+x1.net1                               0.935047
+x1.net7                               0.935047
+x1.x1.st                              0.387914
+x1.net2                               0.935047
+x1.net8                               0.935047
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                               0.935047
+x1.x2.st                              0.387914
+x1.net3                               0.935047
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                               0.935047
+x1.x3.st                              0.387914
+x1.net6                               0.935047
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                               0.935047
+x1.x5.st                              0.387914
+x1.net10                              0.935047
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                              0.387914
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                         1.02716
+x1.x6.net1                            0.415281
+x1.x6.vo+_temp                         1.02716
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                            0.420025
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                        -6.6791e-12
+vc#branch                         -4.54885e-12
+vss#branch                         0.000623498
+vdd#branch                        -0.000709541
+vsub#branch                                  0
+
+ Reference value :  0.00000e+00 Reference value :  1.97117e-09 Reference value :  3.91117e-09 Reference value :  5.96617e-09 Reference value :  7.87117e-09 Reference value :  9.67117e-09 Reference value :  1.15412e-08 Reference value :  1.34412e-08 Reference value :  1.53312e-08 Reference value :  1.70812e-08 Reference value :  1.89812e-08 Reference value :  2.09112e-08 Reference value :  2.27762e-08 Reference value :  2.46862e-08 Reference value :  2.65512e-08 Reference value :  2.84712e-08 Reference value :  3.03612e-08 Reference value :  3.22812e-08 Reference value :  3.42062e-08 Reference value :  3.60862e-08 Reference value :  3.79312e-08 Reference value :  3.98712e-08 Reference value :  4.17212e-08 Reference value :  4.36062e-08 Reference value :  4.54712e-08 Reference value :  4.73212e-08 Reference value :  4.92212e-08 Reference value :  5.10962e-08 Reference value :  5.29362e-08 Reference value :  5.48212e-08 Reference value :  5.66562e-08 Reference value :  5.85362e-08 Reference value :  6.04362e-08 Reference value :  6.24012e-08 Reference value :  6.43162e-08 Reference value :  6.62062e-08 Reference value :  6.79512e-08 Reference value :  6.97212e-08 Reference value :  7.15612e-08 Reference value :  7.34062e-08 Reference value :  7.53412e-08 Reference value :  7.70762e-08 Reference value :  7.88812e-08 Reference value :  8.07362e-08 Reference value :  8.25962e-08 Reference value :  8.44212e-08 Reference value :  8.62362e-08 Reference value :  8.81862e-08 Reference value :  8.99962e-08 Reference value :  9.18862e-08 Reference value :  9.37962e-08 Reference value :  9.57012e-08 Reference value :  9.76362e-08 Reference value :  9.95762e-08 Reference value :  1.01251e-07 Reference value :  1.03306e-07 Reference value :  1.05181e-07 Reference value :  1.07141e-07 Reference value :  1.09081e-07 Reference value :  1.10981e-07 Reference value :  1.12826e-07 Reference value :  1.14676e-07 Reference value :  1.16661e-07 Reference value :  1.18626e-07
+No. of Data Rows : 24008
+t1                  =  9.901724e-09
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  4.338211e-08
+vmax                =  1.150670e+00 at=  7.732617e-08
+vmin                =  7.084513e-01 at=  9.992117e-08
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_pt = 1.000000e+00
+fosc = 5.973647e+08
+swing = 4.422187e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                        1.2
+vss                                          0
+vctrl                                      1.2
+vcoarse                                      0
+x1.net1                               0.784905
+x1.net7                               0.784905
+x1.x1.st                             0.0227216
+x1.net2                               0.784905
+x1.net8                               0.784905
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                               0.784905
+x1.x2.st                             0.0227216
+x1.net3                               0.784905
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                               0.784905
+x1.x3.st                             0.0227216
+x1.net6                               0.784905
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                               0.784905
+x1.x5.st                             0.0227216
+x1.net10                              0.784905
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                             0.0227216
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                         1.06239
+x1.x6.net1                            0.307174
+x1.x6.vo+_temp                         1.06239
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                            0.432545
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                         2.6558e-09
+vc#branch                         -2.50473e-09
+vss#branch                          0.00156467
+vdd#branch                         -0.00164787
+vsub#branch                                  0
+
+ Reference value :  3.75688e-10 Reference value :  2.18569e-09 Reference value :  3.98569e-09 Reference value :  5.91069e-09 Reference value :  8.14569e-09 Reference value :  1.01757e-08 Reference value :  1.20107e-08 Reference value :  1.39657e-08 Reference value :  1.56457e-08 Reference value :  1.75757e-08 Reference value :  1.94557e-08 Reference value :  2.15857e-08 Reference value :  2.31757e-08 Reference value :  2.56607e-08 Reference value :  2.67457e-08 Reference value :  2.87857e-08 Reference value :  3.04857e-08 Reference value :  3.22657e-08 Reference value :  3.47657e-08 Reference value :  3.73657e-08 Reference value :  4.14007e-08 Reference value :  4.26657e-08 Reference value :  4.54257e-08 Reference value :  4.76957e-08 Reference value :  4.93357e-08 Reference value :  5.13307e-08 Reference value :  5.42457e-08 Reference value :  5.64107e-08 Reference value :  5.86207e-08 Reference value :  6.03857e-08 Reference value :  6.19907e-08 Reference value :  6.37557e-08 Reference value :  6.51757e-08 Reference value :  6.71707e-08 Reference value :  6.94807e-08 Reference value :  6.97257e-08 Reference value :  6.97807e-08 Reference value :  6.98657e-08 Reference value :  7.22607e-08 Reference value :  7.65907e-08 Reference value :  7.98207e-08 Reference value :  8.19157e-08 Reference value :  8.45507e-08 Reference value :  8.79807e-08 Reference value :  9.03307e-08 Reference value :  9.31157e-08 Reference value :  9.54157e-08 Reference value :  9.71307e-08 Reference value :  9.91957e-08 Reference value :  1.01986e-07 Reference value :  1.03841e-07 Reference value :  1.05671e-07 Reference value :  1.07256e-07 Reference value :  1.07306e-07 Reference value :  1.07361e-07 Reference value :  1.07416e-07 Reference value :  1.07466e-07 Reference value :  1.08541e-07 Reference value :  1.10791e-07 Reference value :  1.13431e-07 Reference value :  1.16101e-07 Reference value :  1.18106e-07
+No. of Data Rows : 24008
+t1                  =  7.807124e-09
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  3.404355e-08
+vmax                =  1.117171e+00 at=  6.326069e-08
+vmin                =  3.677804e-01 at=  1.163557e-07
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_pt = 2.000000e+00
+fosc = 7.622990e+08
+swing = 7.493906e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.32
+vss                                          0
+vctrl                                     0.45
+vcoarse                                   1.32
+x1.net1                                1.03474
+x1.net7                                1.03474
+x1.x1.st                              0.466809
+x1.net2                                1.03474
+x1.net8                                1.03474
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                                1.03474
+x1.x2.st                              0.466809
+x1.net3                                1.03474
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                                1.03474
+x1.x3.st                              0.466809
+x1.net6                                1.03474
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                                1.03474
+x1.x5.st                              0.466809
+x1.net10                               1.03474
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                              0.466809
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                         1.10135
+x1.x6.net1                            0.485554
+x1.x6.vo+_temp                         1.10135
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                             0.43773
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                       -7.15339e-12
+vc#branch                         -4.46725e-12
+vss#branch                         0.000696464
+vdd#branch                         -0.00081345
+vsub#branch                                  0
+
+ Reference value :  0.00000e+00 Reference value :  1.99994e-09 Reference value :  3.82994e-09 Reference value :  5.72494e-09 Reference value :  7.54494e-09 Reference value :  9.33994e-09 Reference value :  1.12649e-08 Reference value :  1.30899e-08 Reference value :  1.48599e-08 Reference value :  1.66649e-08 Reference value :  1.84099e-08 Reference value :  2.02449e-08 Reference value :  2.24549e-08 Reference value :  2.38599e-08 Reference value :  2.56599e-08 Reference value :  2.74949e-08 Reference value :  2.92949e-08 Reference value :  3.11799e-08 Reference value :  3.29999e-08 Reference value :  3.47749e-08 Reference value :  3.66099e-08 Reference value :  3.84899e-08 Reference value :  4.03549e-08 Reference value :  4.22299e-08 Reference value :  4.40399e-08 Reference value :  4.59599e-08 Reference value :  4.77599e-08 Reference value :  4.96399e-08 Reference value :  5.14949e-08 Reference value :  5.33999e-08 Reference value :  5.52699e-08 Reference value :  5.71749e-08 Reference value :  5.90249e-08 Reference value :  6.08849e-08 Reference value :  6.27199e-08 Reference value :  6.45649e-08 Reference value :  6.64699e-08 Reference value :  6.83649e-08 Reference value :  7.02099e-08 Reference value :  7.20449e-08 Reference value :  7.39249e-08 Reference value :  7.56299e-08 Reference value :  7.74149e-08 Reference value :  7.94899e-08 Reference value :  8.11599e-08 Reference value :  8.30899e-08 Reference value :  8.58249e-08 Reference value :  8.77099e-08 Reference value :  8.95649e-08 Reference value :  9.14449e-08 Reference value :  9.33199e-08 Reference value :  9.52099e-08 Reference value :  9.71649e-08 Reference value :  9.90099e-08 Reference value :  1.00905e-07 Reference value :  1.02725e-07 Reference value :  1.04530e-07 Reference value :  1.06400e-07 Reference value :  1.08225e-07 Reference value :  1.10050e-07 Reference value :  1.11970e-07 Reference value :  1.13900e-07 Reference value :  1.15780e-07 Reference value :  1.17665e-07 Reference value :  1.19425e-07
+No. of Data Rows : 24009
+t1                  =  9.792219e-09
+Using SPARSE 1.3 as Direct Linear Solver
+t2                  =  4.284499e-08
+vmax                =  1.272662e+00 at=  7.140494e-08
+vmin                =  7.828590e-01 at=  1.151999e-07
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_pt = 1.000000e+00
+fosc = 6.050930e+08
+swing = 4.898030e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.32
+vss                                          0
+vctrl                                     1.32
+vcoarse                                      0
+x1.net1                               0.843168
+x1.net7                               0.843168
+x1.x1.st                             0.0246279
+x1.net2                               0.843168
+x1.net8                               0.843168
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.net4                               0.843168
+x1.x2.st                             0.0246279
+x1.net3                               0.843168
+x1.x2.xr1.dt                                 0
+x1.x2.xr2.dt                                 0
+x1.net5                               0.843168
+x1.x3.st                             0.0246279
+x1.net6                               0.843168
+x1.x3.xr1.dt                                 0
+x1.x3.xr2.dt                                 0
+x1.net9                               0.843168
+x1.x5.st                             0.0246279
+x1.net10                              0.843168
+x1.x5.xr1.dt                                 0
+x1.x5.xr2.dt                                 0
+x1.x4.st                             0.0246279
+x1.x4.xr1.dt                                 0
+x1.x4.xr2.dt                                 0
+x1.x6.vo-_temp                         1.15052
+x1.x6.net1                            0.346281
+x1.x6.vo+_temp                         1.15052
+x1.x6.xr3.dt                                 0
+x1.x6.xr4.dt                                 0
+vom                                        0.4
+x1.x6.net2                            0.454074
+vop                                          1
+x1.x6.xr1.dt                                 0
+x1.x6.xr2.dt                                 0
+vcrs#branch                        3.82075e-09
+vc#branch                         -4.73028e-09
+vss#branch                          0.00188207
+vdd#branch                         -0.00199468
+vsub#branch                                  0
+
+ Reference value :  1.20442e-09 Reference value :  3.11442e-09 Reference value :  4.84942e-09 Reference value :  6.63942e-09 Reference value :  8.38942e-09 Reference value :  1.00144e-08 Reference value :  1.16244e-08 Reference value :  1.31644e-08 Reference value :  1.47144e-08 Reference value :  1.62144e-08 Reference value :  1.77544e-08 Reference value :  1.93844e-08 Reference value :  2.09544e-08 Reference value :  2.25794e-08 Reference value :  2.41494e-08 Reference value :  2.57394e-08 Reference value :  2.72794e-08 Reference value :  2.88394e-08 Reference value :  3.04044e-08 Reference value :  3.19994e-08 Reference value :  3.34444e-08 Reference value :  3.50444e-08 Reference value :  3.65794e-08 Reference value :  3.81594e-08 Reference value :  3.97294e-08 Reference value :  4.14594e-08 Reference value :  4.29144e-08 Reference value :  4.44794e-08 Reference value :  4.60694e-08 Reference value :  4.76344e-08 Reference value :  4.92394e-08 Reference value :  5.08194e-08 Reference value :  5.24444e-08 Reference value :  5.40394e-08 Reference value :  5.56244e-08 Reference value :  5.72194e-08 Reference value :  5.87694e-08 Reference value :  6.03694e-08 Reference value :  6.19544e-08 Reference value :  6.35444e-08 Reference value :  6.50844e-08 Reference value :  6.66644e-08 Reference value :  6.82994e-08 Reference value :  6.98594e-08 Reference value :  7.14644e-08 Reference value :  7.31144e-08 Reference value :  7.47244e-08 Reference value :  7.63044e-08 Reference value :  7.78944e-08 Reference value :  7.94444e-08 Reference value :  8.09844e-08 Reference value :  8.25444e-08 Reference value :  8.40894e-08 Reference value :  8.56644e-08 Reference value :  8.72144e-08 Reference value :  8.87694e-08 Reference value :  9.04044e-08 Reference value :  9.19394e-08 Reference value :  9.35094e-08 Reference value :  9.51444e-08 Reference value :  9.67644e-08 Reference value :  9.83644e-08 Reference value :  9.99044e-08 Reference value :  1.01434e-07 Reference value :  1.03084e-07 Reference value :  1.04724e-07 Reference value :  1.06319e-07 Reference value :  1.07954e-07 Reference value :  1.09624e-07 Reference value :  1.11269e-07 Reference value :  1.12929e-07 Reference value :  1.14674e-07 Reference value :  1.16359e-07 Reference value :  1.17989e-07 Reference value :  1.19634e-07
+No. of Data Rows : 24009
+t1                  =  7.351168e-09
+t2                  =  3.200644e-08
+vmax                =  1.228338e+00 at=  8.164942e-08
+vmin                =  3.816850e-01 at=  1.019594e-07
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_pt = 2.000000e+00
+fosc = 8.111855e+08
+swing = 8.466530e-01
+ngspice-42 done
+[safe_ngspice] exit rc=0

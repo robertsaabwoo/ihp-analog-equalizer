@@ -80,6 +80,15 @@ MIN_W_LV = 0.15  # um
 # is ported unchanged apart from the Lmin remap.  Keyed by (cell, instance).
 # --------------------------------------------------------------------------
 
+# The coarse trim leg, one pMOS across each ring load resistor.  See
+# add_coarse_trim() below and docs/RING_DUAL_LOOP.md section 4.1: the width was
+# swept in the ring (vco_ct.spice) rather than computed, because a pMOS across
+# the load is only a resistor while it stays in triode.  W = 4 um gives
+# 1.292:1 of centre-frequency range against the 1.254:1 the corner sweep asks
+# for, and keeps the ring node swinging 0.93-1.01 V at every setting.
+TRIM_W = 4.0
+TRIM_L = 1.0
+
 SIZING: dict[tuple[str, str], dict] = {
 
     # ---------------------------------------------------------------- CTLE
@@ -709,8 +718,87 @@ def add_bias_mirror(text: str) -> str:
     return text
 
 
+def add_coarse_trim(text: str) -> str:
+    """ring_inverter: a pMOS trim leg across each poly load resistor.
+
+    The fine loop drives the ring's tail current, and above the point where a
+    stage can charge its own load faster than its RC, more tail current buys
+    nothing -- the load resistor sets the ceiling, and that ceiling is what
+    fails at temperature.  The untrimmed ring reaches the 600.6 MHz baud rate at
+    8 of 27 corners.  So the coarse loop moves the *load*: one pMOS across each
+    of the ten load resistors, all gates on a single `vcoarse!` rail.
+
+    The resistor sits at the slow end of the span and the pMOS only ever speeds
+    the ring up, so with vcoarse at VDD the trim is absent and the ring is the
+    ported design with a slightly larger load.  There is no state in which the
+    trim makes things worse than the untrimmed circuit.
+
+    Two things about this that are not obvious:
+
+    * `vcoarse!` is a **global** net, like `sub!`.  It is a quasi-dc bias rail
+      distributed to ten gates, which is what a global is for, and the
+      alternative -- a new pin on ring_inverter, ring_oscillator, CDR and their
+      symbols -- would change the port list of four cells that
+      check_port_equivalence.py is comparing against the sky130 source, and
+      bury the one real change among four bookkeeping ones.
+
+    * connectivity is by label, not by wire.  xschem connects by coordinate, so
+      appending geometry to a schematic whose layout you did not compute is how
+      a symbol lands forty units off and silently rewires the circuit.  A
+      lab_wire placed exactly on a pin cannot do that.
+
+    Sizing is measured, not calculated: see docs/RING_DUAL_LOOP.md section 4.1.
+    A pMOS is only a resistor while it stays in triode, and at the bottom of the
+    ring's swing it becomes a current source and stops helping the rising edge,
+    which is the edge the ceiling is made of -- about 43 % as effective as the
+    resistance it imitates.  W was swept in the ring instead.
+    """
+    text = text.rstrip("\n") + "\n"
+    for name, (x, out) in {"T1": (60, "vo+"), "T2": (-480, "vo-")}.items():
+        text += (
+            "C {sg13cmos5l_pr/sg13_lv_pmos.sym} %d 240 0 0 {name=%s\n"
+            "l=%gu\nw=%gu\nng=1\nm=1\nmm_ok=1\n"
+            "model=sg13_lv_pmos\nspiceprefix=X}\n"
+            % (x, name, TRIM_L, TRIM_W))
+        for dx, dy, lab in ((20, -30, "VDD"), (20, 30, out),
+                            (-20, 0, "vcoarse!"), (20, 0, "VDD")):
+            text += ("C {devices/lab_wire.sym} %d %d 0 0 "
+                     "{name=%s_%s sig_type=std_logic lab=%s}\n"
+                     % (x + dx, 240 + dy, name, lab.strip("+-!"), lab))
+    return text
+
+
+def add_coarse_loop(text: str) -> str:
+    """CDR: instantiate the coarse loop next to the loop filter.
+
+    It goes here rather than at the top level because both of its inputs are
+    already local nets at this level -- `vctrl` is the loop filter's output and
+    `vbias` is the reference the charge pump and the latches run on -- so the
+    only thing that has to cross a hierarchy boundary is `vcoarse!`, which is a
+    global.  Instantiating it a level up would need vctrl brought out as a pin
+    on CDR for no reason.
+
+    The loop filter's output is an unnamed net in the sky130 original (xschem
+    calls it #net1).  Labelling it `vctrl` is deliberate: it is the node every
+    measurement in docs/ refers to by that name, and it is about to have a
+    second consumer.
+    """
+    text = text.rstrip("\n") + "\n"
+    text += ("C {devices/lab_wire.sym} 2030 100 0 0 "
+             "{name=pCTL sig_type=std_logic lab=vctrl}\n")
+    text += "C {coarse_loop.sym} 1000 900 0 0 {name=x30}\n"
+    for dx, dy, lab in ((-60, -20, "Vdd"), (-60, 0, "Vss"), (-60, 20, "vbias"),
+                        (60, 0, "vctrl"), (60, 20, "vcoarse!")):
+        text += ("C {devices/lab_wire.sym} %d %d 0 0 "
+                 "{name=pCL%s sig_type=std_logic lab=%s}\n"
+                 % (1000 + dx, 900 + dy, lab.strip("!"), lab))
+    return text
+
+
 POST_PORT_EDITS = {
     "ctle_cdr_rx.sch": add_bias_mirror,
+    "ring_inverter.sch": add_coarse_trim,
+    "CDR.sch": add_coarse_loop,
     # The LVS wrapper and the symbol only need the pin renamed to match.
     "ctle_cdr_rx_lvs.sch": lambda t: t.replace("lab=vbias", "lab=ibias"),
     "ctle_cdr_rx.sym": lambda t: t.replace("name=vbias", "name=ibias"),
