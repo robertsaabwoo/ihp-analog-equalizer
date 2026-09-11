@@ -46,6 +46,12 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
 
 .global sub!
 Vsub sub! 0 0
+* Pin the coarse trim.  This deck measures the fine loop on its own, and with
+* vcoarse! free the coarse loop corrects whatever this deck is detuning --
+* silently, and every point passes.  0.60 V is the nominal trim point at
+* tt / 27 C / 1.2 V (sim/results/vco_ct_centre.log).
+.global vcoarse!
+Vcrs vcoarse! 0 0.60
 
 .options method=gear reltol=1e-3 abstol=1e-12
 
@@ -110,16 +116,16 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * asymmetry is still there.  It is a testbench convenience and it does bypass
 * the cold-start behaviour of the precharge cell, which therefore has to be
 * tested separately rather than as a side effect of this run.
-.ic v(x1.x2.net1)=0.62
+.ic v(x1.x2.vctrl)=0.62
 
 .control
 * Explicit save list.  A bare `write` stores every node at every timepoint and
 * is what exhausted this machine's memory once already.
-save v(x1.x2.net1) v(clkoutp) v(clkoutm) v(x1.eq_p) v(x1.eq_m)
+save v(x1.x2.vctrl) v(clkoutp) v(clkoutm) v(x1.eq_p) v(x1.eq_m)
 +    v(cinp) v(cinm) v(x1.x2.x20.pre)
 tran 20p 3000n
 
-let vctrl  = v(x1.x2.net1)
+let vctrl  = v(x1.x2.vctrl)
 let ctle_d = v(x1.eq_p) - v(x1.eq_m)
 let cin_d  = v(cinp) - v(cinm)
 

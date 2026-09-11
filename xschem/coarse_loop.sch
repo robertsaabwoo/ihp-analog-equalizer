@@ -23,7 +23,7 @@ C {devices/lab_wire.sym} 20 30 0 0 {name=MB1_S sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 20 0 0 0 {name=MB1_B sig_type=std_logic lab=VSS}
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} 140 0 0 0 {name=MB2
 l=1.000000e-06
-w=2.000000e-06
+w=3.000000e-06
 ng=1
 m=1
 model=sg13_lv_pmos
@@ -34,7 +34,7 @@ C {devices/lab_wire.sym} 120 0 0 0 {name=MB2_G sig_type=std_logic lab=nb1}
 C {devices/lab_wire.sym} 160 -30 0 0 {name=MB2_S sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 160 0 0 0 {name=MB2_B sig_type=std_logic lab=VDD}
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} 280 0 0 0 {name=MB3
-l=1.500000e-05
+l=1.000000e-05
 w=2.000000e-07
 ng=1
 m=1
@@ -91,7 +91,7 @@ spiceprefix=X}
 C {devices/lab_wire.sym} 0 130 0 0 {name=RLB_P sig_type=std_logic lab=vl}
 C {devices/lab_wire.sym} 0 190 0 0 {name=RLB_M sig_type=std_logic lab=VSS}
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} 140 160 0 0 {name=MTU
-l=1.500000e-05
+l=1.000000e-05
 w=2.000000e-07
 ng=1
 m=1

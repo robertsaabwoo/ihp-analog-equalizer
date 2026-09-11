@@ -62,7 +62,7 @@ C {devices/iopin.sym} -490 -50 0 0 {name=p2 lab=VSS
 C {devices/lab_wire.sym} -190 180 0 0 {name=p3 sig_type=std_logic lab=VDD}
 C {devices/opin.sym} -100 310 0 0 {name=p10 lab=vo+}
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} -320 370 0 0 {name=M4
-l=0.9u
+l=0.7u
 w=3u
 ng=1
 m=1
@@ -85,7 +85,7 @@ C {devices/ipin.sym} -240 490 0 0 {name=p13 lab=vctrl
 
 }
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} -70 370 0 1 {name=M1
-l=0.9u
+l=0.7u
 w=3u
 ng=1
 m=1
@@ -98,7 +98,7 @@ C {devices/ipin.sym} -50 370 0 1 {name=p5 lab=vin+
 }
 C {sg13cmos5l_pr/rhigh.sym} -100 240 0 0 {name=R1
 w=1.000000e-06
-l=5.079106e-06
+l=6.240000e-06
 model=rhigh
 body=sub!
 spiceprefix=X
@@ -108,7 +108,7 @@ mm_ok=1}
 C {devices/lab_wire.sym} -120 240 0 0 {name=p8 sig_type=std_logic lab=VSS}
 C {sg13cmos5l_pr/rhigh.sym} -310 240 0 0 {name=R2
 w=1.000000e-06
-l=5.079106e-06
+l=6.240000e-06
 model=rhigh
 body=sub!
 spiceprefix=X
@@ -118,3 +118,27 @@ mm_ok=1}
 C {devices/lab_wire.sym} -330 240 0 0 {name=p9 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} -90 370 0 0 {name=p11 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} -250 370 0 1 {name=p12 sig_type=std_logic lab=VSS}
+C {sg13cmos5l_pr/sg13_lv_pmos.sym} 60 240 0 0 {name=T1
+l=1u
+w=4u
+ng=1
+m=1
+mm_ok=1
+model=sg13_lv_pmos
+spiceprefix=X}
+C {devices/lab_wire.sym} 80 210 0 0 {name=T1_S sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 80 270 0 0 {name=T1_D sig_type=std_logic lab=vo+}
+C {devices/lab_wire.sym} 40 240 0 0 {name=T1_G sig_type=std_logic lab=vcoarse!}
+C {devices/lab_wire.sym} 80 240 0 0 {name=T1_B sig_type=std_logic lab=VDD}
+C {sg13cmos5l_pr/sg13_lv_pmos.sym} -480 240 0 0 {name=T2
+l=1u
+w=4u
+ng=1
+m=1
+mm_ok=1
+model=sg13_lv_pmos
+spiceprefix=X}
+C {devices/lab_wire.sym} -460 210 0 0 {name=T2_S sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} -460 270 0 0 {name=T2_D sig_type=std_logic lab=vo-}
+C {devices/lab_wire.sym} -500 240 0 0 {name=T2_G sig_type=std_logic lab=vcoarse!}
+C {devices/lab_wire.sym} -460 240 0 0 {name=T2_B sig_type=std_logic lab=VDD}

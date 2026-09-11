@@ -204,3 +204,10 @@ C {devices/lab_wire.sym} 1470 230 0 0 {name=p80 sig_type=std_logic lab=Vdd
 }
 C {devices/lab_wire.sym} 1470 270 0 0 {name=p81 sig_type=std_logic lab=Vss
 }
+C {devices/lab_wire.sym} 2030 100 0 0 {name=pCTL sig_type=std_logic lab=vctrl}
+C {coarse_loop.sym} 1000 900 0 0 {name=x30}
+C {devices/lab_wire.sym} 940 880 0 0 {name=pCLVdd sig_type=std_logic lab=Vdd}
+C {devices/lab_wire.sym} 940 900 0 0 {name=pCLVss sig_type=std_logic lab=Vss}
+C {devices/lab_wire.sym} 940 920 0 0 {name=pCLvbias sig_type=std_logic lab=vbias}
+C {devices/lab_wire.sym} 1060 900 0 0 {name=pCLvctrl sig_type=std_logic lab=vctrl}
+C {devices/lab_wire.sym} 1060 920 0 0 {name=pCLvcoarse sig_type=std_logic lab=vcoarse!}

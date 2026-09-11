@@ -91,10 +91,19 @@
 * second mirror and the pull-up tail, both biased from nb1).  With Lsrc = 5 um
 * the open-loop testbench measured the search running at 48.6 mV/us, which is
 * 6.5 MHz/us of ring frequency and moves the target 1.6 % during the 1.5 us the
-* fine loop needs to settle -- too fast.  15 um brings it to about a third of
-* that.  The two devices that mirror each other (XMB4 and XMTD) stay at 5 um,
-* because what matters there is that they match, not what length they are.
-.param Lsrc=15u
+* fine loop needs to settle -- too fast.  A third of that is wanted.
+*
+* The obvious way to get it is Lsrc = 15 um, and that is wrong: the PSP 103.6
+* models are characterised over 0.13-10 um, and a 15 um channel simulates
+* perfectly well by extrapolation while corresponding to nothing the foundry
+* has measured.  test/test_device_geometry.py caught it.  So Lsrc is 10 um --
+* the longest device the model covers -- and the remaining factor of 1.5 comes
+* from the mirror ratio instead: XMB2, the pMOS diode these two are compared
+* against, goes from W = 2 um to 3 um.
+*
+* The two devices that mirror each other (XMB4 and XMTD) stay at 5 um, because
+* what matters there is that they match, not what length they are.
+.param Lsrc=10u
 
 .subckt coarse_loop VDD VSS ibias vctrl vcoarse
 *
@@ -103,7 +112,7 @@
 * 20 nA is 1:2000 of that.  One stage would want a 25 um channel; two stages of
 * 1:40 and 1:50 cost two devices and no area.
 XMB1 nb1 ibias VSS VSS sg13_lv_nmos w=0.5u   l=5u ng=1 m=1 mm_ok=1   $ 1 uA
-XMB2 nb1 nb1   VDD VDD sg13_lv_pmos w=2u     l=1u ng=1 m=1 mm_ok=1
+XMB2 nb1 nb1   VDD VDD sg13_lv_pmos w=3u     l=1u ng=1 m=1 mm_ok=1
 XMB3 nb2 nb1   VDD VDD sg13_lv_pmos w='Wsrc' l='Lsrc' ng=1 m=1 mm_ok=1
 XMB4 nb2 nb2   VSS VSS sg13_lv_nmos w='Wsrc' l=5u ng=1 m=1 mm_ok=1
 *

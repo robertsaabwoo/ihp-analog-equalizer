@@ -32,6 +32,12 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
 
 .global sub!
 Vsub sub! 0 0
+* Pin the coarse trim.  This deck measures the fine loop on its own, and with
+* vcoarse! free the coarse loop corrects whatever this deck is detuning --
+* silently, and every point passes.  0.60 V is the nominal trim point at
+* tt / 27 C / 1.2 V (sim/results/vco_ct_centre.log).
+.global vcoarse!
+Vcrs vcoarse! 0 0.60
 
 .options method=gear reltol=1e-3 abstol=1e-12
 
@@ -72,16 +78,16 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 
 .ic v(x1.x2.x20.nrc)=0
 .ic v(x1.x2.x1.net1)=0.9 v(x1.x2.x1.net2)=0.3
-.ic v(x1.x2.net1)=0.62
+.ic v(x1.x2.vctrl)=0.62
 
 .control
-save v(x1.x2.net1) v(x1.x2.x1.net1) v(x1.x2.x1.net2)
+save v(x1.x2.vctrl) v(x1.x2.x1.net1) v(x1.x2.x1.net2)
 +    v(x1.x2.net4) v(x1.x2.net5)
 +    v(x1.x2.x11.net1) v(x1.x3.net1) v(x1.x3.net2)
 +    v(clkoutp) v(x1.eq_p) v(x1.eq_m) v(x1.x2.x20.pre)
 tran 20p 300n
 
-let vctrl  = v(x1.x2.net1)
+let vctrl  = v(x1.x2.vctrl)
 let ring_d = v(x1.x2.x1.net1) - v(x1.x2.x1.net2)
 let raw_d  = v(x1.x2.net4) - v(x1.x2.net5)
 

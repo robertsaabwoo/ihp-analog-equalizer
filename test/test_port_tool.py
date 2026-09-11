@@ -118,23 +118,39 @@ def test_every_sizing_override_names_a_real_cell():
 # that make the label trick work, because the failure mode if one breaks is a
 # netlist with a floating gate, not an error.
 
+LAB_RE = (r"C \{devices/lab_wire\.sym\} (-?\d+) (-?\d+) (\d) (\d) "
+          r"\{name=(\S+).*?lab=(\S+?)\}")
+
+
 def _labels(text):
-    """{(x, y): net} for every lab_wire in a schematic."""
+    """{(x, y): net} for every lab_wire in a schematic.
+
+    Rotation and flip are matched but ignored: a lab_wire's single pin is at
+    its own origin, so neither moves it.  They have to be *matched* though --
+    the ring inverter has one label placed flipped, and a regex that insisted
+    on `0 0` silently dropped it, which made a test that counts labels pass
+    while looking at thirteen of fourteen.
+    """
     import re
-    out = {}
-    for m in re.finditer(r"C \{devices/lab_wire\.sym\} (-?\d+) (-?\d+) 0 0 "
-                         r"\{name=(\S+).*?lab=(\S+?)\}", text):
-        out[(int(m.group(1)), int(m.group(2)))] = m.group(4)
-    return out
+    return {(int(m.group(1)), int(m.group(2))): m.group(6)
+            for m in re.finditer(LAB_RE, text)}
 
 
 def _instances(text):
-    """{name: (symbol, x, y)} for every component placed in a schematic."""
+    """{name: (symbol, x, y)} for every *unrotated, unflipped* component.
+
+    The pin offsets used below are symbol-local, so they are only valid for an
+    instance placed at rotation 0 / flip 0.  Anything else is skipped rather
+    than silently mis-located; the cells these tests check are all placed
+    plainly, and if that ever changes the lookup fails loudly.
+    """
     import re
     out = {}
-    for m in re.finditer(r"C \{(\S+?)\.sym\} (-?\d+) (-?\d+) 0 0 \{name=(\w+)",
+    for m in re.finditer(r"C \{(\S+?)\.sym\} (-?\d+) (-?\d+) (\d) (\d) \{name=(\w+)",
                          text):
-        out[m.group(4)] = (m.group(1), int(m.group(2)), int(m.group(3)))
+        if (m.group(4), m.group(5)) != ("0", "0"):
+            continue
+        out[m.group(6)] = (m.group(1), int(m.group(2)), int(m.group(3)))
     return out
 
 
@@ -142,9 +158,14 @@ PMOS_PINS = {"D": (20, 30), "G": (-20, 0), "S": (20, -30), "B": (20, 0)}
 
 
 def test_trim_legs_land_on_their_own_pins():
-    """Every trim pMOS pin must have a lab_wire exactly on it."""
-    src = (ROOT / "xschem" / "ring_inverter.sch").read_text()
-    out = port.add_coarse_trim(src)
+    """Every trim pMOS pin must have a lab_wire exactly on it.
+
+    Asserted on the ported schematic as it stands, not on the delta: the port
+    is re-run in place, so by the time the tests see it the edit is already
+    applied and `add_coarse_trim` is a no-op.  The finished file is the
+    invariant that matters -- it is what gets netlisted.
+    """
+    out = port.add_coarse_trim((ROOT / "xschem" / "ring_inverter.sch").read_text())
     labels, insts = _labels(out), _instances(out)
     for name, expect_drain in (("T1", "vo+"), ("T2", "vo-")):
         assert name in insts, f"{name} was not placed"
@@ -157,13 +178,17 @@ def test_trim_legs_land_on_their_own_pins():
                 f"{name}.{pin} at ({x+dx},{y+dy}): expected {want[pin]}, got {got}")
 
 
-def test_trim_legs_do_not_land_on_existing_geometry():
-    """A label dropped onto an existing pin rewires that pin silently."""
-    src = (ROOT / "xschem" / "ring_inverter.sch").read_text()
-    before = set(_labels(src))
-    added = set(_labels(port.add_coarse_trim(src))) - before
-    assert added, "no labels were added at all"
-    assert not (added & before), f"trim labels reuse existing points: {added & before}"
+def test_no_two_labels_share_a_point_in_ring_inverter():
+    """Two lab_wires on one coordinate is one net, not two -- a label dropped
+    onto an existing pin rewires that pin silently.  Counting is the check:
+    xschem's own file format allows the collision and says nothing."""
+    import re
+    text = (ROOT / "xschem" / "ring_inverter.sch").read_text()
+    pts = [(int(m.group(1)), int(m.group(2)))
+           for m in re.finditer(LAB_RE, text)]
+    dupes = {p for p in pts if pts.count(p) > 1}
+    assert not dupes, f"lab_wires share coordinates: {sorted(dupes)}"
+    assert len(_labels(text)) == len(pts), "a lab_wire was parsed away"
 
 
 def test_trim_leg_is_a_correction_not_the_load():
@@ -175,8 +200,7 @@ def test_trim_leg_is_a_correction_not_the_load():
 
 
 def test_coarse_loop_is_instantiated_in_the_cdr():
-    src = (ROOT / "xschem" / "CDR.sch").read_text()
-    out = port.add_coarse_loop(src)
+    out = port.add_coarse_loop((ROOT / "xschem" / "CDR.sch").read_text())
     insts = _instances(out)
     name = next(n for n, (s, _, _) in insts.items() if s == "coarse_loop")
     _, x, y = insts[name]
@@ -190,17 +214,20 @@ def test_coarse_loop_is_instantiated_in_the_cdr():
 
 def test_loop_filter_output_gets_named_vctrl():
     """It is the node every measurement in docs/ calls vctrl, and it is about
-    to have a second consumer.  The label has to land on the existing net."""
+    to have a second consumer.  The label has to land on the loop filter's own
+    net -- dropped anywhere else it quietly creates a second, floating net of
+    that name, with no error from xschem or from ngspice."""
     import re
     src = (ROOT / "xschem" / "CDR.sch").read_text()
     out = port.add_coarse_loop(src)
-    x, y = next((p for p, n in _labels(out).items()
-                 if n == "vctrl" and p not in _labels(src)), (None, None))
-    assert x is not None, "no vctrl label was added"
-    # The point must sit on a wire segment that xschem already calls net1.
+    x, y = next((p for p, n in _labels(out).items() if n == "vctrl"),
+                (None, None))
+    assert x is not None, "no vctrl label is present"
+    # The point must sit on the wire the loop filter output runs along.  After
+    # the port has been applied xschem calls it vctrl; before, it is #net1.
     on_net1 = False
-    for m in re.finditer(r"^N (-?\d+) (-?\d+) (-?\d+) (-?\d+) \{\nlab=#net1\}",
-                         src, re.M):
+    for m in re.finditer(r"^N (-?\d+) (-?\d+) (-?\d+) (-?\d+) \{\n"
+                         r"lab=(?:#net1|vctrl)\}", src, re.M):
         x1, y1, x2, y2 = (int(g) for g in m.groups())
         if (x1 == x2 == x and min(y1, y2) <= y <= max(y1, y2)) or \
            (y1 == y2 == y and min(x1, x2) <= x <= max(x1, x2)):

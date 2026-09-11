@@ -799,6 +799,8 @@ def add_coarse_trim(text: str) -> str:
     which is the edge the ceiling is made of -- about 43 % as effective as the
     resistance it imitates.  W was swept in the ring instead.
     """
+    if "name=T1\n" in text:
+        return text                      # already applied; the port is re-run
     text = text.rstrip("\n") + "\n"
     for name, (x, out) in {"T1": (60, "vo+"), "T2": (-480, "vo-")}.items():
         text += (
@@ -831,6 +833,8 @@ def add_coarse_loop(text: str) -> str:
     measurement in docs/ refers to by that name, and it is about to have a
     second consumer.
     """
+    if "{coarse_loop.sym}" in text:
+        return text                      # already applied; the port is re-run
     text = text.rstrip("\n") + "\n"
     text += ("C {devices/lab_wire.sym} 2030 100 0 0 "
              "{name=pCTL sig_type=std_logic lab=vctrl}\n")
