@@ -247,6 +247,44 @@ Coarse tuning. Two candidates, neither built:
   the ≈1.24 a five-stage ring needs. The load has to be *weaker* — a longer
   channel — and that sweep has not been run.
 
+### What was done: an analog dual loop
+
+Both of the above were superseded. The switchable-leg version needs a control
+pin the Chipalooza slot cannot spare — the slot has 1–3 analog pads — and the
+diode-load version was swept and rejected: 5 of 24 points stopped oscillating,
+and the reachable range came out at 1.08:1, *narrower* than the resistor's
+1.166:1, because with the transistor as the load its process spread becomes the
+ring's spread.
+
+What is built instead is a **second, analog control loop**: a pMOS trim leg
+across each of the ten poly load resistors, all gates on one global bias rail,
+driven by an integrator fed from a window comparator on `vctrl`. No pins, no
+clock, no digital. It is on the `ring-coarse-tune` branch and written up in
+[`docs/RING_DUAL_LOOP.md`](RING_DUAL_LOOP.md); the short version is that three
+measurements shaped it and each one refuted the design before it:
+
+* out of band `vctrl` ramps **up** whether the ring is 4 % too slow or 12 % too
+  fast, so it carries no sign and the loop has to *search*, not trim;
+* in lock it does carry the sign, so the loop also has to *hold*, and a search
+  that merely stops is an open-circuit hold on a node that cannot be held open;
+* a MOS capacitor leaks 773 pA over 384 µm², which is 184 mV/ms on its own
+  4.19 pF and walks the whole trim range in four milliseconds.
+
+The ring itself changes with it: the input pair goes from 0.9 µm to 0.7 µm
+(measured, `ring_lin.spice` — it is the only swept length that brackets the
+baud rate from both sides) and the load from 7355 Ω to 9000 Ω (measured,
+`vco_ct_floor.spice` — at low current the ring is current-starved and its
+*floor* frequency goes as 1/R, which is what sets how slow it can be held).
+
+So the sentence above — "centring matters more than headroom" — was right for a
+ring with one knob and is wrong for a ring with two. With a coarse loop,
+centring is the coarse loop's job, and the pair's length buys the part of the
+stage delay the trim cannot reach:
+
+    stage delay = 61.0 ps + 13.100 ps per kilohm of load
+
+which `vco_rsweep.spice` measures as a straight line from 3500 to 9000 Ω.
+
 ## 5. The CDR: five faults, one shape
 
 The closed loop did not work when the port was mechanically correct, and
