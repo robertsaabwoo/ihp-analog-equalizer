@@ -1,0 +1,94 @@
+* Ring variant: DIODE-CONNECTED pMOS loads instead of poly resistors, to see
+* whether the tuning range widens.
+*
+* Why this might work.  With a poly-resistor load the stage delay is RC and
+* does not care what the tail current is, which is why the resistive ring
+* tunes over only 1.3:1 and cannot cover PVT.  A diode load's small-signal
+* resistance is 1/gm, and gm follows the tail current, so the delay falls as
+* the current rises.  It also needs no control pin, unlike a switchable
+* resistor bank.
+*
+* Why the first attempt failed.  A five-stage ring needs a stage gain of at
+* least 1/cos(36 deg) = 1.24 to sustain oscillation, and for a CML pair with a
+* diode load that gain is roughly
+*
+*     sqrt( mu_n * (W/L)_n  /  ( mu_p * (W/L)_p ) )
+*
+* A 2 um / 0.13 um pMOS load against a 3 um / 0.6 um input pair gives about 1,
+* and the ring sat still.  The load has to be *weaker*, which means a longer
+* channel, not a narrower one -- a narrow short-channel device is still a
+* strong load.  Lpl = 0.5 um here, giving a stage gain around 1.8-2.
+*
+* Not yet run.  Recorded as the next experiment, with the arithmetic that
+* says what to try, so nobody repeats the first attempt.
+*
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+.include ring_pm.inc
+
+.global sub!
+Vsub sub! 0 0
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+Vc  vctrl 0 0.6
+
+x1 VDD VSS vctrl vop vom ring_pm
+
+* Break the ring's symmetry so it starts.
+.ic v(vop)=1.0 v(vom)=0.4
+
+.options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
+
+.control
+* Only these two vectors are stored.  A bare `write` would keep every node at
+* every timepoint and has previously exhausted this machine's memory.
+save v(vop) v(vom) v(vctrl)
+* Second attempt.  The first used Lpl = 0.13 um and did not oscillate: for a
+* CML pair with a diode load the stage gain is about
+*     sqrt( mu_n (W/L)_n / ( mu_p (W/L)_p ) )
+* and a short-channel pMOS is a *strong* load however narrow it is, which put
+* the gain near 1 against the 1.24 a five-stage ring needs.  The load has to be
+* weakened by making it longer, not narrower.  Lpl is swept from 0.5 to 2 um.
+foreach lpl 0.5 1.0 2.0
+ foreach wp 1.5 3.0
+  alterparam Win   = 3
+  alterparam Lin   = 0.9
+  alterparam Wtail = 9
+  alterparam Wpl   = $wp
+  alterparam Lpl   = $lpl
+  reset
+  foreach vc 0.40 0.50 0.60 0.70 0.80 0.90 1.00 1.10
+   alter Vc dc = $vc
+  * 120 ns is ~70 cycles at 600 MHz; the first 40 ns is discarded as startup.
+  tran 5p 120n
+   let p_lpl   = $lpl
+   let p_rload = $wp
+   let p_vctrl = $vc
+  * Count rising crossings of the midpoint in the settled window and divide by
+  * the elapsed time, rather than trusting a single period: a ring that is
+  * still building amplitude gives a period that drifts, and one `meas trig/targ`
+  * on an early edge reports that drift as the frequency.
+  meas tran t1 when v(vop)=v(vom) rise=6
+  meas tran t2 when v(vop)=v(vom) rise=26
+  let fosc = 20 / (t2 - t1)
+  meas tran vmax max v(vop) from=60n to=120n
+  meas tran vmin min v(vop) from=60n to=120n
+   let swing = vmax - vmin
+  print p_lpl p_rload p_vctrl fosc swing
+  end
+ end
+end
+quit
+.endc
+.end

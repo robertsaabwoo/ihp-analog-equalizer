@@ -33,7 +33,7 @@
 .param Win=3 Lin=1.0
 .param Wtail=9 Ltail=0.13
 .param Rload=7355
-.param Wpl=4 Lpl=0.13
+.param Wpl=4 Lpl=0.13 Ngpl=1
 .param Wres=1u
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
 
@@ -46,8 +46,8 @@ XM5 st  vctrl VSS VSS sg13_lv_nmos w='Wtail*1u' l='Ltail*1u' ng=1 m=1 mm_ok=1
 * tunes over only 1.3:1 and cannot cover PVT.  A diode load's small-signal
 * resistance is 1/gm, and gm follows the tail current, so the delay falls as
 * the current rises and the tuning range widens.
-XR1 vo+ vo+ VDD VDD sg13_lv_pmos w='Wpl*1u' l='Lpl*1u' ng=1 m=1 mm_ok=1
-XR2 vo- vo- VDD VDD sg13_lv_pmos w='Wpl*1u' l='Lpl*1u' ng=1 m=1 mm_ok=1
+XR1 vo+ vo+ VDD VDD sg13_lv_pmos w='Wpl*1u' l='Lpl*1u' ng='Ngpl' m=1 mm_ok=1
+XR2 vo- vo- VDD VDD sg13_lv_pmos w='Wpl*1u' l='Lpl*1u' ng='Ngpl' m=1 mm_ok=1
 .ends
 
 * Same wiring as ring_oscillator.sch: five stages, the last one crossed over,

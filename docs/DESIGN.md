@@ -238,14 +238,55 @@ Coarse tuning. Two candidates, neither built:
   digital control lines, so the pin is free. The cost is plumbing one signal
   through four levels of hierarchy and ten devices, and it is the lower-risk
   option because the stage topology does not change.
-- **Diode-connected pMOS loads** in place of the poly resistors. A diode load's
-  small-signal resistance is 1/gm, and gm follows the tail current, so the
-  delay falls as the current rises and the range widens with no control pin at
-  all. A first attempt is in `sim/decks/ring_pm.inc` and did not oscillate: the
-  stage gain of a CML pair with a diode load is roughly
-  √(µn(W/L)n / µp(W/L)p), and a 2 µm/0.13 µm pMOS load makes it about 1, below
-  the ≈1.24 a five-stage ring needs. The load has to be *weaker* — a longer
-  channel — and that sweep has not been run.
+- **Diode-connected pMOS loads** in place of the poly resistors. **Tried, and
+  it is worse on every axis** — see below.
+
+### The pin-free option does not work, measured
+
+The attraction of a diode-connected pMOS load is that its resistance is `1/gm`
+and `gm` follows the tail current, so the delay would fall as the current rises
+and the tuning range would widen with no control signal at all.
+
+`sim/decks/vco_pm2.spice`, sweeping the load's length from 0.5 to 2 µm and its
+width over 1.5 and 3 µm (the first attempt used 0.13 µm and did not oscillate
+at all, because a short-channel pMOS is a *strong* load however narrow it is):
+
+| Lpl | Wpl | vctrl | frequency | swing |
+|---|---|---|---|---|
+| 0.5 µm | 1.5 µm | 0.50 V | 313 MHz | 0.219 V |
+| 0.5 µm | 1.5 µm | 0.90 V | 340 MHz | 0.153 V |
+
+**5 of 24 swept points oscillated at all**, and the one configuration that did
+gives 313–340 MHz — half the required frequency — with a tuning range of
+**1.08:1**, *narrower* than the 1.166:1 the poly resistor already delivers, and
+a swing of 150–220 mV where the resistive ring gives 1.8 V.
+
+The reason is worth keeping, because it rules out the whole family of
+load-material substitutions. Two requirements fight:
+
+- **oscillation needs gain**, `√(µn(W/L)n / µp(W/L)p) ≥ 1.24` for five stages,
+  which wants a *weak* load — a long channel;
+- **speed needs a small resistance**, which wants a *strong* load — a short one.
+
+With a poly resistor those two are set independently: the resistance fixes the
+delay and the input pair fixes the gain. With a diode load they are the same
+device, and at 1.2 V there is no sizing that satisfies both.
+
+### Why no load change can widen the range
+
+More fundamentally: with any resistive load the **rising** edge is RC-limited
+whatever the tail current is doing. The current sets the falling edge and the
+swing; the rise is `R·C` regardless. So the control voltage only ever governs
+half the delay, and only weakly — which is exactly the 1.166:1 measured, and
+why swapping what the load is made of does not help.
+
+Wide tuning needs *both* edges current-controlled, which means a
+current-starved CMOS inverter ring — a different oscillator, not a component
+substitution. That is a larger change than adding two control bits, and it
+would end this cell's status as a mechanical port of the sky130 original.
+
+So the options are: two control bits, a different oscillator, or accept the
+limitation as the sky130 project did.
 
 ## 5. The CDR: five faults, one shape
 
