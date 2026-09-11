@@ -1,16 +1,22 @@
 * coarse_tb.spice -- the coarse loop on its own, with vctrl driven by hand.
 *
 * No ring and no CDR here: vctrl is a PWL that plays the part the closed loop
-* would.  That is the whole point of running it this way -- a full closed-loop
-* transient costs twenty minutes and confounds every question, whereas this one
-* answers four separate questions in a few seconds each:
+* would.  That is the point of running it this way.  A closed-loop transient
+* long enough to contain a real acquisition -- tens of microseconds -- would
+* cost hours on this machine, and it would confound every question with every
+* other.  This deck answers them one at a time in a few seconds each:
 *
-*   1. does the retrace self-start from a cold 0 V cap, and where does it park?
-*   2. with vctrl held high (unlocked), does vcoarse ramp at the designed
-*      4 mV/us, and does the wrap fire cleanly and restart the sweep?
-*   3. when vctrl drops through the threshold, does the sweep stop and hold?
-*   4. with vctrl then wandering by more than the fine loop's worst ripple,
-*      does the hysteresis keep it stopped?
+*   1. does the retrace self-start from a cold 0 V capacitor, and where does it
+*      park?  (it must park at the SLOW end, or the search starts in the wrong
+*      place)
+*   2. with vctrl railed high, does vcoarse ramp at the designed rate, does the
+*      wrap fire, and does the search repeat?
+*   3. when vctrl comes back into the window, does the ramp stop?
+*   4. does it then HOLD -- against the capacitor's own leakage and against
+*      vctrl wandering by more than the fine loop's worst measured ripple?
+*   5. and if vctrl goes below the window, does the loop push back the other
+*      way?  (this is the half that a pure acquisition sweep does not have, and
+*      it is what makes the hold immune to leakage rather than merely slow)
 .control
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
@@ -20,7 +26,7 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
 
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib  mos_tt
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib    res_typ
-.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib    cap_typ
 
 .include coarse_loop.inc
 
@@ -33,19 +39,22 @@ VSS VSS 0 0
 Ib  0 ibias dc 40u
 XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
 
-* vctrl: railed high for 300 us (unlocked, sweeping), then dropped to 0.60 V
-* (the measured locked value), then given +-40 mV of wander -- more than the
-* 65 mV pp measured on PRBS7 -- to prove the hysteresis holds.
+* vctrl: railed high for 150 us (unlocked -- the loop must search), then the
+* measured locked value of 0.599 V, then +-40 mV of wander (more than the
+* 65 mV pp measured on PRBS7), then 0.45 V, below the window, to prove the
+* pull-up half works.
 Vct vctrl 0 PWL
 + 0        0.10
-+ 20u      1.10
-+ 300u     1.10
-+ 300.5u   0.60
-+ 380u     0.60
-+ 390u     0.64
-+ 400u     0.56
-+ 410u     0.64
-+ 500u     0.60
++ 5u       1.10
++ 150u     1.10
++ 150.5u   0.599
++ 260u     0.599
++ 270u     0.639
++ 280u     0.559
++ 290u     0.639
++ 340u     0.599
++ 340.5u   0.450
++ 420u     0.450
 
 x1 VDD VSS ibias vctrl vcoarse coarse_loop
 
@@ -54,26 +63,36 @@ x1 VDD VSS ibias vctrl vcoarse coarse_loop
 .options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
 
 .control
-save v(vcoarse) v(vctrl) v(x1.swp) v(x1.rst) v(x1.vh) v(x1.vw) v(x1.nb2)
-tran 50n 500u
+save v(vcoarse) v(vctrl) v(x1.rstn) v(x1.vh) v(x1.vl) v(x1.vw) v(x1.nb2)
+tran 50n 420u
 
-* Where the retrace parks a cold cap.
-meas tran v_park  MAX v(vcoarse) FROM=0    TO=20u
-* The sweep rate, read over a clean stretch well away from either end.
-meas tran vc_a    FIND v(vcoarse) AT=60u
-meas tran vc_b    FIND v(vcoarse) AT=160u
-let slew_mV_us  = (vc_a - vc_b)*1e3/100
-* Wrap: how many retraces in the 280 us of unlocked sweep, and how deep.
-meas tran vc_lo   MIN v(vcoarse) FROM=30u  TO=300u
-meas tran vc_hi   MAX v(vcoarse) FROM=30u  TO=300u
-* Hold: vcoarse must not move once vctrl is back in range, ripple and all.
-meas tran hold_a  FIND v(vcoarse) AT=320u
-meas tran hold_b  FIND v(vcoarse) AT=500u
+* 1. cold start
+meas tran v_park   MAX v(vcoarse) FROM=0    TO=5u
+* 2. search: rate over a clean stretch, and the two ends of the ramp
+meas tran vc_a     FIND v(vcoarse) AT=20u
+meas tran vc_b     FIND v(vcoarse) AT=40u
+let search_mV_us = (vc_a - vc_b)*1e3/20
+meas tran vc_lo    MIN v(vcoarse) FROM=10u  TO=150u
+meas tran vc_hi    MAX v(vcoarse) FROM=10u  TO=150u
+* The search has to cover the whole trim range, not a slice of it: the first
+* version retraced to 0.40 V instead of 0.85 V because the retrace resistor was
+* mis-solved, and searched only 0.15-0.40 -- which looks like a working loop in
+* every waveform and silently cannot reach two thirds of the corners.
+let search_span = vc_hi - vc_lo
+* 3+4. hold, through the ripple, with no help from a switch
+meas tran hold_a   FIND v(vcoarse) AT=200u
+meas tran hold_b   FIND v(vcoarse) AT=340u
 let hold_drift_mV = (hold_a - hold_b)*1e3
-* And the loop must actually be stopped, not merely slow.
-meas tran swp_hold AVG v(x1.swp) FROM=320u TO=500u
-print v_park slew_mV_us vc_lo vc_hi hold_a hold_b hold_drift_mV swp_hold
-print v(x1.vh)[0] v(x1.nb2)[0]
+* How long an unattended hold would take to walk the whole 0.7 V trim range.
+* The MOS-capacitor version of this circuit managed four milliseconds.
+let hold_walk_ms  = 0.70/((hold_a-hold_b)/140e-6)/1e-3
+* 5. the other direction
+meas tran up_a     FIND v(vcoarse) AT=345u
+meas tran up_b     FIND v(vcoarse) AT=415u
+let pullup_mV_us  = (up_b - up_a)*1e3/70
+print v_park vc_a vc_b search_mV_us vc_lo vc_hi search_span
+print hold_a hold_b hold_drift_mV hold_walk_ms up_a up_b pullup_mV_us
+print v(x1.vh)[0] v(x1.vl)[0] v(x1.vw)[0]
 quit
 .endc
 .end

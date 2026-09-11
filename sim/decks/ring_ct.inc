@@ -3,35 +3,64 @@
 * The fine loop is the existing bang-bang CDR: it drives vctrl, which sets the
 * ring's tail current, and it tunes over only 1.166:1 because with a resistive
 * load the *rising* edge is RC-limited whatever the tail current does.  That
-* range covers 8 of 27 PVT corners.
-*
-* The coarse loop drives vcoarse, which sits on the gate of a small pMOS in
-* parallel with each poly load resistor.  The load resistance is what sets the
-* RC limit, so this knob has authority where vctrl does not:
+* range covers 8 of 27 PVT corners.  The coarse loop drives vcoarse, which sits
+* on the gate of a small pMOS in parallel with each poly load resistor:
 *
 *      VDD --+--[Rload 8000]--+-- vo+
 *            |                |
 *            +--|MTR (pMOS)---+          gate = vcoarse
 *
-* The poly resistor sits at the *slow* end and the pMOS only ever speeds the
-* ring up, so with vcoarse at VDD the trim is completely absent and the ring is
-* exactly the ported design with a slightly larger load.
+* The load resistance is what sets the RC limit, so this knob has authority
+* where vctrl does not.  vco_rsweep.spice measured how much:
 *
-* Sizing, before simulating (char/mos.spice gives uCox(p) = 87.4 uA/V^2):
+*      stage delay = 61.0 ps + 13.100 ps per kilohm   (at vctrl = 1.10 V)
 *
-*   Ron = 1 / (uCox (W/L) Vov)   at Vov = 1.2 - 0.46 = 0.74 V
-*   W=0.5 L=1.0 -> 30.9 kohm -> 8000 || 30.9k = 6355 ohm, -21 %
+* -- 61 ps of transit time that the load cannot touch, and the rest RC.  At the
+* shipped 7355 ohm the load is 61 % of the delay.
 *
-* which is the +15.2 % / -8.1 % the corner sweep asked for, with margin at both
-* ends.  A W = 0.5 um device is also small enough that its own process spread
-* is attenuated by the parallel ratio -- the poly resistor still dominates.
-* That is the objection that killed the diode-load idea, and it does not apply
-* here because this pMOS is a correction, not the load.
+* The poly resistor sits at the *slow* end of the span and the pMOS only ever
+* speeds the ring up, so at vcoarse = VDD the trim is absent and the ring is the
+* ported design with a slightly larger load.  There is no state in which the
+* trim makes things worse than the untrimmed circuit.
+*
+* This is not the diode-connected-load idea that was tried and rejected.  There
+* the transistor *was* the load, so its process spread was the ring's spread and
+* 5 of 24 swept points stopped oscillating.  Here the poly resistor is still the
+* load and the pMOS is a correction.
+*
+* -------------------------------------------------------------------------
+* Sizing the leg: why it was swept and not calculated
+*
+* The first attempt sized it by arithmetic.  W = 0.5 um, L = 1 um across an
+* 8000 ohm load was predicted to give -21 % on the load resistance, and
+* trim_r.spice measured 6339 ohm, -20.8 % -- the arithmetic was right to 1 %.
+* The ring then moved +5.6 %, where the table above says a real 6339 ohm
+* resistor is worth about +13 %.
+*
+* A pMOS is only a resistor while it stays in triode.  At the bottom of the
+* ring's swing its source-drain voltage approaches its overdrive, it turns into
+* a current source, and it stops helping the rising edge -- which is exactly
+* the edge the RC ceiling is made of.  Measured against a real resistor of the
+* same dc-equivalent value it is about 43 % as effective.  So the width was
+* swept in the ring instead (vco_ct.spice, Rload = 9000, vctrl = 1.10 V):
+*
+*      Wtr   vcoarse=VDD   0.5 V    0.0 V     span
+*      1 um    553.4       564.1    614.8    1.111:1
+*      2 um    542.2       561.7    642.7    1.185:1
+*      4 um    521.2       556.8    673.5    1.292:1
+*      8 um    483.9       545.5    692.0    1.430:1
+*
+* The corner sweep asks for +15.2 % / -8.1 % about centre, which is 1.254:1.
+* W = 4 um clears that with margin to spare and keeps the ring node swinging
+* 0.93-1.01 V at every setting; W = 8 um buys more range but costs 38 MHz at
+* the untrimmed end (the leg's own drain capacitance loads the ring node even
+* when it is off) and its swing falls to 0.73 V at the strongest setting.
+* -------------------------------------------------------------------------
 
 .param Win=3 Lin=0.9
 .param Wtail=9 Ltail=0.13
 .param Rload=8000
-.param Wtr=0.5 Ltr=1.0
+.param Wtr=4 Ltr=1.0
 .param Wres=1u
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
 

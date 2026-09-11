@@ -1,0 +1,60 @@
+* vco_rsweep.spice -- how much frequency is a ring load resistor worth?
+*
+* The coarse trim moves the ring's load resistance.  Before spending devices on
+* the knob it is worth knowing its leverage, because the ring is only partly
+* RC-limited: some of the stage delay is the input pair's own transit time and
+* the diff_amp_inv buffer's, and neither of those moves with the load.  If
+* df/f is only a fifth of dR/R then no plausible trim leg can deliver the
+* +15.2 % the corner sweep asks for, and the knob has to be something else.
+*
+* Measured at vctrl = 1.10 V, the top of the fine range, because that is where
+* the corner failures live: the ring that cannot reach the baud rate is at
+* maximum tail current when it fails.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+.include ring_p.inc
+
+.global sub!
+Vsub sub! 0 0
+VDD VDD 0 1.2
+VSS VSS 0 0
+Vc  vctrl 0 1.1
+
+x1 VDD VSS vctrl vop vom ring_p
+.ic v(vop)=1.0 v(vom)=0.4
+.options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
+
+.control
+save v(vop) v(vom) v(x1.net1) v(x1.net2)
+* Lin is 0.9 um in the shipped design; ring_p.inc still defaults to the
+* sky130 value of 1.0, so set it explicitly rather than inheriting it.
+alterparam Lin = 0.9
+foreach rl 9000 8000 7355 6500 5500 4500 3500
+  alterparam Rload = $rl
+  reset
+  alter Vc dc = 1.1
+  tran 5p 120n
+  let p_rload = $rl
+  meas tran t1 when v(vop)=v(vom) rise=6
+  meas tran t2 when v(vop)=v(vom) rise=26
+  let fosc = 20 / (t2 - t1)
+  * The ring node itself, not the buffered output -- the buffer is rail to rail
+  * whatever the ring does, so its swing says nothing about the stage.
+  meas tran rmax max v(x1.net1) from=60n to=120n
+  meas tran rmin min v(x1.net1) from=60n to=120n
+  let ring_swing = rmax - rmin
+  print p_rload fosc ring_swing
+end
+quit
+.endc
+.end

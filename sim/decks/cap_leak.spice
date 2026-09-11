@@ -1,0 +1,69 @@
+* cap_leak.spice -- gate leakage of the candidate hold capacitors.
+*
+* The coarse loop's open-loop testbench measured vcoarse drifting 30 mV in the
+* 180 us it was meant to be holding.  Making the sweep switch two long devices
+* in series instead of one short one changed it by 0.6 mV, which rules the
+* switch out.  What is left on that node is the capacitor itself, and 384 um2
+* of thin-oxide MOS gate is a lot of tunnelling area -- roughly 320 times the
+* gate area of everything else attached to vcoarse put together.
+*
+* So measure it.  For each candidate: the dc current into the gate at the hold
+* voltage, and the capacitance at 1 GHz, both on the same instance, so the
+* figure of merit is the one that matters -- I_leak / C, which is volts per
+* second of drift and is independent of how the capacitor is scaled.
+*
+* Candidates:
+*   moscap_n   the dense one now in use, 12.7 fF/um2
+*   moscap_p   6x less dense but hole tunnelling is far weaker than electron
+*   sg13_hv_nmos  the 3.3 V device as a capacitor.  docs/DESIGN.md keeps the
+*                 hv devices out of the signal path and that stands, but a
+*                 thick oxide used purely as a capacitor needs no second rail
+*                 and its leakage should be orders of magnitude down.
+*   cap_cmomf  metal fringe: no leakage at all, 1.29 fF/um2, the fallback if
+*              nothing else works and the area can be found.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib  mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOShv.lib  mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib    cap_typ
+
+.global sub!
+Vsub sub! 0 0
+
+* All five held at 0.42 V, the middle of the trim range where the hold matters.
+V1 n1 0 dc 0.42 ac 1
+V2 n2 0 dc 0.42 ac 1
+V3 n3 0 dc 0.42 ac 1
+V4 n4 0 dc 0.42 ac 1
+
+* 384 um2 of each MOS type, so the currents compare directly.
+XC1 n1 0 sg13_moscap_n w=8u l=8u m=6 mm_ok=1
+XC2 n2 0 sg13_moscap_p w=8u l=8u m=6 mm_ok=1
+* The hv device wired as a capacitor: gate one side, source/drain/bulk the other.
+XC3 0 n3 0 0 sg13_hv_nmos w=8u l=8u ng=1 m=6 mm_ok=1
+* And a same-area metal-fringe cap for the leakage reference (there is none).
+XC4 n4 0 sub! cap_cmomf w=19.6u l=19.6u mmin=1 mmax=4 mm_ok=1
+
+.control
+op
+let i_mosn = -i(V1)
+let i_mosp = -i(V2)
+let i_hvn  = -i(V3)
+let i_mom  = -i(V4)
+print i_mosn i_mosp i_hvn i_mom
+
+ac lin 1 1G 1G
+let w2pi = 2*3.14159265*1e9
+let c_mosn = abs(i(V1))/w2pi
+let c_mosp = abs(i(V2))/w2pi
+let c_hvn  = abs(i(V3))/w2pi
+let c_mom  = abs(i(V4))/w2pi
+print c_mosn c_mosp c_hvn c_mom
+quit
+.endc
+.end

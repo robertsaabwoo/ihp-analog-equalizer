@@ -1,0 +1,63 @@
+* trim_r.spice -- what the trim leg is actually worth, measured as a resistance.
+*
+* The first range sweep (vco_ct.spice, W = 0.5 um, L = 1 um across an 8000 ohm
+* poly load) moved the ring by only +5.6 % from vcoarse = VDD to vcoarse = 0,
+* against a hand estimate of -21 % on the load resistance.  Two things could
+* explain that and they call for opposite fixes: either the pMOS is far weaker
+* than the hand estimate, or the ring's frequency is much less sensitive to its
+* load resistance than assumed.  This deck settles the first one on its own, in
+* seconds, by measuring the parallel combination directly.
+*
+* The measurement node is held at 0.85 V, which is about where a ring output
+* sits when its own stage is pulling it down -- the operating point where the
+* trim leg matters.  A pMOS across a load resistor is not a fixed resistor:
+* deep in triode near VDD it is one, and near the bottom of the swing it is a
+* current source, so the number that matters is the large-signal average, not
+* the small-signal value at VDD.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+
+.global sub!
+Vsub sub! 0 0
+VDD VDD 0 1.2
+
+.param Rload=8000
+.param Wres=1u
+.param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
+.param Wtr=0.5 Ltr=1.0
+
+XR VDD n1 sub! rhigh w='Wres' l='Lload' m=1 b=0 mm_ok=1
+XT n1 vcrs VDD VDD sg13_lv_pmos w='Wtr*1u' l='Ltr*1u' ng=1 m=1 mm_ok=1
+Vn  n1 0 0.85
+Vg  vcrs 0 0.6
+
+.control
+* The resistor alone, as a reference.
+alter Vg dc = 1.2
+op
+let i_r = -i(Vn)
+let r_alone = 0.35/i_r
+print r_alone
+
+foreach wt 0.5 1 2 4 8
+  alterparam Wtr = $wt
+  reset
+  foreach vg 1.2 0.9 0.7 0.6 0.5 0.4 0.3 0.2 0.0
+    alter Vg dc = $vg
+    op
+    let itot = -i(Vn)
+    let reff = 0.35/itot
+    let w_um = $wt
+    let vg_v = $vg
+    print w_um vg_v reff
+  end
+end
+quit
+.endc
+.end

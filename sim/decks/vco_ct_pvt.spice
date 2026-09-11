@@ -1,0 +1,80 @@
+* vco_ct_pvt.spice -- does the coarse-trimmed ring reach the baud rate at every
+* corner?
+*
+* The untrimmed ring reaches 600.6 MHz at 8 of 27 corners.  That is the one
+* open problem the coarse loop exists to fix, and this deck is the test of
+* whether it does.
+*
+* Only two points per corner are needed, not a tuning curve: the slowest the
+* ring can be made (trim fully off, tail current at its minimum) and the
+* fastest (trim fully on, tail at maximum).  If 600.6 MHz lies between them the
+* corner is covered, because the ring is monotonic in both knobs.  That is 18
+* transients per process corner instead of the 36 the untrimmed sweep needed,
+* which is what makes a 27-corner answer affordable at all.
+*
+* Run once per process corner:
+*   tools/safe_ngspice.sh vco_ct_pvt.spice ../results/vco_ctpvt_tt.log
+* after editing the cornerMOSlv line -- a .lib section is fixed at parse time
+* and genuinely needs one run each.  See CLAUDE.md section 2.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+.include ring_ct.inc
+
+.global sub!
+Vsub sub! 0 0
+VDD VDD 0 1.2
+VSS VSS 0 0
+Vc   vctrl   0 0.6
+Vcrs vcoarse 0 1.2
+
+x1 VDD VSS vctrl vcoarse vop vom ring_ct
+.ic v(vop)=1.0 v(vom)=0.4
+.options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
+
+.control
+save v(vop) v(vom) v(x1.net1)
+* vcoarse tracks the supply in the real circuit (its thresholds come from a
+* divider off VDD), so the "trim off" point is VDD, not a fixed 1.2 V.
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  * (crs, ctl) = slowest corner of the knob space, then fastest.
+  foreach pt 1 2
+   if $pt = 1
+     alter Vcrs dc = $vd
+     alter Vc   dc = 0.35
+   else
+     alter Vcrs dc = 0.0
+     alter Vc   dc = $vd
+   end
+   tran 5p 120n
+   let p_temp = $tmp
+   let p_vdd  = $vd
+   let p_pt   = $pt
+   meas tran t1 when v(vop)=v(vom) rise=6
+   meas tran t2 when v(vop)=v(vom) rise=26
+   let fosc = 20 / (t2 - t1)
+   * Filter on the ring node's own swing, not the buffered output: the buffer
+   * is rail to rail whatever the ring does, so a dead ring still measures a
+   * healthy "swing" there and a meas on a flat node reports nonsense.
+   meas tran vmax max v(x1.net1) from=60n to=120n
+   meas tran vmin min v(x1.net1) from=60n to=120n
+   let swing = vmax - vmin
+   print p_temp p_vdd p_pt fosc swing
+  end
+ end
+end
+quit
+.endc
+.end

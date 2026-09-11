@@ -49,16 +49,27 @@ x1 VDD VSS vctrl vcoarse vop vom ring_ct
 .control
 * Only these two vectors are stored.  A bare `write` would keep every node at
 * every timepoint and has previously exhausted this machine's memory.
-save v(vop) v(vom) v(vctrl)
+save v(vop) v(vom) v(vctrl) v(x1.net1)
 * Sweep the coarse trim against the fine control.  What matters is whether the
 * union of the vctrl ranges, across vcoarse, spans the 1.25:1 the corner sweep
 * demands -- and whether each vcoarse setting still oscillates cleanly.
-foreach vcrs 1.20 0.80 0.60 0.45 0.30 0.00
+* The first pass of this sweep used one trim width (0.5 um) and got only
+* +5.6 %, while vco_rsweep.spice showed a *resistor* of the same dc-equivalent
+* value worth about +13 %.  The difference is that a pMOS across the load is
+* only a resistor while it stays in triode: at the bottom of the ring's swing
+* its source-drain voltage approaches its overdrive, it turns into a current
+* source, and it stops helping the rising edge -- which is the edge the RC
+* ceiling is made of.  So the width has to be swept, not calculated.
+foreach wtr 1 2 4 8
+ alterparam Wtr = $wtr
+ reset
+ foreach vcrs 1.20 0.70 0.50 0.30 0.00
   alter Vcrs dc = $vcrs
-  foreach vc 0.50 0.60 0.70 0.90 1.10
+  foreach vc 1.10
    alter Vc dc = $vc
   * 120 ns is ~70 cycles at 600 MHz; the first 40 ns is discarded as startup.
   tran 5p 120n
+   let p_wtr   = $wtr
    let p_vcrs  = $vcrs
    let p_vctrl = $vc
   * Count rising crossings of the midpoint in the settled window and divide by
@@ -68,11 +79,12 @@ foreach vcrs 1.20 0.80 0.60 0.45 0.30 0.00
   meas tran t1 when v(vop)=v(vom) rise=6
   meas tran t2 when v(vop)=v(vom) rise=26
   let fosc = 20 / (t2 - t1)
-  meas tran vmax max v(vop) from=60n to=120n
-  meas tran vmin min v(vop) from=60n to=120n
+  meas tran vmax max v(x1.net1) from=60n to=120n
+  meas tran vmin min v(x1.net1) from=60n to=120n
    let swing = vmax - vmin
-  print p_vcrs p_vctrl fosc swing
+  print p_wtr p_vcrs p_vctrl fosc swing
   end
+ end
 end
 quit
 .endc

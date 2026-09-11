@@ -67,88 +67,198 @@ architecture has to stop asking `vctrl` which way to go.
 (Logs: `sim/results/e2e_band_8460.log`, `sim/results/e2e_band_6400.log`,
 `sim/results/e2e_lock_tt.log`.)
 
-## 3. The architecture the measurement forces
+## 3. The architecture the measurements force
 
-If the error signal is unsigned, the coarse loop cannot be a trim.  It has to
-be a **sweep, halted by a lock detector** — which is the standard answer for a
-reference-less CDR with no frequency detector, and is cheaper here than the
-bidirectional version would have been because the detector needs one threshold
-instead of two.
+Read §2 and §5 together and the circuit is almost determined:
+
+* out of band `vctrl` has no sign, so the loop cannot simply trim — it has to
+  **search**;
+* in lock `vctrl` does have a sign, so the loop should **not** simply search —
+  a search that stops is an open-circuit hold, and §5 shows this node cannot be
+  held open;
+* both facts point the same way when the ring is *slow*, which is what makes
+  one branch able to do both jobs.
 
 ```
-    vctrl ──> [ lock detector: vctrl > VH ? ] ──> sweep_en
-                                                    │ gates
-                    20 nA ──────────────────────────┴──> Ccoarse ──> vcoarse
-                                                          │   │
-                              [ wrap: vcoarse > Vtop ] ────┘   └──> 10 trim gates
-                                          │ dumps Ccoarse back to Vbot
+    vctrl ──┬── [ pMOS pair: vctrl vs VL ] ──────────────┐
+            └── [ nMOS pair: vctrl vs VH ] ── 2 mirrors ─┤
+                                                         ├── vcoarse ──> 10 trim gates
+              [ wrap: vcoarse < 0.15 V ? ] ── retrace ───┤
+                                                      Ccoarse (cap_cmomf)
+                                                         │
+                                                        VSS
 ```
 
-* **Unlocked** — `vctrl` above threshold — a 20 nA source charges `Ccoarse`,
-  `vcoarse` ramps up, the trim pMOS turns progressively off, the ring load
-  rises and the ring sweeps *monotonically downward in frequency*.
-* When `vcoarse` reaches the top of its range the wrap comparator dumps
-  `Ccoarse` back to the bottom in a few nanoseconds and the sweep restarts from
-  the fast end.  The retrace is far too fast for the fine loop to catch, which
-  is correct: it is a retrace, not a search.
-* **Locked** — `vctrl` back inside the window — the source is gated off and
-  `vcoarse` holds.  Leakage on a 5 pF node over a data frame is negligible
-  compared with the fine loop's own tracking range.
-* If the loop later falls out of lock (temperature, supply), `vctrl` rises, the
-  sweep resumes from wherever it stopped and wraps as needed.  Nothing is stuck
-  at a rail, which is the failure the one-way-no-wrap version would have had.
+* `vctrl > VH` → the pull-down branch sinks from `Ccoarse` → `vcoarse` falls →
+  the trim pMOS across each ring load turns on harder → the ring speeds up.
+* `vctrl < VL` → the pull-up branch sources into `Ccoarse` → the ring slows.
+* `VL < vctrl < VH` → both pairs are steered to their dump branch and
+  `vcoarse` holds.  **The dead zone is the point**: without it the coarse loop
+  chases the fine loop's ripple.
+* `vcoarse` at the bottom → the wrap comparator retraces it to the top in tens
+  of nanoseconds and the search continues from the slow end.
 
-### 3.1 How slow the sweep must be
+The pull-down branch does two jobs and needs no mode switch to do them.  Out of
+band `vctrl` is railed high, so it ramps `vcoarse` continuously and the wrap
+turns that ramp into a repeating search of the whole coarse range.  In lock it
+is half of a window trim.  The direction it wants in both cases is the same —
+"vctrl is high, make the ring faster" — which is why one branch covers both.
 
-The fine loop settles in under 1.5 µs.  The sweep must move the ring by much
-less than the fine loop's capture range during that settling time, or it will
-sweep straight through lock.  A full coarse range of 25 % — 150 MHz — traversed
-in 200 µs is 0.75 MHz/µs, so during a 1.5 µs acquisition the target moves
-0.19 %.  That is the design point: **20 nA into a 5 pF `Ccoarse`**, 4 mV/µs, a
-0.5 V ramp in 125 µs.
+`VH = 0.70 V`, `VL = 0.52 V`, from a poly divider off VDD.  Locked `vctrl` is
+0.599 V and the worst measured ripple is 65 mV pp on PRBS7, so ±33 mV about
+0.599 clears both edges by about 70 mV.  The thresholds track VDD, which is
+right: the locked `vctrl` scales with the supply too.
 
-5 pF is 394 µm² as a MOS capacitor at the measured 12.7 fF/µm².
-`docs/DESIGN.md` rules MOS capacitors out for the other two capacitors in this
-design, because their value moves 7.6 % between 0.6 V and 1.2 V and far more
-near threshold.  That objection does not apply to this one: it sets a sweep
-*rate*, not a pole, and the rate is allowed to vary by an order of magnitude as
-long as it stays far slower than the fine loop.  In exchange it is six times
-denser than `cap_cmomf` — 394 µm² instead of 2400 µm².
+### 3.1 Why the search runs slow-to-fast
 
-## 4. The knob
+This is easy to get backwards and the circuit does not work at all if it is.
+
+While unlocked, `vctrl` is railed at the **top** of the fine loop's range.
+Capture therefore happens at the instant the ring can just reach the baud rate
+at maximum tail current — that is, with `vctrl` still high, still above any
+sensible threshold.  The search has to keep running a little longer, and it has
+to run in the direction that lets the fine loop *reduce* `vctrl` to hold lock.
+
+Slow-to-fast does that: after capture the ring keeps speeding up, the fine loop
+backs `vctrl` down, and the search stops itself when `vctrl` re-enters the
+window from above.  Fast-to-slow would capture at the same railed `vctrl` and
+then demand that the fine loop raise `vctrl` further to keep up.  There is no
+headroom there and lock would break immediately.
+
+### 3.2 How slow the search must be
+
+The fine loop settles in under 1.5 µs.  The search must move the ring by much
+less than the fine loop's capture range during that settling time, or it sweeps
+straight through lock.  A full coarse range of 142 MHz (§4) traversed in 37 µs
+is 3.8 MHz/µs, so during a 1.5 µs acquisition the target moves 5.8 MHz — about
+1 % of the baud rate.  **The fine loop's capture range has not been measured**,
+which is the open question this number depends on; §6 lists it.
+
+That is the design point: 20 nA into a 1.05 pF `Ccoarse`, 19 mV/µs.
+
+A closed-loop transient long enough to contain a real acquisition is 40 µs of
+simulated time, and the 1.5 µs lock run already costs a quarter of an hour on
+this machine.  So `coarse_loop.inc` carries a `Ksweep` parameter that scales
+the bias currents: the closed-loop decks raise it so an acquisition fits in a
+few microseconds, and `coarse_tb.spice` checks the real, unscaled rate
+open-loop.  **`Ksweep` must be 1 in anything that claims a silicon number**, and
+what a scaled run demonstrates is the mechanism and the polarity, not the
+capture margin.
+
+## 4. The knob, and what it is worth
 
 The fine loop drives the ring's *tail current*.  Above the point where a stage
 can charge its own load faster than its RC, more tail current buys nothing: the
 load resistor sets the ceiling, and the ceiling is what fails at temperature.
-So the coarse knob must move the *load*, not the current.
+So the coarse knob has to move the *load*, not the current.
 
-    VDD --+--[Rload poly]--+-- vo+
-          |                |
-          +---|MTR pMOS----+        gate = vcoarse (global)
+`sim/decks/vco_rsweep.spice` measures what that is worth, sweeping the ring's
+load resistance directly at `vctrl` = 1.10 V — the top of the fine range,
+because the corner failures all happen at maximum tail current:
 
-one pMOS across each of the ten load resistors, all ten gates tied to a single
-global `vcoarse`.  The poly resistor sits at the *slow* end of the required
-span and the pMOS only ever speeds the ring up, so at `vcoarse = VDD` the trim
-is entirely absent and the ring is the ported design with a slightly larger
-load — there is no state in which the trim can make things worse than the
-untrimmed circuit.
+| Rload | f | stage delay |
+|---|---|---|
+| 9000 Ω | 565.3 MHz | 176.9 ps |
+| 8000 Ω | 603.7 MHz | 165.7 ps |
+| 7355 Ω (shipped) | 632.4 MHz | 158.1 ps |
+| 6500 Ω | 677.0 MHz | 147.7 ps |
+| 5500 Ω | 742.2 MHz | 134.7 ps |
+| 4500 Ω | 829.6 MHz | 120.5 ps |
+| 3500 Ω | 958.2 MHz | 104.4 ps |
+
+Straight line, to better than a picosecond over the whole span:
+
+    stage delay = 61.0 ps + 13.100 ps per kilohm
+
+So 61 ps of the stage delay is not the load at all — it is the pair's own
+transit time and the tail node — and the rest is RC.  At the shipped 7355 Ω
+the load is 61 % of the delay, which makes it a strong knob: the
++15.2 % / −8.1 % the corner sweep asks for is 561–703 MHz, which is
+
+    561 MHz -> 8951 Ω        703 MHz -> 6203 Ω
+
+a 1.44:1 range on the load resistance.  That is a modest thing to ask of a
+trim leg.
+
+### 4.1 The trim leg is a pMOS, and a pMOS is not a resistor
+
+    VDD --+--[Rload poly, 9000 Ω]--+-- vo+
+          |                        |
+          +---|MTR pMOS------------+        gate = vcoarse (global)
+
+one pMOS across each of the ten ring load resistors, all ten gates tied to a
+single global `vcoarse`.  The poly resistor sits at the *slow* end of the span
+and the pMOS only ever speeds the ring up, so at `vcoarse = VDD` the trim is
+entirely absent and the ring is the ported design with a slightly larger load.
+There is no state in which the trim can make things worse than the untrimmed
+circuit.
 
 This is not the diode-connected-load idea that was tried and rejected.  There
-the transistor *was* the load, so its process spread was the ring's spread, and
+the transistor *was* the load, so its process spread was the ring's spread and
 5 of 24 swept points stopped oscillating.  Here the poly resistor is still the
-load and the pMOS is a correction of order 20 %, so the pMOS's own spread is
-attenuated by the parallel ratio.
+load and the pMOS is a correction, so the pMOS's own spread is attenuated by
+the parallel ratio.
 
-`sim/decks/vco_ct.spice` sweeps `vcoarse` against `vctrl` to measure what range
-the leg actually delivers and whether the ring still swings at every setting.
+The first sizing pass got this wrong in an instructive way.  A W = 0.5 µm,
+L = 1 µm leg across an 8000 Ω load was predicted to give −21 % on the load
+resistance; `sim/decks/trim_r.spice` measured **6339 Ω, −20.8 %** — the hand
+arithmetic was right to 1 %.  But the ring moved only **+5.6 %**, where the
+table above says a real 6339 Ω resistor is worth about +13 %.
 
-## 5. Status
+The pMOS is only a resistor while it stays in triode.  At the bottom of the
+ring's swing its source-drain voltage approaches its overdrive, it becomes a
+current source, and it stops helping the rising edge — which is precisely the
+edge the RC ceiling is made of.  Measured against a real resistor of the same
+dc-equivalent value it is about 43 % as effective.  So the leg has to be sized
+by sweeping the width in the ring, not by computing a resistance:
+`sim/decks/vco_ct.spice` does that.
 
-- [x] band signature measured — refuted the bidirectional trim, justified the
-      single-threshold sweep (§2)
-- [ ] trim-leg range sweep (`sim/decks/vco_ct.spice`) — running
-- [ ] lock detector: threshold, hysteresis, behaviour against 65 mV of ripple
-- [ ] sweep source and wrap comparator
-- [ ] closed dual loop, in-band (must not disturb the locked numbers)
-- [ ] closed dual loop, acquiring from a wrong band
+## 5. The hold capacitor cannot be a MOS capacitor
+
+The first open-loop testbench showed `vcoarse` drifting 30 mV in the 180 µs it
+was supposed to be holding — 0.17 mV/µs, which walks the whole trim range in
+under four milliseconds and would make the receiver re-acquire forever.
+Replacing the sweep switch with two long devices in series changed it by
+0.6 mV, which ruled the switch out.  `sim/decks/cap_leak.spice` measured the
+candidates directly, all at 384 µm² and at the 0.42 V hold point:
+
+| capacitor | dc gate current | C | drift = I/C |
+|---|---|---|---|
+| `moscap_n` | **773 pA** | 4.19 pF | **184 mV/ms** |
+| `moscap_p` | 13.7 pA | 1.20 pF | 11.4 mV/ms |
+| `sg13_hv_nmos` as a cap | 0 (not modelled) | 0.50 pF | — |
+| `cap_cmomf` | 0.42 pA | 0.49 pF | 0.85 mV/ms |
+
+The measured 184 mV/ms accounts for the observed 171 mV/ms on its own, so that
+is the whole of it.  `docs/DESIGN.md` already ruled MOS capacitors out of this
+design for a different reason — their value moves 7.6 % between 0.6 V and 1.2 V
+— and §3 of this note had argued that objection did not apply to an integrator
+that only sets a rate.  It does not.  This one does.
+
+So `Ccoarse` is `cap_cmomf`: 1.05 pF in a 28.5 µm square, 812 µm².  That is
+comparable to the CTLE's degeneration capacitor, which is already the largest
+object in the design, and it takes the total drawn device area from 2131 µm² to
+about 2940 µm².
+
+The `sg13_hv_nmos` row is not a recommendation.  Its zero is the model
+declining to report a gate current rather than a measurement of one, and the
+0.50 pF is a *depletion* value — at a 0.42 V gate bias a 3.3 V device is below
+threshold, so that number says nothing about its oxide capacitance.  It is here
+because it was tried.
+
+## 6. Status
+
+- [x] band signature measured — refuted the bidirectional-only trim, and
+      justified the search (§2)
+- [x] ring load leverage measured: 61.0 ps + 13.1 ps/kΩ (§4)
+- [x] trim leg measured as a resistance, and found to be 43 % as effective as
+      that resistance in the ring (§4.1)
+- [x] hold capacitor: MOS ruled out by measurement, `cap_cmomf` chosen (§5)
+- [ ] trim-leg width sweep in the ring — running
+- [ ] open-loop: cold start, search rate, wrap, hold, pull-up — running
+- [ ] fine loop capture range — **not measured**, and §3.2 depends on it
+- [ ] closed dual loop, in-band: must not disturb the locked numbers
+- [ ] closed dual loop, acquiring from a wrong band (scaled `Ksweep`)
 - [ ] PVT corner sweep of the dual loop
+- [ ] schematic capture: `coarse_loop.sch`, and the trim legs into
+      `ring_inverter.sch` via `POST_PORT_EDITS`
