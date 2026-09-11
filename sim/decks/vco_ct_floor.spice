@@ -16,6 +16,14 @@
 * frequency at which the ring still oscillates with a usable swing, so sweep
 * vctrl down and find it, at the corners where the question is live.
 *
+* The grid runs up to 0.65 V as well as down to 0.30, because at the cold, slow
+* corners the ring has no usable swing anywhere below 0.50 V: ss / -40 C /
+* 1.08 V oscillates at 406.6 MHz at vctrl = 0.50 with only 90 mV of swing, so
+* the whole sweep came back unusable and the corner looked unmeasured.  The
+* floor there is a *higher* control voltage than at the hot corners, which is
+* the same threshold-tracking effect that made a fixed 0.45 V the wrong
+* convention in the first place.
+*
 * The filter is the ring node's own swing above 300 mV differential -- 150 mV
 * single-ended -- which is the threshold docs/DESIGN.md uses everywhere else,
 * and the reason it is read on the ring node and not on vop: the diff_amp_inv
@@ -28,7 +36,7 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
 .endc
 
-.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_ss
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
 
@@ -54,7 +62,7 @@ foreach tmp 125 27 -40
   set temp = $tmp
   alter VDD  = $vd
   alter Vcrs dc = $vd
-  foreach vc 0.50 0.45 0.42 0.39 0.36 0.33 0.30
+  foreach vc 0.65 0.60 0.55 0.50 0.45 0.42 0.39 0.36 0.33 0.30
    alter Vc dc = $vc
    tran 5p 160n
    let p_temp  = $tmp
