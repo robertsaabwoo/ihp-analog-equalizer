@@ -161,8 +161,41 @@ SIZING: dict[tuple[str, str], dict] = {
     # 0.9 um rather than something shorter because the range is narrow either
     # way and centring matters more than headroom: 0.8 um gives 613-723 MHz,
     # which puts the baud rate below the point where the ring starts at all.
-    ("ring_inverter", "M1"): {"W": 3, "L": 0.9},
-    ("ring_inverter", "M4"): {"W": 3, "L": 0.9},
+    #
+    # That reasoning was right for a ring with one knob and is wrong for a ring
+    # with two.  With the coarse trim (add_coarse_trim below) centring is the
+    # coarse loop's job, and what the pair's length buys instead is the part of
+    # the stage delay the trim cannot reach.  vco_rsweep.spice splits it:
+    #
+    #     stage delay = 61.0 ps + 13.100 ps per kilohm of load
+    #
+    # and at tt / 125 C / 1.08 V two thirds of the delay is that fixed 61 ps,
+    # which is why the trimmed 0.9 um ring still reached only 573.7 MHz there
+    # against a 600.6 MHz baud rate.  ring_lin.spice sweeps the length at the
+    # two binding corners -- hot and low-supply with the trim on, cold and
+    # high-supply with the trim off:
+    #
+    #     Lin       hot/low, trim ON    cold/high, trim OFF
+    #     0.9 um       573.7 MHz             367.5 MHz
+    #     0.7 um       710.4                 462.7
+    #     0.5 um       960.6                 601.2
+    #     0.13 um     1925.5                 962.2
+    #
+    # The ring has to bracket 600.6 MHz from both sides.  0.9 um cannot reach
+    # it from below at the hot corner; 0.5 um and shorter cannot get *under* it
+    # at the cold corner, where with the trim entirely off the ring is already
+    # at 601 MHz.  0.7 um is the only swept value that clears both, and it does
+    # so by 18 % at the top and 23 % at the bottom.
+    ("ring_inverter", "M1"): {"W": 3, "L": 0.7},
+    ("ring_inverter", "M4"): {"W": 3, "L": 0.7},
+
+    # The load moves from 7355 to 8000 ohm because the trim leg only ever
+    # speeds the ring up: the poly resistor has to sit at the *slow* end of the
+    # span so that vcoarse = VDD is a state in which the trim is absent and the
+    # ring is the untrimmed circuit.  8000 ohm with a 4 um leg gives 1.292:1 of
+    # centre-frequency range against the 1.254:1 the corner sweep asks for.
+    ("ring_inverter", "R1"): {"R": 8000},
+    ("ring_inverter", "R2"): {"R": 8000},
 
     # ------------------------------ differential-to-single-ended converter
     # diff_amp_inv is instantiated twice: once as the ring oscillator's own
