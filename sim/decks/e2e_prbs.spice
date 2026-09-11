@@ -49,9 +49,10 @@ Vsub sub! 0 0
 * Pin the coarse trim.  This deck measures the fine loop on its own, and with
 * vcoarse! free the coarse loop corrects whatever this deck is detuning --
 * silently, and every point passes.  0.60 V is the nominal trim point at
-* tt / 27 C / 1.2 V (sim/results/vco_ct_centre.log).
+* tt / 27 C / 1.2 V: the trim fully OFF, which is where the coarse loop
+* rests at nominal (docs/RING_DUAL_LOOP.md section 7.3).
 .global vcoarse!
-Vcrs vcoarse! 0 0.60
+Vcrs vcoarse! 0 1.20
 
 .options method=gear reltol=1e-3 abstol=1e-12
 
@@ -116,7 +117,14 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * asymmetry is still there.  It is a testbench convenience and it does bypass
 * the cold-start behaviour of the precharge cell, which therefore has to be
 * tested separately rather than as a side effect of this run.
-.ic v(x1.x2.vctrl)=0.62
+* 0.55 V, not 0.62 V.  The ring changed with the coarse loop -- 0.7 um input
+* pair, 9000 ohm load -- and now reaches 641.6 MHz at vctrl = 0.60 and
+* 562.1 MHz at 0.50 (vco_ct_centre.log), so the baud rate is at about 0.549 V.
+* Seeding 0.62 V starts the ring 2.7 % fast, and a closed-loop run seeded
+* outside the fine loop's capture range measures the seed: the first attempt
+* came out at 666.6 MHz with vctrl climbing at 63 mV/us, which is the
+* out-of-band signature of docs/RING_DUAL_LOOP.md section 2, not a lock.
+.ic v(x1.x2.vctrl)=0.55
 
 .control
 * Explicit save list.  A bare `write` stores every node at every timepoint and

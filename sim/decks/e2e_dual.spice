@@ -81,7 +81,17 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * voltage is a valid dc solution and the simulator has no noise to leave it.
 .ic v(x1.x2.x1.net1)=0.9 v(x1.x2.x1.net2)=0.3
 * ... and the ring needs tail current at t = 0 for that kick to survive.
-.ic v(x1.x2.vctrl)=0.57
+*
+* 0.55 V, not the 0.62 V e2e_lock uses.  The ring is a different ring: with the
+* 0.7 um input pair and the 9000 ohm load it reaches 641.6 MHz at vctrl = 0.60
+* and 562.1 MHz at 0.50 (vco_ct_centre.log), so 600.6 MHz is at about 0.549 V.
+*
+* The first run of this deck seeded 0.57 V, which is 617 MHz -- 2.7 % fast --
+* and it did not lock: the recovered clock came out at 666.6 MHz with vctrl
+* climbing at 63 mV/us, which is exactly the out-of-band signature of section 2
+* of docs/RING_DUAL_LOOP.md.  Seeding a closed-loop deck outside the fine
+* loop's capture range measures the seed.
+.ic v(x1.x2.vctrl)=0.55
 * A literal, not 'vc0': .ic does not evaluate expressions, and a quoted one
 * is accepted and ignored, which starts the trim at zero volts -- the ring
 * at its fastest -- and looks like a circuit that cannot lock.

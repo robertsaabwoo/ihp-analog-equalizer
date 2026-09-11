@@ -28,10 +28,10 @@ DECKS = Path(__file__).resolve().parent.parent / "sim" / "decks"
 PIN = """
 * Pin the coarse trim.  This deck measures the fine loop on its own, and with
 * vcoarse! free the coarse loop corrects whatever this deck is detuning --
-* silently, and every point passes.  0.60 V is the nominal trim point at
-* tt / 27 C / 1.2 V (sim/results/vco_ct_centre.log).
+* silently, and every point passes.  1.20 V is the trim fully OFF, which is
+* where the coarse loop rests at nominal (docs/RING_DUAL_LOOP.md section 7.3).
 .global vcoarse!
-Vcrs vcoarse! 0 0.60
+Vcrs vcoarse! 0 1.20
 """
 
 
