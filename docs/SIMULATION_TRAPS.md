@@ -399,3 +399,31 @@ RC ceiling is made of. About 43 % as effective as the resistance it imitates.
 Rule: a device used as a controlled resistance in a switching circuit has to be
 swept in that circuit. Its dc operating point is a different measurement and
 will agree with the arithmetic while the circuit does not.
+
+### 2.19 `tran` and `meas` do not evaluate a quoted `.param`
+
+`.param tend=2500n` followed by `tran 20p 'tend'` is accepted. TSTOP comes out
+**zero**, the transient does nothing, and every vector downstream is then
+invalid — a wall of
+
+```
+Error: RHS "v(x1.x2.vctrl)" invalid
+Error: RHS "v(vcoarse!)" invalid
+```
+
+which names the vectors and never mentions the cause. The one line that does
+is four errors earlier: `TSTOP is invalid, must be greater than zero`.
+
+The same applies to `meas ... FROM='tend-700n'`. Parameters work in the netlist
+body, where the parser expands them; the `.control` section is a different
+language. Use literals there, or build the command with `set` and `$`.
+
+### 2.20 `.ic` does not evaluate an expression either, and says nothing at all
+
+`.ic v(vcoarse!)='vc0'` is accepted and ignored. The node starts at zero
+instead — which for a coarse trim rail means the ring starts at its *fastest*
+and the run looks like a circuit that cannot lock, rather than like a deck that
+did not do what it said.
+
+Unlike 2.19 there is no error message anywhere. If a `.ic` matters, read the
+node back at t = 0 and print it.
