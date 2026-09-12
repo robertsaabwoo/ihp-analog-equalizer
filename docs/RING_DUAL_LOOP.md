@@ -458,20 +458,46 @@ fixed 0.45 V the wrong convention to begin with.  The grid has been extended to
 
 The fast end paid for it: the worst ceiling went from 692.1 MHz (15.2 % of
 margin) to 662.3 MHz (10.3 %).  That is the whole trade, and it is why the
-resistor is not larger still.
+resistor is not larger still.  Centring would need about 10000 Ω, and that
+takes the worst ceiling to roughly 617 MHz — 2.8 % of margin at
+ss / 125 °C / 1.08 V, which is not enough to spend on centring.
 
-It also leaves the design **off-centre at nominal**.  At tt / 27 °C / 1.2 V with
-the trim entirely off the ring reaches 641.6 MHz at `vctrl` = 0.60 V and
-562.1 MHz at 0.50 V, so the fine loop locks at about `vctrl` = 0.55 V with the
-coarse trim at its slow rail — the coarse loop has no slow-side authority left
-at nominal, and rests there.  That is a stable, locked state and not a failure
-(the trim only ever speeds the ring up, so its slow rail is the untrimmed
-circuit), but it means the coarse range is spent entirely on the corners that
-need the ring *faster*.
+### 7.4 The two ring changes are not separable, and the lock point is steep
 
-Centring it would need about 10000 Ω, and that takes the worst ceiling to
-roughly 617 MHz — 2.8 % of margin at ss / 125 °C / 1.08 V, which is not enough
-to spend on centring.  9000 Ω is the compromise and the asymmetry is deliberate.
+`sim/decks/ring_seed.spice` sweeps `vctrl` from 0.30 to 1.20 V for all four
+combinations of the pair length and the load, in one run:
+
+| Lin | Rload | `vctrl` for 600.6 MHz | Kvco there | usable range |
+|---|---|---|---|---|
+| 0.7 µm | 7355 Ω | — | — | 624–846 MHz — **never reaches the baud rate** |
+| **0.7 µm** | **9000 Ω** | **0.473 V** | **1239 MHz/V** | 572–753 MHz |
+| **0.9 µm** | **7355 Ω** | **0.595 V** | **522 MHz/V** | 478–633 MHz |
+| 0.9 µm | 9000 Ω | — | — | 438–566 MHz — **never reaches it** |
+
+Two results, and the first one retires a question rather than answering it.
+
+**Neither intermediate ring is usable at all.** The short pair alone is always
+too fast and the big load alone always too slow, at *any* control voltage over
+the full range.  So the bisect that was trying to attribute the lock failure to
+one change or the other was unanswerable as posed: the two changes only make
+sense together.  It also explains why the trim legs looked mildly helpful —
+their capacitance was partly undoing the pair shortening.
+
+**And the branch ring's lock point is 2.4× steeper than main's.**  It sits at
+`vctrl` = 0.473 V, low on its curve where the slope is 1239 MHz/V; main's sits
+at 0.595 V, at the knee, where it is 522 MHz/V.
+
+That last number matters because a bang-bang loop's phase correction per update
+is proportional to Kvco — and so is the effect of the charge pump's 11 %
+current mismatch.  Same pump, same filter, 2.4× the gain.  That is the
+"correction cannot beat the mismatch" failure §11 of `docs/HANDBOOK.md`
+describes, with a number attached.
+
+This hypothesis was **raised, dismissed and then reinstated**, which is worth
+recording.  It was first computed as 1.3× and dropped, off a tuning sweep whose
+`vctrl` grid was 0.1 V and whose range did not cover either ring's real lock
+point.  A coarse grid over the wrong interval gave a number that was wrong by a
+factor of two and confident enough to close the line of enquiry.
 
 ## 8. What this loop is not, and what has not been checked
 

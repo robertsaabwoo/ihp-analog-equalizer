@@ -189,8 +189,34 @@ SIZING: dict[tuple[str, str], dict] = {
     ("ring_inverter", "M1"): {"W": 3, "L": 0.7},
     ("ring_inverter", "M4"): {"W": 3, "L": 0.7},
 
-    # The load moves from 7355 to 9000 ohm.  Two reasons, and the second one is
-    # the one that set the value.
+    # The load is 10000 ohm, and the number that set it is not the one that
+    # first looked decisive.
+    #
+    # It went to 9000 for the reasons below -- the trim leg only speeds the ring
+    # up, so the poly resistor must sit at the slow end of the span, and the
+    # ring's floor goes as 1/R.  Both are still true.  What 9000 also did was
+    # put the baud rate at 88 % of the ring's ceiling, on the steep rise of the
+    # tuning curve, and there the closed loop does not hold: measured 667.9 MHz
+    # with vctrl walking away, for two days of wrong hypotheses.
+    #
+    # Where the baud rate sits relative to the CEILING is the thing that
+    # decides whether the loop locks (ring_ct_ceiling.spice, trim legs present,
+    # trim off):
+    #
+    #     Rload    ceiling   baud/ceiling   vctrl    Kvco      closed loop
+    #      9000    681.3       88 %         0.546    844       does NOT lock
+    #     10000    639.9       94 %         0.595    720       LOCKS
+    #     10500    621.5       97 %         0.642    302       (untested)
+    #     11000    604.4       99 %         0.870     27       no headroom left
+    #    (main's 0.9um/7355:  632.9, 95 %,  0.595,   522,      locks)
+    #
+    # 10000 reproduces main's operating profile almost exactly -- ceiling within
+    # 1 %, the same 0.595 V lock point -- and measures 600.660 MHz, +0.0101 %.
+    # Past the knee the loop has margin against the charge pump's 11 % current
+    # mismatch; on the steep rise it does not, and a 40 mV startup kick becomes
+    # a 50 MHz frequency error, outside the bang-bang capture range.
+    #
+    # The two reasons the load was raised in the first place:
     #
     # The trim leg only ever speeds the ring up, so the poly resistor has to
     # sit at the *slow* end of the span -- vcoarse = VDD then means the trim is
@@ -207,8 +233,8 @@ SIZING: dict[tuple[str, str], dict] = {
     # not be made slow *enough*.  vco_ct_centre.spice agreed from the other
     # side -- at tt / 27 C / 1.2 V with the trim off the ring was already at
     # 685.6 MHz at vctrl = 0.60, so nominal sat at the slow rail.
-    ("ring_inverter", "R1"): {"R": 9000},
-    ("ring_inverter", "R2"): {"R": 9000},
+    ("ring_inverter", "R1"): {"R": 10000},
+    ("ring_inverter", "R2"): {"R": 10000},
 
     # ------------------------------ differential-to-single-ended converter
     # diff_amp_inv is instantiated twice: once as the ring oscillator's own

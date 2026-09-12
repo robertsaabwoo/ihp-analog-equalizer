@@ -15,7 +15,12 @@
 * limits instead of equalising, and the equalisation cannot show up in the
 * measurement at all. The sky130 project spent a session on that.
 *
-* HEAVY: ~75000 timepoints over 225 devices, expect 10-20 minutes.
+* HEAVY: 4 us at 20 ps over 268 devices, expect 45-70 minutes.
+*
+* 4 us rather than 1.5 because this deck is used to test a REDUCED charge pump
+* current.  Loop bandwidth scales with pump current, so cutting the current to
+* tame a high-Kvco ring also slows acquisition by the same factor; measuring a
+* slower loop in the old window would report it as a failure to lock.
 * Run only under tools/safe_ngspice.sh, and never alongside another ngspice.
 .control
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
@@ -110,14 +115,14 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * outside the fine loop's capture range measures the seed: the first attempt
 * came out at 666.6 MHz with vctrl climbing at 63 mV/us, which is the
 * out-of-band signature of docs/RING_DUAL_LOOP.md section 2, not a lock.
-.ic v(x1.x2.vctrl)=0.595
+.ic v(x1.x2.vctrl)=0.473
 
 .control
 * Explicit save list.  A bare `write` stores every node at every timepoint and
 * is what exhausted this machine's memory once already.
 save v(x1.x2.vctrl) v(clkoutp) v(clkoutm) v(x1.eq_p) v(x1.eq_m)
 +    v(cinp) v(cinm) v(x1.x2.x20.pre)
-tran 20p 1500n
+tran 20p 4000n
 
 let vctrl  = v(x1.x2.vctrl)
 let ctle_d = v(x1.eq_p) - v(x1.eq_m)
@@ -126,15 +131,15 @@ let cin_d  = v(cinp) - v(cinm)
 * Did it lock?  Three separate questions: the control voltage has settled,
 * the recovered clock is a real full-swing clock, and its frequency is the
 * baud rate.  Any one of them alone can look right while the loop is broken.
-meas tran vctrl_lock AVG vctrl FROM=1300n TO=1400n
-meas tran vctrl_ripp PP  vctrl FROM=1300n TO=1400n
-meas tran vctrl_e1   AVG vctrl FROM=1000n TO=1100n
-meas tran vctrl_e2   AVG vctrl FROM=1400n TO=1500n
-meas tran rclk_swing PP  v(clkoutp) FROM=1300n TO=1400n
+meas tran vctrl_lock AVG vctrl FROM=3600n TO=3700n
+meas tran vctrl_ripp PP  vctrl FROM=3600n TO=3700n
+meas tran vctrl_e1   AVG vctrl FROM=2600n TO=2700n
+meas tran vctrl_e2   AVG vctrl FROM=3900n TO=4000n
+meas tran rclk_swing PP  v(clkoutp) FROM=3600n TO=3700n
 meas tran t_release  WHEN v(x1.x2.x20.pre)=0.6 FALL=1
 
-meas tran cin_swing  PP cin_d  FROM=1300n TO=1400n
-meas tran ctle_swing PP ctle_d FROM=1300n TO=1400n
+meas tran cin_swing  PP cin_d  FROM=3600n TO=3700n
+meas tran ctle_swing PP ctle_d FROM=3600n TO=3700n
 
 * Frequency over 60 cycles inside the settled window.  Counting many cycles
 * rather than measuring one period: a loop that is still acquiring gives a
@@ -142,8 +147,8 @@ meas tran ctle_swing PP ctle_d FROM=1300n TO=1400n
 * the frequency.  The edge indices are chosen well inside the window -- a
 * .measure on an edge index that does not exist fails silently, taking every
 * `let` derived from it with it.
-meas tran c600 WHEN v(clkoutp)=0.6 RISE=600
-meas tran c660 WHEN v(clkoutp)=0.6 RISE=660
+meas tran c600 WHEN v(clkoutp)=0.6 RISE=1500
+meas tran c660 WHEN v(clkoutp)=0.6 RISE=1560
 let f_MHz = 60/(c660-c600)/1e6
 
 * A second estimate over a much longer baseline.  60 cycles is not enough to
@@ -151,8 +156,8 @@ let f_MHz = 60/(c660-c600)/1e6
 * oscillator the instantaneous frequency swings by tens of MHz, and a 60-cycle
 * window reports a sample of that rather than the mean.  350 cycles, entirely
 * inside the settled region, is the number to compare against the data rate.
-meas tran c500 WHEN v(clkoutp)=0.6 RISE=500
-meas tran c850 WHEN v(clkoutp)=0.6 RISE=850
+meas tran c500 WHEN v(clkoutp)=0.6 RISE=1400
+meas tran c850 WHEN v(clkoutp)=0.6 RISE=1750
 let f_long = 350/(c850-c500)/1e6
 let f_err = 100*(f_long - 600.60)/600.60
 print f_MHz f_long f_err

@@ -102,7 +102,7 @@
 
 .param Win=3 Lin=0.7
 .param Wtail=9 Ltail=0.13
-.param Rload=9000
+.param Rload=10000
 .param Wtr=4 Ltr=1.0
 .param Wres=1u
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
