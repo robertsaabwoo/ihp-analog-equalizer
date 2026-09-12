@@ -53,6 +53,14 @@ save v(vop) v(vom) v(vctrl)
 * must be seeded at the lock point of the ring they are testing; seeding one
 * ring at another's measures the seed, which has already cost a run.
 *
+* The vctrl grid runs 0.30-1.20, not 0.45-0.75.  The narrow version covered
+* main's ring (which locks at 0.595) and missed both of the others entirely:
+* the 0.7 um pair is already at 624 MHz at vctrl = 0.45 and needs a LOWER
+* control voltage to reach the baud rate, while the 9000 ohm load is still at
+* 485 MHz at 0.75 and needs a higher one.  tools/pick_seed.py reported "baud
+* not reachable" for both rather than extrapolating, which is the only reason
+* that was obvious instead of becoming two more wrongly-seeded runs.
+*
 * Four explicit blocks and NO `if`.  The first version of this deck selected the
 * configuration with `if $cfg = 0.9_7355` inside a foreach over strings, and
 * ngspice's control-language `if` does not do string comparison -- every branch
@@ -64,7 +72,7 @@ alterparam Lin = 0.9
 alterparam Rload = 7355
 reset
 echo "=== CONFIG Lin=0.9 Rload=7355"
-foreach vc 0.45 0.50 0.55 0.60 0.65 0.70 0.75
+foreach vc 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.80 0.90 1.00 1.10 1.20
  alter Vc dc = $vc
  tran 5p 120n
  let p_vctrl = $vc
@@ -81,7 +89,7 @@ alterparam Lin = 0.7
 alterparam Rload = 7355
 reset
 echo "=== CONFIG Lin=0.7 Rload=7355"
-foreach vc 0.45 0.50 0.55 0.60 0.65 0.70 0.75
+foreach vc 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.80 0.90 1.00 1.10 1.20
  alter Vc dc = $vc
  tran 5p 120n
  let p_vctrl = $vc
@@ -98,7 +106,7 @@ alterparam Lin = 0.9
 alterparam Rload = 9000
 reset
 echo "=== CONFIG Lin=0.9 Rload=9000"
-foreach vc 0.45 0.50 0.55 0.60 0.65 0.70 0.75
+foreach vc 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.80 0.90 1.00 1.10 1.20
  alter Vc dc = $vc
  tran 5p 120n
  let p_vctrl = $vc
@@ -115,7 +123,7 @@ alterparam Lin = 0.7
 alterparam Rload = 9000
 reset
 echo "=== CONFIG Lin=0.7 Rload=9000"
-foreach vc 0.45 0.50 0.55 0.60 0.65 0.70 0.75
+foreach vc 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.80 0.90 1.00 1.10 1.20
  alter Vc dc = $vc
  tran 5p 120n
  let p_vctrl = $vc
