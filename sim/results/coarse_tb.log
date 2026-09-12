@@ -23,57 +23,57 @@ vdd                                        1.2
 vss                                          0
 ibias                                 0.484278
 vctrl                                      0.1
-x1.nb1                                0.743955
-x1.nb2                                0.193776
+x1.nb1                                0.769245
+x1.nb2                                0.195594
 x1.vh                                 0.719999
 x1.xrlt.dt                                   0
 x1.vl                                 0.479999
 x1.xrlm.dt                                   0
 x1.xrlb.dt                                   0
-x1.spu                                0.473631
+x1.spu                                 0.47483
 vcoarse                                      0
-x1.snd                                0.548284
+x1.snd                                  0.5471
 x1.nd                                  1.16104
-x1.ne                               0.00260195
-x1.nlo                                 1.19898
-x1.nhi                                  1.1998
-x1.nlon                            9.46996e-08
+x1.ne                                0.0026019
+x1.nlo                                 1.19871
+x1.nhi                                 1.19979
+x1.nlon                            9.51158e-08
 x1.rst                                     1.2
-x1.rstn                            1.86721e-07
+x1.rstn                            1.86732e-07
 x1.nas                               0.0508975
-x1.nbs                              1.0421e-07
-vct#branch                         1.72329e-12
-vss#branch                         4.33536e-06
-vdd#branch                        -2.05674e-05
+x1.nbs                             1.04215e-07
+vct#branch                         1.72629e-12
+vss#branch                          4.3407e-06
+vdd#branch                        -2.05733e-05
 vsub#branch                                  0
 
- Reference value :  0.00000e+00 Reference value :  8.75729e-07 Reference value :  9.67500e-06 Reference value :  1.70750e-05 Reference value :  2.81250e-05 Reference value :  3.47750e-05 Reference value :  4.29250e-05 Reference value :  4.79103e-05 Reference value :  5.55930e-05 Reference value :  6.40930e-05 Reference value :  7.45930e-05 Reference value :  8.52430e-05 Reference value :  9.81430e-05 Reference value :  1.06143e-04 Reference value :  1.09050e-04 Reference value :  1.17337e-04 Reference value :  1.26537e-04 Reference value :  1.38437e-04 Reference value :  1.48337e-04 Reference value :  1.57425e-04 Reference value :  1.67325e-04 Reference value :  1.79425e-04 Reference value :  1.90675e-04 Reference value :  2.02975e-04 Reference value :  2.13675e-04 Reference value :  2.25125e-04 Reference value :  2.37025e-04 Reference value :  2.48375e-04 Reference value :  2.60225e-04 Reference value :  2.72675e-04 Reference value :  2.83875e-04 Reference value :  2.95475e-04 Reference value :  3.07525e-04 Reference value :  3.18425e-04 Reference value :  3.29475e-04 Reference value :  3.40625e-04
-No. of Data Rows : 7178
-v_park              =  1.100333e+00 at=  1.705635e-07
-vc_a                =  9.290893e-01
-vc_b                =  7.328660e-01
-vc_lo               =  1.338979e-01 at=  1.086431e-04
-vc_hi               =  1.200608e+00 at=  1.091619e-04
-v_park = 1.100333e+00
-search_mv_us = 1.962233e+01
-vc_lo = 1.338979e-01
-vc_hi = 1.200608e+00
-search_span = 1.066710e+00
-n68a                =  3.812571e-01
-n68b                =  3.115650e-01
-n64a                =  2.985366e-01
-n64b                =  2.789413e-01
-n60a                =  2.768531e-01
-n60b                =  2.773121e-01
-n56a                =  2.836354e-01
-n56b                =  3.031969e-01
-n52a                =  3.266673e-01
-n52b                =  3.898085e-01
-d_680 = -2.48900e+00
-d_640 = -6.99832e-01
-d_600 = 1.639286e-02
-d_560 = 6.986250e-01
-d_520 = 2.255043e+00
+ Reference value :  0.00000e+00 Reference value :  4.13317e-06 Reference value :  1.76750e-05 Reference value :  2.78250e-05 Reference value :  4.28750e-05 Reference value :  5.17140e-05 Reference value :  6.51140e-05 Reference value :  8.18640e-05 Reference value :  9.86640e-05 Reference value :  1.06877e-04 Reference value :  1.19804e-04 Reference value :  1.38704e-04 Reference value :  1.57575e-04 Reference value :  1.73825e-04 Reference value :  1.91025e-04 Reference value :  2.12325e-04 Reference value :  2.33775e-04 Reference value :  2.49625e-04 Reference value :  2.67975e-04 Reference value :  2.94375e-04 Reference value :  3.13125e-04 Reference value :  3.22425e-04 Reference value :  3.43625e-04
+No. of Data Rows : 7162
+v_park              =  1.100260e+00 at=  1.862796e-07
+vc_a                =  9.016310e-01
+vc_b                =  7.002549e-01
+vc_lo               =  1.226182e-01 at=  1.063640e-04
+vc_hi               =  1.200706e+00 at=  4.711670e-05
+v_park = 1.100260e+00
+search_mv_us = 2.013761e+01
+vc_lo = 1.226182e-01
+vc_hi = 1.200706e+00
+search_span = 1.078088e+00
+n68a                =  3.192522e-01
+n68b                =  2.503434e-01
+n64a                =  2.377287e-01
+n64b                =  2.190700e-01
+n60a                =  2.175087e-01
+n60b                =  2.191743e-01
+n56a                =  2.263109e-01
+n56b                =  2.478290e-01
+n52a                =  2.728856e-01
+n52b                =  3.398815e-01
+d_680 = -2.46103e+00
+d_640 = -6.66382e-01
+d_600 = 5.948571e-02
+d_560 = 7.685036e-01
+d_520 = 2.392711e+00
 v(x1.vh)[0] = 7.199994e-01
 v(x1.vl)[0] = 4.799994e-01
 ngspice-42 done

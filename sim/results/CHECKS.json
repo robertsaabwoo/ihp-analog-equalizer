@@ -9,7 +9,7 @@
     "status": "pass",
     "notes": [
       "................................................                         [100%]",
-      "48 passed in 1.08s"
+      "48 passed in 0.94s"
     ],
     "seconds": 1.8
   },
@@ -29,5 +29,147 @@
       "blocks.inc is newer than every schematic"
     ],
     "seconds": 0.0
+  },
+  {
+    "name": "char-caps",
+    "tier": "sims",
+    "desc": "Passive densities.  Every geometry the port solves comes from these, so a wrong constant here is a wrong constant in every resistor and capacitor in the design.",
+    "known_broken": "",
+    "measures": {
+      "rh": 14326.86,
+      "rp": 2654.527,
+      "rs": 78.30771,
+      "ccmomi": 1.001552e-13,
+      "ccmomf": 1.287e-13,
+      "cmoscapn06": 1.178031e-12,
+      "cmoscapn12": 1.267165e-12,
+      "cmoscapp06": 3.893289e-13
+    },
+    "failures": [],
+    "status": "pass",
+    "seconds": 3.1
+  },
+  {
+    "name": "cap-leak",
+    "tier": "sims",
+    "desc": "Gate leakage of the candidate hold capacitors.  This is the measurement that disqualified moscap_n from the coarse loop's integrator: I/C is volts per second of drift and does not improve by scaling the capacitor.",
+    "known_broken": "",
+    "measures": {
+      "i_mosn": 7.734631e-10,
+      "i_mosp": 1.369926e-11,
+      "i_hvn": -0.0,
+      "i_mom": 4.2e-13,
+      "c_mosn": 4.187033e-12,
+      "c_mosp": 1.200397e-12,
+      "c_hvn": 5.014336e-13,
+      "c_mom": 4.944139e-13
+    },
+    "failures": [],
+    "status": "pass",
+    "seconds": 3.0
+  },
+  {
+    "name": "trim-r",
+    "tier": "sims",
+    "desc": "The coarse trim leg measured as a dc resistance.  Pairs with 'vco-ct': the leg matches the hand arithmetic to 1 % here and delivers 43 % of it in the ring, because a pMOS is only a resistor while it stays in triode.",
+    "known_broken": "",
+    "measures": {
+      "r_alone": -8000.06,
+      "w_um": 8.0,
+      "vg_v": 0.0,
+      "reff": -1801.01
+    },
+    "failures": [],
+    "status": "pass",
+    "seconds": 3.1
+  },
+  {
+    "name": "cp-current",
+    "tier": "sims",
+    "desc": "Charge pump and loop filter.  The 11.0 % up/down mismatch this measures is what drives vctrl one-signed when the loop is out of band, which is the entire reason the coarse loop has to search rather than trim (docs/RING_DUAL_LOOP.md section 2).",
+    "known_broken": "",
+    "measures": {
+      "i_up": 8.951946e-07,
+      "i_down": -7.96512e-07,
+      "i_leak": 1.971529e-11,
+      "bias_n": 0.2868082,
+      "bias_p": 0.7698978,
+      "t_lo": 1.073876e-08,
+      "t_hi": 2.192944e-08,
+      "c_filt": 5.59534e-13
+    },
+    "failures": [],
+    "status": "pass",
+    "seconds": 6.1
+  },
+  {
+    "name": "vco-rsweep",
+    "tier": "sims",
+    "desc": "Ring frequency against load resistance, at the top of the fine range.  Splits the stage delay into the part the coarse trim can move and the part it cannot: 61.0 ps + 13.100 ps per kilohm.",
+    "known_broken": "",
+    "measures": {
+      "t1": 6.292003e-09,
+      "t2": 2.716539e-08,
+      "rmax": 1.138905,
+      "rmin": 0.3156054,
+      "p_rload": 3500.0,
+      "fosc": 958157900.0,
+      "ring_swing": 0.8232996
+    },
+    "failures": [],
+    "status": "pass",
+    "seconds": 138.9
+  },
+  {
+    "name": "coarse-tb",
+    "tier": "sims",
+    "desc": "The coarse loop open-loop, with vctrl driven by hand: cold start, search rate, wrap span, and the null.  Seconds per question where the closed-loop equivalent is hours.",
+    "known_broken": "",
+    "measures": {
+      "v_park": 1.10026,
+      "vc_a": 0.901631,
+      "vc_b": 0.7002549,
+      "vc_lo": 0.1226182,
+      "vc_hi": 1.200706,
+      "search_mv_us": 20.13761,
+      "search_span": 1.078088,
+      "n68a": 0.3192522,
+      "n68b": 0.2503434,
+      "n64a": 0.2377287,
+      "n64b": 0.21907,
+      "n60a": 0.2175087,
+      "n60b": 0.2191743,
+      "n56a": 0.2263109,
+      "n56b": 0.247829,
+      "n52a": 0.2728856,
+      "n52b": 0.3398815,
+      "d_680": -2.46103,
+      "d_640": -0.666382,
+      "d_600": 0.05948571,
+      "d_560": 0.7685036,
+      "d_520": 2.392711
+    },
+    "failures": [],
+    "status": "pass",
+    "seconds": 6.1
+  },
+  {
+    "name": "vco-ct-centre",
+    "tier": "sims",
+    "desc": "Where the coarse trim has to sit at nominal.  Also says whether the trim is centred -- one whose nominal is at either end has its range on one side only, and the corner sweep would still pass while half the silicon fell off the end.",
+    "known_broken": "",
+    "measures": {
+      "t1": 7.585207e-09,
+      "t2": 3.274992e-08,
+      "vmax": 1.165734,
+      "vmin": 0.1930121,
+      "p_vcrs": 0.15,
+      "p_vctrl": 0.7,
+      "fosc": 794763700.0,
+      "swing": 0.9727219
+    },
+    "failures": [],
+    "status": "pass",
+    "seconds": 330.9
   }
 ]

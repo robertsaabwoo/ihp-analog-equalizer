@@ -673,7 +673,9 @@ has not completed.
 - **Kvco-driven jitter** — the new ring's control-line slope at its lock point
   is several times the old ring's, which converts control-line noise to jitter
   proportionately
-- **layout** — no DRC, no LVS against a layout, no GDS
+- **layout** — no DRC, no LVS against a layout, no GDS.  The *flow* is now set
+  up and proven end to end (`docs/LAYOUT.md`, `mag/`), but nothing has been
+  drawn.
 
 ### 11.4 Known-stale documentation
 
@@ -784,6 +786,8 @@ outputs for the recovered clock phases. The coarse loop deliberately adds
 | `docs/PORTING.md` | what changed from sky130 and why |
 | `docs/RING_DUAL_LOOP.md` | the coarse loop in full |
 | `docs/SIMULATION_TRAPS.md` | read this before writing a deck |
+| `docs/LAYOUT.md` | getting into Magic from a standing start |
+| `mag/` | the layout flow: generate, DRC, LVS |
 | `test/` | 48 repository-consistency tests |
 
 ---
