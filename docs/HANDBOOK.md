@@ -637,9 +637,16 @@ Area on the branch: **268 devices, 3094 µm²** (up from 225 / 2131).
 
 ## 11. What is not working, and what is not known
 
-### 11.1 The branch does not lock
+### 11.1 The branch does not lock — FIXED, 2026-09-12
 
-The closed loop on the new ring reaches **667.9 MHz, +11.2 %**, with `vctrl`
+**Resolved.** With the ring load at **10000 Ω** the loop locks at
+**600.660 MHz, +0.0101 %**, `vctrl` = 0.5973 V flat across both measurement
+windows, 30.5 mV of ripple, 1.305 V clock at the pin. All 27 corners bracket
+the baud rate (+6.3 % / −5.2 % at the worst of each end). What follows is the
+record of how it failed and what it took to find, because six hypotheses were
+wrong and two of those were measurement errors rather than circuit faults.
+
+The closed loop at 9000 Ω reached **667.9 MHz, +11.2 %**, with `vctrl`
 climbing at ~75 mV/µs — §10.2's out-of-band signature.
 
 Critically, that is `e2e_lock` with the **coarse loop pinned off**. So it is not
@@ -653,9 +660,18 @@ precharged the ring was inside the capture range. The new ring reaches
 **863 MHz at `vctrl` = 1.2 V**, ~44 % above the baud rate, from which a
 bang-bang detector cannot recover.
 
-If that is right, it is a real design change (the precharge must release near
-the new lock point) and not a testbench fix. **It has not been directly
-measured** — the run that would show it is the next thing to do.
+That was wrong, and so were four more after it — `diff_amp_inv`, the charge
+pump bias, loop gain, and pump current. The cause is **where the baud rate
+sits relative to the ring's ceiling**. At 9000 Ω it was at 88 % of a 681 MHz
+ceiling, on the steep rise of the tuning curve; at 10000 Ω it is at 94 % of
+640 MHz, past the knee, which is where main's ring sits too (95 %). Past the
+knee the loop has margin against the charge pump's 11 % current mismatch; on
+the steep rise a 40 mV startup kick becomes a 50 MHz frequency error, outside
+the bang-bang capture range, so the loop never grabs.
+
+`docs/RING_DUAL_LOOP.md` §7.1a has the consequence that matters: holding
+`vctrl` at 0.60 V *is* holding the ceiling at ~1.065 × the baud rate, so the
+coarse loop is regulating the ring into the one place the fine loop can lock.
 
 ### 11.2 The fine loop's capture range
 

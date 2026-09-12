@@ -385,23 +385,60 @@ the fastest the ring can be made (trim fully on, tail at maximum) and the
 slowest it can be *held* — and the ring is monotonic in both knobs, so two
 points settle a corner rather than a tuning curve.
 
-### 7.1 The fast end: all 27 clear, worst margin 10.3 %
+### 7.1 All 27 corners, at 10000 Ω
 
-Trim fully on, `vctrl` at VDD, MHz:
+Trim fully **on**, `vctrl` at VDD — can the ring *reach* the baud rate? MHz:
 
 | | −40 °C | | | 27 °C | | | 125 °C | | |
 |---|---|---|---|---|---|---|---|---|---|
 | **VDD** | 1.08 | 1.20 | 1.32 | 1.08 | 1.20 | 1.32 | 1.08 | 1.20 | 1.32 |
-| tt | 886.6 | 980.6 | 1065.8 | 790.0 | 863.3 | 930.8 | 681.5 | 733.6 | 782.5 |
-| ss | 839.0 | 934.3 | 1020.9 | 756.3 | 831.2 | 900.6 | **662.3** | 715.4 | 765.6 |
-| ff | 931.7 | 1022.5 | 1104.3 | 819.9 | 890.3 | 954.7 | 697.7 | 748.0 | 794.8 |
+| tt | 864.1 | 958.3 | 1043.9 | 767.3 | 840.7 | 908.3 | 658.1 | 710.1 | 758.9 |
+| ss | 816.3 | 912.1 | 999.2 | 733.1 | 808.3 | 878.0 | **638.2** | 691.3 | 741.6 |
+| ff | 909.7 | 1000.6 | 1082.7 | 797.9 | 868.3 | 932.8 | 675.0 | 725.1 | 771.9 |
 
-Worst case **662.3 MHz at ss / 125 °C / 1.08 V — 10.3 % above the baud rate.**
+Worst **638.2 MHz at ss / 125 °C / 1.08 V — +6.3 %** above the baud rate.
 
-This is the end that failed before.  Untrimmed, 19 of 27 corners could not reach
-600.6 MHz at any control voltage, and a bang-bang detector has no frequency
-acquisition, so a ring that cannot reach the baud rate never locks.  None of
-them fails now.
+Trim fully **off** — can it get *under* the baud rate? MHz:
+
+| | −40 °C | | | 27 °C | | | 125 °C | | |
+|---|---|---|---|---|---|---|---|---|---|
+| tt | 397.5 | 408.6 | 419.7 | 470.1 | 480.5 | 489.4 | 514.3 | 523.2 | 531.4 |
+| ss | — | — | — | — | — | — | — | 482.6 | 487.4 |
+| ff | 480.5 | 486.7 | 492.2 | 514.5 | 523.2 | 531.1 | 548.1 | 559.6 | **569.2** |
+
+Worst **569.2 MHz at ff / 125 °C / 1.32 V — −5.2 %**. (A dash means no usable
+swing at `vctrl` = 0.45, i.e. the ring is slower than the measurement — the
+comfortable direction, see §7.2.)
+
+**Every corner brackets the baud rate**, with +6.3 % and −5.2 % at the worst of
+each end. That is tighter than the +10.3 % / −5.7 % measured at 9000 Ω, and
+9000 Ω does not lock, so the comparison is not a trade — it is the difference
+between a number and a working circuit.
+
+### 7.1a Why 94 % is the number, and what the coarse loop is really regulating
+
+Two measurements that turn out to be the same one:
+
+* at the worst fast corner, ss / 125 °C / 1.08 V, the ceiling with the trim
+  fully on is 638.2 MHz — the baud rate is at **94.1 %** of it;
+* at tt / 27 °C / 1.2 V with the trim fully off the ceiling is 639.9 MHz — the
+  baud rate is at **93.9 %** of it.
+
+94 % is the ratio at which the loop locks (§7.4), and at both ends of the
+corner box the design sits on it.
+
+That is not luck, and it reframes what the coarse loop is for. The loop
+regulates `vctrl` to the centre of its window, ~0.60 V (§6). Holding `vctrl` at
+0.60 V *is* holding the ring's ceiling at about 1.065 × the baud rate, because
+that is where 600.6 MHz falls on the tuning curve at that control voltage. So
+the coarse loop is not merely widening the tuning range — **it is regulating
+the ceiling to the one place the fine loop can lock**, at every corner.
+
+This was not designed in. It was found after a ring re-sizing that widened the
+range and broke the lock, and it is the reason the two things cannot be traded
+off against each other freely: pushing the ceiling up for corner margin moves
+the baud rate down the steep part of the curve, and the fine loop stops
+holding.
 
 ### 7.2 The slow end, and why the load resistor is 9000 Ω
 
