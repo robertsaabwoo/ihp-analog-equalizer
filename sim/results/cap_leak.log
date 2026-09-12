@@ -2,7 +2,6 @@
 Warning: m=xx on .subckt line will override multiplier m hierarchy!
 
 Using SPARSE 1.3 as Direct Linear Solver
-Using SPARSE 1.3 as Direct Linear Solver
 
 Note: Compatibility modes selected: hs a
 
@@ -11,6 +10,7 @@ Circuit: * cap_leak.spice -- gate leakage of the candidate hold capacitors.
 
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
 
 No. of Data Rows : 1
 i_mosn = 7.734631e-10

@@ -1,0 +1,33 @@
+[
+  {
+    "name": "repo-tests",
+    "tier": "quick",
+    "desc": "48 consistency tests: manufacturable device set, channel geometry inside the PSP models' range, hierarchy, the port's passive arithmetic, and the generated coarse-loop schematic against its include.  No PDK, no simulator, no network.",
+    "known_broken": "",
+    "measures": {},
+    "failures": [],
+    "status": "pass",
+    "notes": [
+      "................................................                         [100%]",
+      "48 passed in 1.08s"
+    ],
+    "seconds": 1.8
+  },
+  {
+    "name": "toolchain",
+    "tier": "quick",
+    "desc": "Is there a PDK, were the Verilog-A models compiled to OSDI, and is the netlist newer than the schematics it came from?  Nothing simulates without the OSDI build, and a stale netlist is the quiet way to measure last week's circuit.",
+    "known_broken": "",
+    "measures": {},
+    "failures": [],
+    "status": "pass",
+    "notes": [
+      "PDK: /home/ttuser/pdk/ihp-sg13cmos5l",
+      "OSDI: 4/4 present",
+      "ngspice: /usr/local/bin/ngspice",
+      "xschem: /usr/local/bin/xschem",
+      "blocks.inc is newer than every schematic"
+    ],
+    "seconds": 0.0
+  }
+]

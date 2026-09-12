@@ -1,4 +1,4 @@
-[safe_ngspice] cp_current.spice  memcap=2500MB timeout=300s floor=2000MB
+[safe_ngspice] cp_current.spice  memcap=2000MB timeout=900s floor=2000MB
 Warning: m=xx on .subckt line will override multiplier m hierarchy!
 
 Using SPARSE 1.3 as Direct Linear Solver
@@ -29,12 +29,12 @@ bias_p = 7.698978e-01
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
 Using transient initial conditions
- Reference value :  3.51263e-09 Reference value :  8.44263e-09 Reference value :  1.24426e-08 Reference value :  1.72926e-08 Reference value :  2.25526e-08 Reference value :  2.93826e-08 Reference value :  3.22126e-08 Reference value :  3.64126e-08 Reference value :  3.99826e-08
+ Reference value :  1.35263e-09 Reference value :  1.98263e-09 Reference value :  2.00263e-09 Reference value :  2.38263e-09 Reference value :  3.83263e-09 Reference value :  5.17263e-09 Reference value :  7.24263e-09 Reference value :  9.76263e-09 Reference value :  1.30126e-08 Reference value :  1.58226e-08 Reference value :  1.89326e-08 Reference value :  2.21626e-08 Reference value :  2.51526e-08 Reference value :  2.90726e-08 Reference value :  3.31426e-08 Reference value :  3.68626e-08
 No. of Data Rows : 4014
-t_lo                =  7.033065e-09
-t_hi                =  1.574656e-08
-c_filt = 4.356747e-13
-t_lo = 7.033065e-09
-t_hi = 1.574656e-08
+t_lo                =  1.073876e-08
+t_hi                =  2.192944e-08
+c_filt = 5.595340e-13
+t_lo = 1.073876e-08
+t_hi = 2.192944e-08
 ngspice-42 done
 [safe_ngspice] exit rc=0
