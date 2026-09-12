@@ -14,9 +14,24 @@ Three ways of supplying that were considered and two rejected:
 
 | approach | why not |
 |---|---|
-| external band-select pins | the Chipalooza slot has 1–3 analog pads; spending two on trim bits is not affordable, and the user was clear the pins are not available |
+| external band-select pins | rejected on a constraint that turned out not to exist — see below |
 | a clocked FSM that sweeps bands | needs a clock the receiver does not have before it locks, plus digital area and a reset strategy |
-| **an analog coarse loop** | ~30 devices, no clock, no pins — adopted |
+| **an analog coarse loop** | ~30 devices, no clock, no pins, no configuration — adopted |
+
+The band-select row originally read *"the Chipalooza slot has 1–3 analog pads;
+spending two on trim bits is not affordable"*.  The pad count is right and the
+conclusion drawn from it is wrong: a band select would not have used an analog
+pad.  Every slot has **24 dedicated digital inputs**, driven from the harness's
+housekeeping registers, and they are there whether a project uses them or not —
+measured in `docs/CHIPALOOZA_SLOT.md` §4.
+
+The analog loop is still the better answer, for a reason that has nothing to do
+with pins: a loop that centres itself needs no configuration, no per-chip
+calibration and no knowledge of which corner a die landed on.  But it was
+chosen against a constraint that does not exist, and the switched-leg version
+is therefore a **live fallback** — and the lower-risk circuit, since the stage
+topology does not change — if the dual loop cannot be made to lock
+(`docs/HANDBOOK.md` §11).
 
 ## 2. What vctrl actually reports
 
