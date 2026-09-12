@@ -440,8 +440,13 @@ of reach. A ring with a 1.2:1 tuning range cannot span a corner box that needs
 So: a coarse control spanning **1.25:1**.
 
 Two candidates were rejected before the third was built. **Switchable
-resistor legs under a digital control bit** — rejected because the Chipalooza
-slot has 1–3 analog pads and the pins are not available. **Diode-connected
+resistor legs under a digital control bit** — rejected on the grounds that the
+Chipalooza slot has 1–3 analog pads and the pins were not available. **That
+reasoning was wrong**: a band select would not use an analog pad, and every
+slot has 24 dedicated digital inputs from the housekeeping registers
+(`docs/CHIPALOOZA_SLOT.md` §4). The analog loop is still preferable — it needs
+no configuration and no per-chip calibration — but this candidate is a live
+fallback, not a closed door. **Diode-connected
 pMOS loads** in place of the poly resistors — swept and rejected: 5 of 24
 points stopped oscillating and the reachable range came out at **1.08:1**,
 *narrower* than the resistor's 1.166:1, because with the transistor as the load
@@ -761,10 +766,22 @@ biases, shared analog lines, and digital control and status lines.
 **There is no 1.8 V rail.** That is why this is a 1.2 V build and why §2 is the
 whole story.
 
-This block uses: the **1.2 V** rail, **two** analog pads for the differential
-input, **one** bandgap-referenced current for `ibias`, and **two** digital
-outputs for the recovered clock phases. The coarse loop deliberately adds
-**none** — that constraint is what ruled out the digital band-select in §9.
+**Which slot this project has, and when it is due, are not known** — neither is
+in the harness repository or anywhere else searched. `docs/CHIPALOOZA_SLOT.md`
+§5 records what was looked at.
+
+Measured from the harness layout (`docs/CHIPALOOZA_SLOT.md`): every slot is
+**537.15 × 273.00 µm = 146 642 µm²** — this design's 3094 µm² of drawn devices
+is about 2 % of it — and every slot carries `vdd_1v2`/`vss_1v2`,
+`vdd_3v3`/`vss_3v3`, `vbias`, `ibias[0..1]`, `analog_bus[0..3]`,
+**`dig_in[0..23]`**, **`dig_out[0..11]`**, `clk` and `enable`.
+
+Dedicated analog pads are the scarce resource and vary by slot: three on slots
+5, 10 and 14; two on ten others; one on 4, 8, 11 and 15; none on 9.
+
+This block needs **two analog pads** for the differential input, one of the
+`ibias` lines, two of the twelve `dig_out` for the recovered clock, and the
+1.2 V rail — so thirteen of the eighteen slots would take it.
 
 ---
 
@@ -787,6 +804,7 @@ outputs for the recovered clock phases. The coarse loop deliberately adds
 | `docs/RING_DUAL_LOOP.md` | the coarse loop in full |
 | `docs/SIMULATION_TRAPS.md` | read this before writing a deck |
 | `docs/LAYOUT.md` | getting into Magic from a standing start |
+| `docs/CHIPALOOZA_SLOT.md` | the slot footprint and what it connects to |
 | `mag/` | the layout flow: generate, DRC, LVS |
 | `test/` | 48 repository-consistency tests |
 

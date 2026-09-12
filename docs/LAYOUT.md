@@ -306,12 +306,11 @@ mirrored halves.
 
 ## 9. What this does not cover yet
 
-- **The Chipalooza slot.** The harness
-  (`sg13cmos5l_ocd_chipalooza`) provides a slot footprint with power, pads and
-  bias connections, analogous to the Tiny Tapeout DEF template the sky130
-  version used. It has **not been cloned or examined** here, and the top-level
-  cell has to be built inside whatever it defines. Do that before the
-  floorplan, not after.
+- **The Chipalooza slot** is now measured and written up in
+  `docs/CHIPALOOZA_SLOT.md`: **537.15 × 273.00 µm**, identical for all
+  eighteen, against 3094 µm² of drawn devices here — about 2 %. What is *not*
+  known is which slot is ours. Build the top level inside
+  `magic/slotN_wrapper.mag` from the harness repo once that is settled.
 - **Fill and seal ring, and density checks.** The PDK ships
   `generate_fill.py`, `generate_seal.py` and `check_density.py` in its magic
   directory. They matter at tapeout and not before.
