@@ -775,12 +775,12 @@ Both dedicated pins go to the differential input, which leaves **no pin for the
 bandwidth, and the digital-output path crosses the chip through a synthesised
 mux and an I/O pad.
 
-The answer is to stop trying to send it out. `docs/BIST.md` proposes verifying
-the receiver *inside* the slot: a frequency counter gated by the harness's
-external `clk` pin (proving lock to one count), and a 128-bit capture of the
-recovered data read out statically (proving the bits). The retimed data already
-exists inside the phase detector at `B+`/`B-` and never leaves the macro today.
-Neither is built. `docs/CHIPALOOZA_SLOT.md` §4 has the rest of the pin plan.
+The answer is to stop trying to send it out, and **the analog macro is not
+changed to achieve it**. `docs/BIST.md` records the plan: Verilog inside slot 2
+divides and counts the recovered clock against the harness's external `clk`
+pin, and reads out a static count. The receiver keeps the interface it has.
+That logic is not written yet. `docs/CHIPALOOZA_SLOT.md` §4 has the rest of the
+pin plan.
 
 Measured from the harness layout (`docs/CHIPALOOZA_SLOT.md`): every slot is
 **537.15 × 273.00 µm = 146 642 µm²** — this design's 3094 µm² of drawn devices

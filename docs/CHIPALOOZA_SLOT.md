@@ -128,13 +128,11 @@ Two things to preserve while doing it:
   and nothing else, and if the path turns out better than expected it is free
   information. It should not be the primary measurement.
 
-**Superseded — see `docs/BIST.md`.** The decision taken is not to send the
-clock off chip at all, but to verify the receiver with logic inside the slot: a
-frequency counter gated by the harness's external `clk` pin, and a capture of
-the recovered bits read out statically.  That removes the 600 MHz output path
-rather than working around it, and produces the recovered *bits*, which a
-divided clock never would.  A divider is still needed — it is the front of the
-frequency counter — but nothing fast leaves the slot.
+**Superseded — see `docs/BIST.md`, and the analog macro is not changed.** The
+clock is not sent off chip at all. It is divided and counted by Verilog inside
+slot 2, gated against the harness's external `clk` pin, and only a static count
+is read out. The receiver keeps the interface it has; the dividing moves into
+logic that can be written and changed without touching a transistor.
 
 ### 4.3 The shared analog pins are useful for something else
 

@@ -1,8 +1,13 @@
 # On-chip self-test: proving the receiver works without a 600 MHz pin
 
-A proposal, not a built thing. Written in response to the decision to verify the
-receiver with internal logic rather than by getting the recovered clock off
-chip. Read §4 (risks) before committing to it.
+**Decision: the analog macro is not changed.** It keeps the interface it has —
+`clkout_p` / `clkout_n` at 600.6 MHz — and the self-test is a separate Verilog
+block inside slot 2, to be built later. Nothing below asks for an edit to the
+receiver.
+
+This document is therefore reference material for whoever writes that Verilog:
+what the harness supplies, what the macro already exposes, and what the risks
+are. Read §4 before sizing the block.
 
 ---
 
@@ -19,6 +24,10 @@ Testing on chip deletes that problem instead of working around it. It also
 produces something the project has never had: **the recovered bits themselves**,
 and a frequency measurement good to one count rather than to whatever a scope
 probe on a degraded pad can resolve.
+
+And it keeps the analog side frozen, which is the point: the receiver is
+green-lit, and the dividing and counting move into logic that can be written,
+simulated and changed without touching a transistor.
 
 ## 2. What the harness gives, and what it does not
 
@@ -57,10 +66,14 @@ detector samples each bit three times — on the two clock edges bracketing a
 transition, and in the middle. The *middle* sample is the recovered data, and
 in `alexander_phase_detector` it is the pair `B+` / `B-`, the output of the
 flip-flop `x3`. It is used today only to make `up`/`down`, and it is never
-brought out of the macro. Tapping it costs a buffer.
+brought out of the macro.
 
-So the self-test block's inputs are: a 600 MHz clock, a 600 Mb/s retimed data
-bit, the harness `clk`, and some control bits.
+**Bringing it out would be a macro edit, so it is not being done now.** Noted
+because it is nearly free if the Verilog ever wants the recovered *data* rather
+than just the clock — the tier 2 and 3 tests below need it, tier 1 does not.
+
+So with the macro as it stands, the self-test block's inputs are: the 600 MHz
+recovered clock, the harness `clk`, and control bits.
 
 ## 4. The risks, before the design
 
@@ -90,28 +103,29 @@ light. Tim should hear about it before it is drawn, not after.
 
 ## 5. Staged proposal
 
-### Tier 1 — frequency counter. Do this one.
+### Tier 1 — frequency counter. Needs only the clock the macro already gives.
 
-Proves the loop is locked to the data rate, exactly, with almost no logic and
-almost no full-rate switching.
+Proves the loop is locked to the data rate, exactly, and it is the whole of
+what tier 1 needs:
 
 ```
-clkout ──► CML ÷2 ──► ÷2 ──► ÷2 ──► 75 MHz ──► [ 24-bit counter ] ──► dig_out
-           (2x d_latch)  CMOS               gate from harness clk
+clkout_p ──► ÷N ──► [ counter ] ──► dig_out
+  600 MHz    in Verilog      gate from the harness clk pin
 ```
 
-Only the first ÷2 sees 600 MHz, and it is built from **`d_latch`** — the CML
-latch this design already runs at 600 MHz in the phase detector, so it is a
-proven block rather than a new risk. After it, everything is at 300 MHz or
-below and ordinary.
+Count recovered-clock edges over a gate of N `clk` periods. Locked, the count
+is exactly `600.6 MHz × N / f_clk`, divided by whatever ÷N the front end uses.
+One number, read out statically, and it settles the question the whole project
+turns on.
 
-Count recovered-clock edges over a gate of N `clk` periods. If the ring is
-locked, the count is exactly `8 × 600.6 MHz × N / f_clk`. One number, read out
-statically, and it settles the question the whole project turns on.
+**The one thing to verify rather than assume:** the first divider stage sees
+600 MHz in standard cells. A 130 nm flop will do it, but with margin that has
+to be shown in STA and simulation, not taken on faith. If it will not close,
+the fallback is a CML ÷2 built from `d_latch` — the latch this design already
+runs at 600 MHz in the phase detector — but that is a macro change and is
+explicitly out of scope today.
 
-**Cost:** roughly 26 devices of CML plus a handful of flops and a counter.
-
-### Tier 2 — capture the recovered bits. Most value per unit risk.
+### Tier 2 — capture the recovered bits. Needs `B+`/`B-` brought out (§3).
 
 A shift register that captures **128 consecutive recovered bits** on a trigger,
 then stops. Read them out 12 at a time over `dig_out`, and check the pattern in
@@ -166,13 +180,13 @@ And from `docs/CHIPALOOZA_SLOT.md` §4.3, the shared analog bus should still
 carry **`vctrl`** and **`vcoarse`** — quasi-dc, no pin cost, and the difference
 between a die that is locked and a die that is asleep.
 
-## 7. What has to be decided
+## 7. Open, for whoever writes the Verilog
 
-1. **Tier 1 only, or Tier 1 + 2?** Tier 1 is small enough that it should go in
-   regardless. Tier 2 is the one that needs a noise judgement.
-2. **Synthesised or hand-laid?** Tier 1 is small enough to draw by hand and
-   keep entirely inside the analog flow. Tier 2's 128 flops are not.
-3. **Tell Tim**, since the schematic is green-lit and this adds a block.
+1. **Does the 600 MHz divider close timing** in standard cells? Everything else
+   in tier 1 is slow and easy; this is the only hard constraint.
+2. **Tier 2 and 3 need `B+`/`B-` out of the macro** (§3). Tier 1 does not. That
+   is the decision point at which the analog side has to be reopened.
+3. **Tell Tim** if a digital block is added, since the schematic is green-lit.
 4. **The ring still does not lock** on `ring-coarse-tune`
    (`docs/HANDBOOK.md` §11.1). Self-test logic verifies a receiver; it does not
-   fix one. That problem is still the critical path.
+   fix one. That is still the critical path, and it is analog.
