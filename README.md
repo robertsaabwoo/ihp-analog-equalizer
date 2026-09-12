@@ -13,6 +13,8 @@ which is the same receiver in sky130 at 1.8 V for Tiny Tapeout. The circuit is
 the same circuit — proven so at netlist level, not by eye — running on a
 different process at 1.2 V.
 
+- **[docs/HANDBOOK.md](docs/HANDBOOK.md)** — everything, in one document.
+  **Start here if you are new to the project.**
 - **[docs/PORTING.md](docs/PORTING.md)** — what changed and why. Start here if
   you know the sky130 design.
 - **[docs/DESIGN.md](docs/DESIGN.md)** — what was measured, how, and what each
