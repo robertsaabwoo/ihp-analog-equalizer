@@ -74,7 +74,7 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * expression parser would treat as operators:
 *
 *   x1.x2.x1.net1 / net2   ring stage 1 outputs, inside ring_oscillator
-*   x1.x2.net4 / net5      ring_oscillator's buffered outputs, inside CDR
+*   x1.x2.net3 / net5      ring_oscillator's buffered outputs, inside CDR
 *   clkoutp                the pin
 
 .ic v(x1.x2.x20.nrc)=0
@@ -90,14 +90,14 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 
 .control
 save v(x1.x2.vctrl) v(x1.x2.x1.net1) v(x1.x2.x1.net2)
-+    v(x1.x2.net4) v(x1.x2.net5)
++    v(x1.x2.net3) v(x1.x2.net4)
 +    v(x1.x2.x11.net1) v(x1.x3.net1) v(x1.x3.net2)
 +    v(clkoutp) v(x1.eq_p) v(x1.eq_m) v(x1.x2.x20.pre)
 tran 20p 300n
 
 let vctrl  = v(x1.x2.vctrl)
 let ring_d = v(x1.x2.x1.net1) - v(x1.x2.x1.net2)
-let raw_d  = v(x1.x2.net4) - v(x1.x2.net5)
+let raw_d  = v(x1.x2.net3) - v(x1.x2.net4)
 
 * Peak-to-peak in three windows: right after the .ic kick, after the precharge
 * releases, and at the end.  If the ring rings and dies, the three differ.

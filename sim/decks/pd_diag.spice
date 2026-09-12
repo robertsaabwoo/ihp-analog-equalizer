@@ -74,7 +74,7 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * expression parser would treat as operators:
 *
 *   x1.x2.x1.net1 / net2   ring stage 1 outputs, inside ring_oscillator
-*   x1.x2.net4 / net5      ring_oscillator's buffered outputs, inside CDR
+*   x1.x2.net3 / net5      ring_oscillator's buffered outputs, inside CDR
 *   clkoutp                the pin
 
 .ic v(x1.x2.x20.nrc)=0
@@ -90,15 +90,15 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 
 .control
 save v(x1.x2.vctrl) v(x1.x2.x1.net1) v(x1.x2.x1.net2)
-+    v(x1.x2.net4) v(x1.x2.net5) v(x1.x2.x4.net1) v(x1.x2.x4.net2)
-+    v(x1.x2.net2) v(x1.x2.net3) v(x1.x2.bias_n) v(x1.x2.bias_p) v(x1.ibias)
++    v(x1.x2.net3) v(x1.x2.net4) v(x1.x2.x4.net1) v(x1.x2.x4.net2)
++    v(x1.x2.net1) v(x1.x2.net2) v(x1.x2.bias_n) v(x1.x2.bias_p) v(x1.ibias)
 +    v(x1.x2.x11.net1) v(x1.x3.net1) v(x1.x3.net2)
 +    v(clkoutp) v(x1.eq_p) v(x1.eq_m) v(x1.x2.x20.pre)
 tran 20p 300n
 
 let vctrl  = v(x1.x2.vctrl)
 let ring_d = v(x1.x2.x1.net1) - v(x1.x2.x1.net2)
-let raw_d  = v(x1.x2.net4) - v(x1.x2.net5)
+let raw_d  = v(x1.x2.net3) - v(x1.x2.net4)
 
 * Peak-to-peak in three windows: right after the .ic kick, after the precharge
 * releases, and at the end.  If the ring rings and dies, the three differ.
@@ -120,20 +120,20 @@ meas tran raw_pp   PP raw_d  FROM=250n TO=300n
 * pattern -- so 0.98 mV means the charge pump is delivering almost nothing and
 * the loop is effectively open.
 *
-* x1.x2.net2 and net3 are the charge pump's up and down inputs, straight off
+* x1.x2.net1 and net3 are the charge pump's up and down inputs, straight off
 * the Alexander detector; bias_n and bias_p are its current-source bias.  All
 * four names are free of '+' and '-', so they can actually be measured.
-meas tran up_avg   AVG v(x1.x2.net2) FROM=250n TO=300n
-meas tran up_pp    PP  v(x1.x2.net2) FROM=250n TO=300n
-meas tran dn_avg   AVG v(x1.x2.net3) FROM=250n TO=300n
-meas tran dn_pp    PP  v(x1.x2.net3) FROM=250n TO=300n
+meas tran up_avg   AVG v(x1.x2.net1) FROM=250n TO=300n
+meas tran up_pp    PP  v(x1.x2.net1) FROM=250n TO=300n
+meas tran dn_avg   AVG v(x1.x2.net2) FROM=250n TO=300n
+meas tran dn_pp    PP  v(x1.x2.net2) FROM=250n TO=300n
 meas tran biasn    AVG v(x1.x2.bias_n) FROM=250n TO=300n
 meas tran biasp    AVG v(x1.x2.bias_p) FROM=250n TO=300n
 meas tran vb_avg   AVG v(x1.ibias) FROM=250n TO=300n
-meas tran n4_avg  AVG v(x1.x2.net4) FROM=250n TO=300n
-meas tran n4_pp   PP  v(x1.x2.net4) FROM=250n TO=300n
-meas tran n5_avg  AVG v(x1.x2.net5) FROM=250n TO=300n
-meas tran n5_pp   PP  v(x1.x2.net5) FROM=250n TO=300n
+meas tran n4_avg  AVG v(x1.x2.net3) FROM=250n TO=300n
+meas tran n4_pp   PP  v(x1.x2.net3) FROM=250n TO=300n
+meas tran n5_avg  AVG v(x1.x2.net4) FROM=250n TO=300n
+meas tran n5_pp   PP  v(x1.x2.net4) FROM=250n TO=300n
 meas tran x4t1    AVG v(x1.x2.x4.net1) FROM=250n TO=300n
 meas tran x4t2    AVG v(x1.x2.x4.net2) FROM=250n TO=300n
 meas tran buf_pp   PP v(x1.x2.x11.net1) FROM=250n TO=300n

@@ -35,8 +35,36 @@ Vcrs vcoarse! 0 1.20
 """
 
 
+# Renaming the loop filter output to `vctrl` did not just rename one net -- it
+# renumbered every anonymous net in CDR after it, because xschem numbers them in
+# order.  A deck that still says x1.x2.net2 now reads `up` where it used to read
+# `down`, and x1.x2.net5 names a node that no longer exists.  One of those is
+# silent and one kills the whole print (trap 2.3); neither is a good way to
+# debug a loop that will not lock.
+#
+#   main            branch        what it is
+#   x1.x2.net1  ->  x1.x2.vctrl   loop filter output
+#   x1.x2.net2  ->  x1.x2.net1    charge pump `up`
+#   x1.x2.net3  ->  x1.x2.net2    charge pump `down`
+#   x1.x2.net4  ->  x1.x2.net3    ring output +
+#   x1.x2.net5  ->  x1.x2.net4    ring output -
+#
+# Deeper paths (x1.x2.x1.netN, inside ring_oscillator) are untouched, and the
+# literal "x1.x2.net" prefix cannot match them.
+CDR_NETS = [("x1.x2.net1", "x1.x2.vctrl"),
+            ("x1.x2.net2", "x1.x2.net1"),
+            ("x1.x2.net3", "x1.x2.net2"),
+            ("x1.x2.net4", "x1.x2.net3"),
+            ("x1.x2.net5", "x1.x2.net4")]
+
+
 def migrate(text):
-    text = text.replace("x1.x2.net1", "x1.x2.vctrl")
+    # Two passes through a placeholder, or net2->net1 would then be caught by
+    # net1->vctrl and the whole chain would collapse onto one node.
+    for i, (old, _) in enumerate(CDR_NETS):
+        text = text.replace(old, f"@@{i}@@")
+    for i, (_, new) in enumerate(CDR_NETS):
+        text = text.replace(f"@@{i}@@", new)
     if "vcoarse!" not in text:
         text = re.sub(r"^(Vsub sub! 0 0\n)", r"\1" + PIN.lstrip("\n"),
                       text, count=1, flags=re.M)
