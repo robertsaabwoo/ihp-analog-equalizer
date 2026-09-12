@@ -1,0 +1,137 @@
+* Diagnostic: is the ring oscillating inside the closed loop, and if it is,
+* where does the clock stop getting through?
+*
+* The end-to-end run reports a recovered clock of 55 nanovolts at the output
+* pin while the CTLE equalises correctly and the control voltage sits at
+* 0.66 V -- a value the standalone ring runs at 620 MHz on.  Two possibilities
+* and they need different fixes:
+*
+*   (a) the ring is not oscillating at all;
+*   (b) the ring is oscillating and the differential-to-single-ended stage or
+*       the output buffers are not passing it at 1.2 V.
+*
+* So this probes the chain at four points -- a ring node, the ring's own
+* buffered output, the CDR's single-ended clock, and the pin -- and runs for
+* 300 ns instead of 1500 ns, which costs about four minutes instead of thirty.
+*
+* Nodes with '+' in the name are unusable: ngspice parses the '+' as an
+* operator and the vector silently never appears.  rclk+ is therefore reached
+* through a unity-gain source rather than measured directly.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+
+.global sub!
+Vsub sub! 0 0
+* Pin the coarse trim.  This deck measures the fine loop on its own, and with
+* vcoarse! free the coarse loop corrects whatever this deck is detuning --
+* silently, and every point passes.  0.60 V is the nominal trim point at
+* tt / 27 C / 1.2 V: the trim fully OFF, which is where the coarse loop
+* rests at nominal (docs/RING_DUAL_LOOP.md section 7.3).
+.global vcoarse!
+Vcrs vcoarse! 0 1.20
+
+.options method=gear reltol=1e-3 abstol=1e-12
+
+.param vcm=0.70
+.param amp=0.2
+.param rpad=500 cpad=5p
+.param ui=1.665n
+
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Iref Vdd ibias 40u
+
+Vdraw draw 0 PULSE(0 1 0 10p 10p 'ui' '2*ui')
+Edinp dinp 0 vol='vcm + 0.5*amp*(v(draw)-0.5)'
+Edinm dinm 0 vol='vcm - 0.5*amp*(v(draw)-0.5)'
+
+Rpadp dinp cinp 'rpad'
+Cpadp cinp 0    'cpad'
+Rpadm dinm cinm 'rpad'
+Cpadm cinm 0    'cpad'
+
+x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
+
+* No voltage-controlled sources copying internal nodes out.  The first version
+* of this deck did that, and it does not work: an element's node fields are
+* not hierarchical, so ngspice created five NEW top-level nodes literally named
+* "x1.x2.rclk+" and so on, left them floating, and the operating point failed
+* with "singular matrix: check node x1.x2.rclk+" -- pointing at a node the
+* circuit does not contain.
+*
+* Hierarchical paths are legal in save, print and meas.  So the probes below
+* are chosen to be nodes whose names contain no '+' or '-', which ngspice's
+* expression parser would treat as operators:
+*
+*   x1.x2.x1.net1 / net2   ring stage 1 outputs, inside ring_oscillator
+*   x1.x2.net3 / net5      ring_oscillator's buffered outputs, inside CDR
+*   clkoutp                the pin
+
+.ic v(x1.x2.x20.nrc)=0
+.ic v(x1.x2.x1.net1)=0.9 v(x1.x2.x1.net2)=0.3
+* 0.55 V, not 0.62 V.  The ring changed with the coarse loop -- 0.7 um input
+* pair, 9000 ohm load -- and now reaches 641.6 MHz at vctrl = 0.60 and
+* 562.1 MHz at 0.50 (vco_ct_centre.log), so the baud rate is at about 0.549 V.
+* Seeding 0.62 V starts the ring 2.7 % fast, and a closed-loop run seeded
+* outside the fine loop's capture range measures the seed: the first attempt
+* came out at 666.6 MHz with vctrl climbing at 63 mV/us, which is the
+* out-of-band signature of docs/RING_DUAL_LOOP.md section 2, not a lock.
+.ic v(x1.x2.vctrl)=0.55
+
+.control
+save v(x1.x2.vctrl) v(x1.x2.x1.net1) v(x1.x2.x1.net2)
++    v(x1.x2.net3) v(x1.x2.net4) v(x1.x2.x4.net1) v(x1.x2.x4.net2)
++    v(x1.x2.net1) v(x1.x2.net2) v(x1.x2.bias_n) v(x1.x2.bias_p) v(x1.ibias)
++    v(x1.x2.x11.net1) v(x1.x3.net1) v(x1.x3.net2)
++    v(clkoutp) v(x1.eq_p) v(x1.eq_m) v(x1.x2.x20.pre)
+tran 20p 2500n
+
+let vctrl  = v(x1.x2.vctrl)
+let ring_d = v(x1.x2.x1.net1) - v(x1.x2.x1.net2)
+let raw_d  = v(x1.x2.net3) - v(x1.x2.net4)
+
+* Peak-to-peak in three windows: right after the .ic kick, after the precharge
+* releases, and at the end.  If the ring rings and dies, the three differ.
+* The original deck stops at 300 ns, which is before the loop has done
+* anything.  The question here is what the detector and the pump are doing in
+* the *failing steady state*, so everything is measured in four windows across
+* 2.5 us.  A bang-bang detector that is working fires up and down at roughly
+* equal rates whatever the frequency error; one that is not fires neither, or
+* one of them only.
+meas tran ring_pp3 PP ring_d FROM=2400n TO=2500n
+meas tran raw_pp   PP raw_d  FROM=2400n TO=2500n
+
+meas tran up_a  AVG v(x1.x2.net1) FROM=280n  TO=300n
+meas tran up_b  AVG v(x1.x2.net1) FROM=1000n TO=1020n
+meas tran up_c  AVG v(x1.x2.net1) FROM=2400n TO=2420n
+meas tran dn_a  AVG v(x1.x2.net2) FROM=280n  TO=300n
+meas tran dn_b  AVG v(x1.x2.net2) FROM=1000n TO=1020n
+meas tran dn_c  AVG v(x1.x2.net2) FROM=2400n TO=2420n
+meas tran uppp_c PP v(x1.x2.net1) FROM=2400n TO=2420n
+meas tran dnpp_c PP v(x1.x2.net2) FROM=2400n TO=2420n
+
+* The charge pump's two current-source gate biases.  On the working design
+* these sit at 0.465 / 0.554 V.
+meas tran biasn_a AVG v(x1.x2.bias_n) FROM=280n  TO=300n
+meas tran biasn_c AVG v(x1.x2.bias_n) FROM=2400n TO=2500n
+meas tran biasp_a AVG v(x1.x2.bias_p) FROM=280n  TO=300n
+meas tran biasp_c AVG v(x1.x2.bias_p) FROM=2400n TO=2500n
+
+meas tran vctrl_a AVG v(x1.x2.vctrl) FROM=280n  TO=300n
+meas tran vctrl_c AVG v(x1.x2.vctrl) FROM=2400n TO=2500n
+print ring_pp3 raw_pp
+print up_a up_b up_c dn_a dn_b dn_c uppp_c dnpp_c
+print biasn_a biasn_c biasp_a biasp_c vctrl_a vctrl_c
+quit
+.endc
+.end

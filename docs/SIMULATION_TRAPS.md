@@ -427,3 +427,29 @@ did not do what it said.
 
 Unlike 2.19 there is no error message anywhere. If a `.ic` matters, read the
 node back at t = 0 and print it.
+
+### 2.21 `if` in the control section does not compare strings
+
+```
+foreach cfg 0.9_7355 0.7_7355 0.9_9000 0.7_9000
+ if $cfg = 0.9_7355
+   alterparam Lin = 0.9
+   alterparam Rload = 7355
+ end
+ ...
+```
+
+Every branch falls through. `if` wants a numeric expression, and `$cfg` is a
+string; there is no error and no warning. All four configurations then ran with
+whichever `alterparam` was last in force, and the sweep returned **four
+identical columns** for four different rings.
+
+Identical columns are at least a loud failure — the mistake was noticed
+immediately. A selector that matched *some* of the time would have produced a
+table that looked entirely reasonable and was partly wrong, which is the
+version of this to be afraid of.
+
+Rule: select a configuration by writing the blocks out explicitly, or index a
+numeric loop variable. Do not branch on a string. And when a sweep is supposed
+to vary something, **check that the output actually varies** before reading
+anything into it.
