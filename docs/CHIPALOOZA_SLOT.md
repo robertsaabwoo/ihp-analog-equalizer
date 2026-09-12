@@ -128,8 +128,13 @@ Two things to preserve while doing it:
   and nothing else, and if the path turns out better than expected it is free
   information. It should not be the primary measurement.
 
-**This is a schematic change and the design is green-lighted for layout, so it
-should be raised before drawing anything at the top level.**
+**Superseded — see `docs/BIST.md`.** The decision taken is not to send the
+clock off chip at all, but to verify the receiver with logic inside the slot: a
+frequency counter gated by the harness's external `clk` pin, and a capture of
+the recovered bits read out statically.  That removes the 600 MHz output path
+rather than working around it, and produces the recovered *bits*, which a
+divided clock never would.  A divider is still needed — it is the front of the
+frequency counter — but nothing fast leaves the slot.
 
 ### 4.3 The shared analog pins are useful for something else
 
