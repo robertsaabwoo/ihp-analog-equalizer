@@ -98,7 +98,7 @@ C {devices/ipin.sym} -50 370 0 1 {name=p5 lab=vin+
 }
 C {sg13cmos5l_pr/rhigh.sym} -100 240 0 0 {name=R1
 w=1.000000e-06
-l=6.945882e-06
+l=7.298824e-06
 model=rhigh
 body=sub!
 spiceprefix=X
@@ -108,7 +108,7 @@ mm_ok=1}
 C {devices/lab_wire.sym} -120 240 0 0 {name=p8 sig_type=std_logic lab=VSS}
 C {sg13cmos5l_pr/rhigh.sym} -310 240 0 0 {name=R2
 w=1.000000e-06
-l=6.945882e-06
+l=7.298824e-06
 model=rhigh
 body=sub!
 spiceprefix=X

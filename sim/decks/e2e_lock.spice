@@ -110,7 +110,7 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * outside the fine loop's capture range measures the seed: the first attempt
 * came out at 666.6 MHz with vctrl climbing at 63 mV/us, which is the
 * out-of-band signature of docs/RING_DUAL_LOOP.md section 2, not a lock.
-.ic v(x1.x2.vctrl)=0.595
+.ic v(x1.x2.vctrl)=0.642
 
 .control
 * Explicit save list.  A bare `write` stores every node at every timepoint and

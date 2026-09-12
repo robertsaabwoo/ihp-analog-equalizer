@@ -233,8 +233,8 @@ SIZING: dict[tuple[str, str], dict] = {
     # not be made slow *enough*.  vco_ct_centre.spice agreed from the other
     # side -- at tt / 27 C / 1.2 V with the trim off the ring was already at
     # 685.6 MHz at vctrl = 0.60, so nominal sat at the slow rail.
-    ("ring_inverter", "R1"): {"R": 10000},
-    ("ring_inverter", "R2"): {"R": 10000},
+    ("ring_inverter", "R1"): {"R": 10500},
+    ("ring_inverter", "R2"): {"R": 10500},
 
     # ------------------------------ differential-to-single-ended converter
     # diff_amp_inv is instantiated twice: once as the ring oscillator's own
