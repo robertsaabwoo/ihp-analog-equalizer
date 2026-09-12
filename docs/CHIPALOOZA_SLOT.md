@@ -6,12 +6,13 @@ at commit dated 2026-09-08, cloned to `~/ssh_analog/sg13cmos5l_ocd_chipalooza`.
 
 Read with `docs/LAYOUT.md` — this is the box the top-level layout has to fit in.
 
-> **Not found: which slot is ours.** The harness repository contains only the
-> generic template — `config.txt` has all eighteen slots set to plain analog
-> pads and `project_id: 20260908`, which is a placeholder date, not an
-> assignment. There are no participant names, no issues and no discussions in
-> it, nothing in this repository or the sky130 one, and nothing on
-> opencircuitdesign.com. **Also not found: a deadline.** See §5.
+> **This project is slot 2, with 2 dedicated pins.** Assigned by email from
+> Tim Edwards, listing all eighteen slots; schematic review is complete and
+> this design is **green-lighted to start layout**. The assignment is not in
+> the repository — `config.txt` there is still the generic template with
+> `project_id: 20260908` — so §3's per-slot pad counts are the repo's, and the
+> email supersedes them. **No deadline was given** in that email or anywhere
+> searched (§5).
 
 ---
 
@@ -67,28 +68,98 @@ each. The repository is four days old and its own README opens with *"These
 instructions are currently very incomplete"*, so treat all three as provisional
 and confirm before relying on a pad count.
 
-### What this design needs
+Slot 2 has `s2_an[0]` and `s2_an[1]`, each with an ESD tap
+(`s2_an_0_esd`, `s2_an_1_esd`), plus the full shared set in §2.
 
-| need | from |
-|---|---|
-| `vinp`, `vinm` differential input | **2 dedicated analog pads** |
-| `ibias` 40 µA reference | `ibias[0]` or `ibias[1]` — no pad needed |
-| `clkout_p`, `clkout_n` recovered clock | 2 of the 12 `dig_out` — no pad needed |
-| supply | `vdd_1v2` / `vss_1v2` |
+## 4. The pin budget for slot 2, and the one problem in it
 
-So **two analog pads**, which rules out slots 4, 8, 9, 11 and 15 and leaves
-thirteen candidates. Nothing else this design needs is scarce.
+| need | goes to | status |
+|---|---|---|
+| `vinp`, `vinm` — 200 mVpp differential at 600 Mb/s | **both dedicated pads** | settled |
+| `ibias` — 40 µA reference | `ibias[0]` or `ibias[1]` | settled, no pad |
+| supply | `vdd_1v2` / `vss_1v2` | settled |
+| **recovered clock, 600.6 MHz** | ? | **see below** |
 
-Taking the recovered clock out on `dig_out` rather than a pad is worth
-checking rather than assuming: 600 MHz through the housekeeping path may not be
-observable, in which case the clock wants a real pad and the requirement
-becomes three — which leaves slots 5, 10 and 14. **Not investigated.**
+The two dedicated pads are spoken for and not negotiable. The input is the most
+bandwidth-critical and most sensitive signal in the design — 200 mV
+differential at 600 Mb/s — and it gets the best path available. That leaves
+nothing dedicated for the output.
 
-## 4. This corrects a design decision
+### 4.1 A 600 MHz clock cannot leave this chip the obvious way
+
+Neither remaining route carries it:
+
+* **The shared analog bus** is explicitly ruled out by the assignment email —
+  a switch of under 5 Ω, but the line is common to all eighteen slots and
+  carries their eighteen switch capacitances. Tim's words: *"output drivers
+  with sufficient drive and minimal bandwidth requirements should have no
+  problem"*. 600 MHz is not a minimal bandwidth requirement.
+
+* **The digital outputs** are better than feared but still not good enough.
+  Tracing `verilog/rtl/router.v`, `dig_out` reaches a pin through a purely
+  **combinational** 12-way mux — `assign io_out[i] = ...`, not registered and
+  not clocked by the SPI, so there is no architectural ceiling. But the path is
+  a synthesised route from the slot, across the chip to the central router,
+  through that mux, into an `IOPadOut16mA`-class pad, a bondwire and a package
+  pin. A 600 MHz square wave through all of that is at best badly degraded, and
+  every part of it is shared infrastructure outside this project's control.
+
+### 4.2 What to do instead: divide the clock on chip
+
+This is standard for a CDR test chip and it costs very little.
+
+A **÷8** puts the output at **75.1 MHz**, which a digital pad handles without
+argument, and it proves lock exactly as well: if the divided output sits at
+precisely one eighth of the baud rate, the loop is locked. ÷16 → 37.5 MHz is
+even safer.
+
+The first stage has to run at 600 MHz, and this design already contains a
+proven building block for that — `d_latch`, the CML latch in the phase
+detector, which is already doing 600 MHz work. A CML ÷2 built from two of them,
+followed by two ordinary CMOS ÷2 stages, gives ÷8 for well under twenty
+devices.
+
+Two things to preserve while doing it:
+
+* `clkout_n` exists partly to **load the ring symmetrically** — the sky130
+  layout handoff says in as many words *"do not delete"*. A divider must be
+  driven from a buffered copy, not by unbalancing the existing output pair.
+* Keeping the **undivided** clock on a second `dig_out` as well costs one pin
+  and nothing else, and if the path turns out better than expected it is free
+  information. It should not be the primary measurement.
+
+**This is a schematic change and the design is green-lighted for layout, so it
+should be raised before drawing anything at the top level.**
+
+### 4.3 The shared analog pins are useful for something else
+
+The shared bus is poor for 600 MHz and excellent for exactly what this design
+most needs to observe: **`vctrl`**, and **`vcoarse`** if the dual loop survives.
+Both are quasi-dc nodes, both are the difference between a chip that is locked
+and a chip that is asleep (`docs/DESIGN.md` §5.1: a settled control voltage is
+not evidence of lock), and both are how a part that fails would be diagnosed.
+Bringing them out through the switch costs no dedicated pin.
+
+### 4.4 Twenty-four digital inputs are available, and worth spending
+
+The email confirms 24 digital inputs, drivable at run time from constants, the
+sequencer, or the pattern generator. This design currently uses none. Three
+things are worth taking:
+
+* a bit to **disable the coarse loop**, so the fine loop can be characterised
+  alone on silicon exactly as `e2e_lock.spice` does in simulation;
+* a few bits to **force `vcoarse`** to known settings, which turns the ring's
+  tuning curve into something measurable on a real die;
+* and, if the dual loop cannot be made to lock (`docs/HANDBOOK.md` §11), those
+  same bits are the **switched-leg band select** that §1 wrongly believed was
+  unaffordable.
+
+## 5. This corrects a design decision
 
 `docs/DESIGN.md` §9 and `docs/RING_DUAL_LOOP.md` §1 both reject a
 digitally-selected coarse frequency trim on the grounds that *the Chipalooza
-slot has 1–3 analog pads and the pins are not available*.
+slot has 1–3 analog pads and the pins are not available*. Slot 2 has exactly
+two, so the premise is now confirmed — and the conclusion is still wrong.
 
 **The pad count is right and the conclusion drawn from it is wrong.** A band
 select would not have used an analog pad. Every slot has **24 dedicated digital
@@ -107,7 +178,7 @@ It also means a **fallback exists**: if the dual loop cannot be made to lock
 version available after all, and it is the lower-risk circuit because the stage
 topology does not change.
 
-## 5. Deadline: not found
+## 6. Deadline: not found
 
 Searched: the harness repository, its GitHub page for issues and discussions,
 opencircuitdesign.com, and the web generally.
@@ -118,11 +189,10 @@ SG13CMOS5L round is doing it under different sponsorship. The harness repo is
 Tim Edwards' and was last committed 2026-09-08, four days ago, which says the
 round is live and early rather than closing.
 
-**If you have a slot number or a date, tell me and I will write them into this
-document and the floorplan.** They most plausibly came from an email, a Slack
-or Matrix channel, or a signup form — none of which I can reach.
+The slot assignment arrived by email and contained no date. If a schedule
+exists it is presumably in the same channel.
 
-## 6. Reproducing this
+## 7. Reproducing this
 
 ```bash
 git clone --depth 1 https://github.com/RTimothyEdwards/sg13cmos5l_ocd_chipalooza

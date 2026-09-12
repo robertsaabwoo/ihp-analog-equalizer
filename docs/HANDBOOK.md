@@ -766,9 +766,17 @@ biases, shared analog lines, and digital control and status lines.
 **There is no 1.8 V rail.** That is why this is a 1.2 V build and why §2 is the
 whole story.
 
-**Which slot this project has, and when it is due, are not known** — neither is
-in the harness repository or anywhere else searched. `docs/CHIPALOOZA_SLOT.md`
-§5 records what was looked at.
+**This project is slot 2, with two dedicated pins**, assigned by email; the
+schematic review is complete and it is green-lighted to start layout. No
+deadline was given.
+
+Both dedicated pins go to the differential input, which leaves **no pin for the
+600.6 MHz recovered clock** — the shared analog bus is explicitly not for that
+bandwidth, and the digital-output path crosses the chip through a synthesised
+mux and an I/O pad. The answer is an on-chip **÷8 divider** to 75.1 MHz, built
+from the CML latch this design already runs at 600 MHz. That is a schematic
+change and it is not yet made. `docs/CHIPALOOZA_SLOT.md` §4 has the reasoning
+and the rest of the pin plan.
 
 Measured from the harness layout (`docs/CHIPALOOZA_SLOT.md`): every slot is
 **537.15 × 273.00 µm = 146 642 µm²** — this design's 3094 µm² of drawn devices
