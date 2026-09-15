@@ -236,6 +236,23 @@ decks with a double space (`coarse_tb`, `coarse_tb_pvt`, `coarse_startup`,
 never ran under `run_corners` (no `_tt/_ss/_ff` logs, no references), so no
 earlier result is affected.
 
+**Clock path open loop across PVT (`clkpath_pvt.spice`, ring_ct -> diff_amp_inv ->
+inverter_buffer -> single_inverter; pt1 vctrl 0.45 trim off, pt2 vctrl 0.60 trim off,
+pt3 vctrl VDD trim on):**
+- tt, -40 C and 27 C, all supplies: `clkraw+` min 0.23-0.48 V, `rclk` full swing.
+- **tt, 125 C, every supply and every knob setting: `rclk` swing 0.000-0.002 V.**
+  `clkraw+` min 0.620-0.678 V, above the buffer trip. So the ff/125 C failure is
+  not ff-specific: the recovered clock is dead at 125 C even in tt.
+- ss pt1 (vctrl 0.45): `clkraw` flat, i.e. the ring itself is not oscillating
+  there (below its floor). Not a clock-path result.
+- ss 27 C 1.08 V: pt2 swing 0.653 V, pt3 0.028 V (marginal / failing with the
+  ring running, `clkraw+` min 0.457 V). Ring-level causes not separated.
+- ss 125 C and ff: still running at the time of writing.
+Mechanism, as far as measured: `clkraw`'s low level rises with temperature
+(0.23-0.31 V at -40 C, 0.37-0.48 V at 27 C, 0.62-0.68 V at 125 C at tt) until it
+no longer crosses the buffer's switching point. The cells are unchanged from main.
+Changing the clock path needs the user's decision ("no editing the clock").
+
 **Folded pull-up, XMUP2 0.7 um (`coarse_loop_fold2.inc`):** park 1.202 V,
 span 0.122-1.201 V, search 18.40 mV/us, d_680/640/600/560/520 =
 -2.96 / -0.84 / +0.019 / +0.87 / +2.80 mV/us. Original (`coarse_tb.log`):
