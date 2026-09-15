@@ -23,7 +23,7 @@ The cause is **where the baud rate sits relative to the ring's ceiling**:
 |---|---|---|---|---|---|
 | 9000 | 681.3 | 88 % | 844 | no | — |
 | **10000** | 639.9 | 94 % | 720 | **600.660 MHz ✓** | **609.96 MHz ✗** |
-| 10500 | 621.5 | 97 % | **302** | *running* | *running* |
+| 10500 | 621.5 | 97 % | 302 | **612.19 MHz ✗** (+1.93 %) | not run — pointless |
 | 11000 | 604.4 | 99 % | 27 | no headroom | — |
 | main 0.9/7355 | 632.9 | 95 % | 522 | 600.614 ✓ | 600.581 ✓ |
 
@@ -31,22 +31,26 @@ Past the knee the loop has margin against the pump's 11 % current mismatch; on
 the steep rise a 40 mV startup kick is a 50 MHz error, outside the bang-bang
 capture range.
 
-## Pick up here
+## Pick up here (updated 2026-09-15)
 
-1. **Re-run 10500 Ω, both patterns** — it was in flight and is the current best
-   hope, because its Kvco of 302 MHz/V is *lower than main's* 522, so it should
-   be more PRBS7-robust than the design that works today.
-   ```bash
-   cd /home/ttuser/ssh_analog/ct-worktree && sim/runners/r105.sh
-   ```
-2. If PRBS7 locks at 10500 Ω, **re-measure the 27 corners** (`sim/run_corners.sh
-   vco_ct_pvt.spice vco_ctpvt`). Expect ~+3.2 % at the worst fast corner instead
-   of the +6.3 % measured at 10000 Ω.
-3. If PRBS7 does not lock at 10500 Ω either, the remaining lever is the charge
-   pump's **11 % up/down mismatch** itself — that is what integrates during
-   PRBS7's seven-bit blind runs. Nothing has been tried there yet.
-4. Still never done on any locking configuration: **the coarse loop closed-loop**
-   (`e2e_dual.spice`, `e2e_dual_walk.spice`).
+10500 Ω **failed even on 0101** (612.19 MHz, `vctrl` walked to 0.792) — only
+3 % of headroom under its ceiling. Dead end.
+
+The live test is **10000 Ω + the charge pump's up-source trimmed 2.0 → 1.8 µm**
+(`sim/runners/pump18.sh`, both patterns). PRBS7 failed at 10000 Ω because its
+seven-bit blind runs let the pump mismatch integrate; `cp_mismatch.spice`
+measured that mismatch moving with `vctrl` and showed 1.8 µm nulls it at the
+lock point:
+
+| Wp | @0.60 V | @0.65 V |
+|---|---|---|
+| 2.0 (was) | 11.7 % | 9.5 % |
+| **1.8** | **2.1 %** | **−0.1 %** |
+
+Results land in `sim/results/run_pump18.out`. If PRBS7 locks: re-measure the 27
+corners, then the coarse loop closed-loop (`e2e_dual.spice`), which has still
+never run on a locking configuration. If it does not: the mismatch was
+measured at tt only and at one bias; check it at the PRBS7 run's actual `vctrl`.
 
 ## Before trusting anything after the reboot
 

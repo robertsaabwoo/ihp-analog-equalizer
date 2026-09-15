@@ -233,8 +233,8 @@ SIZING: dict[tuple[str, str], dict] = {
     # not be made slow *enough*.  vco_ct_centre.spice agreed from the other
     # side -- at tt / 27 C / 1.2 V with the trim off the ring was already at
     # 685.6 MHz at vctrl = 0.60, so nominal sat at the slow rail.
-    ("ring_inverter", "R1"): {"R": 10500},
-    ("ring_inverter", "R2"): {"R": 10500},
+    ("ring_inverter", "R1"): {"R": 10000},
+    ("ring_inverter", "R2"): {"R": 10000},
 
     # ------------------------------ differential-to-single-ended converter
     # diff_amp_inv is instantiated twice: once as the ring oscillator's own
@@ -350,6 +350,34 @@ SIZING: dict[tuple[str, str], dict] = {
     # what happened first time: the sweep ran four resistor values and
     # reported the same current four times.
     ("tiny_pll_bias_gen_res", "R[2..0]"): {"R": 24000},
+
+    # ------------------------------------------------------- charge pump
+    # The up-current source is trimmed from W = 2 um to 1.8 um.
+    #
+    # Measured at vout = 0.6 V the pump sourced 895.2 nA up against 796.5 nA
+    # down, 12.4 % high.  On 0101 data that is harmless.  On PRBS7 it is not:
+    # a run of seven identical bits blinds the Alexander detector, and for
+    # those seven UI the mismatch integrates onto vctrl with nothing opposing
+    # it.  At 10000 ohm the ring locked on 0101 (600.660 MHz) and walked to
+    # 609.96 MHz on PRBS7.
+    #
+    # The mismatch is channel-length modulation, not device error: MPSRC and
+    # MNSRC mirror diodes in tiny_pll_bias_gen that sit at fixed Vds (0.43 V
+    # and 0.29 V) while the sources' own Vds follows vctrl.  So it moves with
+    # vctrl, and it has to be nulled at the lock point, not at dc.
+    # cp_mismatch.spice, (up - down)/avg against vout:
+    #
+    #     Wp      0.45    0.55    0.60    0.65    0.70    0.80
+    #     2.0     20.4    14.4    11.7     9.5     8.1     6.3   (was)
+    #     1.9     15.8     9.7     7.0     4.8     3.4     1.6
+    #     1.8     10.9     4.8     2.1    -0.1    -1.6    -3.3   <- this
+    #     1.7      5.7    -0.4    -3.1    -5.3    -6.8    -8.5
+    #
+    # 1.8 um puts the null between 0.60 and 0.65 V, where the 10000 ohm ring
+    # locks (0.597 V).  Lengthening both sources to L = 2 um was also tried to
+    # flatten the vctrl dependence and is worse: it breaks the mirror ratio to
+    # the L = 1 um diodes and swings to -30 %.  Measured at tt only.
+    ("tiny_pll_charge_pump", "MPSRC"): {"W": 1.8, "L": 1.0},
 
     # ------------------------------------------------------- loop filter
     # The filter is vctl --[R 30k]-- cap_plus --[C1]-- gnd, with C2 straight

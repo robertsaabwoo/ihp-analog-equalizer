@@ -1,0 +1,365 @@
+[safe_ngspice] cp_mismatch.spice  memcap=1500MB timeout=600s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+Reset re-loads circuit * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+Circuit: * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+=== CONFIG Wp=2.0 Ls=1
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 4.500000e-01
+i_up = 9.000988e-07
+i_dn = 7.334018e-07
+mis_pct = 2.040978e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 5.500000e-01
+i_up = 8.977186e-07
+i_dn = 7.774959e-07
+mis_pct = 1.435312e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.000000e-01
+i_up = 8.952007e-07
+i_dn = 7.965152e-07
+mis_pct = 1.166690e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.500000e-01
+i_up = 8.920575e-07
+i_dn = 8.112623e-07
+mis_pct = 9.486793e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 7.000000e-01
+i_up = 8.884195e-07
+i_dn = 8.196681e-07
+mis_pct = 8.050103e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 8.000000e-01
+i_up = 8.795879e-07
+i_dn = 8.258812e-07
+mis_pct = 6.298174e+00
+Reset re-loads circuit * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+Circuit: * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+=== CONFIG Wp=1.9 Ls=1
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 4.500000e-01
+i_up = 8.589162e-07
+i_dn = 7.334020e-07
+mis_pct = 1.576496e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 5.500000e-01
+i_up = 8.566086e-07
+i_dn = 7.774960e-07
+mis_pct = 9.682674e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.000000e-01
+i_up = 8.541901e-07
+i_dn = 7.965154e-07
+mis_pct = 6.987878e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.500000e-01
+i_up = 8.511853e-07
+i_dn = 8.112625e-07
+mis_pct = 4.802904e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 7.000000e-01
+i_up = 8.477150e-07
+i_dn = 8.196683e-07
+mis_pct = 3.364154e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_vout = 8.000000e-01
+i_up = 8.393005e-07
+i_dn = 8.258814e-07
+mis_pct = 1.611723e+00
+Reset re-loads circuit * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+Circuit: * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+=== CONFIG Wp=1.8 Ls=1
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 4.500000e-01
+i_up = 8.176183e-07
+i_dn = 7.334022e-07
+mis_pct = 1.085945e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 5.500000e-01
+i_up = 8.153850e-07
+i_dn = 7.774962e-07
+mis_pct = 4.757258e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.000000e-01
+i_up = 8.130680e-07
+i_dn = 7.965156e-07
+mis_pct = 2.056725e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.500000e-01
+i_up = 8.102032e-07
+i_dn = 8.112627e-07
+mis_pct = -1.30675e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 7.000000e-01
+i_up = 8.069016e-07
+i_dn = 8.196685e-07
+mis_pct = -1.56979e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 8.000000e-01
+i_up = 7.989061e-07
+i_dn = 8.258816e-07
+mis_pct = -3.32051e+00
+Reset re-loads circuit * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+Circuit: * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+=== CONFIG Wp=1.7 Ls=1
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 4.500000e-01
+i_up = 7.761923e-07
+i_dn = 7.334024e-07
+mis_pct = 5.669061e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 5.500000e-01
+i_up = 7.740354e-07
+i_dn = 7.774964e-07
+mis_pct = -4.46148e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.000000e-01
+i_up = 7.718218e-07
+i_dn = 7.965158e-07
+mis_pct = -3.14907e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.500000e-01
+i_up = 7.690986e-07
+i_dn = 8.112629e-07
+mis_pct = -5.33602e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 7.000000e-01
+i_up = 7.659670e-07
+i_dn = 8.196687e-07
+mis_pct = -6.77353e+00
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 8.000000e-01
+i_up = 7.583924e-07
+i_dn = 8.258818e-07
+mis_pct = -8.51993e+00
+Reset re-loads circuit * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+Circuit: * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+=== CONFIG Wp=2.0 Ls=2
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 4.500000e-01
+i_up = 9.327729e-07
+i_dn = 1.177461e-06
+mis_pct = -2.31906e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 5.500000e-01
+i_up = 9.312169e-07
+i_dn = 1.228864e-06
+mis_pct = -2.75589e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.000000e-01
+i_up = 9.295551e-07
+i_dn = 1.249901e-06
+mis_pct = -2.93968e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.500000e-01
+i_up = 9.274661e-07
+i_dn = 1.265037e-06
+mis_pct = -3.07932e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 7.000000e-01
+i_up = 9.250344e-07
+i_dn = 1.273110e-06
+mis_pct = -3.16700e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 8.000000e-01
+i_up = 9.190816e-07
+i_dn = 1.279733e-06
+mis_pct = -3.28042e+01
+Reset re-loads circuit * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+Circuit: * cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+
+=== CONFIG Wp=1.8 Ls=2
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 4.500000e-01
+i_up = 8.453710e-07
+i_dn = 1.177463e-06
+mis_pct = -3.28343e+01
+DoingUsing SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+ analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 5.500000e-01
+i_up = 8.439094e-07
+i_dn = 1.228866e-06
+mis_pct = -3.71441e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.000000e-01
+i_up = 8.423787e-07
+i_dn = 1.249902e-06
+mis_pct = -3.89550e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 6.500000e-01
+i_up = 8.404735e-07
+i_dn = 1.265039e-06
+mis_pct = -4.03290e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 7.000000e-01
+i_up = 8.382655e-07
+i_dn = 1.273112e-06
+mis_pct = -4.11908e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_vout = 8.000000e-01
+i_up = 8.328745e-07
+i_dn = 1.279735e-06
+mis_pct = -4.23041e+01
+ngspice-42 done
+[safe_ngspice] exit rc=0
