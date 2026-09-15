@@ -1,0 +1,76 @@
+* cp_mismatch_pvt.spice -- does the 1.8 um up-source trim hold across corners?
+*
+* The trim was chosen at tt / 27 C / 1.2 V, where it nulls the mismatch between
+* vctrl 0.60 and 0.65 V.  Mismatch is channel-length modulation, which moves
+* with temperature and supply as well as with vctrl, so a tt null says nothing
+* about ss/125 C.  2.0 um is swept alongside for the before/after.
+* mis_pct is (up - down)/avg; i(Vout1) is +up, i(Vout2) is -down.
+* Explicit blocks, no `if` (trap 2.21).  DC only: seconds.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.include ../netlists/blocks.inc
+.include cp_p.inc
+.global sub!
+Vsub sub! 0 0
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Vout1 o1 0 0.6
+Vup1  u1 0 1.2
+Vdn1  d1 0 0
+x1 Vdd Vdd Vss Vss o1 u1 d1 bn bp cp_p
+Vout2 o2 0 0.6
+Vup2  u2 0 0
+Vdn2  d2 0 1.2
+x2 Vdd Vdd Vss Vss o2 u2 d2 bn bp cp_p
+x9 Vss Vss Vdd Vdd bn Vdd Vss bp tiny_pll_bias_gen
+.control
+
+alterparam Wp = 2.0
+alterparam Ls = 1
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  foreach vo 0.50 0.60 0.70
+   alter Vout1 dc = $vo
+   alter Vout2 dc = $vo
+   op
+   let p_wp = 2.0
+   let p_temp = $tmp
+   let p_vdd = $vd
+   let p_vout = $vo
+   let mis_pct = 100*(i(Vout1) + i(Vout2))/(0.5*(i(Vout1) - i(Vout2)))
+   print p_wp p_temp p_vdd p_vout mis_pct
+  end
+ end
+end
+
+alterparam Wp = 1.8
+alterparam Ls = 1
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  foreach vo 0.50 0.60 0.70
+   alter Vout1 dc = $vo
+   alter Vout2 dc = $vo
+   op
+   let p_wp = 1.8
+   let p_temp = $tmp
+   let p_vdd = $vd
+   let p_vout = $vo
+   let mis_pct = 100*(i(Vout1) + i(Vout2))/(0.5*(i(Vout1) - i(Vout2)))
+   print p_wp p_temp p_vdd p_vout mis_pct
+  end
+ end
+end
+quit
+.endc
+.end
