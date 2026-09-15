@@ -73,8 +73,28 @@ up and down separately and their ratio may drift with VDD at ff.
 The DC percentage is a proxy. Ground truth is closed-loop PRBS7 at
 ff / 125 °C / 1.32 V: `sim/runners/prbs_ff125.sh` (seeds itself first).
 
-**Running:** `sim/runners/dualloop.sh` — the coarse loop closed-loop on this
-configuration, never before run on anything that locks.
+**The coarse loop, closed-loop, on this configuration** (`sim/runners/dualloop.sh`):
+
+| run | start | recovered | error | `vctrl` | `vcoarse` |
+|---|---|---|---|---|---|
+| `e2e_dual` | trim off, 1.20 V | 600.661 MHz | +0.010 % | 0.6007 → 0.6013 | 1.20 → 0.914 V |
+| `e2e_dual_walk` | trim on, 0.55 V | 600.724 MHz | +0.021 % | 0.5747 → 0.5739 | −8 mV |
+
+Established: with both loops closed the receiver locks from both starting
+points, and the coarse loop does not disturb the fine loop.
+
+**Not established: the handover itself.** Near the null the coarse loop moves
+~0.5 mV/µs, so a 2.5 µs run shows ~1 mV of walk — the deck's expectation of
+47 mV used the railed search rate. Observing it needs the loop sped up
+(`Ksweep`), and the generated schematic bakes widths as literals, so that means
+overriding the subckt in a deck — being checked.
+
+Unexpected, two items:
+- `e2e_dual_walk` locked with the baud rate at 91 % of the ceiling (Kvco
+  1005 MHz/V), where the untrimmed pump did not. Suggests pump mismatch was part
+  of the steep-side failure all along. A lead only.
+- `e2e_dual`'s `vcoarse` fell 286 mV with `vctrl` at the null. Harmless above
+  ~0.8 V (trim off), cause not yet known.
 
 ## Before trusting anything after the reboot
 
