@@ -364,18 +364,33 @@ failed a `meas` and are still to be chased.)
 
 (d`vcoarse`/dt in mV/µs at each held `vctrl`.)
 
-Two things are moving it.  The divider is ratiometric so the window tracks VDD
-by design — that is the 0.539 → 0.600 V column.  Temperature is different: the
-pull-down is an nMOS pair and the pull-up a pMOS pair, they drift against each
-other, and no divider corrects that.
+(That table is the **original, unfolded** cell, `coarse_tb_pvt.log`.)
 
-It happens to drift the right way.  At 125 °C the tail device's threshold is
-lower, so the fine loop locks at a *lower* `vctrl` anyway — about 0.52 V at
-125 °C against 0.60 V at −40 °C, from §7.2's floor data.  The null follows that
-demand, at smaller magnitude, and the trim covers the difference.  Making the
-two branches symmetric (an nMOS pair on both sides, the pull-up folded through
-a pMOS mirror) would cost two devices to correct a drift that is already
-pointing the right way, so it has not been done.
+The divider is ratiometric, so the window tracks VDD by design; that is the
+0.539 -> 0.600 V column. **The 125 °C row is not a drift.** An earlier version of
+this section called it a harmless pMOS-against-nMOS drift "pointing the right
+way". That was wrong. The pull-up pMOS pair had its drain on `vcoarse`, and
+above the tail node `spu` it reverse-conducted and **sank** `vcoarse`: 239 nA at
+1.0 V and 4.3 uA at 1.2 V, 27 °C (`coarse_clamp.log`). At 125 °C that sink
+outweighs the pull-up everywhere. The 0.54-0.74 V staircase finds **no null at
+all** at tt/125 °C (every supply) or ss/125 °C/1.08 V, and at ff/125 °C
+`vcoarse` is already pinned at the bottom rail (`coarse_null_pvt_*.log`). The
+coarse loop would drive the trim fully on.
+
+**Fixed by folding the pull-up** (`sim/decks/coarse_loop.inc`, 37 devices). XMU1's
+current goes nMOS diode -> nMOS mirror -> pMOS diode -> a pMOS output whose
+source is at VDD, so it cannot sink `vcoarse`. The output pMOS is 0.7 um, not
+1 um: at 1 um the pull-up slope was 1.75x the pull-down's
+(`coarse_tb_fold.log`). Measured on the adopted cell:
+
+- sink at `vcoarse` = 1.0 V, 27 °C/1.2 V: 0.64 nA (`coarse_clamp_fold.log`,
+  measured on the 1 um candidate; the output-mirror change does not touch the
+  path that sank)
+- nominal: d_600 +0.019 mV/us, slopes -0.84 / +0.87, search 18.96 mV/us, span
+  1.078 V, park 1.202 V (`coarse_tb.log`)
+- null at 125 °C, 1.08 / 1.20 / 1.32 V: tt ~0.58 / ~0.63 / ~0.69 V, ss ~0.55 /
+  ~0.61 / ~0.67 V, ff ~0.58 / ~0.64 / ~0.69 V (`coarse_null_fold2_pvt_*.log`)
+- parks at the rail, 1.05-1.32 V, at all 27 corners
 
 ## 7. The 27 corners
 
@@ -412,9 +427,9 @@ Worst **569.2 MHz at ff / 125 °C / 1.32 V — −5.2 %** on this reading.
 is a convention, not the floor (§7.2). Swept properly at that corner
 (`vco_ct_floor_clamp.spice`), the lowest frequency with usable swing is
 **470.5 MHz, −21.7 %** with the trim off — and it stays at 449–464 MHz, −22.7 to
-−25.2 %, with `vcoarse` at the 0.80–0.90 V where the coarse loop's top rail
-actually sits when hot (see `RESUME.md`, the pull-up clamp). So the clamp costs
-no slow-end margin at the worst corner. (A dash means no usable
+−25.2 %, with `vcoarse` at 0.80–0.90 V, where the original cell's top rail sat when hot
+(the sink described in §6, since removed by folding the pull-up). So even the
+old clamp cost no slow-end margin at the worst corner. (A dash means no usable
 swing at `vctrl` = 0.45, i.e. the ring is slower than the measurement — the
 comfortable direction, see §7.2.)
 

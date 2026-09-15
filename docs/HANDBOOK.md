@@ -459,7 +459,7 @@ its process spread becomes the ring's spread.
 A **second, analog control loop**: a pMOS trim leg across each of the ten ring
 load resistors, all gates on one global `vcoarse!` rail, driven by an integrator
 fed from a window comparator on `vctrl`. No pins, no clock, no digital logic.
-33 devices. Full write-up in `docs/RING_DUAL_LOOP.md`; this is the shape of it
+37 devices. Full write-up in `docs/RING_DUAL_LOOP.md`; this is the shape of it
 and the four measurements that each refuted the design before it.
 
 ### 10.1 The knob has to be the load, not the current
@@ -565,10 +565,14 @@ disposes of the leakage question: it is a closed loop with a stable
 equilibrium, not a capacitor left open.
 
 Across its own nine corners the low wrap trip moves 0.023 → 0.205 V, the high
-trip tracks VDD exactly, and the rate is flat to ±5 %. The null moves from
-0.600 V at 27 °C/1.32 V to below 0.54 V at 125 °C — the nMOS pull-down and pMOS
-pull-up pairs drifting against each other — and it drifts the *helpful* way,
-because at 125 °C the fine loop wants a lower `vctrl` anyway.
+trip tracks VDD exactly, and the rate is flat to ±5 %. An earlier reading of the
+125 °C numbers as a harmless drift was wrong. The original pull-up pMOS
+had its drain on `vcoarse` and reverse-conducted above its tail node, sinking up
+to 4.3 uA (`coarse_clamp.log`). At 125 °C that erased the null entirely
+(`coarse_null_pvt_*.log`), so the trim would run fully on. The pull-up is now
+folded through two mirrors to a pMOS output sourced from VDD. That cell has a null
+at every 125 °C corner (0.55–0.69 V, `coarse_null_fold2_pvt_*.log`) and parks at
+the rail everywhere. Details: `docs/RING_DUAL_LOOP.md` §6.
 
 Two things the toolchain caught on the way in. `Lsrc` was **15 µm**, outside
 PSP's 0.13–10 µm characterisation: it simulates perfectly by extrapolation
