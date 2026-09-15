@@ -105,7 +105,7 @@ At ff it is worse — `cp_mismatch_pvt2.spice`, ff, trimmed pump, `vout` 0.60 V:
 **7782 nA up vs 3586 nA down at 125 °C / 1.32 V**, about 10× nominal up
 current, `VDD − bias_p` = 0.594 V.
 
-**Ground truth at the worst corner: FAIL — the receiver dies.** Closed-loop
+**Ground truth at the worst corner: FAIL — but possibly not a circuit death (see below).** Closed-loop
 PRBS7 at ff / 125 °C / 1.32 V, trim off, seeded at that corner's lock point
 (0.489 V) (`sim/results/e2e_prbs_ff125.log`):
 - recovered clock swing **49 nV** — the ring stopped
@@ -113,42 +113,31 @@ PRBS7 at ff / 125 °C / 1.32 V, trim off, seeded at that corner's lock point
   floor at that corner (swing 0.235 V at 0.325, none at 0.300)
 - CTLE output 361 mV, so the data path is fine; it is the loop
 
-Cause of the *downward* walk not established. The pump's up current is more than
-twice its down current there, which alone would push `vctrl` up; a loop gain
-several times nominal overshooting past the floor is plausible and untested.
+**Cause test: the pump reference is NOT the cause.** The same run with
+`tiny_pll_bias_gen` replaced by ideal nominal currents
+(`e2e_prbs_ff125_idealbias.spice`; the log confirms the override took) fails
+**identically to four digits**:
 
-**A second, separate corner defect: the coarse loop cannot turn the trim off
-when hot.** `coarse_clamp.spice` forces `vcoarse` and reads the current the cell
-draws (positive = the cell sinks `vcoarse`), `vctrl` at VDD/2:
+| | `vctrl` s1 | s2 | s3 | clock |
+|---|---|---|---|---|
+| self-biased pump | 0.3725 | 0.3381 | 0.3032 | 49 nV |
+| ideal pump bias | 0.3722 | 0.3376 | 0.3026 | 49 nV |
 
-| `vcoarse` | 27 °C 1.2 V | 125 °C 1.32 V | 27 °C 1.08 V |
-|---|---|---|---|
-| 0.80 V | 0.6 nA | 5.7 nA | 3.2 nA |
-| 0.90 V | 9.6 | 20.8 | 97 |
-| 1.00 V | 239 | 200 | 968 |
-| 1.20 V | **4296** | — | — |
+If the pump were acting, cutting its current from ~7.8 µA to 0.8 µA would change
+the drift. It does not move at all — so the phase detector and pump are not
+participating, and `vctrl` is decaying on its own. That is the signature of a
+ring that **never started** at this corner. The standalone seed sweep shows the
+ring *can* oscillate there (0.91 V swing at `vctrl` 0.475–0.500 V), so this may
+be a full-chip startup failure, possibly a testbench artefact of the kind found
+in bring-up (HANDBOOK §6.2), rather than the receiver dying. **Unresolved**; an
+early-time diagnostic is running, and `main` at the same corner will show
+whether the same signature appears there.
 
-Cause, confirmed: `XMU1`, the pull-up pair's output pMOS, has its drain on
-`vcoarse`; above the pull-up tail node (~0.8–1.1 V) source and drain swap and it
-sinks `vcoarse` into the tail. The pull-up sources only ~7 nA, so the real top
-rail is where the sink reaches that: **~0.89 V at 27 °C/1.2 V, ~0.82 V at
-125 °C/1.32 V.** The 4.3 µA at 1.2 V matches the ~3.7 µA inferred from the
-startup drop in `e2e_dual`, which this also explains.
+The pump reference's 14× current spread across corners is still real and still
+a problem for loop gain — it just is not what stops this run.
 
-Consequence: at 125 °C/1.32 V a 0.82 V gate puts ~0.5 V across the trim pMOS,
-above its hot threshold, so **the slow rail is not trim-off at hot/high supply.**
-Every slow-end corner number in §7.1 of `docs/RING_DUAL_LOOP.md` was measured
-with `vcoarse` forced to VDD and does not describe the closed loop; nor did the
-ff/125 °C PRBS7 run, which also forced it. When the cell was written this was
-noted as a "soft top" and accepted — it is not soft, it actively pulls down.
-(The −6.2 µA point at 125 °C/1.1 V is the retrace latch resolving the other way
-in a DC solve of a bistable, not a real current.)
-
-Candidate fix under test, outside the design record: fold the pull-up through two
-mirrors like the pull-down, so its output device is a pMOS with source at VDD.
-
-**So the branch holds both patterns at tt only, and fails hard at
-ff / 125 °C / 1.32 V.** `main` has not been tested closed-loop at that corner
+**So the branch holds both patterns at tt only; at ff / 125 °C / 1.32 V it
+fails, cause unresolved.** `main` has not been tested closed-loop at that corner
 either, so this is not yet a comparison against a known-good.
 
 **The coarse loop, closed-loop, on this configuration** (`sim/runners/dualloop.sh`):
