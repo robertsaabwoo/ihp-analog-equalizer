@@ -44,11 +44,34 @@ at tt / 27 °C / 1.2 V** — the first branch configuration to do so:
 
 (`sim/results/e2e_lock_pump18.log`, `e2e_prbs_pump18.log`)
 
-**Not established: whether the trim holds across corners.** The DC mismatch
-sweep (`cp_mismatch_pvt.spice`) shows up to +74 % at ff even with the trim,
-which is either a real mismatch or a collapsed down-current making the
-percentage meaningless. `cp_mismatch_pvt2.spice` prints the currents to tell
-which. The trim was chosen at tt only and is not yet a corner result.
+**The trim does NOT hold across corners at DC.** `cp_mismatch_pvt.spice`,
+mismatch % with the 1.8 µm trim, `vout` at ~VDD/2 (where the coarse loop's
+window centres `vctrl`):
+
+| | 1.08 V | 1.20 V | 1.32 V |
+|---|---|---|---|
+| tt −40 °C | +2.2 | +2.9 | +6.6 |
+| tt 27 °C | +1.1 | +2.1 | +11.6 |
+| tt 125 °C | +3.4 | +15.1 | **+35.3** |
+| ss (all temps) | −2.3 … −1.1 | −1.3 … +1.3 | +3.5 … +6.7 |
+| ff −40 °C | +5.7 | +11.2 | **+39.7** |
+| ff 27 °C | +9.8 | +29.7 | **+57.9** |
+| ff 125 °C | +33.7 | +53.2 | **+71.7** |
+
+Two explanations were tried and are **retracted**:
+
+1. *Channel-length modulation at the pump sources.* It would make mismatch depend
+   strongly on `vout`. At ff it barely does (76 → 72 % over 0.50 → 0.70 V) while
+   depending enormously on supply (+6 → +49 % at −40 °C, 1.08 → 1.32 V).
+2. *VDD tracking symmetrises it.* Reading at `vout` = VDD/2 instead of a fixed
+   0.60 V changes the numbers by a few points, not the picture.
+
+Current suspicion, **untested**: the bias generator. Its two diode currents set
+up and down separately and their ratio may drift with VDD at ff.
+`cp_mismatch_pvt2.spice` prints the currents and `bias_n`/`bias_p` to test it.
+
+The DC percentage is a proxy. Ground truth is closed-loop PRBS7 at
+ff / 125 °C / 1.32 V: `sim/runners/prbs_ff125.sh` (seeds itself first).
 
 **Running:** `sim/runners/dualloop.sh` — the coarse loop closed-loop on this
 configuration, never before run on anything that locks.
