@@ -274,6 +274,20 @@ ahead of `inverter_buffer`). Open loop, 27 corners x 3 ring settings
 Not yet measured: closed loop with the stage in the netlist, and the effect of the
 ~55 % duty cycle on the Alexander detector's edge sampler.
 
+**Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
+`port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
+of `--cells`, and `add_bias_mirror` had no already-applied guard, so
+`ctle_cdr_rx.sch` got a second x5 `ibias_mirror`. blocks.inc carried both. The
+first closed-loop PRBS7 attempt with the sb stage (`e2e_prbs_sb.log`) died at
+parse ("Error on line:"), so no wrong number came out of it, and the chain was
+killed before any other run used that netlist. Fixed: schematic restored, edits
+scoped to `--cells`, guard added, `test_post_port_edits_are_idempotent`, and
+`netlist.sh` now fails on duplicate instance names.
+
+**Nominal PRBS seed:** `e2e_prbs.spice` is committed back to 0.595. The 0.642
+committed in f379502 came from the abandoned 10500 ohm experiment. The
+600.541 MHz PRBS7 result was run with 0.595 (`sim/runners/pump18.sh`).
+
 **Folded pull-up, XMUP2 0.7 um (`coarse_loop_fold2.inc`):** park 1.202 V,
 span 0.122-1.201 V, search 18.40 mV/us, d_680/640/600/560/520 =
 -2.96 / -0.84 / +0.019 / +0.87 / +2.80 mV/us. Original (`coarse_tb.log`):

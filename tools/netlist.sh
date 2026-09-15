@@ -74,4 +74,18 @@ if [ -n "$stray" ]; then
     exit 1
 fi
 
+# Duplicate instance names inside one .subckt.  xschem emits them without
+# complaint when a schematic carries the same instance twice; ngspice then dies
+# at parse ("Error on line:") or, worse, a tool downstream keeps both.
+dups=$(awk '
+    /^[.]subckt/ { cell=$2; delete seen; next }
+    /^[.]ends/   { cell=""; next }
+    cell != "" && /^[xX]/ { if (seen[$1]++) print cell": "$1 }
+' "$OUT/blocks.inc")
+if [ -n "$dups" ]; then
+    echo "netlist.sh: duplicate instance names in blocks.inc:" >&2
+    echo "$dups" >&2
+    exit 1
+fi
+
 echo "netlist.sh: $OUT/blocks.inc  ($n_mos MOSFETs, $(grep -c '^\.subckt' "$OUT/blocks.inc") subcircuits)"

@@ -806,6 +806,11 @@ def add_bias_mirror(text: str) -> str:
     gate voltage that current needs at this corner.  Nothing inside CTLE or
     CDR changes: they still see a bias voltage on the same node.
     """
+    if "{ibias_mirror.sym}" in text:
+        # Already applied.  Without this guard a second port run appended a
+        # second x5, and blocks.inc carried two bias mirrors splitting the
+        # reference current (found 2026-09-15 after a --cells CDR run).
+        return text
     text = text.replace("lab=vbias", "lab=ibias")
     text = text.rstrip("\n") + "\n"
     text += (
@@ -969,6 +974,12 @@ def main():
     for name, edit in POST_PORT_EDITS.items():
         target = args.dst / name
         if not target.exists():
+            continue
+        # --cells limits the edits too.  It used to limit only the copy, so a
+        # `--cells CDR` run re-applied every other cell's edit to files it had
+        # not re-ported, and add_bias_mirror (unguarded then) appended a
+        # second x5 to ctle_cdr_rx.sch.
+        if args.cells and name.split(".")[0] not in set(args.cells):
             continue
         target.write_text(edit(target.read_text()))
         report.append(f"{name}: design change applied ({edit.__name__ if hasattr(edit, '__name__') else 'inline'})")

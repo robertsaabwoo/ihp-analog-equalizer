@@ -233,3 +233,15 @@ def test_loop_filter_output_gets_named_vctrl():
            (y1 == y2 == y and min(x1, x2) <= x <= max(x1, x2)):
             on_net1 = True
     assert on_net1, f"the vctrl label at ({x},{y}) is not on the loop filter's net"
+
+
+def test_post_port_edits_are_idempotent():
+    """Every post-port edit must be a no-op on its own output.  A non-idempotent
+    edit (add_bias_mirror, 2026-09-15) appended a second bias mirror on a
+    re-run, and blocks.inc carried two x5 instances."""
+    for name, edit in port.POST_PORT_EDITS.items():
+        f = ROOT / "xschem" / name
+        if not f.exists():
+            continue
+        once = edit(f.read_text())
+        assert edit(once) == once, f"{name}: edit is not idempotent"

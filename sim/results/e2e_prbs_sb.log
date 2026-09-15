@@ -1,0 +1,16 @@
+[safe_ngspice] e2e_prbs.spice  memcap=2500MB timeout=5400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * end-to-end acquisition on prbs7 -- the run that decides whether the 0101
+
+Error on line:
+  n.x1.x5.xmref.nsg13_lv_nmos ibias ibias vss vss x1.x5.xmref:sg13g2_lv_nmos_psp w=    4.000000000000000e-06     l=    1.000000000000000e-06     nf=    1.000000000000000e+00     mult=    1.000000000000000e+00     as=    1.360000000000000e-12     ad=    1.360000000000000e-12     ps=    8.680000000000000e-06     pd=    8.680000000000000e-06     dta=    0.000000000000000e+00     ngcon=2 delvto=0 factuo=1
+device already exists, bail out
+    Simulation interrupted due to error!
+
+Note: No ".plot", ".print", or ".fourier" lines; no simulations run
+[safe_ngspice] exit rc=1
