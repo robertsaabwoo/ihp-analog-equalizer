@@ -534,6 +534,35 @@ as at nominal before.
 Neither result is in yet; don't quote the adopted cell's closed-loop numbers until
 they are.
 
+## In flight at shutdown (2026-09-15 19:22) -- restart here
+
+State: design on `ring-coarse-tune` = dual loop + folded coarse pull-up + self-biased
+clock stage (sb_inverter) + pump bias from ibias (cp_bias). PRBS7 locks closed loop,
+trim pinned off, at tt/27 C/1.2 V, tt/125 C/1.2 V and ff/125 C/1.32 V (table above).
+
+Corner chain results so far (`sim/runners/prbs_corner.sh`, trim pinned off):
+- ss/125 C/1.08 V: **not bracketed** -- the trim-off ring doesn't give 600.6 MHz with
+  usable swing (`vco_ct_seed_ss125_108.log`), so no closed-loop run. Needs a vcoarse-free run.
+- ss/-40 C/1.08 V: **not bracketed** (`vco_ct_seed_ssm40_108.log`), same.
+- ff/-40 C/1.32 V: seed 0.546, closed-loop run was IN PROGRESS at shutdown -- killed, re-run.
+- tt/-40 C/1.2 V: not started.
+
+Before anything: `tools/netlist.sh` (blocks.inc is gitignored and generated), then check
+`grep -c "^x14 Vdd Vss vbias bias_n bias_p cp_bias" sim/netlists/blocks.inc` = 1 and
+`grep -c "^x13 Vdd Vss clkraw- clkraw_sb sb_inverter" sim/netlists/blocks.inc` = 1.
+
+Restart (one at a time; each ~15 min):
+
+    sim/runners/prbs_corner.sh ff -40 1.32   # -> sim/results/run_prbs_ffm40_132.out
+    sim/runners/prbs_corner.sh tt -40 1.2    # -> sim/results/run_prbs_ttm40_12.out
+
+Why the ss corners don't bracket: **the trim-off ring is too slow** there. ss/125 C/1.08 V
+peaks at 571.6 MHz at vctrl 0.65 V (472-572 MHz over 0.45-0.65 V); ss/-40 C/1.08 V peaks at
+541.9 MHz (386-542 MHz over 0.50-0.65 V; below 0.5 V there is no swing, and those fosc numbers are
+noise). This is what the coarse trim is for (trim-on ceiling at ss/125 C/1.08 V is 638.2 MHz,
+section 7.1 of RING_DUAL_LOOP.md). Next: run those corners with vcoarse free (dual loop),
+e.g. e2e_dual.spice retargeted to the corner and seeded with vcoarse low enough to bracket.
+
 ## In flight at last checkpoint (2026-09-15)
 
 Five jobs, serialised on the ngspice lock. If the machine went down, rerun the
