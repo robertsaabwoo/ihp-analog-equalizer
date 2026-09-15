@@ -901,10 +901,43 @@ def add_coarse_loop(text: str) -> str:
     return text
 
 
+def add_sb_clock_stage(text: str) -> str:
+    """CDR: an AC-coupled, self-biased inverter ahead of the recovered-clock buffer.
+
+    `clkraw` (x4's output) is a resistor-loaded swing whose low level rises with
+    temperature: 0.23-0.48 V at -40/27 C, 0.60-0.70 V at 125 C
+    (sim/results/clkpath_pvt_*.log).  inverter_buffer switches at 0.50-0.615 V
+    (inv_trip_*.log), so at 125 C it never switches and the clock is dead at
+    every process corner.  No fixed threshold can fit: the lowest high level
+    (0.621 V) is below the highest low level (0.700 V).  `sb_inverter`
+    (sim/decks/sb_inverter.inc) blocks the DC level with a capacitor and holds
+    its input at its own switching point through a feedback resistor.
+
+    It takes `clkraw-`, previously unused, because its inversion then restores
+    `clkraw+`'s polarity at `rclk+`.  x11's input moves from `clkraw+` to the new
+    net `clkraw_sb`.  A flipped clock would swap the Alexander detector's data
+    and edge samplers.
+    """
+    if "{sb_inverter.sym}" in text:
+        return text                      # already applied; the port is re-run
+    old = "{name=p70 sig_type=std_logic lab=clkraw+"
+    assert old in text, "CDR.sch: x11 input label p70 not found"
+    text = text.replace(old, "{name=p70 sig_type=std_logic lab=clkraw_sb")
+    text = text.rstrip("\n") + "\n"
+    text += "C {sb_inverter.sym} 2900 1000 0 0 {name=x13}\n"
+    for dx, dy, lab in ((-60, -20, "Vdd"), (-60, 0, "Vss"), (-60, 20, "clkraw-"),
+                        (60, 0, "clkraw_sb")):
+        text += ("C {devices/lab_wire.sym} %d %d 0 0 "
+                 "{name=pSB%s sig_type=std_logic lab=%s}\n"
+                 % (2900 + dx, 1000 + dy,
+                    lab.replace("-", "m").replace("_", ""), lab))
+    return text
+
+
 POST_PORT_EDITS = {
     "ctle_cdr_rx.sch": add_bias_mirror,
     "ring_inverter.sch": add_coarse_trim,
-    "CDR.sch": add_coarse_loop,
+    "CDR.sch": lambda t: add_sb_clock_stage(add_coarse_loop(t)),
     # The LVS wrapper and the symbol only need the pin renamed to match.
     "ctle_cdr_rx_lvs.sch": lambda t: t.replace("lab=vbias", "lab=ibias"),
     "ctle_cdr_rx.sym": lambda t: t.replace("name=vbias", "name=ibias"),
