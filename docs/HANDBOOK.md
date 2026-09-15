@@ -258,6 +258,7 @@ most of §9 and §10.**
 | `alexander_phase_detector` | four `d_flip_flop` + two `robs_xor` |
 | `d_latch` | M2 tail W 24 µm L 1 µm 4 fingers; R1/R3 6000 Ω |
 | `tiny_pll_bias_gen_res` | R[2..0] 24 kΩ each |
+| (branch) | `tiny_pll_bias_gen` replaced by `cp_bias` on `ring-coarse-tune`, §10.10 |
 | `tiny_pll_loop_filter_res` | 15 kΩ |
 | `tiny_pll_loop_filter_cap1` | MOS cap, m = 18 → 378 fF |
 | `tiny_pll_loop_filter_cap2` | MOS cap, m = 3 → 58 fF |
@@ -702,6 +703,51 @@ devices conduct. Measured (`sb_idle_{tt,ss,ff}.log`, DC): **1.8-78.3 µA** acros
 corners. That's 6.5-52.2 µA at tt, 1.8-32.2 µA at ss and 15.4-78.3 µA at ff, worst at
 ff/125 °C/1.32 V. The parked input sits at 0.546-0.686 V. With a clock running the
 inverter switches and this is not a static cost.
+
+### 10.10 The charge-pump bias comes from `ibias`
+
+**Once the clock survived 125 °C, lock still failed there, for a second reason: the
+pump's bias generator.** `tiny_pll_bias_gen` is a self-biased reference: two mirrors
+with a 2:1 ratio and 72 kΩ of `rhigh`, running below a microamp. Its current rises
+with temperature and with fast process. Pump current at vout 0.6 V is 813 nA at
+tt/27 °C/1.2 V, 1862 nA at tt/125 °C and 7782 nA at ff/125 °C/1.32 V, with 398-5684 nA
+across all corners and up/down mismatch to +74 % (`run_cp_cur.out`). That current sets
+the loop's integral gain.
+
+How it was pinned down (all tt/125 °C/1.2 V, trim pinned off, PRBS7):
+
+| run | result | log |
+|---|---|---|
+| real generator | runaway to 615 MHz, vctrl -> 1.0 V; never captured (passed the lock point at ~300 ns) | `e2e_prbs_tt125_12.log`, `e2e_prbs_tt125_early.log` |
+| phase-detector probe | detector works: full-swing outputs, correct sign | `pd_probe_tt125.log` |
+| up/down mismatch nulled (sim-only) | still not locked, 612 MHz | `e2e_prbs_tt125_wp155.log` |
+| **ideal nominal pump currents (sim-only)** | **locks, 600.550 MHz, −0.0084 %** | `e2e_prbs_tt125_idealbias.log` |
+
+At ff/125 °C/1.32 V the same ideal bias removed the runaway (603.9 MHz, against
+644.5 MHz with the generator), but that run didn't settle cleanly
+(`e2e_prbs_ff125_132_idealbias.log`).
+
+**Fix, chosen by the user: `cp_bias`** (`sim/decks/cp_bias.inc`, generated into
+`xschem/cp_bias.sch`, placed in CDR as x14 by `replace_bias_gen`, which removes
+x8). It builds the pump's two gate voltages from `vbias`, the gate of the 40 µA
+`ibias` diode:
+
+| device | size | role |
+|---|---|---|
+| XMN1 | nMOS W 0.5 / L 8 µm | mirrors a small fraction of the 40 µA diode's current |
+| XMPD | pMOS W 2 / L 1 µm | diode, `bias_p` (up source) |
+| XMP2 | pMOS W 1.45 / L 1 µm | copies into the down branch |
+| XMND | nMOS W 1 / L 1 µm | diode, `bias_n` (down source) |
+
+Sized across 27 corners × vout 0.5/0.6/0.7 V (`cp_ibias_pvt_*.log`, `cp_ibias_pvt2_*.log`):
+nominal up/down **790 / 806 nA**; **up 715-894 nA across all corners (1.25×, against 14×)**;
+mismatch −13.4 .. +10.3 % (against up to +74 %). The pump current is now only as
+stable as the harness's `ibias`. The mismatch width that remains is the pump's own
+output-voltage and temperature dependence.
+
+**Not measured yet:** closed-loop lock with `cp_bias` in the netlist, at nominal,
+tt/125 °C and ff/125 °C (running); the other 24 corners closed loop; the dual loop
+(vcoarse free) at 125 °C.
 
 ## 11. What is not working, and what is not known
 
