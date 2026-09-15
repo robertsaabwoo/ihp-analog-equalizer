@@ -1,0 +1,683 @@
+[safe_ngspice] bg_lsweep.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Reset re-loads circuit * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Circuit: * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+i_up_na = 3.846494e+02
+i_dn_na = 4.118917e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+i_up_na = 4.635493e+02
+i_dn_na = 4.574695e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+i_up_na = 5.427980e+02
+i_dn_na = 4.995064e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+i_up_na = 6.047603e+02
+i_dn_na = 6.480862e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+i_up_na = 7.065803e+02
+i_dn_na = 7.071787e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+i_up_na = 8.070365e+02
+i_dn_na = 7.615766e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+i_up_na = 1.054340e+03
+i_dn_na = 1.127798e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+i_up_na = 1.194704e+03
+i_dn_na = 1.210339e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+i_up_na = 1.408515e+03
+i_dn_na = 1.329416e+03
+ROWEND
+Reset re-loads circuit * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Circuit: * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+i_up_na = 4.243137e+02
+i_dn_na = 4.118916e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+i_up_na = 5.113728e+02
+i_dn_na = 4.574694e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+i_up_na = 5.988243e+02
+i_dn_na = 4.995063e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+i_up_na = 6.672210e+02
+i_dn_na = 6.480861e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+i_up_na = 7.795867e+02
+i_dn_na = 7.071785e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+i_up_na = 8.904498e+02
+i_dn_na = 7.615764e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+i_up_na = 1.163635e+03
+i_dn_na = 1.127797e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+i_up_na = 1.318597e+03
+i_dn_na = 1.210339e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 1.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+i_up_na = 1.554607e+03
+i_dn_na = 1.329416e+03
+ROWEND
+Reset re-loads circuit * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Circuit: * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+i_up_na = 3.873268e+02
+i_dn_na = 4.155746e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+i_up_na = 4.547007e+02
+i_dn_na = 4.554958e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+i_up_na = 5.213785e+02
+i_dn_na = 4.922434e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+i_up_na = 5.995934e+02
+i_dn_na = 6.447033e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+i_up_na = 6.851123e+02
+i_dn_na = 6.957700e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+i_up_na = 7.714539e+02
+i_dn_na = 7.443868e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+i_up_na = 1.034597e+03
+i_dn_na = 1.111239e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+i_up_na = 1.176037e+03
+i_dn_na = 1.197126e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+i_up_na = 1.524791e+03
+i_dn_na = 1.393055e+03
+ROWEND
+Reset re-loads circuit * bg_lsweep.spice -- does lengthening the bias generaUsing SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+tor fix the pump's hot/high
+
+Circuit: * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+i_up_na = 4.275669e+02
+i_dn_na = 4.155742e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+i_up_na = 5.019812e+02
+i_dn_na = 4.554954e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+i_up_na = 5.756350e+02
+i_dn_na = 4.922430e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+i_up_na = 6.622582e+02
+i_dn_na = 6.447027e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+i_up_na = 7.567552e+02
+i_dn_na = 6.957694e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+i_up_na = 8.521651e+02
+i_dn_na = 7.443863e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+i_up_na = 1.143374e+03
+i_dn_na = 1.111238e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+i_up_na = 1.299735e+03
+i_dn_na = 1.197125e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 2.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+i_up_na = 1.685258e+03
+i_dn_na = 1.393055e+03
+ROWEND
+Reset re-loads circuit * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Circuit: * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+i_up_na = 3.772258e+02
+i_dn_na = 4.070852e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+i_up_na = 4.319121e+02
+i_dn_na = 4.405606e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+i_up_na = 4.856768e+02
+i_dn_na = 4.715465e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+i_up_na = 5.793531e+02
+i_dn_na = 6.265264e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+i_up_na = 6.490926e+02
+i_dn_na = 6.695973e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+i_up_na = 7.390988e+02
+i_dn_na = 7.223444e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+i_up_na = 1.007844e+03
+i_dn_na = 1.085127e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+i_up_na = 1.202440e+03
+i_dn_na = 1.205832e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 1.800000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+i_up_na = 1.785833e+03
+i_dn_na = 1.524305e+03
+ROWEND
+Reset re-loads circuit * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Circuit: * bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+i_up_na = 4.172110e+02
+i_dn_na = 4.070837e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+i_up_na = 4.777224e+02
+i_dn_na = 4.405590e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+i_up_na = 5.372187e+02
+i_dn_na = 4.715450e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+i_up_na = 6.410667e+02
+i_dn_na = 6.265242e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+i_up_na = 7.182628e+02
+i_dn_na = 6.695951e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+i_up_na = 8.178945e+02
+i_dn_na = 7.223423e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+i_up_na = 1.115701e+03
+i_dn_na = 1.085123e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+i_up_na = 1.331176e+03
+i_dn_na = 1.205829e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lb = 4.000000e+00
+p_wp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+i_up_na = 1.977168e+03
+i_dn_na = 1.524303e+03
+ROWEND
+ngspice-42 done
+[safe_ngspice] exit rc=0

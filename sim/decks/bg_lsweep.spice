@@ -1,0 +1,153 @@
+* bg_lsweep.spice -- does lengthening the bias generator fix the pump's hot/high
+* supply runaway?  Lb in (1, 2, 4) x up-source width Wp in (1.8, 2.0), across
+* temperature and supply, vout held at 0.60 V.  Run per process corner with
+* sim/run_corners.sh.  `echo ROWEND` after each print so trap 2.22's banner
+* collision cannot splice two rows together.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.include ../netlists/blocks.inc
+.include cp_p.inc
+.include bg_p.inc
+.global sub!
+Vsub sub! 0 0
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Vout1 o1 0 0.6
+Vup1  u1 0 1.2
+Vdn1  d1 0 0
+x1 Vdd Vdd Vss Vss o1 u1 d1 bn bp cp_p
+Vout2 o2 0 0.6
+Vup2  u2 0 0
+Vdn2  d2 0 1.2
+x2 Vdd Vdd Vss Vss o2 u2 d2 bn bp cp_p
+x9 Vss Vss Vdd Vdd bn Vdd Vss bp bg_p
+.control
+
+alterparam Lb = 1
+alterparam Ls = 1
+alterparam Wp = 1.8
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  op
+  let p_lb = 1
+  let p_wp = 1.8
+  let p_temp = $tmp
+  let p_vdd = $vd
+  let i_up_na = 1e9*i(Vout1)
+  let i_dn_na = -1e9*i(Vout2)
+  print p_lb p_wp p_temp p_vdd i_up_na i_dn_na
+  echo "ROWEND"
+ end
+end
+
+alterparam Lb = 1
+alterparam Ls = 1
+alterparam Wp = 2.0
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  op
+  let p_lb = 1
+  let p_wp = 2.0
+  let p_temp = $tmp
+  let p_vdd = $vd
+  let i_up_na = 1e9*i(Vout1)
+  let i_dn_na = -1e9*i(Vout2)
+  print p_lb p_wp p_temp p_vdd i_up_na i_dn_na
+  echo "ROWEND"
+ end
+end
+
+alterparam Lb = 2
+alterparam Ls = 2
+alterparam Wp = 1.8
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  op
+  let p_lb = 2
+  let p_wp = 1.8
+  let p_temp = $tmp
+  let p_vdd = $vd
+  let i_up_na = 1e9*i(Vout1)
+  let i_dn_na = -1e9*i(Vout2)
+  print p_lb p_wp p_temp p_vdd i_up_na i_dn_na
+  echo "ROWEND"
+ end
+end
+
+alterparam Lb = 2
+alterparam Ls = 2
+alterparam Wp = 2.0
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  op
+  let p_lb = 2
+  let p_wp = 2.0
+  let p_temp = $tmp
+  let p_vdd = $vd
+  let i_up_na = 1e9*i(Vout1)
+  let i_dn_na = -1e9*i(Vout2)
+  print p_lb p_wp p_temp p_vdd i_up_na i_dn_na
+  echo "ROWEND"
+ end
+end
+
+alterparam Lb = 4
+alterparam Ls = 4
+alterparam Wp = 1.8
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  op
+  let p_lb = 4
+  let p_wp = 1.8
+  let p_temp = $tmp
+  let p_vdd = $vd
+  let i_up_na = 1e9*i(Vout1)
+  let i_dn_na = -1e9*i(Vout2)
+  print p_lb p_wp p_temp p_vdd i_up_na i_dn_na
+  echo "ROWEND"
+ end
+end
+
+alterparam Lb = 4
+alterparam Ls = 4
+alterparam Wp = 2.0
+reset
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  op
+  let p_lb = 4
+  let p_wp = 2.0
+  let p_temp = $tmp
+  let p_vdd = $vd
+  let i_up_na = 1e9*i(Vout1)
+  let i_dn_na = -1e9*i(Vout2)
+  print p_lb p_wp p_temp p_vdd i_up_na i_dn_na
+  echo "ROWEND"
+ end
+end
+
+quit
+.endc
+.end

@@ -83,9 +83,23 @@ down path does not. And a second problem the percentages hid: **total pump
 current is ~4× nominal at tt/125 °C/1.32 V**, a 4× loop-gain swing across
 corners, independent of mismatch.
 
-Fix under exploration: lengthen the bias generator's mirrors and diodes (and the
-pump sources with them, to keep W/L and the mirror ratios) to cut their Vds
-sensitivity (`sim/decks/bg_lsweep.spice`).
+**Lengthening the bias generator makes it worse** — retracted as a fix
+(`bg_lsweep.spice`, all 27 corners, Wp 1.8 µm):
+
+| Lb | worst mismatch | pump current across corners | spread |
+|---|---|---|---|
+| 1 µm | +73.8 % | 398 … 5684 nA | 14.3× |
+| 2 µm | +77.5 % | 401 … 6224 nA | 15.5× |
+| 4 µm | +81.4 % | 392 … 6856 nA | 17.5× |
+
+So channel-length modulation in its mirrors is not the mechanism either. The
+underlying problem is the reference itself: a **14× spread in pump current**
+across corners. Candidate direction, not yet tried: derive the pump current from
+the harness's bandgap-referenced `ibias` (already feeding the CTLE) instead of the
+self-biased `tiny_pll_bias_gen` — the same lesson as the port's bias fix,
+HANDBOOK §6.1. Before redesigning, the cause is being tested: the failing
+ff/125 °C PRBS7 run repeated with ideal nominal pump bias
+(`e2e_prbs_ff125_idealbias.spice`).
 
 At ff it is worse — `cp_mismatch_pvt2.spice`, ff, trimmed pump, `vout` 0.60 V:
 **7782 nA up vs 3586 nA down at 125 °C / 1.32 V**, about 10× nominal up
