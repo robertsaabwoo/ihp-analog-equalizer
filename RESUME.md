@@ -332,6 +332,18 @@ charge from pump mismatch overpowering the detector; not proven until the wp155 
 Unexplained: the initial 0.53 V below the seed. Not checked; the precharge
 release at 76 ns is a candidate.
 
+**tt/125 C with the pump mismatch nulled (sim-only MPSRC 1.55 um; override confirmed
+by "redefinition of .subckt tiny_pll_charge_pump, ignored")**
+(`e2e_prbs_tt125_wp155.log`): **still not locked.** 612.2 MHz (+1.93 %), vctrl
+0.762 / 0.751 / 0.795 V (min 0.700, max 0.852 over 1.5-3 us), ripple 92.9 mV, clock
+1.278 V. Nulling the mismatch kept vctrl lower (~0.75-0.80 V against ~1.0 V), but
+the loop still sits with the ring above baud and doesn't pull back. At vctrl 0.70 V
+this pump is ~3 % down-heavy (1850*1.55/1.8 = 1593 nA up vs 1640 nA down), so
+**pump mismatch is not the whole cause.** The phase detector's behaviour at 125 C
+is the next suspect: its d_latch cells are resistor-loaded CML like the diff amp
+that killed the clock. Next: measure up/down pulse activity in closed loop at
+tt/125 C against nominal.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
