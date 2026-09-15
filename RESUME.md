@@ -230,9 +230,11 @@ The next check is `clkraw` min/max across PVT, open loop.
 
 `sim/run_corners.sh` bug found on the way: its sed matched `cornerMOSlv.lib mos_`
 with ONE space, and `coarse_tb_pvt.spice` has two. The sed matched nothing, so every
-"corner" would have run tt. Fixed with `+` plus a hard fail on no match. Earlier
-`run_corners` results on decks with a double space need re-checking before
-they're trusted (to do: grep decks for the double space).
+"corner" would have run tt. Fixed with `+` plus a hard fail on no match. Checked: the eight
+decks with a double space (`coarse_tb`, `coarse_tb_pvt`, `coarse_startup`,
+`coarse_clamp`, `coarse_clamp_fold`, `coarse_tb_fold`, `coarse_tb_fold2`, `cap_leak`)
+never ran under `run_corners` (no `_tt/_ss/_ff` logs, no references), so no
+earlier result is affected.
 
 **Folded pull-up, XMUP2 0.7 um (`coarse_loop_fold2.inc`):** park 1.202 V,
 span 0.122-1.201 V, search 18.40 mV/us, d_680/640/600/560/520 =
