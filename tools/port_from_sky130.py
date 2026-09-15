@@ -939,10 +939,37 @@ def add_sb_clock_stage(text: str) -> str:
     return text
 
 
+def replace_bias_gen(text: str) -> str:
+    """CDR: bias the charge pump from the chip's ibias reference.
+
+    tiny_pll_bias_gen is a self-biased reference whose current -- and so the
+    loop's integral gain -- rises 2.3x at tt/125 C and ~10x at ff/125 C/1.32 V
+    (sim/results/run_cp_cur.out).  With the clock path fixed, that gain is what
+    stopped lock at 125 C: replacing it with ideal nominal currents locks tt/125 C
+    at 600.550 MHz (e2e_prbs_tt125_idealbias.log).  `cp_bias`
+    (sim/decks/cp_bias.inc) derives the same currents from `vbias`, the gate of
+    the 40 uA ibias diode.  The generator's instance goes; its old labels are
+    left in place and connect nothing.
+    """
+    if "{cp_bias.sym}" in text:
+        return text                      # already applied; the port is re-run
+    old = "C {tiny_pll_bias_gen.sym} 1220 -450 0 0 {name=x8}\n"
+    assert old in text, "CDR.sch: tiny_pll_bias_gen instance x8 not found"
+    text = text.replace(old, "")
+    text = text.rstrip("\n") + "\n"
+    text += "C {cp_bias.sym} 200 -1200 0 0 {name=x14}\n"
+    for dx, dy, lab in ((-60, -20, "Vdd"), (-60, 0, "Vss"), (-60, 20, "vbias"),
+                        (60, 0, "bias_n"), (60, 20, "bias_p")):
+        text += ("C {devices/lab_wire.sym} %d %d 0 0 "
+                 "{name=pCB%s sig_type=std_logic lab=%s}\n"
+                 % (200 + dx, -1200 + dy, lab.replace("_", ""), lab))
+    return text
+
+
 POST_PORT_EDITS = {
     "ctle_cdr_rx.sch": add_bias_mirror,
     "ring_inverter.sch": add_coarse_trim,
-    "CDR.sch": lambda t: add_sb_clock_stage(add_coarse_loop(t)),
+    "CDR.sch": lambda t: replace_bias_gen(add_sb_clock_stage(add_coarse_loop(t))),
     # The LVS wrapper and the symbol only need the pin renamed to match.
     "ctle_cdr_rx_lvs.sch": lambda t: t.replace("lab=vbias", "lab=ibias"),
     "ctle_cdr_rx.sym": lambda t: t.replace("name=vbias", "name=ibias"),
