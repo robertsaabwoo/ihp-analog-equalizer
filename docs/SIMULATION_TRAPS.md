@@ -469,3 +469,21 @@ this way in a 54-point corner sweep.
 Rule: parse numbers with a full pattern — `-?\d\.\d+e[-+]\d{2}` — count what was
 skipped, and report the count. A sweep that silently has 53 of 54 points looks
 complete.
+
+### 2.23 A repeated `.subckt` keeps the FIRST definition
+
+```
+Warning: redefinition of .subckt dut, ignored
+```
+
+Including a modified cell *after* the netlist that already defines it does
+nothing but print that warning — the deck then simulates the original, and every
+result looks like the modification had no effect. Measured directly
+(`sim/scratch/subckt_override.spice`: two definitions, 1 kΩ first and 2 kΩ
+second, the circuit read 1 kΩ).
+
+This matters here because the generated schematics bake every width as a
+literal, so overriding a subckt in a deck is the only way to vary one without
+re-porting — and the obvious place to put the override, after `.include
+../netlists/blocks.inc`, is the one place it cannot work. Put it before, or give
+it a different name.

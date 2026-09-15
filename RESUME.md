@@ -87,8 +87,25 @@ Fix under exploration: lengthen the bias generator's mirrors and diodes (and the
 pump sources with them, to keep W/L and the mirror ratios) to cut their Vds
 sensitivity (`sim/decks/bg_lsweep.spice`).
 
-The DC percentage is a proxy. Ground truth is closed-loop PRBS7 at
-ff / 125 °C / 1.32 V: `sim/runners/prbs_ff125.sh` (seeds itself first).
+At ff it is worse — `cp_mismatch_pvt2.spice`, ff, trimmed pump, `vout` 0.60 V:
+**7782 nA up vs 3586 nA down at 125 °C / 1.32 V**, about 10× nominal up
+current, `VDD − bias_p` = 0.594 V.
+
+**Ground truth at the worst corner: FAIL — the receiver dies.** Closed-loop
+PRBS7 at ff / 125 °C / 1.32 V, trim off, seeded at that corner's lock point
+(0.489 V) (`sim/results/e2e_prbs_ff125.log`):
+- recovered clock swing **49 nV** — the ring stopped
+- `vctrl` walked **down** 0.373 → 0.338 → 0.303 V, below the ring's oscillation
+  floor at that corner (swing 0.235 V at 0.325, none at 0.300)
+- CTLE output 361 mV, so the data path is fine; it is the loop
+
+Cause of the *downward* walk not established. The pump's up current is more than
+twice its down current there, which alone would push `vctrl` up; a loop gain
+several times nominal overshooting past the floor is plausible and untested.
+
+**So the branch holds both patterns at tt only, and fails hard at
+ff / 125 °C / 1.32 V.** `main` has not been tested closed-loop at that corner
+either, so this is not yet a comparison against a known-good.
 
 **The coarse loop, closed-loop, on this configuration** (`sim/runners/dualloop.sh`):
 

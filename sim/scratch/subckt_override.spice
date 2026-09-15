@@ -1,0 +1,19 @@
+* Does ngspice use the FIRST or the LAST definition of a repeated .subckt,
+* and does it say so?  Needed before overriding coarse_loop in a deck to scale
+* its sweep current: the generated schematic bakes every width as a literal, so
+* Ksweep in coarse_loop.inc cannot reach the netlisted cell any other way.
+Vin a 0 1
+.subckt dut n1 n2
+R1 n1 n2 1k
+.ends
+.subckt dut n1 n2
+R1 n1 n2 2k
+.ends
+X1 a 0 dut
+.control
+op
+let r_used = v(a)/(-i(Vin))
+print r_used
+quit
+.endc
+.end

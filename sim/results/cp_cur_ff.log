@@ -1,0 +1,339 @@
+[safe_ngspice] cp_mismatch_pvt2.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * cp_mismatch_pvt2.spice -- the up and down currents behind the corner mismatch.
+
+Reset re-loads circuit * cp_mismatch_pvt2.spice -- the up and down currents behind the corner mismatch.
+
+Circuit: * cp_mismatch_pvt2.spice -- the up and down currents behind the corner mismatch.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 5.418045e+02
+i_dn_na = 5.118741e+02
+bn = 2.637112e-01
+bp = 6.941039e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 5.369315e+02
+i_dn_na = 5.450446e+02
+bn = 2.637112e-01
+bp = 6.941040e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 5.301559e+02
+i_dn_na = 5.691523e+02
+bn = 2.637112e-01
+bp = 6.941040e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 7.165725e+02
+i_dn_na = 5.986512e+02
+bn = 2.696570e-01
+bp = 8.009252e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 7.118246e+02
+i_dn_na = 6.360656e+02
+bn = 2.696570e-01
+bp = 8.009252e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 7.049400e+02
+i_dn_na = 6.624597e+02
+bn = 2.696570e-01
+bp = 8.009252e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.471979e+03
+i_dn_na = 8.913500e+02
+bn = 2.860073e-01
+bp = 8.789282e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.466032e+03
+i_dn_na = 9.412830e+02
+bn = 2.860073e-01
+bp = 8.789282e-01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.455600e+03
+i_dn_na = 9.736586e+02
+bn = 2.860073e-01
+bp = 8.789282e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 9.172547e+02
+i_dn_na = 8.319611e+02
+bn = 2.429815e-01
+bp = 6.929660e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 9.103233e+02
+i_dn_na = 8.768418e+02
+bn = 2.429815e-01
+bp = 6.929660e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 9.008809e+02
+i_dn_na = 9.115177e+02
+bn = 2.429815e-01
+bp = 6.929660e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.628857e+03
+i_dn_na = 1.145360e+03
+bn = 2.606076e-01
+bp = 7.713361e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.620201e+03
+i_dn_na = 1.201158e+03
+bn = 2.606076e-01
+bp = 7.713361e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.607849e+03
+i_dn_na = 1.242065e+03
+bn = 2.606076e-01
+bp = 7.713361e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 3.302000e+03
+i_dn_na = 1.683792e+03
+bn = 2.843344e-01
+bp = 8.248916e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000eUsing SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+-01
+i_up_na = 3.291298e+03
+i_dn_na = 1.754832e+03
+bn = 2.843344e-01
+bp = 8.248916e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 3.273727e+03
+i_dn_na = 1.803219e+03
+bn = 2.843344e-01
+bp = 8.248916e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 2.731596e+03
+i_dn_na = 1.943031e+03
+bn = 2.433491e-01
+bp = 6.437228e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 2.714288e+03
+i_dn_na = 2.013234e+03
+bn = 2.433491e-01
+bp = 6.437228e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 2.688618e+03
+i_dn_na = 2.068461e+03
+bn = 2.433491e-01
+bp = 6.437228e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 4.704559e+03
+i_dn_na = 2.631413e+03
+bn = 2.722707e-01
+bp = 6.911532e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 4.684179e+03
+i_dn_na = 2.714890e+03
+bn = 2.722707e-01
+bp = 6.911532e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 4.653603e+03
+i_dn_na = 2.777742e+03
+bn = 2.722707e-01
+bp = 6.911532e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 7.805283e+03
+i_dn_na = 3.488788e+03
+bn = 3.021632e-01
+bp = 7.256363e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 7.782437e+03
+i_dn_na = 3.586172e+03
+bn = 3.021632e-01
+bp = 7.256363e-01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 7.745827e+03
+i_dn_na = 3.656188e+03
+bn = 3.021632e-01
+bp = 7.256363e-01
+ngspice-42 done
+[safe_ngspice] exit rc=0
