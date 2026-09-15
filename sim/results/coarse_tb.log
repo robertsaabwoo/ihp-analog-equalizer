@@ -1,4 +1,4 @@
-[safe_ngspice] coarse_tb.spice  memcap=2000MB timeout=1800s floor=2000MB
+[safe_ngspice] coarse_tb.spice  memcap=2500MB timeout=2400s floor=2000MB
 Warning: m=xx on .subckt line will override multiplier m hierarchy!
 
 Using SPARSE 1.3 as Direct Linear Solver
@@ -30,11 +30,13 @@ x1.xrlt.dt                                   0
 x1.vl                                 0.479999
 x1.xrlm.dt                                   0
 x1.xrlb.dt                                   0
-x1.spu                                 0.47483
+x1.spu                                0.474989
+x1.nu1                                0.166594
+x1.nu2                                0.890646
 vcoarse                                      0
 x1.snd                                  0.5471
-x1.nd                                  1.16104
-x1.ne                                0.0026019
+x1.nd                                  1.16105
+x1.ne                                0.0026017
 x1.nlo                                 1.19871
 x1.nhi                                 1.19979
 x1.nlon                            9.51158e-08
@@ -42,38 +44,38 @@ x1.rst                                     1.2
 x1.rstn                            1.86732e-07
 x1.nas                               0.0508975
 x1.nbs                             1.04215e-07
-vct#branch                         1.72629e-12
-vss#branch                          4.3407e-06
-vdd#branch                        -2.05733e-05
+vct#branch                         1.86462e-12
+vss#branch                         4.37316e-06
+vdd#branch                        -2.06077e-05
 vsub#branch                                  0
 
- Reference value :  0.00000e+00 Reference value :  4.13317e-06 Reference value :  1.76750e-05 Reference value :  2.78250e-05 Reference value :  4.28750e-05 Reference value :  5.17140e-05 Reference value :  6.51140e-05 Reference value :  8.18640e-05 Reference value :  9.86640e-05 Reference value :  1.06877e-04 Reference value :  1.19804e-04 Reference value :  1.38704e-04 Reference value :  1.57575e-04 Reference value :  1.73825e-04 Reference value :  1.91025e-04 Reference value :  2.12325e-04 Reference value :  2.33775e-04 Reference value :  2.49625e-04 Reference value :  2.67975e-04 Reference value :  2.94375e-04 Reference value :  3.13125e-04 Reference value :  3.22425e-04 Reference value :  3.43625e-04
-No. of Data Rows : 7162
-v_park              =  1.100260e+00 at=  1.862796e-07
-vc_a                =  9.016310e-01
-vc_b                =  7.002549e-01
-vc_lo               =  1.226182e-01 at=  1.063640e-04
-vc_hi               =  1.200706e+00 at=  4.711670e-05
-v_park = 1.100260e+00
-search_mv_us = 2.013761e+01
-vc_lo = 1.226182e-01
-vc_hi = 1.200706e+00
-search_span = 1.078088e+00
-n68a                =  3.192522e-01
-n68b                =  2.503434e-01
-n64a                =  2.377287e-01
-n64b                =  2.190700e-01
-n60a                =  2.175087e-01
-n60b                =  2.191743e-01
-n56a                =  2.263109e-01
-n56b                =  2.478290e-01
-n52a                =  2.728856e-01
-n52b                =  3.398815e-01
-d_680 = -2.46103e+00
-d_640 = -6.66382e-01
-d_600 = 5.948571e-02
-d_560 = 7.685036e-01
-d_520 = 2.392711e+00
+ Reference value :  1.40165e-08 Reference value :  3.38250e-05 Reference value :  5.01750e-05 Reference value :  6.81207e-05 Reference value :  9.76207e-05 Reference value :  1.22825e-04 Reference value :  1.46260e-04 Reference value :  1.81575e-04 Reference value :  2.12675e-04 Reference value :  2.43725e-04 Reference value :  2.77375e-04 Reference value :  3.07425e-04 Reference value :  3.33825e-04
+No. of Data Rows : 7157
+v_park              =  1.201544e+00 at=  5.093372e-07
+t_s09               =  7.630990e-05
+t_s05               =  9.741159e-05
+vc_lo               =  1.223116e-01 at=  6.282500e-05
+vc_hi               =  1.200711e+00 at=  1.232624e-04
+v_park = 1.201544e+00
+search_mv_us = 1.895583e+01
+vc_lo = 1.223116e-01
+vc_hi = 1.200711e+00
+search_span = 1.078399e+00
+n68a                =  5.911125e-01
+n68b                =  5.082548e-01
+n64a                =  4.925832e-01
+n64b                =  4.691087e-01
+n60a                =  4.663082e-01
+n60b                =  4.668285e-01
+n56a                =  4.742691e-01
+n56b                =  4.985346e-01
+n52a                =  5.271842e-01
+n52b                =  6.055748e-01
+d_680 = -2.95920e+00
+d_640 = -8.38375e-01
+d_600 = 1.858214e-02
+d_560 = 8.666250e-01
+d_520 = 2.799664e+00
 v(x1.vh)[0] = 7.199994e-01
 v(x1.vl)[0] = 4.799994e-01
 ngspice-42 done
