@@ -247,7 +247,15 @@ pt3 vctrl VDD trim on):**
   there (below its floor). Not a clock-path result.
 - ss 27 C 1.08 V: pt2 swing 0.653 V, pt3 0.028 V (marginal / failing with the
   ring running, `clkraw+` min 0.457 V). Ring-level causes not separated.
-- ss 125 C and ff: still running at the time of writing.
+- **ss 125 C and ff 125 C, every supply and knob: `rclk` swing 0.000-0.002 V.**
+  The clock is dead at 125 C at all three process corners.
+- **No fixed switching point can work.** Lowest high level of `clkraw+` with the
+  ring running: 0.621 V (ff/-40 C/1.08 V, pt2). Highest low level: 0.700 V
+  (ss/125 C/1.32 V, pt3). The low level at one corner is above the high level at
+  another, so resizing the buffer (option 2) cannot cover PVT. A fixed downward
+  shift of x4's output (option 1) meets the same wall unless it also changes the
+  swing. That points to an AC-coupled, self-biased buffer (option 3). Options as
+  explained to the user: diff-amp resize / buffer resize / self-biased buffer.
 Mechanism, as far as measured: `clkraw`'s low level rises with temperature
 (0.23-0.31 V at -40 C, 0.37-0.48 V at 27 C, 0.62-0.68 V at 125 C at tt) until it
 no longer crosses the buffer's switching point. The cells are unchanged from main.
