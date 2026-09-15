@@ -1,0 +1,66 @@
+* cp_ibias_pvt2.spice -- sweep 2: Lm 7/7.5/8 um x XMP2 1.45/1.55/1.65 um.
+* Sweep 1 (cp_ibias_pvt_*.log): Lm 6 gave ~1015 nA and a -7..-27 % down-heavy pump.
+* cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 uA ibias
+* reference) in place of tiny_pll_bias_gen, sweeping the long mirror length Lm.
+* Same measurement as cp_mismatch_pvt2.spice (i(Vout1) = +up, i(Vout2) = -down).
+* Target: ~800 nA each at tt/27 C/1.2 V, and a SMALL spread across corners --
+* the self-biased generator gave 398-5684 nA.  Run under sim/run_corners.sh.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.include cp_bias_p.inc
+.include ../netlists/blocks.inc
+.include cp_p.inc
+.global sub!
+Vsub sub! 0 0
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Iref Vdd vbias dc 40u
+xref vbias Vss ibias_mirror
+xb Vdd Vss vbias bn bp cp_bias
+Vout1 o1 0 0.6
+Vup1  u1 0 1.2
+Vdn1  d1 0 0
+x1 Vdd Vdd Vss Vss o1 u1 d1 bn bp cp_p
+Vout2 o2 0 0.6
+Vup2  u2 0 0
+Vdn2  d2 0 1.2
+x2 Vdd Vdd Vss Vss o2 u2 d2 bn bp cp_p
+.control
+foreach lm 7 7.5 8
+ foreach wp2 1.45 1.55 1.65
+ alterparam Wp = 1.8
+ alterparam Ls = 1
+ alterparam Wm = 0.5
+ alterparam Lm = $lm
+ alterparam Wp2 = $wp2
+ reset
+ foreach tmp -40 27 125
+  foreach vd 1.08 1.2 1.32
+   set temp = $tmp
+   alter VDD = $vd
+   foreach vo 0.50 0.60 0.70
+    alter Vout1 dc = $vo
+    alter Vout2 dc = $vo
+    op
+    let p_lm = $lm
+    let p_wp2 = $wp2
+    let p_temp = $tmp
+    let p_vdd = $vd
+    let p_vout = $vo
+    let i_up_nA = 1e9*i(Vout1)
+    let i_dn_nA = -1e9*i(Vout2)
+    print p_lm p_wp2 p_temp p_vdd p_vout i_up_nA i_dn_nA
+    echo ROWEND
+   end
+  end
+ end
+ end
+end
+quit
+.endc
+.end

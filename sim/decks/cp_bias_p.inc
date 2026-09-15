@@ -12,10 +12,10 @@
 *     so the pump's 1.8 um up source gives ~800 nA.
 *   XMP2 (W1.8/L1) copies 0.9x of that into bias_n's nMOS diode (W1/L1), so
 *     the pump's W1/L1 down source also gives ~800 nA.
-.param Wm=0.5 Lm=5
+.param Wm=0.5 Lm=5 Wp2=1.8
 .subckt cp_bias VDD VSS vbias bias_n bias_p
 XMN1 bias_p vbias  VSS VSS sg13_lv_nmos w='Wm*1e-6' l='Lm*1e-6' ng=1 m=1 mm_ok=1
 XMPD bias_p bias_p VDD VDD sg13_lv_pmos w=2u   l=1u ng=1 m=1 mm_ok=1
-XMP2 bias_n bias_p VDD VDD sg13_lv_pmos w=1.8u l=1u ng=1 m=1 mm_ok=1
+XMP2 bias_n bias_p VDD VDD sg13_lv_pmos w='Wp2*1e-6' l=1u ng=1 m=1 mm_ok=1
 XMND bias_n bias_n VSS VSS sg13_lv_nmos w=1u   l=1u ng=1 m=1 mm_ok=1
 .ends
