@@ -1,0 +1,632 @@
+[safe_ngspice] coarse_null_fold2_pvt.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * coarse_tb_pvt.spice -- the coarse loop's own corners.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.08
+vss                                          0
+ibias                                 0.531759
+vctrl                                      0.1
+x1.nb1                                0.578051
+x1.nb2                                0.303311
+x1.vh                                    0.648
+x1.xrlt.dt                                   0
+x1.vl                                    0.432
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.543175
+x1.nu1                                 0.27295
+x1.nu2                                0.686642
+vcoarse                                      0
+x1.snd                                0.380054
+x1.nd                                 0.920969
+x1.ne                                0.0671211
+x1.nlo                                 1.07999
+x1.nhi                                 1.07985
+x1.nlon                            6.36785e-09
+x1.rst                                    1.08
+x1.rstn                            1.24256e-08
+x1.nas                              0.00628325
+x1.nbs                             7.24397e-09
+vct#branch                         1.70836e-13
+vss#branch                         3.64208e-06
+vdd#branch                        -1.61626e-05
+vsub#branch                                  0
+
+ Reference value :  5.76873e-07 Reference value :  2.85096e-05 Reference value :  6.24096e-05 Reference value :  8.61750e-05 Reference value :  1.20975e-04 Reference value :  1.53225e-04 Reference value :  1.85682e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 4046
+v_park              =  1.080219e+00
+vc_lo               =  2.297378e-01 at=  6.715959e-05
+vc_hi               =  1.032431e+00 at=  5.009586e-06
+s_a                 =  6.597652e-01
+s_b                 =  5.310109e-01
+n540a               =  8.139134e-01
+n540b               =  8.123381e-01
+n600a               =  8.041826e-01
+n600b               =  7.840214e-01
+n660a               =  7.292168e-01
+n660b               =  6.231726e-01
+n700a               =  5.374401e-01
+n700b               =  3.884732e-01
+n740a               =  3.011983e-01
+n740b               =  9.652594e-01
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+v_park = 1.080219e+00
+vc_lo = 2.297378e-01
+vc_hi = 1.032431e+00
+d_540 = -9.84563e-02
+d_600 = -1.26008e+00
+d_660 = -6.62776e+00
+d_700 = -9.31043e+00
+d_740 = 4.150382e+01
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                        1.2
+vss                                          0
+ibias                                 0.531759
+vctrl                                      0.1
+x1.nb1                                0.697173
+x1.nb2                                0.303887
+x1.vh                                 0.719999
+x1.xrlt.dt                                   0
+x1.vl                                 0.479999
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.558471
+x1.nu1                                0.273416
+x1.nu2                                0.804544
+vcoarse                                      0
+x1.snd                                0.445281
+x1.nd                                  1.03666
+x1.ne                                0.0705955
+x1.nlo                                 1.19998
+x1.nhi                                 1.19986
+x1.nlon                             7.5409e-09
+x1.rst                                     1.2
+x1.rstn                            1.59053e-08
+x1.nas                              0.00671884
+x1.nbs                             9.60674e-09
+vct#branch                         2.19269e-13
+vss#branch                         3.92309e-06
+vdd#branch                         -2.1085e-05
+vsub#branch                                  0
+
+ Reference value :  4.77500e-06 Reference value :  3.69750e-05 Reference value :  6.89750e-05 Reference value :  1.01775e-04 Reference value :  1.35175e-04 Reference value :  1.55306e-04 Reference value :  1.83825e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 4034
+v_park              =  1.200091e+00
+vc_lo               =  2.514988e-01 at=  7.000000e-05
+vc_hi               =  1.150699e+00 at=  5.025000e-06
+s_a                 =  7.470907e-01
+s_b                 =  6.078600e-01
+n540a               =  2.499702e-01
+n540b               =  2.619716e-01
+n600a               =  2.641768e-01
+n600b               =  2.650562e-01
+n660a               =  2.621161e-01
+n660b               =  2.534292e-01
+n700a               =  2.361431e-01
+n700b               =  1.143560e+00
+n740a               =  1.061924e+00
+n740b               =  9.102005e-01
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+v_park = 1.200091e+00
+vc_lo = 2.514988e-01
+vc_hi = 1.150699e+00
+d_540 = 7.500875e-01
+d_600 = 5.496250e-02
+d_660 = -5.42931e-01
+d_700 = 5.671356e+01
+d_740 = -9.48272e+00
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.32
+vss                                          0
+ibias                                 0.531759
+vctrl                                      0.1
+x1.nb1                                0.816395
+x1.nb2                                0.304395
+x1.vh                                 0.791999
+x1.xrlt.dt                                   0
+x1.vl                                 0.527999
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.573337
+x1.nu1                                0.273825
+x1.nu2                                0.922667
+vcoarse                                      0
+x1.snd                                0.510709
+x1.nd                                  1.15252
+x1.ne                                0.0739284
+x1.nlo                                 1.31997
+x1.nhi                                 1.31987
+x1.nlon                            9.50292e-09
+x1.rst                                    1.32
+x1.rstn                            2.16789e-08
+x1.nas                              0.00713712
+x1.nbs                             1.35251e-08
+vct#branch                         2.89407e-13
+vss#branch                         4.20178e-06
+vdd#branch                        -2.65238e-05
+vsub#branch                                  0
+
+ Reference value :  5.13504e-06 Reference value :  3.07850e-05 Reference value :  6.02850e-05 Reference value :  8.80750e-05 Reference value :  1.16575e-04 Reference value :  1.45725e-04 Reference value :  1.73525e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 3991
+v_park              =  1.319920e+00
+vc_lo               =  3.131008e-01 at=  7.000000e-05
+vc_hi               =  1.270597e+00 at=  5.035037e-06
+s_a                 =  8.411958e-01
+s_b                 =  6.929720e-01
+n540a               =  3.348295e-01
+n540b               =  3.962152e-01
+n600a               =  4.053178e-01
+n600b               =  4.133643e-01
+n660a               =  4.150758e-01
+n660b               =  4.159135e-01
+n700a               =  4.156764e-01
+n700b               =  4.131427e-01
+n740a               =  4.068092e-01
+n740b               =  3.927139e-01
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+v_park = 1.319920e+00
+vc_lo = 3.131008e-01
+vc_hi = 1.270597e+00
+d_540 = 3.836606e+00
+d_600 = 5.029063e-01
+d_660 = 5.235625e-02
+d_700 = -1.58356e-01
+d_740 = -8.80956e-01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.08
+vss                                          0
+ibias                                 0.531021
+vctrl                                      0.1
+x1.nb1                                0.605117
+x1.nb2                                0.248589
+x1.vh                                    0.648
+x1.xrlt.dt                                   0
+x1.vl                                    0.432
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.493746
+x1.nu1                                0.208954
+x1.nu2                                 0.73503
+vcoarse                                      0
+x1.snd                                0.447336
+x1.nd                                  1.02385
+x1.ne                               0.00609358
+x1.nlo                                 1.07962
+x1.nhi                                 1.07982
+x1.nlon                            1.37117e-08
+x1.rst                                    1.08
+x1.rstn                            2.59017e-08
+x1.nas                                0.042118
+x1.nbs                             1.46178e-08
+vct#branch                         3.39395e-13
+vss#branch                         3.98397e-06
+vdd#branch                        -1.45942e-05
+vsub#branch                                  0
+
+ Reference value :  3.39613e-08 Reference value :  1.67250e-05 Reference value :  4.16250e-05 Reference value :  6.84250e-05 Reference value :  9.31750e-05 Reference value :  1.20000e-04 Reference value :  1.35043e-04 Reference value :  1.56725e-04 Reference value :  1.82275e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 4031
+v_park              =  1.080097e+00
+vc_lo               =  2.095331e-01 at=  7.000000e-05
+vc_hi               =  1.034131e+00 at=  5.025000e-06
+s_a                 =  6.674203e-01
+s_b                 =  5.395459e-01
+n540a               =  2.025531e-01
+n540b               =  2.038497e-01
+n600a               =  1.961330e-01
+n600b               =  1.770965e-01
+n660a               =  1.051629e+00
+n660b               =  9.280927e-01
+n700a               =  8.321468e-01
+n700b               =  6.649040e-01
+n740a               =  5.644193e-01
+n740b               =  3.966598e-01
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+v_park = 1.080097e+00
+vc_lo = 2.095331e-01
+vc_hi = 1.034131e+00
+d_540 = 8.103750e-02
+d_600 = -1.18978e+00
+d_660 = -7.72102e+00
+d_700 = -1.04527e+01
+d_740 = -1.04850e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                        1.2
+vss                                          0
+ibias                                 0.531021
+vctrl                                      0.1
+x1.nb1                                0.724222
+x1.nb2                                0.249194
+x1.vh                                 0.719999
+x1.xrlt.dt                                   0
+x1.vl                                 0.479999
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                 0.50954
+x1.nu1                                0.209459
+x1.nu2                                 0.85266
+vcoarse                                      0
+x1.snd                                 0.51267
+x1.nd                                  1.13865
+x1.ne                               0.00702066
+x1.nlo                                  1.1996
+x1.nhi                                 1.19984
+x1.nlon                            1.58097e-08
+x1.rst                                     1.2
+x1.rstn                            3.19791e-08
+x1.nas                               0.0438801
+x1.nbs                             1.87695e-08
+vct#branch                         4.71123e-13
+vss#branch                         4.30358e-06
+vdd#branch                        -1.87137e-05
+vsub#branch                                  0
+
+ Reference value :  4.72500e-06 Reference value :  4.00250e-05 Reference value :  6.48750e-05 Reference value :  8.80750e-05 Reference value :  1.51425e-04 Reference value :  1.53125e-04 Reference value :  1.78539e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 4034
+v_park              =  1.199860e+00
+vc_lo               =  2.641764e-01 at=  7.000000e-05
+vc_hi               =  1.152736e+00 at=  5.025000e-06
+s_a                 =  7.570830e-01
+s_b                 =  6.194093e-01
+n540a               =  2.652358e-01
+n540b               =  2.845713e-01
+n600a               =  2.880487e-01
+n600b               =  2.891062e-01
+n660a               =  2.833227e-01
+n660b               =  2.681293e-01
+n700a               =  2.463727e-01
+n700b               =  2.034987e-01
+n740a               =  1.596350e-01
+n740b               =  1.053383e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+v_park = 1.199860e+00
+vc_lo = 2.641764e-01
+vc_hi = 1.152736e+00
+d_540 = 1.208469e+00
+d_600 = 6.609375e-02
+d_660 = -9.49587e-01
+d_700 = -2.67962e+00
+d_740 = 5.585925e+01
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.32
+vss                                          0
+ibias                                 0.531021
+vctrl                                      0.1
+x1.nb1                                0.843429
+x1.nb2                                0.249728
+x1.vh                                 0.791999
+x1.xrlt.dt                                   0
+x1.vl                                 0.527999
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.524865
+x1.nu1                                0.209903
+x1.nu2                                0.970532
+vcoarse                                      0
+x1.snd                                0.578209
+x1.nd                                  1.25314
+x1.ne                               0.00827472
+x1.nlo                                 1.31957
+x1.nhi                                 1.31985
+x1.nlon                            1.96398e-08
+x1.rst                                    1.32
+x1.rstn                            4.27669e-08
+x1.nas                               0.0455107
+x1.nbs                             2.60253e-08
+vct#branch                         6.60361e-13
+vss#branch                         4.62121e-06
+vdd#branch                         -2.3274e-05
+vsub#branch                                  0
+
+ Reference value :  1.00000e-09 Reference value :  1.46750e-05 Reference value :  3.96250e-05 Reference value :  6.78750e-05 Reference value :  1.07525e-04 Reference value :  1.53825e-04 Reference value :  1.71475e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 3991
+v_park              =  1.319595e+00
+vc_lo               =  3.284247e-01 at=  7.000000e-05
+vc_hi               =  1.272567e+00 at=  5.025000e-06
+s_a                 =  8.521125e-01
+s_b                 =  7.060884e-01
+n540a               =  3.506054e-01
+n540b               =  4.149203e-01
+n600a               =  4.274969e-01
+n600b               =  4.420276e-01
+n660a               =  4.448957e-01
+n660b               =  4.456943e-01
+n700a               =  4.438105e-01
+n700b               =  4.375235e-01
+n740a               =  4.269146e-01
+n740b               =  4.044532e-01
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+v_park = 1.319595e+00
+vc_lo = 3.284247e-01
+vc_hi = 1.272567e+00
+d_540 = 4.019681e+00
+d_600 = 9.081688e-01
+d_660 = 4.991250e-02
+d_700 = -3.92938e-01
+d_740 = -1.40384e+00
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.08
+vss                                          0
+ibias                                 0.532631
+vctrl                                      0.1
+x1.nb1                                 0.66498
+x1.nb2                                0.156683
+x1.vh                                    0.648
+x1.xrlt.dt                                   0
+x1.vl                                    0.432
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.406529
+x1.nu1                                0.106355
+x1.nu2                                0.822735
+vcoarse                                      0
+x1.snd                                0.552976
+x1.nd                                  1.07759
+x1.ne                               0.00627317
+x1.nlo                                 1.04945
+x1.nhi                                 1.07979
+x1.nlon                            1.45145e-06
+x1.rst                                    1.08
+x1.rstn                            1.55872e-06
+x1.nas                               0.0537626
+x1.nbs                             7.82319e-07
+vct#branch                         7.19647e-13
+vss#branch                         4.65502e-06
+vdd#branch                        -1.38103e-05
+vsub#branch                                  0
+
+ Reference value :  2.50138e-08 Reference value :  8.77500e-06 Reference value :  2.74250e-05 Reference value :  5.83250e-05 Reference value :  8.38750e-05 Reference value :  1.14575e-04 Reference value :  1.57741e-04 Reference value :  1.67318e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 4013
+v_park              =  1.078241e+00
+vc_lo               =  2.334830e-01 at=  7.000000e-05
+vc_hi               =  1.031136e+00 at=  5.025000e-06
+s_a                 =  6.771646e-01
+s_b                 =  5.535367e-01
+n540a               =  2.292450e-01
+n540b               =  2.340137e-01
+n600a               =  2.244095e-01
+n600b               =  2.021870e-01
+n660a               =  1.685363e-01
+n660b               =  1.049661e-01
+n700a               =  6.147077e-02
+n700b               =  9.605160e-01
+n740a               =  8.517657e-01
+n740b               =  6.690908e-01
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+v_park = 1.078241e+00
+vc_lo = 2.334830e-01
+vc_hi = 1.031136e+00
+d_540 = 2.980437e-01
+d_600 = -1.38891e+00
+d_660 = -3.97314e+00
+d_700 = 5.619033e+01
+d_740 = -1.14172e+01
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                        1.2
+vss                                          0
+ibias                                 0.532631
+vctrl                                      0.1
+x1.nb1                                  0.7841
+x1.nb2                                0.157317
+x1.vh                                 0.719999
+x1.xrlt.dt                                   0
+x1.vl                                 0.479999
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.423234
+x1.nu1                                0.107107
+x1.nu2                                0.939888
+vcoarse                                      0
+x1.snd                                0.618552
+x1.nd                                  1.19711
+x1.ne                               0.00676352
+x1.nlo                                 1.16816
+x1.nhi                                 1.19981
+x1.nlon                            1.36105e-06
+x1.rst                                     1.2
+x1.rstn                            1.46555e-06
+x1.nas                               0.0559149
+x1.nbs                              7.3805e-07
+vct#branch                         1.08014e-12
+vss#branch                         5.04877e-06
+vdd#branch                         -1.7191e-05
+vsub#branch                                  0
+
+ Reference value :  0.00000e+00 Reference value :  3.87750e-05 Reference value :  6.71750e-05 Reference value :  1.03425e-04 Reference value :  1.41725e-04 Reference value :  1.76875e-04Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 3981
+v_park              =  1.198022e+00
+vc_lo               =  2.949855e-01 at=  7.000000e-05
+vc_hi               =  1.149547e+00 at=  5.025000e-06
+s_a                 =  7.698803e-01
+s_b                 =  6.377089e-01
+n540a               =  3.015463e-01
+n540b               =  3.298451e-01
+n600a               =  3.350182e-01
+n600b               =  3.389362e-01
+n660a               =  3.307252e-01
+n660b               =  3.113205e-01
+n700a               =  2.877059e-01
+n700b               =  2.424014e-01
+n740a               =  2.012299e-01
+n740b               =  1.269393e-01
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+v_park = 1.198022e+00
+vc_lo = 2.949855e-01
+vc_hi = 1.149547e+00
+d_540 = 1.768675e+00
+d_600 = 2.448750e-01
+d_660 = -1.21279e+00
+d_700 = -2.83153e+00
+d_740 = -4.64316e+00
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                       1.32
+vss                                          0
+ibias                                 0.532631
+vctrl                                      0.1
+x1.nb1                                0.903318
+x1.nb2                                 0.15788
+x1.vh                                 0.791999
+x1.xrlt.dt                                   0
+x1.vl                                 0.527999
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                0.439406
+x1.nu1                                0.107792
+x1.nu2                                  1.0573
+vcoarse                                      0
+x1.snd                                0.684331
+x1.nd                                   1.3165
+x1.ne                               0.00732315
+x1.nlo                                  1.2869
+x1.nhi                                 1.31982
+x1.nlon                            1.33453e-06
+x1.rst                                    1.32
+x1.rstn                            1.44139e-06
+x1.nas                               0.0579054
+x1.nbs                             7.29817e-07
+vct#branch                         1.60516e-12
+vss#branch                         5.44101e-06
+vdd#branch                        -2.09017e-05
+vsub#branch                                  0
+
+ Reference value :  7.47052e-07 Reference value :  2.18250e-05 Reference value :  5.26750e-05 Reference value :  7.98750e-05 Reference value :  1.06575e-04 Reference value :  1.31225e-04 Reference value :  1.64225e-04 Reference value :  1.90325e-04
+No. of Data Rows : 3982
+v_park              =  1.317324e+00
+vc_lo               =  3.630538e-01 at=  7.000000e-05
+vc_hi               =  1.268252e+00 at=  5.025000e-06
+s_a                 =  8.651025e-01
+s_b                 =  7.256354e-01
+n540a               =  3.872633e-01
+n540b               =  4.529829e-01
+n600a               =  4.697954e-01
+n600b               =  4.923772e-01
+n660a               =  4.962796e-01
+n660b               =  4.985640e-01
+n700a               =  4.948502e-01
+n700b               =  4.854151e-01
+n740a               =  4.710752e-01
+n740b               =  4.421228e-01
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+v_park = 1.317324e+00
+vc_lo = 3.630538e-01
+vc_hi = 1.268252e+00
+d_540 = 4.107475e+00
+d_600 = 1.411362e+00
+d_660 = 1.427750e-01
+d_700 = -5.89694e-01
+d_740 = -1.80952e+00
+ngspice-42 done
+[safe_ngspice] exit rc=0

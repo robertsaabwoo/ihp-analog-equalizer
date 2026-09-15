@@ -314,6 +314,22 @@ null is above 0.66 V; not located.** vc_hi there 0.94-1.14 V. The original cell
 was only ever run at tt, so there's no ss/ff comparison yet. Next: vctrl past 0.66 V
 at 125 C, both cells.
 
+**Null staircase 0.54 -> 0.74 V, both cells, 27 corners** (`coarse_null_pvt_*.log`,
+`coarse_null_fold2_pvt_*.log`). Readings of +30 to +57 mV/us are wraps inside a
+sample window and are excluded. Null = sign change between adjacent steps.
+
+| corner | original null | fold2 null |
+|---|---|---|
+| tt 125 C 1.08 / 1.20 / 1.32 V | **none** (sinks at every step) | ~0.58 / ~0.63 / ~0.69 V |
+| ss 125 C 1.08 / 1.20 / 1.32 V | **none** / ~0.59 / ~0.64 V | ~0.55 / ~0.61 / ~0.67 V |
+| ff 125 C 1.08 / 1.20 / 1.32 V | vcoarse pinned at 0.002-0.004 V (runaway; d~0 is saturation) | ~0.58 / ~0.64 / ~0.69 V |
+| -40 C and 27 C, 1.20 / 1.32 V | 0.54-0.66 V | 0.54-0.67 V |
+| -40 C and 27 C, 1.08 V | at or just below 0.54 V (\|d_540\| <= 2.5) | at or just below 0.54 V (\|d_540\| <= 0.3) |
+
+Parks: original 0.75-1.08 V, fold2 1.05-1.32 V. Fold2 has a null at every corner
+where one was measurable. The original loses it at tt/125 C and ss/125 C/1.08 V
+and runs away at ff/125 C. **Fold2 meets the adoption criterion.**
+
 ## In flight at last checkpoint (2026-09-15)
 
 Five jobs, serialised on the ngspice lock. If the machine went down, rerun the
