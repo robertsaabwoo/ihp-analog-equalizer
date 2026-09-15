@@ -276,7 +276,15 @@ ahead of `inverter_buffer`). Open loop, 27 corners x 3 ring settings
 0.5971 / 0.5974 / 0.5968 V across the three windows, ripple 36.6 mV pp, clock swing
 1.307 V. Before the stage it was 600.541 MHz (-0.0099 %), ripple 36.7 mV
 (`e2e_prbs_pump18.log`). Locks; the ~55 % duty cycle costs nothing measurable here.
-125 C closed loop: running (`run_prbs_tt125_12.out`, `run_prbs_ff125_132.out`).
+**tt/125 C/1.2 V PRBS7, stage in the netlist, vcoarse PINNED at VDD (trim off)**
+(`e2e_prbs_tt125_12.log`, seed 0.593): **the clock is alive, swing 1.277 V** (it was
+0-2 mV at 125 C before the stage), but **it does not lock**. 615.0 MHz (+2.40 %),
+with vctrl climbing 0.773 -> 0.954 -> 0.997 V, ripple 87.6 mV. That's the out-of-band
+signature (the bang-bang detector has no frequency discrimination). With the trim
+pinned off, 600.6 MHz sits at 99 % of this ring's top speed (608.1 MHz at vctrl
+0.65 V, `vco_ct_seed_tt125_12.log`), beyond the ~94 % that has locked before. This
+run removes exactly what the coarse loop is for. The real test at this corner is the
+dual loop with vcoarse free: to do.
 
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
