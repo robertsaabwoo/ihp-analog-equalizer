@@ -639,6 +639,53 @@ Area on the branch: **268 devices, 3094 µm²** (up from 225 / 2131).
 
 ---
 
+### 10.9 The recovered clock at 125 °C, and the self-biased stage
+
+**The clock died at 125 °C at every process corner. This is inherited from `main`,
+not caused by the dual loop.** The ring→logic path is ring → `diff_amp_inv` (x6,
+inside the ring) → `diff_amp_inv` (CDR x4) → `inverter_buffer` (x11) → `rclk`.
+`diff_amp_inv` is resistor-loaded: its output swings from near VDD down to
+VDD − I·R, and I·R shrinks as it gets hot. Open loop, ring running
+(`clkpath_pvt_{tt,ss,ff}.log`), the low level of `clkraw+` at tt/1.2 V is
+0.23-0.31 V at −40 °C, 0.37-0.45 V at 27 °C and **0.63-0.65 V at 125 °C**.
+`inverter_buffer` switches at 0.50-0.615 V across corners (`inv_trip_*.log`), so at
+125 °C the input never crosses it: `rclk` swing is 0-2 mV at all nine
+125 °C combinations. `main`'s PRBS7 run at ff/125 °C/1.32 V fails the same way (clock
+49.6 nV). None of `main`'s closed-loop runs had gone to 125 °C before.
+
+**No fixed switching point can fix it.** The lowest high level measured is 0.621 V
+(ff/−40 °C/1.08 V) and the highest low level is 0.700 V (ss/125 °C/1.32 V). A
+threshold would have to sit above one and below the other. Resizing the buffer, or
+shifting the diff amp's output, only moves a fixed threshold.
+
+**Fix: `sb_inverter`** (`sim/decks/sb_inverter.inc`, generated into
+`xschem/sb_inverter.sch` by `tools/gen_coarse_loop.py --cell sb_inverter`,
+placed in CDR by `add_sb_clock_stage` in `tools/port_from_sky130.py`):
+
+| part | value |
+|---|---|
+| coupling cap | `cap_cmomf` 8.8 µm square, ~100 fF |
+| feedback resistor, output → input | `rhigh` W 1 µm L 70 µm, ~100 kΩ |
+| inverter | pMOS 2 µm / nMOS 1 µm, L 0.13 µm |
+| input | `clkraw−` (previously unused); output `clkraw_sb` → x11 |
+
+The capacitor blocks `clkraw`'s DC level. The resistor holds the inverter's input
+at its own switching point, so at every corner the input is centred on the
+threshold and only the swing has to be large enough. It takes `clkraw−` because its
+inversion then restores `clkraw+`'s polarity at `rclk+`. A flipped clock would swap
+the Alexander detector's data and edge samplers.
+
+Open loop, 27 corners × 3 ring settings (`clkpath_sb_pvt_{tt,ss,ff}.log`): at
+**every point where the ring oscillates, `rclk` swings 1.10-1.40 V, including all
+125 °C combinations.** Duty cycle 0.51-0.60. The smallest swing at the stage's
+input is 0.287 V (ss/125 °C/1.08 V). The only rows with no swing are ss at
+`vctrl` = 0.45 V, where the ring itself is not oscillating.
+
+**Not measured yet:** closed-loop lock with the stage in the netlist, at nominal and
+at 125 °C; whether the ~55 % duty cycle costs the edge sampler anything; and the
+stage's supply current when no clock is present (a self-biased inverter conducts
+at its threshold).
+
 ## 11. What is not working, and what is not known
 
 ### 11.1 The branch does not lock — fixed at nominal, open across corners
