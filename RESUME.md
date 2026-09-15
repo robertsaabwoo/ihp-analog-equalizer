@@ -286,6 +286,17 @@ pinned off, 600.6 MHz sits at 99 % of this ring's top speed (608.1 MHz at vctrl
 run removes exactly what the coarse loop is for. The real test at this corner is the
 dual loop with vcoarse free: to do.
 
+Centring sweep at tt/125 C/1.2 V (`vco_ct_centre_tt125.log`), MHz at vctrl 0.50 / 0.60 / 0.70:
+vcoarse 1.20: 559.6 / 602.3 / 611.3; 0.85: 557.9 / 602.0 / 611.1; 0.65: 553.9 / 609.3 / 620.3;
+0.45: 548.0 / 623.4 / 638.7; 0.30: 559.4 / 635.9 / 654.6; 0.15: (swing 0.136) / 652.2 / 672.8.
+The trim does almost nothing above vcoarse 0.85 V here. 600.6 MHz needs vctrl ~0.595 V
+at vcoarse >= 0.85 V, ~0.57 V at 0.45 V, ~0.55 V at 0.30 V. **Concern (not measured
+closed-loop):** fold2's coarse null at tt/125 C/1.2 V is ~0.63 V (`coarse_null_fold2_pvt_tt.log`),
+above every one of those lock points. So the coarse loop would push vcoarse back
+toward the rail (trim off), which is the pinned state that did not lock. The vctrl
+runaway in the pinned run also has to be checked against the charge pump's DC
+up/down mismatch at this corner, which could produce it on its own.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
