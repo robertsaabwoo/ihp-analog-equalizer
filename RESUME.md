@@ -420,6 +420,21 @@ from its larger Vds than the diode's. Sweep 2: Lm 7/7.5/8 x XMP2 1.45/1.55/1.65 
 800 nA the ideal-bias lock used; current spread is 1.25x across 27 corners (was 14x);
 mismatch is centred (was up to +74 %).
 
+**CLOSED LOOP WITH cp_bias IN THE NETLIST: all three corners lock** (PRBS7, sb stage +
+cp_bias, vcoarse pinned at VDD, no overrides):
+
+| corner | f | f_err | vctrl s1 / s2 / s3 | ripple | clock | log |
+|---|---|---|---|---|---|---|
+| tt 27 C 1.2 V | 600.756 MHz | +0.026 % | 0.5999 / 0.5978 / 0.5988 | 34.1 mV | 1.308 V | `e2e_prbs_cpbias.log` |
+| tt 125 C 1.2 V | 600.419 MHz | -0.030 % | 0.6051 / 0.6031 / 0.5997 | 60.9 mV | 1.277 V | `e2e_prbs_tt125_cpbias.log` |
+| ff 125 C 1.32 V | 600.604 MHz | +0.0006 % | 0.4923 / 0.4922 / 0.4936 | 50.4 mV | 1.388 V | `e2e_prbs_ff125_cpbias.log` |
+
+Before: tt/125 C ran away to 615 MHz and ff/125 C to 644.5 MHz (real generator), and ff/125 C
+with ideal bias drifted at 603.9 MHz. tt/125 C vctrl still eases down 5 mV across the
+windows. Next: the remaining extremes closed loop (ss/125 C/1.08 V, ss/-40 C/1.08 V,
+ff/-40 C/1.32 V, tt/-40 C/1.2 V) with `sim/runners/prbs_corner.sh`; then the dual loop at a
+corner where the trim-off ring can't reach baud.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so

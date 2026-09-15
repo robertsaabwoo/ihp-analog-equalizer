@@ -745,9 +745,20 @@ mismatch −13.4 .. +10.3 % (against up to +74 %). The pump current is now only 
 stable as the harness's `ibias`. The mismatch width that remains is the pump's own
 output-voltage and temperature dependence.
 
-**Not measured yet:** closed-loop lock with `cp_bias` in the netlist, at nominal,
-tt/125 °C and ff/125 °C (running); the other 24 corners closed loop; the dual loop
-(vcoarse free) at 125 °C.
+**Closed loop with `cp_bias` and the self-biased clock stage in the netlist, PRBS7,
+trim pinned off, no overrides — all three lock:**
+
+| corner | frequency | vctrl (last window) | ripple | log |
+|---|---|---|---|---|
+| tt 27 °C 1.2 V | 600.756 MHz, +0.026 % | 0.599 V | 34.1 mV | `e2e_prbs_cpbias.log` |
+| tt 125 °C 1.2 V | 600.419 MHz, −0.030 % | 0.600 V | 60.9 mV | `e2e_prbs_tt125_cpbias.log` |
+| ff 125 °C 1.32 V | 600.604 MHz, +0.0006 % | 0.494 V | 50.4 mV | `e2e_prbs_ff125_cpbias.log` |
+
+Both 125 °C corners failed before these two changes (615 MHz and 644.5 MHz runaways,
+or no clock at all).
+
+**Not measured yet:** the other 24 corners closed loop; the dual loop (vcoarse free) at
+the corners where the trim-off ring can't reach the baud rate.
 
 ## 11. What is not working, and what is not known
 
