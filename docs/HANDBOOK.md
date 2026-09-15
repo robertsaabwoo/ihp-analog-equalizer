@@ -685,7 +685,17 @@ input is 0.287 V (ss/125 °C/1.08 V). The only rows with no swing are ss at
 **600.633 MHz, +0.0055 %**, `vctrl` settled at 0.597 V, ripple 36.6 mV pp, clock
 swing 1.307 V. Without the stage it was 600.541 MHz with 36.7 mV of ripple.
 
-**Not measured yet:** closed-loop lock at 125 °C; and whether the ~55 % duty cycle costs the edge sampler anything at the corners.
+**At 125 °C the clock now arrives, but lock failed for a second, separate
+reason: the pump bias generator.** With the trim pinned off, tt/125 °C/1.2 V ran
+away to 615 MHz (`e2e_prbs_tt125_12.log`) and ff/125 °C/1.32 V to 644 MHz
+(`e2e_prbs_ff125_132.log`), both with a live clock. The phase detector works at
+125 °C (`pd_probe_tt125.log`), and nulling the pump's up/down mismatch alone didn't
+fix it (`e2e_prbs_tt125_wp155.log`). Replacing `tiny_pll_bias_gen` with ideal
+nominal currents, sim-only, **locks tt/125 °C at 600.550 MHz, −0.0084 %**
+(`e2e_prbs_tt125_idealbias.log`). The self-biased reference's current rises 2.3× at
+tt/125 °C and ~10× at ff/125 °C/1.32 V (`run_cp_cur.out`), and loop gain with it.
+
+**Not measured yet:** a fixed bias generator; and whether the ~55 % duty cycle costs the edge sampler anything at the corners.
 
 With no clock the feedback resistor parks the inverter at its threshold, where both
 devices conduct. Measured (`sb_idle_{tt,ss,ff}.log`, DC): **1.8-78.3 µA** across 27

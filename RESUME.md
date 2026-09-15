@@ -367,6 +367,17 @@ cycle slips averaging to no net correction. That would also explain why nulling 
 mismatch didn't help. Test: tt/125 C with an ideal nominal-current pump bias
 (`e2e_prbs_tt125_idealbias.spice`).
 
+**CONFIRMED: tt/125 C locks with an ideal nominal-current pump bias**
+(`e2e_prbs_tt125_idealbias.log`; override confirmed by "redefinition of .subckt
+tiny_pll_bias_gen, ignored"): **600.550 MHz, -0.0084 %**, vctrl 0.6024 / 0.6014 /
+0.6022 V, ripple 51.9 mV, clock 1.278 V. Early windows 0.527 / 0.517 / 0.540 / 0.589 /
+0.602 V, i.e. a smooth approach and settle, against the runaway to 1.0 V with the real
+bias. **The 125 C lock failure is the pump bias generator**: its current, and so the
+loop gain, rises 2.3x at tt/125 C and ~10x at ff/125 C/1.32 V. This test also changes the
+pump's mismatch, so it doesn't separate gain from mismatch completely; the wp155 run
+(mismatch nulled, real bias) still failed, which points at gain. Fix options go to the user
+before any design change.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
