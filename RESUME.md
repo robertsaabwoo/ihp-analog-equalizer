@@ -309,6 +309,15 @@ is. That matches the pinned tt/125 C run (vctrl -> 1.0 V at 615 MHz). In lock a
 the tt/125 C run captured and then lost lock, or never captured, is not known from
 the three window averages.
 
+**ff/125 C/1.32 V PRBS7, stage in the netlist, vcoarse pinned at VDD**
+(`e2e_prbs_ff125_132.log`, seed 0.489): **clock alive, swing 1.391 V** (49 nV
+before the stage), **not locked**. 644.5 MHz (+7.31 %), vctrl 1.207 / 1.161 / 1.162 V
+in the three windows (min 1.070, max 1.263 over 1.5-3 us), ripple 147 mV. That's the
+same runaway signature as tt/125 C, stronger, at the corner with the largest pump
+mismatch (+74 %). Here 600.6 MHz is well inside the ring's range (seed 0.489 V), so
+the ring ceiling can't be the cause at this corner. Pump mismatch is the leading
+suspect; the tt/125 C mismatch-nulled run (`e2e_prbs_tt125_wp155.spice`) tests it.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
