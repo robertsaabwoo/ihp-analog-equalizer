@@ -98,7 +98,13 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * climbing at 63 mV/us, which is exactly the out-of-band signature of section 2
 * of docs/RING_DUAL_LOOP.md.  Seeding a closed-loop deck outside the fine
 * loop's capture range measures the seed.
-.ic v(x1.x2.vctrl)=0.55
+* vctrl seeded at 0.573 V: the lock point of the 10000 ohm ring with trim legs
+* at vcoarse = 0.55 V (vco_ct_walkseed.spice, 0.025 V grid).  At this vcoarse
+* the ceiling is 660 MHz and the baud rate sits at 91 % of it, Kvco 1005 MHz/V --
+* the steep side, where the fine loop alone does not hold.  That is the point:
+* vctrl 0.573 is below the coarse loop's 0.60 V null, so the pull-up should
+* raise vcoarse, lower the ceiling, and move the ring back to where it locks.
+.ic v(x1.x2.vctrl)=0.573
 * A literal, not 'vc0': .ic does not evaluate expressions, and a quoted one
 * is accepted and ignored, which starts the trim at zero volts -- the ring
 * at its fastest -- and looks like a circuit that cannot lock.
