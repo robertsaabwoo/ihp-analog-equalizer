@@ -163,6 +163,44 @@ Unexpected, two items:
 - `e2e_dual`'s `vcoarse` fell 286 mV with `vctrl` at the null. Harmless above
   ~0.8 V (trim off), cause not yet known.
 
+## Results landed after the checkpoint (2026-09-15)
+
+**Top-rail clamp costs no slow-end margin.** `vco_ct_floor_clamp.spice`,
+ff/125 °C/1.32 V, lowest ring frequency with swing >= 0.15 V, `vcoarse` at
+1.32 / 0.90 / 0.85 / 0.80 V: 470.5 / 464.2 / 456.0 / 449.2 MHz, i.e. -21.7 to
+-25.2 % below baud. The corner table's "-5.2 %" there was read at fixed
+vctrl 0.45 V, not the floor (corrected in RING_DUAL_LOOP.md §7).
+
+**Folded pull-up (`coarse_loop_fold.inc`) removes the sink; not adopted yet.**
+`coarse_clamp_fold.spice`, current into `vcoarse` at vctrl = VDD/2:
+
+| vcoarse | original 27 °C/1.2 V | folded 27 °C/1.2 V | folded 125 °C/1.32 V |
+|---|---|---|---|
+| 0.90 V | +9.63 nA | +0.33 nA | -0.03 nA |
+| 1.00 V | +239 nA | +0.64 nA | +0.72 nA |
+| 1.20 V | +4296 nA | +2.40 nA | (1.32 V) +12.2 nA |
+
+The 125 °C/1.10 V folded point reads -7268 nA and the original's reads -6204 nA:
+both are the same outlier and most likely a DC-convergence artefact. Not
+chased.
+
+`coarse_tb_fold.spice` against the original: parks at 1.202 V (was 1.100),
+span 0.123-1.201 V (was 0.134-1.201), search rate 18.4 mV/us (original 17.6),
+both taken as the median of 2 us windows over `coarse_tb*.csv`. The deck's own
+`search_mv_us` printed -88 because the 60-70 us window straddles a retrace.
+That is a measurement artefact, and `run_checks.py` would flag it.
+Null: d_600 +0.137 against +0.016, interpolated zero at vctrl ~0.606 V against
+0.600. Pull-up slope is ~1.75x the original (d_560 1.22 against 0.70 mV/us)
+while pull-down is ~1.2x. **Open:** scale the folded mirror (XMUP2) down to
+restore symmetry, re-run both decks, then adopt.
+
+**ff/125 °C/1.32 V PRBS7 failure: the ring runs, the clock path does not.**
+`e2e_ff125_early.spice`: ring core differential p-p 1.906 / 1.906 / 1.904 /
+1.770 / 1.720 V over 1-300 ns, but `clkoutp` p-p 43-56 nV and PD up/down p-p
+2-13 uV. Precharge releases at 75.9 ns. So the break is between the ring core
+and `rclk` (ring-internal diff_amp_inv -> CDR x4 diff_amp_inv -> inverter_buffer).
+Those cells are unchanged from main. Stage probe queued: `e2e_ff125_stages.spice`.
+
 ## In flight at last checkpoint (2026-09-15)
 
 Five jobs, serialised on the ngspice lock. If the machine went down, rerun the
