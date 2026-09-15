@@ -1,0 +1,135 @@
+* coarse_clamp_fold.spice -- the same top-rail measurement on the FOLDED pull-up
+* candidate (coarse_loop_fold.inc).
+* coarse_clamp.spice -- where does the coarse loop actually hold vcoarse's top rail?
+*
+* vcoarse seeded at 1.20 V falls to ~0.91 V in 2.5 us with vctrl at the null,
+* standalone (coarse_startup.spice), starting at ~3.7 uA -- far more than any
+* designed branch current.  Hypothesis: XMU1, the pull-up pMOS pair's output
+* device, has its drain on vcoarse; once vcoarse rises above the pull-up tail
+* node spu, drain and source swap and XMU1 SINKS vcoarse into spu and on through
+* XMU2 to VSS.  Force vcoarse with a source and read the current the cell pulls:
+* positive = cell sources into vcoarse, negative = cell sinks it.  Where it
+* crosses zero is the real top rail.  vctrl at VDD/2, the window centre.
+* coarse_tb.spice -- the coarse loop on its own, with vctrl driven by hand.
+*
+* No ring and no CDR here: vctrl is a PWL that plays the part the closed loop
+* would.  That is the point of running it this way.  A closed-loop transient
+* long enough to contain a real acquisition -- tens of microseconds -- would
+* cost hours on this machine, and it would confound every question with every
+* other.  This deck answers them one at a time in a few seconds each:
+*
+*   1. does the retrace self-start from a cold 0 V capacitor, and where does it
+*      park?  (it must park at the SLOW end, or the search starts in the wrong
+*      place)
+*   2. with vctrl railed high, does vcoarse ramp at the designed rate, does the
+*      wrap fire, and does the search repeat?
+*   3. when vctrl comes back into the window, does the ramp stop?
+*   4. does it then HOLD -- against the capacitor's own leakage and against
+*      vctrl wandering by more than the fine loop's worst measured ripple?
+*   5. and if vctrl goes below the window, does the loop push back the other
+*      way?  (this is the half that a pure acquisition sweep does not have, and
+*      it is what makes the hold immune to leakage rather than merely slow)
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib  mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib    res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib    cap_typ
+
+.include coarse_loop_fold.inc
+
+.global sub!
+Vsub sub! 0 0
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+* The chip's bias pad: 40 uA into the diode-connected reference.
+Ib  0 ibias dc 40u
+XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+* 100 fF on the bias node.  In the real macro ibias carries the CTLE's and the
+* CDR's mirrors and the pad; here it carries four gates and an ideal current
+* source, which is numerically stiff -- at -40 C the retrace edge killed the
+* run outright with "Timestep too small, trouble with node ibias".  This is a
+* testbench fix for a testbench artefact; the retrace device was weakened
+* separately, for the part of it that is a real disturbance.
+Cbias ibias 0 100f
+
+* vctrl: railed high for 150 us so the search has to run and wrap several
+* times, then a staircase through the window.
+*
+* The staircase is the real measurement, and it replaces a test that was asking
+* the wrong question.  The window is not a dead zone: at these currents the
+* input pairs are in weak inversion and steer over about 130 mV, so between the
+* thresholds *both* are partly on and the loop settles where they balance.  So
+* "does vcoarse hold at vctrl = 0.599?" has no good answer -- vcoarse holds at
+* whatever vctrl the null happens to be at, and drifts everywhere else, which
+* is the loop working, not failing.  The question worth asking is where that
+* null is, because in the closed loop it is the vctrl the receiver ends up
+* sitting at.  So: step vctrl across the window and measure dvcoarse/dt at each
+* step.  The null is where it changes sign.
+* Startup diagnostic.  In e2e_dual, vcoarse seeded at 1.20 V fell 286 mV in
+* 2.5 us while vctrl sat at the 0.60 V null -- starting at -3.5 V/us, which is
+* ~3.7 uA out of Ccoarse and far beyond the pull-down branch's current, and
+* decaying to -12 mV/us.  Hypothesis: an internal mirror node starts at an
+* inconsistent value and discharges slowly through a subthreshold device,
+* keeping XMN2 sinking.  Hold vctrl at the null, start vcoarse at 1.20 V,
+* trace the mirror nodes.  No ring, so this costs seconds.
+Vct vctrl 0 dc 0.600
+
+x1 VDD VSS ibias vctrl vcoarse coarse_loop_fold
+
+Vfrc vcoarse 0 dc 1.20
+
+.options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
+
+.control
+
+set temp = 27
+alter VDD = 1.2
+alter Vct dc = 0.600
+echo "=== COND 27C 1.2V vctrl=0.600"
+foreach vf 0.600 0.700 0.800 0.850 0.900 0.950 1.000 1.100 1.200
+ alter Vfrc dc = $vf
+ op
+ let p_vf = $vf
+ let i_into_vcoarse_nA = -1e9*i(Vfrc)
+ let v_spu = v(x1.spu)
+ print p_vf i_into_vcoarse_nA v_spu
+ echo "ROWEND"
+end
+
+set temp = 125
+alter VDD = 1.32
+alter Vct dc = 0.660
+echo "=== COND 125C 1.32V vctrl=0.660"
+foreach vf 0.600 0.700 0.800 0.850 0.900 0.950 1.000 1.100 1.320
+ alter Vfrc dc = $vf
+ op
+ let p_vf = $vf
+ let i_into_vcoarse_nA = -1e9*i(Vfrc)
+ let v_spu = v(x1.spu)
+ print p_vf i_into_vcoarse_nA v_spu
+ echo "ROWEND"
+end
+
+set temp = 27
+alter VDD = 1.08
+alter Vct dc = 0.540
+echo "=== COND 27C 1.08V vctrl=0.540"
+foreach vf 0.600 0.700 0.800 0.850 0.900 0.950 1.000 1.100 1.080
+ alter Vfrc dc = $vf
+ op
+ let p_vf = $vf
+ let i_into_vcoarse_nA = -1e9*i(Vfrc)
+ let v_spu = v(x1.spu)
+ print p_vf i_into_vcoarse_nA v_spu
+ echo "ROWEND"
+end
+
+quit
+.endc
+.end

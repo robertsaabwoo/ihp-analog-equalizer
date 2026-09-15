@@ -1,0 +1,132 @@
+* coarse_tb_fold.spice -- the original coarse_tb characterisation (cold start,
+* search rate, span, null) run on the FOLDED pull-up candidate, so the clamp fix
+* is not accepted on the clamp measurement alone.  Reference, original cell:
+*   v_park 1.100, search 19.62 mV/us, span 0.134-1.201, null at vctrl 0.600
+*   (d_600 +0.016, d_640 -0.700, d_560 +0.699 mV/us).
+* coarse_tb.spice -- the coarse loop on its own, with vctrl driven by hand.
+*
+* No ring and no CDR here: vctrl is a PWL that plays the part the closed loop
+* would.  That is the point of running it this way.  A closed-loop transient
+* long enough to contain a real acquisition -- tens of microseconds -- would
+* cost hours on this machine, and it would confound every question with every
+* other.  This deck answers them one at a time in a few seconds each:
+*
+*   1. does the retrace self-start from a cold 0 V capacitor, and where does it
+*      park?  (it must park at the SLOW end, or the search starts in the wrong
+*      place)
+*   2. with vctrl railed high, does vcoarse ramp at the designed rate, does the
+*      wrap fire, and does the search repeat?
+*   3. when vctrl comes back into the window, does the ramp stop?
+*   4. does it then HOLD -- against the capacitor's own leakage and against
+*      vctrl wandering by more than the fine loop's worst measured ripple?
+*   5. and if vctrl goes below the window, does the loop push back the other
+*      way?  (this is the half that a pure acquisition sweep does not have, and
+*      it is what makes the hold immune to leakage rather than merely slow)
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib  mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib    res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib    cap_typ
+
+.include coarse_loop_fold.inc
+
+.global sub!
+Vsub sub! 0 0
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+* The chip's bias pad: 40 uA into the diode-connected reference.
+Ib  0 ibias dc 40u
+XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+* 100 fF on the bias node.  In the real macro ibias carries the CTLE's and the
+* CDR's mirrors and the pad; here it carries four gates and an ideal current
+* source, which is numerically stiff -- at -40 C the retrace edge killed the
+* run outright with "Timestep too small, trouble with node ibias".  This is a
+* testbench fix for a testbench artefact; the retrace device was weakened
+* separately, for the part of it that is a real disturbance.
+Cbias ibias 0 100f
+
+* vctrl: railed high for 150 us so the search has to run and wrap several
+* times, then a staircase through the window.
+*
+* The staircase is the real measurement, and it replaces a test that was asking
+* the wrong question.  The window is not a dead zone: at these currents the
+* input pairs are in weak inversion and steer over about 130 mV, so between the
+* thresholds *both* are partly on and the loop settles where they balance.  So
+* "does vcoarse hold at vctrl = 0.599?" has no good answer -- vcoarse holds at
+* whatever vctrl the null happens to be at, and drifts everywhere else, which
+* is the loop working, not failing.  The question worth asking is where that
+* null is, because in the closed loop it is the vctrl the receiver ends up
+* sitting at.  So: step vctrl across the window and measure dvcoarse/dt at each
+* step.  The null is where it changes sign.
+Vct vctrl 0 PWL
++ 0        0.10
++ 5u       1.10
++ 150u     1.10
++ 150.5u   0.680
++ 190u     0.680
++ 190.5u   0.640
++ 230u     0.640
++ 230.5u   0.600
++ 270u     0.600
++ 270.5u   0.560
++ 310u     0.560
++ 310.5u   0.520
++ 350u     0.520
+
+x1 VDD VSS ibias vctrl vcoarse coarse_loop_fold
+
+.ic v(vcoarse)=0
+
+.options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
+
+.control
+save v(vcoarse) v(vctrl) v(x1.rstn) v(x1.rst) v(x1.nlo) v(x1.nhi) v(x1.vh) v(x1.vl)
+tran 50n 350u
+
+* 1. cold start: the retrace must park at the SLOW end, or the search starts
+*    in the wrong place.
+meas tran v_park   MAX v(vcoarse) FROM=0    TO=5u
+* 2. search rate, and the span it actually covers.  The first wrap searched
+*    only 0.15-0.40 V because its retrace resistor was mis-solved, which looks
+*    like a working loop in every waveform and silently cannot reach two thirds
+*    of the corners.
+meas tran vc_a     FIND v(vcoarse) AT=60u
+meas tran vc_b     FIND v(vcoarse) AT=70u
+let search_mV_us = (vc_a - vc_b)*1e3/10
+meas tran vc_lo    MIN v(vcoarse) FROM=10u  TO=150u
+meas tran vc_hi    MAX v(vcoarse) FROM=10u  TO=150u
+let search_span  = vc_hi - vc_lo
+print v_park search_mV_us vc_lo vc_hi search_span
+* 3. the null.  Each step is sampled 10 us after it lands, to let the pairs
+*    settle, and 35 us later.
+meas tran n68a FIND v(vcoarse) AT=160u
+meas tran n68b FIND v(vcoarse) AT=188u
+meas tran n64a FIND v(vcoarse) AT=200u
+meas tran n64b FIND v(vcoarse) AT=228u
+meas tran n60a FIND v(vcoarse) AT=240u
+meas tran n60b FIND v(vcoarse) AT=268u
+meas tran n56a FIND v(vcoarse) AT=280u
+meas tran n56b FIND v(vcoarse) AT=308u
+meas tran n52a FIND v(vcoarse) AT=320u
+meas tran n52b FIND v(vcoarse) AT=348u
+let d_680 = (n68b-n68a)*1e3/28
+let d_640 = (n64b-n64a)*1e3/28
+let d_600 = (n60b-n60a)*1e3/28
+let d_560 = (n56b-n56a)*1e3/28
+let d_520 = (n52b-n52a)*1e3/28
+* mV/us of vcoarse at each vctrl; the null is where this changes sign.
+print d_680 d_640 d_600 d_560 d_520
+print v(x1.vh)[0] v(x1.vl)[0]
+* Named vectors only -- a bare `write` stores every node at every timepoint and
+* has exhausted this machine's memory before.  Five vectors over 8000 rows is
+* a few hundred kilobytes and is what makes the wrap debuggable at all.
+wrdata ../results/coarse_tb_fold.csv v(vcoarse) v(x1.rstn) v(x1.nlo) v(x1.nhi) v(vctrl)
+quit
+.endc
+.end

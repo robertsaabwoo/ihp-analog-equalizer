@@ -174,6 +174,22 @@ Unexpected, two items:
 - `e2e_dual`'s `vcoarse` fell 286 mV with `vctrl` at the null. Harmless above
   ~0.8 V (trim off), cause not yet known.
 
+## In flight at last checkpoint (2026-09-15)
+
+Five jobs, serialised on the ngspice lock. If the machine went down, rerun the
+ones without results, in this order:
+
+| what | how to rerun | answers |
+|---|---|---|
+| branch PRBS7 at ff/125 °C/1.32 V, **ideal pump bias** | `cd sim/decks && ../../tools/safe_ngspice.sh e2e_prbs_ff125_idealbias.spice ../results/e2e_prbs_ff125_idealbias.log 2500 5400 2000` | is the pump's reference the cause of the ff/125 °C death? Log must contain `redefinition of .subckt tiny_pll_bias_gen, ignored` or the result is void |
+| slow-end floor at ff/125 °C with `vcoarse` at 1.32/0.90/0.85/0.80 V | `cd sim/decks && ../../tools/safe_ngspice.sh vco_ct_floor_clamp.spice ../results/vco_ct_floor_clamp.log 2500 2400 2000` | does the top-rail clamp cost the slow-end margin? |
+| folded pull-up: top-rail sink | `cd sim/decks && ../../tools/safe_ngspice.sh coarse_clamp_fold.spice ../results/coarse_clamp_fold.log 1500 600 2000` | does folding remove the sink above ~0.85 V? |
+| folded pull-up: null/search/span | `cd sim/decks && ../../tools/safe_ngspice.sh coarse_tb_fold.spice ../results/coarse_tb_fold.log 2000 1800 2000` | does the fix keep the null at 0.600 V and the 19.6 mV/µs search? |
+| **main** PRBS7 at ff/125 °C/1.32 V | `sim/runners/main_prbs_ff125.sh` (self-seeding; writes nothing into main) | is the corner death inherited from main, or introduced by the branch? |
+
+The folded pull-up lives in `sim/decks/coarse_loop_fold.inc` (subckt
+`coarse_loop_fold`) and is **not** in the design record.
+
 ## Before trusting anything after the reboot
 
 The runner scripts edit `tools/port_from_sky130.py` in place and restore it at
