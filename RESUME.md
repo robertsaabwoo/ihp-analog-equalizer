@@ -344,6 +344,29 @@ is the next suspect: its d_latch cells are resistor-loaded CML like the diff amp
 that killed the clock. Next: measure up/down pulse activity in closed loop at
 tt/125 C against nominal.
 
+**Phase-detector probe, 200-400 ns closed loop** (`pd_probe_nom.log`, `pd_probe_tt125.log`),
+avg / p-p in V:
+
+| node | tt 27 C (locks) | tt 125 C |
+|---|---|---|
+| data latch internal net1 / net2 | 0.693 / 1.082, 0.679 / 1.082 | 0.736 / 0.980, 0.731 / 0.975 |
+| data latch output | 0.548 / 1.289 | 0.519 / 1.282 |
+| data / edge flip-flop Q | 0.611 / 1.278, 0.571 / 1.288 | 0.601 / 1.284, 0.561 / 1.282 |
+| pump up / down inputs | 0.188 / 1.341, 0.322 / 1.344 | 0.382 / 1.260, 0.175 / 1.269 |
+
+Latch output inverter trip: 0.639 V at 27 C, 0.650 V at 125 C (`latinv_trip.log`).
+**The detector works at 125 C:** the latch nodes still cross the trip and every output is
+full swing. At 125 C in that window it is up-dominant, which is correct while vctrl
+was 0.53-0.59 V and the ring slow.
+
+**Hypothesis (not verified): loop gain.** Pump current at vout 0.60 V is 813 nA at tt/27 C,
+1862 nA at tt/125 C (2.3x) and 7782 nA at ff/125 C/1.32 V (~10x) (`run_cp_cur.out`). The
+bias generator's spread sets the loop's integral gain. The tt/125 C trace crossed the
+lock point at ~0.7 mV/ns without stopping, consistent with overshoot past pull-in, then
+cycle slips averaging to no net correction. That would also explain why nulling the
+mismatch didn't help. Test: tt/125 C with an ideal nominal-current pump bias
+(`e2e_prbs_tt125_idealbias.spice`).
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so

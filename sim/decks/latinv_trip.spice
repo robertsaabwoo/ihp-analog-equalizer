@@ -1,0 +1,25 @@
+* latinv_trip.spice -- switching point of d_latch's output inverter
+* (XM8 pMOS 3 um / XM9 nMOS 1 um, L 0.13 um) at tt 27 C and tt 125 C, 1.2 V.
+* Compare with the CML internal node's low level in pd_probe_*.log: if that low
+* level sits above this trip, the latch output never switches (the clkraw failure
+* mode again).
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+VDD VDD 0 1.2
+Vin in 0 0
+XMP out in VDD VDD sg13_lv_pmos w=3u l=0.13u ng=1 m=1
+XMN out in 0 0 sg13_lv_nmos w=1u l=0.13u ng=1 m=1
+.control
+foreach tmp 27 125
+ set temp = $tmp
+ dc Vin 0 1.2 1m
+ meas dc trip WHEN v(out)=0.6 FALL=1
+ let p_temp = $tmp
+ print p_temp trip
+end
+quit
+.endc
+.end
