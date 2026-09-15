@@ -1,0 +1,122 @@
+* coarse_tb_pvt.spice -- the coarse loop's own corners.
+*
+* The wrap's two trip points are transistor thresholds rather than references,
+* which is deliberate: they sit at the rails of the vcoarse range, so what
+* moves over PVT is how much dead travel the search does at each end and not
+* whether it covers the middle.  That is an argument, and this is the
+* measurement.  If the LO trip rises far enough at ss / -40 C the search stops
+* reaching the fast third of the trim, and the corner table in section 7 --
+* which assumes vcoarse can reach 0 -- would be wrong.
+*
+* Also reads the null at each corner.  The null is where the closed loop parks
+* vctrl, so if it moves much with temperature the fine loop is being pushed
+* off-centre exactly when it has least margin.
+*
+* Same shape as coarse_tb.spice with a shorter search phase: one full search
+* and wrap is about 55 us at the nominal rate, so 70 us is enough to see the
+* span, and the staircase is three points instead of five.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib    res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib    cap_typ
+
+.include coarse_loop_fold2.inc
+
+.global sub!
+Vsub sub! 0 0
+
+VDD VDD 0 1.2
+VSS VSS 0 0
+* The chip's bias pad: 40 uA into the diode-connected reference.
+Ib  0 ibias dc 40u
+XMREF ibias ibias 0 0 sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+* 100 fF on the bias node.  In the real macro ibias carries the CTLE's and the
+* CDR's mirrors and the pad; here it carries four gates and an ideal current
+* source, which is numerically stiff -- at -40 C the retrace edge killed the
+* run outright with "Timestep too small, trouble with node ibias".  This is a
+* testbench fix for a testbench artefact; the retrace device was weakened
+* separately, for the part of it that is a real disturbance.
+Cbias ibias 0 100f
+
+* vctrl: railed high for 150 us so the search has to run and wrap several
+* times, then a staircase through the window.
+*
+* The staircase is the real measurement, and it replaces a test that was asking
+* the wrong question.  The window is not a dead zone: at these currents the
+* input pairs are in weak inversion and steer over about 130 mV, so between the
+* thresholds *both* are partly on and the loop settles where they balance.  So
+* "does vcoarse hold at vctrl = 0.599?" has no good answer -- vcoarse holds at
+* whatever vctrl the null happens to be at, and drifts everywhere else, which
+* is the loop working, not failing.  The question worth asking is where that
+* null is, because in the closed loop it is the vctrl the receiver ends up
+* sitting at.  So: step vctrl across the window and measure dvcoarse/dt at each
+* step.  The null is where it changes sign.
+Vct vctrl 0 PWL
++ 0       0.10
++ 3u      1.10
++ 70u     1.10
++ 70.5u   0.540
++ 95u     0.540
++ 95.5u   0.600
++ 120u    0.600
++ 120.5u  0.660
++ 145u    0.660
++ 145.5u  0.700
++ 170u    0.700
++ 170.5u  0.740
++ 195u    0.740
+
+x1 VDD VSS ibias vctrl vcoarse coarse_loop_fold2
+
+.ic v(vcoarse)=0
+
+.options method=gear reltol=1e-4 abstol=1e-13 vntol=1e-7
+
+.control
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+
+save v(vcoarse) v(vctrl) v(x1.rstn) v(x1.rst) v(x1.nlo) v(x1.nhi) v(x1.vh) v(x1.vl)
+tran 50n 195u
+
+* Staircase extended to 0.70 and 0.74 V to locate the null where it lies
+* above 0.66 V (fold2 at ff/125C, coarse_tb_fold2_pvt_ff.log).
+* Per corner: where the retrace parks, the two trip points the search runs
+* between, the rate, and the null.
+meas tran v_park FIND v(vcoarse) AT=2u
+meas tran vc_lo  MIN  v(vcoarse) FROM=5u TO=70u
+meas tran vc_hi  MAX  v(vcoarse) FROM=5u TO=70u
+meas tran s_a    FIND v(vcoarse) AT=30u
+meas tran s_b    FIND v(vcoarse) AT=40u
+let search_mV_us = (s_a - s_b)*1e3/10
+meas tran n540a FIND v(vcoarse) AT=78u
+meas tran n540b FIND v(vcoarse) AT=94u
+meas tran n600a FIND v(vcoarse) AT=103u
+meas tran n600b FIND v(vcoarse) AT=119u
+meas tran n660a FIND v(vcoarse) AT=128u
+meas tran n660b FIND v(vcoarse) AT=144u
+meas tran n700a FIND v(vcoarse) AT=153u
+meas tran n700b FIND v(vcoarse) AT=169u
+meas tran n740a FIND v(vcoarse) AT=178u
+meas tran n740b FIND v(vcoarse) AT=194u
+let d_540 = (n540b-n540a)*1e3/16
+let d_600 = (n600b-n600a)*1e3/16
+let d_660 = (n660b-n660a)*1e3/16
+let d_700 = (n700b-n700a)*1e3/16
+let d_740 = (n740b-n740a)*1e3/16
+let p_temp = $tmp
+let p_vdd  = $vd
+print p_temp p_vdd v_park vc_lo vc_hi d_540 d_600 d_660 d_700 d_740
+ end
+end
+quit
+.endc
+.end
