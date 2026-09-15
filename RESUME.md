@@ -117,6 +117,36 @@ Cause of the *downward* walk not established. The pump's up current is more than
 twice its down current there, which alone would push `vctrl` up; a loop gain
 several times nominal overshooting past the floor is plausible and untested.
 
+**A second, separate corner defect: the coarse loop cannot turn the trim off
+when hot.** `coarse_clamp.spice` forces `vcoarse` and reads the current the cell
+draws (positive = the cell sinks `vcoarse`), `vctrl` at VDD/2:
+
+| `vcoarse` | 27 °C 1.2 V | 125 °C 1.32 V | 27 °C 1.08 V |
+|---|---|---|---|
+| 0.80 V | 0.6 nA | 5.7 nA | 3.2 nA |
+| 0.90 V | 9.6 | 20.8 | 97 |
+| 1.00 V | 239 | 200 | 968 |
+| 1.20 V | **4296** | — | — |
+
+Cause, confirmed: `XMU1`, the pull-up pair's output pMOS, has its drain on
+`vcoarse`; above the pull-up tail node (~0.8–1.1 V) source and drain swap and it
+sinks `vcoarse` into the tail. The pull-up sources only ~7 nA, so the real top
+rail is where the sink reaches that: **~0.89 V at 27 °C/1.2 V, ~0.82 V at
+125 °C/1.32 V.** The 4.3 µA at 1.2 V matches the ~3.7 µA inferred from the
+startup drop in `e2e_dual`, which this also explains.
+
+Consequence: at 125 °C/1.32 V a 0.82 V gate puts ~0.5 V across the trim pMOS,
+above its hot threshold, so **the slow rail is not trim-off at hot/high supply.**
+Every slow-end corner number in §7.1 of `docs/RING_DUAL_LOOP.md` was measured
+with `vcoarse` forced to VDD and does not describe the closed loop; nor did the
+ff/125 °C PRBS7 run, which also forced it. When the cell was written this was
+noted as a "soft top" and accepted — it is not soft, it actively pulls down.
+(The −6.2 µA point at 125 °C/1.1 V is the retrace latch resolving the other way
+in a DC solve of a bistable, not a real current.)
+
+Candidate fix under test, outside the design record: fold the pull-up through two
+mirrors like the pull-down, so its output device is a pMOS with source at VDD.
+
 **So the branch holds both patterns at tt only, and fails hard at
 ff / 125 °C / 1.32 V.** `main` has not been tested closed-loop at that corner
 either, so this is not yet a comparison against a known-good.

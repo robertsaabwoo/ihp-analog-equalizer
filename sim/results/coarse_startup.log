@@ -1,0 +1,152 @@
+[safe_ngspice] coarse_startup.spice  memcap=2000MB timeout=900s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * coarse_tb.spice -- the coarse loop on its own, with vctrl driven by hand.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vdd                                        1.2
+vss                                          0
+ibias                                 0.484278
+vctrl                                      0.6
+x1.nb1                                0.769245
+x1.nb2                                0.195593
+x1.vh                                     0.72
+x1.xrlt.dt                                   0
+x1.vl                                     0.48
+x1.xrlm.dt                                   0
+x1.xrlb.dt                                   0
+x1.spu                                  1.0697
+vcoarse                                    1.2
+x1.snd                                0.547564
+x1.nd                                  1.03251
+x1.ne                                0.0485186
+x1.nlo                             7.73978e-05
+x1.nhi                             0.000118331
+x1.nlon                                    1.2
+x1.rst                             1.75061e-07
+x1.rstn                                    1.2
+x1.nas                             9.83962e-08
+x1.nbs                               0.0509773
+vct#branch                         6.79901e-12
+vss#branch                         8.65817e-06
+vdd#branch                        -4.36201e-06
+vsub#branch                                  0
+
+ Reference value :  9.31400e-09 Reference value :  3.72640e-08 Reference value :  8.17140e-08 Reference value :  1.16364e-07 Reference value :  1.64564e-07 Reference value :  2.12564e-07 Reference value :  2.54264e-07 Reference value :  3.44164e-07 Reference value :  3.44214e-07 Reference value :  3.93614e-07 Reference value :  4.34564e-07 Reference value :  4.98614e-07 Reference value :  5.46264e-07 Reference value :  6.24514e-07 Reference value :  6.77064e-07 Reference value :  7.17064e-07 Reference value :  7.77514e-07 Reference value :  8.08714e-07 Reference value :  8.99214e-07 Reference value :  9.14364e-07 Reference value :  9.58464e-07 Reference value :  1.02956e-06 Reference value :  1.05111e-06 Reference value :  1.09316e-06 Reference value :  1.13661e-06 Reference value :  1.17721e-06 Reference value :  1.22701e-06 Reference value :  1.26156e-06 Reference value :  1.30936e-06 Reference value :  1.36771e-06 Reference value :  1.40776e-06 Reference value :  1.44456e-06 Reference value :  1.49621e-06 Reference value :  1.56696e-06 Reference value :  1.57141e-06 Reference value :  1.64386e-06 Reference value :  1.70236e-06 Reference value :  1.73841e-06 Reference value :  1.78946e-06 Reference value :  1.81091e-06 Reference value :  1.87051e-06 Reference value :  1.88481e-06 Reference value :  1.92326e-06 Reference value :  1.98221e-06 Reference value :  2.01766e-06 Reference value :  2.05896e-06 Reference value :  2.11941e-06 Reference value :  2.18561e-06 Reference value :  2.19366e-06 Reference value :  2.23571e-06 Reference value :  2.28601e-06 Reference value :  2.30061e-06 Reference value :  2.35381e-06 Reference value :  2.38986e-06 Reference value :  2.41301e-06 Reference value :  2.44536e-06 Reference value :  2.48171e-06
+No. of Data Rows : 50008
+vc                  =  1.200000e+00
+nd                  =  1.032507e+00
+ne                  =  4.851862e-02
+snd                 =  5.475643e-01
+nb2                 =  1.955930e-01
+rst                 =  1.200000e+00
+AT 0
+vc = 1.200000e+00
+nd ne snd = 1.000000e+00
+nb2 = 1.955930e-01
+rst = 1.200000e+00
+vc                  =  1.196226e+00
+nd                  =  1.032500e+00
+ne                  =  4.831209e-02
+snd                 =  5.473797e-01
+nb2                 =  1.955154e-01
+rst                 =  1.199999e+00
+AT 1n
+vc = 1.196226e+00
+nd ne snd = 1.000000e+00
+nb2 = 1.955154e-01
+rst = 1.199999e+00
+vc                  =  1.182156e+00
+nd                  =  1.032471e+00
+ne                  =  4.754543e-02
+snd                 =  5.463726e-01
+nb2                 =  1.952938e-01
+rst                 =  1.199999e+00
+AT 5n
+vc = 1.182156e+00
+nd ne snd = 1.000000e+00
+nb2 = 1.952938e-01
+rst = 1.199999e+00
+vc                  =  1.141086e+00
+nd                  =  1.032381e+00
+ne                  =  4.535040e-02
+snd                 =  5.462606e-01
+nb2                 =  1.950659e-01
+rst                 =  1.200000e+00
+AT 20n
+vc = 1.141086e+00
+nd ne snd = 1.000000e+00
+nb2 = 1.950659e-01
+rst = 1.200000e+00
+vc                  =  1.064833e+00
+nd                  =  1.032232e+00
+ne                  =  4.170213e-02
+snd                 =  5.470572e-01
+nb2                 =  1.956254e-01
+rst                 =  1.200000e+00
+AT 76n
+vc = 1.064833e+00
+nd ne snd = 1.000000e+00
+nb2 = 1.956254e-01
+rst = 1.200000e+00
+vc                  =  9.879462e-01
+nd                  =  1.032192e+00
+ne                  =  4.066973e-02
+snd                 =  5.473511e-01
+nb2                 =  1.958358e-01
+rst                 =  1.200000e+00
+AT 300n
+vc = 9.879462e-01
+nd ne snd = 1.000000e+00
+nb2 = 1.958358e-01
+rst = 1.200000e+00
+vc                  =  9.477877e-01
+nd                  =  1.032322e+00
+ne                  =  4.412365e-02
+snd                 =  5.473838e-01
+nb2                 =  1.958592e-01
+rst                 =  1.200000e+00
+AT 800n
+vc = 9.477877e-01
+nd ne snd = 1.000000e+00
+nb2 = 1.958592e-01
+rst = 1.200000e+00
+vc                  =  9.242015e-01
+nd                  =  1.032391e+00
+ne                  =  4.702082e-02
+snd                 =  5.474245e-01
+nb2                 =  1.958011e-01
+rst                 =  1.200000e+00
+AT 1600n
+vc = 9.242015e-01
+nd ne snd = 1.000000e+00
+nb2 = 1.958011e-01
+rst = 1.200000e+00
+vc                  =  9.104821e-01
+nd                  =  1.032383e+00
+ne                  =  4.797444e-02
+snd                 =  5.473363e-01
+nb2                 =  1.959461e-01
+rst                 =  1.200000e+00
+AT 2500n
+vc = 9.104821e-01
+nd ne snd = 1.000000e+00
+nb2 = 1.959461e-01
+rst = 1.200000e+00
+v(x1.vh)[0] = 7.199997e-01
+v(x1.vl)[0] = 4.799999e-01
+ngspice-42 done
+[safe_ngspice] exit rc=0
