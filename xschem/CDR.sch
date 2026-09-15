@@ -184,7 +184,7 @@ C {devices/lab_wire.sym} 2930 460 0 0 {name=p6 sig_type=std_logic lab=Vdd
 C {devices/lab_wire.sym} 2970 490 0 0 {name=p8 sig_type=std_logic lab=Vss
 }
 C {inverter_buffer.sym} 3200 700 0 0 {name=x11}
-C {devices/lab_wire.sym} 3050 680 0 0 {name=p70 sig_type=std_logic lab=clkraw+
+C {devices/lab_wire.sym} 3050 680 0 0 {name=p70 sig_type=std_logic lab=clkraw_sb
 }
 C {devices/lab_wire.sym} 3350 680 0 0 {name=p71 sig_type=std_logic lab=Vdd
 }
@@ -211,3 +211,8 @@ C {devices/lab_wire.sym} 940 900 0 0 {name=pCLVss sig_type=std_logic lab=Vss}
 C {devices/lab_wire.sym} 940 920 0 0 {name=pCLvbias sig_type=std_logic lab=vbias}
 C {devices/lab_wire.sym} 1060 900 0 0 {name=pCLvctrl sig_type=std_logic lab=vctrl}
 C {devices/lab_wire.sym} 1060 920 0 0 {name=pCLvcoarse sig_type=std_logic lab=vcoarse!}
+C {sb_inverter.sym} 2900 1000 0 0 {name=x13}
+C {devices/lab_wire.sym} 2840 980 0 0 {name=pSBVdd sig_type=std_logic lab=Vdd}
+C {devices/lab_wire.sym} 2840 1000 0 0 {name=pSBVss sig_type=std_logic lab=Vss}
+C {devices/lab_wire.sym} 2840 1020 0 0 {name=pSBclkrawm sig_type=std_logic lab=clkraw-}
+C {devices/lab_wire.sym} 2960 1000 0 0 {name=pSBclkrawsb sig_type=std_logic lab=clkraw_sb}
