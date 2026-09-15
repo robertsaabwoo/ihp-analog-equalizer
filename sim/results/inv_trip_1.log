@@ -1,0 +1,18 @@
+[safe_ngspice] inv_trip_1.spice  memcap=300MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * inverter_buffer / single_inverter trip points vs corner, and the
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1321
+trip                =  5.924464e-01
+trip = 5.924464e-01
+ngspice-42 done
+[safe_ngspice] exit rc=0

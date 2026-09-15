@@ -211,7 +211,28 @@ ring core net7/8 0.678 / 0.939 V; ring out net3/4 0.869 / 0.545 V;
 (`rclk±` probes used the CDR port names and did not resolve; they need re-probing
 as `x1.rclk_p`.) `clkraw` never goes below ~0.60 V, so the working hypothesis is
 that `inverter_buffer`'s trip point at ff/125 C sits below 0.60 V and it reads a
-constant high. The trip-point sweep `inv_trip.spice` is queued to test that.
+constant high. Trip-point sweep (`sim/runners/inv_trip.sh`, `inv_trip_*.log`, DC, input for output = VDD/2):
+
+| corner | trip |
+|---|---|
+| tt 27 C 1.20 V | 0.560 V |
+| tt 27 C 1.32 V | 0.608 V |
+| ff 27 C 1.20 V | 0.555 V |
+| ff 125 C 1.32 V | **0.592 V** |
+| ff -40 C 1.32 V | 0.615 V |
+| ss -40 C 1.08 V | 0.517 V |
+| ss 125 C 1.08 V | 0.502 V |
+
+At ff/125 C/1.32 V `clkraw+` bottoms at ~0.605 V (avg - p-p/2) against a 0.592 V
+trip, so it never crosses. That supports the hypothesis, but the miss is only
+~13 mV, so any corner with a high trip and a high `clkraw` common mode is exposed.
+The next check is `clkraw` min/max across PVT, open loop.
+
+`sim/run_corners.sh` bug found on the way: its sed matched `cornerMOSlv.lib mos_`
+with ONE space, and `coarse_tb_pvt.spice` has two. The sed matched nothing, so every
+"corner" would have run tt. Fixed with `+` plus a hard fail on no match. Earlier
+`run_corners` results on decks with a double space need re-checking before
+they're trusted (to do: grep decks for the double space).
 
 **Folded pull-up, XMUP2 0.7 um (`coarse_loop_fold2.inc`):** park 1.202 V,
 span 0.122-1.201 V, search 18.40 mV/us, d_680/640/600/560/520 =

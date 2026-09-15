@@ -1,0 +1,28 @@
+* inverter_buffer / single_inverter trip points vs corner, and the
+* diff_amp_inv -> inverter_buffer chain at DC.  Question: at ff/125C/1.32V is
+* the buffer trip below the ~0.60 V floor of clkraw (e2e_ff125_stages.log)?
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+.include ../netlists/blocks.inc
+.temp 27
+.global sub!
+Vsub sub! 0 0
+.global vcoarse!
+Vcrs vcoarse! 0 1.32
+VDD Vdd 0 1.32
+Vin in 0 0
+xb Vdd 0 in out inverter_buffer
+.control
+dc Vin 0 1.32 1m
+meas dc trip WHEN v(out)=0.66 RISE=1
+print trip
+quit
+.endc
+.end
