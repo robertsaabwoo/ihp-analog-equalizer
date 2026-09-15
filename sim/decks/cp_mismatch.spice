@@ -1,0 +1,119 @@
+* cp_mismatch.spice -- charge pump up/down mismatch vs vctrl and source sizing.
+* Explicit blocks, no `if` (trap 2.21).  DC only: seconds.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.include ../netlists/blocks.inc
+.include cp_p.inc
+.global sub!
+Vsub sub! 0 0
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Vout1 o1 0 0.6
+Vup1  u1 0 1.2
+Vdn1  d1 0 0
+x1 Vdd Vdd Vss Vss o1 u1 d1 bn bp cp_p
+Vout2 o2 0 0.6
+Vup2  u2 0 0
+Vdn2  d2 0 1.2
+x2 Vdd Vdd Vss Vss o2 u2 d2 bn bp cp_p
+x9 Vss Vss Vdd Vdd bn Vdd Vss bp tiny_pll_bias_gen
+.control
+
+alterparam Wp = 2.0
+alterparam Ls = 1
+reset
+echo "=== CONFIG Wp=2.0 Ls=1"
+foreach vo 0.45 0.55 0.60 0.65 0.70 0.80
+ alter Vout1 dc = $vo
+ alter Vout2 dc = $vo
+ op
+ let p_vout = $vo
+ let i_up = i(Vout1)
+ let i_dn = -i(Vout2)
+ let mis_pct = 100*(i_up - i_dn)/(0.5*(i_up + i_dn))
+ print p_vout i_up i_dn mis_pct
+end
+
+alterparam Wp = 1.9
+alterparam Ls = 1
+reset
+echo "=== CONFIG Wp=1.9 Ls=1"
+foreach vo 0.45 0.55 0.60 0.65 0.70 0.80
+ alter Vout1 dc = $vo
+ alter Vout2 dc = $vo
+ op
+ let p_vout = $vo
+ let i_up = i(Vout1)
+ let i_dn = -i(Vout2)
+ let mis_pct = 100*(i_up - i_dn)/(0.5*(i_up + i_dn))
+ print p_vout i_up i_dn mis_pct
+end
+
+alterparam Wp = 1.8
+alterparam Ls = 1
+reset
+echo "=== CONFIG Wp=1.8 Ls=1"
+foreach vo 0.45 0.55 0.60 0.65 0.70 0.80
+ alter Vout1 dc = $vo
+ alter Vout2 dc = $vo
+ op
+ let p_vout = $vo
+ let i_up = i(Vout1)
+ let i_dn = -i(Vout2)
+ let mis_pct = 100*(i_up - i_dn)/(0.5*(i_up + i_dn))
+ print p_vout i_up i_dn mis_pct
+end
+
+alterparam Wp = 1.7
+alterparam Ls = 1
+reset
+echo "=== CONFIG Wp=1.7 Ls=1"
+foreach vo 0.45 0.55 0.60 0.65 0.70 0.80
+ alter Vout1 dc = $vo
+ alter Vout2 dc = $vo
+ op
+ let p_vout = $vo
+ let i_up = i(Vout1)
+ let i_dn = -i(Vout2)
+ let mis_pct = 100*(i_up - i_dn)/(0.5*(i_up + i_dn))
+ print p_vout i_up i_dn mis_pct
+end
+
+alterparam Wp = 2.0
+alterparam Ls = 2
+reset
+echo "=== CONFIG Wp=2.0 Ls=2"
+foreach vo 0.45 0.55 0.60 0.65 0.70 0.80
+ alter Vout1 dc = $vo
+ alter Vout2 dc = $vo
+ op
+ let p_vout = $vo
+ let i_up = i(Vout1)
+ let i_dn = -i(Vout2)
+ let mis_pct = 100*(i_up - i_dn)/(0.5*(i_up + i_dn))
+ print p_vout i_up i_dn mis_pct
+end
+
+alterparam Wp = 1.8
+alterparam Ls = 2
+reset
+echo "=== CONFIG Wp=1.8 Ls=2"
+foreach vo 0.45 0.55 0.60 0.65 0.70 0.80
+ alter Vout1 dc = $vo
+ alter Vout2 dc = $vo
+ op
+ let p_vout = $vo
+ let i_up = i(Vout1)
+ let i_dn = -i(Vout2)
+ let mis_pct = 100*(i_up - i_dn)/(0.5*(i_up + i_dn))
+ print p_vout i_up i_dn mis_pct
+end
+
+quit
+.endc
+.end
