@@ -91,9 +91,12 @@ meas tran v_park   MAX v(vcoarse) FROM=0    TO=5u
 *    only 0.15-0.40 V because its retrace resistor was mis-solved, which looks
 *    like a working loop in every waveform and silently cannot reach two thirds
 *    of the corners.
-meas tran vc_a     FIND v(vcoarse) AT=60u
-meas tran vc_b     FIND v(vcoarse) AT=70u
-let search_mV_us = (vc_a - vc_b)*1e3/10
+* Timed between two fixed levels on one falling segment, not sampled at fixed
+* times: a fixed 60-70 us window straddled a retrace on the folded pull-up and
+* printed -88 mV/us for a loop searching at 18.4 (coarse_tb_fold.log).
+meas tran t_s09    WHEN v(vcoarse)=0.9 FALL=2 TD=10u
+meas tran t_s05    WHEN v(vcoarse)=0.5 FALL=2 TD=10u
+let search_mV_us = 400/((t_s05 - t_s09)*1e6)
 meas tran vc_lo    MIN v(vcoarse) FROM=10u  TO=150u
 meas tran vc_hi    MAX v(vcoarse) FROM=10u  TO=150u
 let search_span  = vc_hi - vc_lo

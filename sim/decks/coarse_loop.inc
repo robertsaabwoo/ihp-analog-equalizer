@@ -125,7 +125,20 @@ XRLB vl  VSS sub! rhigh w='Wres' l='Lr(Rlk_b)' m=1 b=0 mm_ok=1
 *
 * === pull-up: vctrl < VL, ring too fast, slow it down =====================
 XMTU spu nb1   VDD VDD sg13_lv_pmos w='Wsrc' l='Lsrc' ng=1 m=1 mm_ok=1
-XMU1 vcoarse vctrl spu VDD sg13_lv_pmos w=2u l=1u ng=1 m=1 mm_ok=1
+* FOLDED PULL-UP.  XMU1's drain used to sit on vcoarse, and above the tail node
+* spu it reverse-conducted and sank vcoarse (4.3 uA at 1.2 V, coarse_clamp.spice),
+* capping the top rail near 0.82-0.89 V and, at 125 C, erasing the null so the
+* trim ran away (coarse_null_pvt_*.log).  Its current now goes nMOS diode ->
+* nMOS mirror -> pMOS diode -> pMOS output whose source is at VDD, which cannot
+* sink vcoarse below VDD (0.64 nA at 1.0 V, coarse_clamp_fold.spice).  XMUP2 is
+* 0.7 um, not 1 um: at 1 um the pull-up slope was 1.75x the pull-down's and the
+* null sat at 0.606 V (coarse_tb_fold.log); at 0.7 um the slopes are -0.84 /
+* +0.87 mV/us and d_600 is +0.019 (coarse_tb_fold2.log).
+XMU1  nu1     vctrl spu VDD sg13_lv_pmos w=2u   l=1u ng=1 m=1 mm_ok=1
+XMUN1 nu1     nu1   VSS VSS sg13_lv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XMUN2 nu2     nu1   VSS VSS sg13_lv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XMUP1 nu2     nu2   VDD VDD sg13_lv_pmos w=1u   l=2u ng=1 m=1 mm_ok=1
+XMUP2 vcoarse nu2   VDD VDD sg13_lv_pmos w=0.7u l=2u ng=1 m=1 mm_ok=1
 XMU2 VSS     vl    spu VDD sg13_lv_pmos w=2u l=1u ng=1 m=1 mm_ok=1
 *
 * === pull-down: vctrl > VH, ring too slow (or not locked), speed it up ====
