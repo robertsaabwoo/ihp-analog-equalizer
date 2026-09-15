@@ -637,12 +637,30 @@ Area on the branch: **268 devices, 3094 µm²** (up from 225 / 2131).
 
 ## 11. What is not working, and what is not known
 
-### 11.1 The branch does not lock — FIXED, 2026-09-12
+### 11.1 The branch does not lock — half fixed
 
-**Resolved.** With the ring load at **10000 Ω** the loop locks at
-**600.660 MHz, +0.0101 %**, `vctrl` = 0.5973 V flat across both measurement
-windows, 30.5 mV of ripple, 1.305 V clock at the pin. All 27 corners bracket
-the baud rate (+6.3 % / −5.2 % at the worst of each end). What follows is the
+**Not resolved — this section previously said it was, and that was written
+before PRBS7 was run.** With the ring load at **10000 Ω** the loop locks on
+**0101** at **600.660 MHz, +0.0101 %**, `vctrl` = 0.5973 V flat across both
+measurement windows, and all 27 ring corners bracket the baud rate (+6.3 % /
+−5.2 %). On **PRBS7** the same configuration walks to **609.96 MHz, +1.56 %**.
+0101 is the easy pattern; this repository's own rule is that no 0101 number
+means anything until PRBS7 has run, and the "resolved" claim broke that rule.
+
+| | 0101 | PRBS7 |
+|---|---|---|
+| main, 0.9 µm / 7355 Ω | 600.614 MHz ✓ | 600.581 MHz ✓ |
+| branch, 0.7 µm / 10000 Ω | 600.660 MHz ✓ | 609.96 MHz ✗ |
+| branch, 0.7 µm / 10500 Ω | 612.19 MHz ✗ | — |
+
+PRBS7's runs of seven identical bits blind the detector, and the charge pump's
+up/down mismatch — **12.4 %** at `vctrl` = 0.6 V, and moving with `vctrl`
+because it is channel-length modulation against fixed-Vds bias diodes —
+integrates unopposed. The fix under test trims the pump's up-current source
+from 2.0 to 1.8 µm, which nulls the mismatch at the lock point at tt
+(`sim/decks/cp_mismatch.spice`; −0.1 % at 0.65 V). **Its closed-loop result
+and its behaviour across corners are pending.** `RESUME.md` has the live
+state. What follows is the
 record of how it failed and what it took to find, because six hypotheses were
 wrong and two of those were measurement errors rather than circuit faults.
 
