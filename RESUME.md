@@ -261,6 +261,19 @@ Mechanism, as far as measured: `clkraw`'s low level rises with temperature
 no longer crosses the buffer's switching point. The cells are unchanged from main.
 Changing the clock path needs the user's decision ("no editing the clock").
 
+**Option 3 chosen by the user: self-biased clock stage** (`sim/decks/sb_inverter.inc`:
+100 fF cap_cmomf, 100 kohm rhigh feedback, 2/1 um inverter, fed from `clkraw-`
+ahead of `inverter_buffer`). Open loop, 27 corners x 3 ring settings
+(`clkpath_sb_pvt_{tt,ss,ff}.log`):
+- **Every point where the ring oscillates switches: `rclk` swing 1.098-1.396 V,
+  including all nine 125 C combinations at tt, ss and ff** (0-2 mV before).
+- Duty cycle 0.514-0.595. Worst sb input swing 0.287 V (ss/125 C/1.08 V), still
+  full-rail output. sb node average tracks the inverter threshold, 0.53-0.75 V.
+- Only zero-swing rows: ss pt1 (vctrl 0.45 V), where `clkraw` is flat. The ring
+  isn't oscillating there, the same as before the change; not a clock-path result.
+Not yet measured: closed loop with the stage in the netlist, and the effect of the
+~55 % duty cycle on the Alexander detector's edge sampler.
+
 **Folded pull-up, XMUP2 0.7 um (`coarse_loop_fold2.inc`):** park 1.202 V,
 span 0.122-1.201 V, search 18.40 mV/us, d_680/640/600/560/520 =
 -2.96 / -0.84 / +0.019 / +0.87 / +2.80 mV/us. Original (`coarse_tb.log`):
