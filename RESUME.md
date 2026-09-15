@@ -297,6 +297,18 @@ toward the rail (trim off), which is the pinned state that did not lock. The vct
 runaway in the pinned run also has to be checked against the charge pump's DC
 up/down mismatch at this corner, which could produce it on its own.
 
+Charge-pump DC mismatch, current design (Wp 1.8 um; `cp_mismatch_pvt2.spice` ->
+`run_cp_cur.out`), (I_up - I_dn)/mean at vout 0.50 / 0.60 / 0.70 V:
+tt 27 C 1.2 V +7.7 / +2.1 / -1.6 %; **tt 125 C 1.2 V +19.2 / +15.1 / +12.0 %**
+(up 1862 nA, dn 1601 nA at 0.60); ss 125 C 1.2 V +2.9 / -1.3 / -3.8 %;
+ff 125 C 1.2 V +56.5 / +53.2 / +50.5 %; **ff 125 C 1.32 V +76.4 / +73.8 / +71.7 %**.
+Reasoning, not yet verified: out of lock the detector's up/down decisions average
+out and the net charge is this mismatch, so vctrl rises whatever the frequency
+is. That matches the pinned tt/125 C run (vctrl -> 1.0 V at 615 MHz). In lock a
++15 % mismatch needs ~54 % down decisions (~69 % at ff/125 C/1.32 V) to hold. Whether
+the tt/125 C run captured and then lost lock, or never captured, is not known from
+the three window averages.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
