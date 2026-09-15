@@ -240,6 +240,32 @@ span 0.122-1.201 V, search 18.40 mV/us, d_680/640/600/560/520 =
 -2.46 / -0.67 / +0.059 / +0.77 / +2.39. Symmetric, null at 0.600 V. Passes nominal;
 PVT run (`coarse_tb_fold2_pvt.spice`) queued before adoption.
 
+First fold2 PVT run: **ss/ff invalid.** All three logs have identical numbers.
+`run_corners.sh` was edited while bash was executing it, and the ss/ff passes ran
+the tt models. Re-run queued (`results/fold2_pvt.out`). The tt block is valid,
+because the deck was tt throughout. tt, d_660 / d_600 / d_540 mV/us at the
+temperature/supply points:
+
+| T, VDD | original (`coarse_tb_pvt.log`) | fold2 | v_park orig -> fold2 |
+|---|---|---|---|
+| -40, 1.08 | -7.60 / -1.25 / +0.04 | -8.72 / -1.46 / +0.03 | 0.834 -> 1.078 |
+| -40, 1.20 | -1.02 / -0.02 / +0.87 | -1.33 / -0.12 / +1.02 | 0.888 -> 1.199 |
+| -40, 1.32 | -0.08 / +0.48 / +4.40 | -0.35 / +0.45 / +5.35 | 0.942 -> 1.318 |
+| 27, 1.08 | -7.82 / -1.99 / -0.07 | -9.12 / -2.29 / -0.04 | 0.807 -> 1.079 |
+| 27, 1.20 | -1.92 / -0.23 / +1.09 | -2.60 / -0.46 / +1.20 | 0.859 -> 1.198 |
+| 27, 1.32 | -0.49 / +0.08 / +0.30 | -1.64 / -0.22 / +3.62 | 0.912 -> 1.317 |
+| 125, 1.08 | **-10.06 / -4.95 / -2.46** | -0.66 / +0.64 / +1.45 | 0.758 -> 1.071 |
+| 125, 1.20 | **-6.23 / -3.57 / -1.66** | -0.15 / +1.27 / +2.81 | 0.865 -> 1.191 |
+| 125, 1.32 | -5.16 / -2.69 / +0.06 | +1.24 / +2.54 / +5.44 | 0.986 -> 1.308 |
+
+At 125 C the original has no null between vctrl 0.54 and 0.66: it sinks at every
+point, which is the top-rail leak, and it would walk the trim fully on. Fold2
+restores a null (~0.65 V at 125 C/1.2 V) and parks at the rail everywhere.
+At 125 C/1.32 V fold2's null is above 0.66 V: not measured further out. In both
+cells the null does not track VDD/2 (27 C/1.32 V null ~0.59 V against the 0.66 V
+divider midpoint); pre-existing, not chased. Fold2 vc_hi at 125 C is
+1.00 / 1.12 / 1.23 V, below VDD.
+
 ## In flight at last checkpoint (2026-09-15)
 
 Five jobs, serialised on the ngspice lock. If the machine went down, rerun the
