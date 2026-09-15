@@ -66,9 +66,26 @@ Two explanations were tried and are **retracted**:
 2. *VDD tracking symmetrises it.* Reading at `vout` = VDD/2 instead of a fixed
    0.60 V changes the numbers by a few points, not the picture.
 
-Current suspicion, **untested**: the bias generator. Its two diode currents set
-up and down separately and their ratio may drift with VDD at ff.
-`cp_mismatch_pvt2.spice` prints the currents and `bias_n`/`bias_p` to test it.
+**Mechanism confirmed: the bias generator** (`cp_mismatch_pvt2.spice`,
+currents and bias nodes, 1.8 µm trim, `vout` = 0.60 V):
+
+| corner | up nA | down nA | mis % | bias_n | VDD − bias_p |
+|---|---|---|---|---|---|
+| tt −40 °C 1.08 V | 457 | 479 | −4.7 | 0.307 | 0.428 |
+| tt −40 °C 1.32 V | 630 | 571 | +9.8 | 0.314 | 0.442 |
+| tt 125 °C 1.08 V | 1279 | 1295 | −1.2 | 0.255 | 0.411 |
+| tt 125 °C 1.20 V | 1862 | 1601 | +15.1 | 0.273 | 0.447 |
+| tt 125 °C 1.32 V | **3137** | **2142** | **+37.7** | 0.299 | **0.507** |
+
+At 125 °C the pMOS bias `VDD − bias_p` grows with supply; at −40 °C it is flat;
+`bias_n` barely moves anywhere. The up path loses regulation hot and high, the
+down path does not. And a second problem the percentages hid: **total pump
+current is ~4× nominal at tt/125 °C/1.32 V**, a 4× loop-gain swing across
+corners, independent of mismatch.
+
+Fix under exploration: lengthen the bias generator's mirrors and diodes (and the
+pump sources with them, to keep W/L and the mirror ratios) to cut their Vds
+sensitivity (`sim/decks/bg_lsweep.spice`).
 
 The DC percentage is a proxy. Ground truth is closed-loop PRBS7 at
 ff / 125 °C / 1.32 V: `sim/runners/prbs_ff125.sh` (seeds itself first).

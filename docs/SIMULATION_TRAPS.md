@@ -453,3 +453,19 @@ Rule: select a configuration by writing the blocks out explicitly, or index a
 numeric loop variable. Do not branch on a string. And when a sweep is supposed
 to vary something, **check that the output actually varies** before reading
 anything into it.
+
+### 2.22 ngspice's own messages can land in the middle of a `print` line
+
+```
+p_vout = 6.000000eUsing SPARSE 1.3 as Direct Linear Solver
+```
+
+A `print` inside a `foreach` is buffered; the next `op` writes its solver banner
+straight through. The two collide mid-line, and a parser that accepts
+`[-+0-9.eE]+` happily takes `6.000000e`, then crashes converting it — or worse,
+a different truncation parses as a *wrong* number. One point per log was lost
+this way in a 54-point corner sweep.
+
+Rule: parse numbers with a full pattern — `-?\d\.\d+e[-+]\d{2}` — count what was
+skipped, and report the count. A sweep that silently has 53 of 54 points looks
+complete.
