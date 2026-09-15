@@ -1,0 +1,74 @@
+* clkpath_pvt.spice -- does the recovered-clock buffer switch at every corner?
+*
+* e2e_ff125_stages.log: at ff/125C/1.32V the ring runs but clkraw (CDR x4
+* diff_amp_inv output) bottoms at ~0.605 V while inverter_buffer trips at
+* 0.592 V (inv_trip_1.log), so rclk never toggles and the loop is dead.  This
+* deck is the same chain open loop -- ring_ct -> diff_amp_inv (tail at VDD, as
+* in CDR x4) -> inverter_buffer -> single_inverter -- at every temperature and
+* supply, at the ring's slowest and fastest knob settings.
+*
+* Run under sim/run_corners.sh for the three process corners.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+.include ring_ct.inc
+
+.global sub!
+Vsub sub! 0 0
+VDD VDD 0 1.2
+VSS VSS 0 0
+Vc   vctrl   0 0.6
+Vcrs vcoarse 0 1.2
+
+x1 VDD VSS vctrl vcoarse vop vom ring_ct
+x4 VDD VSS crm crp vop vom VDD diff_amp_inv
+x11 VDD VSS crp rclkp inverter_buffer
+x12 VDD VSS rclkp rclkm single_inverter
+.ic v(vop)=1.0 v(vom)=0.4
+.options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
+
+.control
+save v(vop) v(vom) v(crp) v(crm) v(rclkp)
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  foreach pt 1 2 3
+   if $pt = 1
+     alter Vcrs dc = $vd
+     alter Vc   dc = 0.45
+   end
+   if $pt = 2
+     alter Vcrs dc = $vd
+     alter Vc   dc = 0.60
+   end
+   if $pt = 3
+     alter Vcrs dc = 0.0
+     alter Vc   dc = $vd
+   end
+   tran 5p 80n
+   let p_temp = $tmp
+   let p_vdd  = $vd
+   let p_pt   = $pt
+   meas tran crp_max max v(crp) from=40n to=80n
+   meas tran crp_min min v(crp) from=40n to=80n
+   meas tran rk_max  max v(rclkp) from=40n to=80n
+   meas tran rk_min  min v(rclkp) from=40n to=80n
+   let rk_sw = rk_max - rk_min
+   print p_temp p_vdd p_pt crp_min crp_max rk_sw
+   echo ROWEND
+  end
+ end
+end
+quit
+.endc
+.end

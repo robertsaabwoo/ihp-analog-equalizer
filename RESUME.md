@@ -268,6 +268,27 @@ cells the null does not track VDD/2 (27 C/1.32 V null ~0.59 V against the 0.66 V
 divider midpoint); pre-existing, not chased. Fold2 vc_hi at 125 C is
 1.00 / 1.12 / 1.23 V, below VDD.
 
+Fold2 PVT re-run, valid (`coarse_tb_fold2_pvt_{ss,ff}.log`, different from tt),
+d_660 / d_600 / d_540 mV/us:
+
+| T, VDD | ss | ff |
+|---|---|---|
+| -40, 1.08 | -6.79 / -1.13 / -0.04 | -14.17 / -2.25 / +0.15 |
+| -40, 1.20 | -0.53 / -0.35 / +0.01 | -3.40 / -0.86 / +1.09 |
+| -40, 1.32 | -0.01 / +0.51 / +3.85 | +0.37 / +1.62 / +9.87 |
+| 27, 1.08 | (+50.3 wrap) / -2.10 / -0.16 | (+48.7 wrap) / -5.16 / -0.86 |
+| 27, 1.20 | -0.95 / +0.08 / +1.22 | -2.06 / +0.27 / +2.70 |
+| 27, 1.32 | +0.05 / +0.91 / +4.03 | +0.08 / +1.88 / +8.25 |
+| 125, 1.08 | -4.12 / -1.07 / +0.52 | +0.24 / +1.14 / +2.48 |
+| 125, 1.20 | -1.11 / +0.34 / +1.79 | +2.09 / +2.90 / +4.42 |
+| 125, 1.32 | +0.30 / +1.50 / +4.07 | +4.30 / +4.78 / +7.55 |
+
+Park is at the rail at every corner (1.049-1.320 V). The two +50 readings are
+the sample window straddling a wrap. **ff/125 C: positive at every step, so the
+null is above 0.66 V; not located.** vc_hi there 0.94-1.14 V. The original cell
+was only ever run at tt, so there's no ss/ff comparison yet. Next: vctrl past 0.66 V
+at 125 C, both cells.
+
 ## In flight at last checkpoint (2026-09-15)
 
 Five jobs, serialised on the ngspice lock. If the machine went down, rerun the
