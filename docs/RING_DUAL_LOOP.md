@@ -406,7 +406,15 @@ Trim fully **off** — can it get *under* the baud rate? MHz:
 | ss | — | — | — | — | — | — | — | 482.6 | 487.4 |
 | ff | 480.5 | 486.7 | 492.2 | 514.5 | 523.2 | 531.1 | 548.1 | 559.6 | **569.2** |
 
-Worst **569.2 MHz at ff / 125 °C / 1.32 V — −5.2 %**. (A dash means no usable
+Worst **569.2 MHz at ff / 125 °C / 1.32 V — −5.2 %** on this reading.
+
+**That −5.2 % understates the margin.** This table holds `vctrl` at 0.45 V, which
+is a convention, not the floor (§7.2). Swept properly at that corner
+(`vco_ct_floor_clamp.spice`), the lowest frequency with usable swing is
+**470.5 MHz, −21.7 %** with the trim off — and it stays at 449–464 MHz, −22.7 to
+−25.2 %, with `vcoarse` at the 0.80–0.90 V where the coarse loop's top rail
+actually sits when hot (see `RESUME.md`, the pull-up clamp). So the clamp costs
+no slow-end margin at the worst corner. (A dash means no usable
 swing at `vctrl` = 0.45, i.e. the ring is slower than the measurement — the
 comfortable direction, see §7.2.)
 
