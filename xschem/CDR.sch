@@ -122,7 +122,6 @@ C {devices/lab_wire.sym} 1790 -280 0 0 {name=p14 sig_type=std_logic lab=Vdd
 }
 C {devices/lab_wire.sym} 1780 170 0 0 {name=p35 sig_type=std_logic lab=Vss
 }
-C {tiny_pll_bias_gen.sym} 1220 -450 0 0 {name=x8}
 C {devices/lab_wire.sym} 1310 -640 0 0 {name=p43 sig_type=std_logic lab=Vdd
 }
 C {devices/lab_wire.sym} 1300 -310 0 0 {name=p44 sig_type=std_logic lab=Vss
@@ -216,3 +215,9 @@ C {devices/lab_wire.sym} 2840 980 0 0 {name=pSBVdd sig_type=std_logic lab=Vdd}
 C {devices/lab_wire.sym} 2840 1000 0 0 {name=pSBVss sig_type=std_logic lab=Vss}
 C {devices/lab_wire.sym} 2840 1020 0 0 {name=pSBclkrawm sig_type=std_logic lab=clkraw-}
 C {devices/lab_wire.sym} 2960 1000 0 0 {name=pSBclkrawsb sig_type=std_logic lab=clkraw_sb}
+C {cp_bias.sym} 200 -1200 0 0 {name=x14}
+C {devices/lab_wire.sym} 140 -1220 0 0 {name=pCBVdd sig_type=std_logic lab=Vdd}
+C {devices/lab_wire.sym} 140 -1200 0 0 {name=pCBVss sig_type=std_logic lab=Vss}
+C {devices/lab_wire.sym} 140 -1180 0 0 {name=pCBvbias sig_type=std_logic lab=vbias}
+C {devices/lab_wire.sym} 260 -1200 0 0 {name=pCBbiasn sig_type=std_logic lab=bias_n}
+C {devices/lab_wire.sym} 260 -1180 0 0 {name=pCBbiasp sig_type=std_logic lab=bias_p}

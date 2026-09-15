@@ -401,6 +401,25 @@ tiny_pll_bias_gen.** Two problems to trim: current ~25 % above the 800 nA the id
 lock used, and the pump is down-heavy by 7-27 %. XMP2 carries more than 0.9x, likely
 from its larger Vds than the diode's. Sweep 2: Lm 7/7.5/8 x XMP2 1.45/1.55/1.65 um.
 
+**Sizing sweep 2** (`cp_ibias_pvt2_{tt,ss,ff}.log`; 27 points per corner = 3 T x 3 VDD x
+3 vout; 711 of 729 rows parsed, 18 lost to banner corruption):
+
+| Lm | XMP2 | up nA | dn nA | mismatch | nominal up/dn |
+|---|---|---|---|---|---|
+| 7 | 1.45 | 802-1007 | 775-1067 | -11.8 .. +10.9 % | 888 / 896 |
+| 7 | 1.55 | 802-1007 | 821-1123 | -16.9 .. +5.1 % | 888 / 946 |
+| 7 | 1.65 | 802-1007 | 866-1179 | -21.7 .. -0.4 % | 888 / 996 |
+| 7.5 | 1.45 | 756-947 | 734-1010 | -12.6 .. +10.6 % | 836 / 848 |
+| 7.5 | 1.55 | 756-943 | 777-1063 | -17.7 .. +4.7 % | 836 / 896 |
+| 7.5 | 1.65 | 756-947 | 820-1098 | -22.5 .. -0.7 % | (row lost) |
+| **8** | **1.45** | **715-894** | **697-959** | **-13.4 .. +10.3 %** | **790 / 806** |
+| 8 | 1.55 | 715-894 | 738-1010 | -18.5 .. +4.4 % | (row lost) |
+| 8 | 1.65 | 715-894 | 779-1060 | -23.2 .. -1.0 % | 790 / 896 |
+
+**Chosen: Lm 8 um, XMP2 1.45 um** (`sim/decks/cp_bias.inc`). Nominal matches the
+800 nA the ideal-bias lock used; current spread is 1.25x across 27 corners (was 14x);
+mismatch is centred (was up to +74 %).
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
