@@ -320,6 +320,18 @@ mismatch (+74 %). Here 600.6 MHz is well inside the ring's range (seed 0.489 V),
 the ring ceiling can't be the cause at this corner. Pump mismatch is the leading
 suspect; the tt/125 C mismatch-nulled run (`e2e_prbs_tt125_wp155.spice`) tests it.
 
+**tt/125 C early-window diagnostic** (`e2e_prbs_tt125_early.log`, vctrl CSV in
+`e2e_prbs_tt125_early_vctrl.csv`, not committed, 5.6 MB): **never captured.**
+vctrl averages 0.531 (20-100 ns), 0.554 (100-300), 0.656 (300-600), 0.702 (600-1000),
+0.730 V (1000-1500 ns). From 50 ns bins: 0.53-0.55 V for 0-300 ns (below the 0.593
+seed; ring ~589 MHz), through 0.594 V at 300-350 ns without stopping, then a staircase:
+plateau ~0.69-0.70 V over 600-1000 ns, ~0.75 V over 1200-1600 ns, ~1.0 V from 2.5 us.
+Ripple 41-106 mV pp in every bin. The ring is above baud from vctrl ~0.60 V
+(>= 611 MHz at 0.70 V), yet vctrl keeps rising. That's consistent with net up
+charge from pump mismatch overpowering the detector; not proven until the wp155 run.
+Unexplained: the initial 0.53 V below the seed. Not checked; the precharge
+release at 76 ns is a candidate.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
