@@ -271,8 +271,12 @@ ahead of `inverter_buffer`). Open loop, 27 corners x 3 ring settings
   full-rail output. sb node average tracks the inverter threshold, 0.53-0.75 V.
 - Only zero-swing rows: ss pt1 (vctrl 0.45 V), where `clkraw` is flat. The ring
   isn't oscillating there, the same as before the change; not a clock-path result.
-Not yet measured: closed loop with the stage in the netlist, and the effect of the
-~55 % duty cycle on the Alexander detector's edge sampler.
+**Closed loop, nominal tt/27 C/1.2 V PRBS7, stage in the netlist**
+(`e2e_prbs_sb.log`, seed 0.595): **600.633 MHz, +0.0055 %**, vctrl
+0.5971 / 0.5974 / 0.5968 V across the three windows, ripple 36.6 mV pp, clock swing
+1.307 V. Before the stage it was 600.541 MHz (-0.0099 %), ripple 36.7 mV
+(`e2e_prbs_pump18.log`). Locks; the ~55 % duty cycle costs nothing measurable here.
+125 C closed loop: running (`run_prbs_tt125_12.out`, `run_prbs_ff125_132.out`).
 
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless

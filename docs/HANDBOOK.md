@@ -681,8 +681,11 @@ Open loop, 27 corners × 3 ring settings (`clkpath_sb_pvt_{tt,ss,ff}.log`): at
 input is 0.287 V (ss/125 °C/1.08 V). The only rows with no swing are ss at
 `vctrl` = 0.45 V, where the ring itself is not oscillating.
 
-**Not measured yet:** closed-loop lock with the stage in the netlist, at nominal and
-at 125 °C; whether the ~55 % duty cycle costs the edge sampler anything; and the
+**Closed loop at nominal, stage in the netlist** (`e2e_prbs_sb.log`, PRBS7, tt/27 °C/1.2 V):
+**600.633 MHz, +0.0055 %**, `vctrl` settled at 0.597 V, ripple 36.6 mV pp, clock
+swing 1.307 V. Without the stage it was 600.541 MHz with 36.7 mV of ripple.
+
+**Not measured yet:** closed-loop lock at 125 °C; whether the ~55 % duty cycle costs the edge sampler anything; and the
 stage's supply current when no clock is present (a self-biased inverter conducts
 at its threshold).
 
