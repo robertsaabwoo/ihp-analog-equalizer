@@ -386,6 +386,21 @@ clean lock** (locked runs read ~0.01 % with a flat vctrl). Fixed pump currents r
 runaway; something else at ff still pulls. Pump up/down balance at ff with nominal
 currents is the next suspect; `cp_ibias_pvt_ff.log` will show it.
 
+**cp_bias sizing sweep 1** (`cp_ibias_pvt_{tt,ss,ff}.log`, W 0.5 um mirror, XMP2 1.8 um,
+27 corners x vout 0.5/0.6/0.7):
+
+| Lm | up nA (all corners) | dn nA | mismatch | tt/27 C/1.2 V/0.6 V up / dn |
+|---|---|---|---|---|
+| 4 um | 1294-1637 | 1428-1952 | -24.8 .. -5.6 % (all Lm) | 1434 / 1655 |
+| 5 um | 1071-1352 | 1212-1643 | | 1187 / 1393 |
+| 6 um | 916-1153 | 1053-1425 | -26.7 .. -7.4 % | 1015 / 1209 |
+
+(per corner: Lm=6 tt -23.9..-10.6, ss -19.9..-7.4, ff -26.7..-13.6 %.)
+**Spread collapses: up 916-1153 nA at Lm 6 um (1.26x) against 398-5684 nA (14x) for
+tiny_pll_bias_gen.** Two problems to trim: current ~25 % above the 800 nA the ideal-bias
+lock used, and the pump is down-heavy by 7-27 %. XMP2 carries more than 0.9x, likely
+from its larger Vds than the diode's. Sweep 2: Lm 7/7.5/8 x XMP2 1.45/1.55/1.65 um.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so

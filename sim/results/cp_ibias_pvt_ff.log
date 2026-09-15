@@ -1,0 +1,1049 @@
+[safe_ngspice] cp_ibias_pvt.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 ua ibias
+
+Reset re-loads circuit * cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 ua ibias
+
+Circuit: * cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 ua ibias
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.558822e+03
+i_dn_na = 1.756530e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.547403e+03
+i_dn_na = 1.833270e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.528731e+03
+i_dn_na = 1.875448e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.600063e+03
+i_dn_na = 1.795634e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.591667e+03
+i_dn_na = 1.873346e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.577523e+03
+i_dn_na = 1.915820e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.636506e+03
+i_dn_na = 1.830814e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.630186e+03
+i_dn_na = 1.909387e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.618835e+03
+i_dn_na = 1.952120e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.501970e+03
+i_dn_na = 1.709887e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.491239e+03
+i_dn_na = 1.781575e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.475764e+03
+i_dn_na = 1.830250e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.536040e+03
+i_dn_na = 1.741902e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.527767e+03
+i_dn_na = 1.814387e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.516061e+03
+i_dn_na = 1.863416e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.566088e+03
+i_dn_na = 1.770693e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.559494e+03
+i_dn_na = 1.843888e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.550050e+03
+i_dn_na = 1.893229e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.446063e+03
+i_dn_na = 1.668046e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.436627e+03
+i_dn_na = 1.732192e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.423877e+03
+i_dn_na = 1.783657e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.472705e+03
+i_dn_na = 1.691855e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.465224e+03
+i_dn_na = 1.756608e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.455683e+03
+i_dn_na = 1.808467e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.496160e+03
+i_dn_na = 1.713148e+03
+ROWEND
+Doing analysis at TEMUsing SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+P = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.489961e+03
+i_dn_na = 1.778455e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 4.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.482237e+03
+i_dn_na = 1.830677e+03
+ROWEND
+Reset re-loads circuit * cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 ua ibias
+
+Circuit: * cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 ua ibias
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.290484e+03
+i_dn_na = 1.473354e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.280501e+03
+i_dn_na = 1.542543e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.264747e+03
+i_dn_na = 1.582300e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.322969e+03
+i_dn_na = 1.504320e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.315535e+03
+i_dn_na = 1.574382e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.303493e+03
+i_dn_na = 1.614431e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.351639e+03
+i_dn_na = 1.532178e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.345985e+03
+i_dn_na = 1.603016e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.336253e+03
+i_dn_na = 1.643322e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.234822e+03
+i_dn_na = 1.427377e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.225752e+03
+i_dn_na = 1.491601e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.212996e+03
+i_dn_na = 1.536806e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.261327e+03
+i_dn_na = 1.452394e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.254255e+03
+i_dn_na = 1.517318e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.244515e+03
+i_dn_na = 1.562863e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.284689e+03
+i_dn_na = 1.474901e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.278996e+03
+i_dn_na = 1.540449e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.271089e+03
+i_dn_na = 1.586294e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.180411e+03
+i_dn_na = 1.386546e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.172675e+03
+i_dn_na = 1.443862e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.162422e+03
+i_dn_na = 1.490856e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.200851e+03
+i_dn_na = 1.404725e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.194655e+03
+i_dn_na = 1.462568e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.186881e+03
+i_dn_na = 1.509922e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.218851e+03
+i_dn_na = 1.420969e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.213676e+03
+i_dn_na = 1.479294e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 5.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.207335e+03
+i_dn_na = 1.526982e+03
+ROWEND
+Reset re-loads circuit * cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 ua ibias
+
+Circuit: * cp_ibias_pvt.spice -- pump up/down currents with cp_bias (from the 40 ua ibias
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.102991e+03
+i_dn_na = 1.273261e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.094109e+03
+i_dn_na = 1.336483e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.080472e+03
+i_dn_na = 1.374154e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.129706e+03
+i_dn_na = 1.298848e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 anUsing SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+d TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.123026e+03
+i_dn_na = 1.362867e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.112534e+03
+i_dn_na = 1.400827e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.153264e+03
+i_dn_na = 1.321871e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.148137e+03
+i_dn_na = 1.386598e+03
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.139614e+03
+i_dn_na = 1.424811e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.050083e+03
+i_dn_na = 1.229580e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.042232e+03
+i_dn_na = 1.288010e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.031391e+03
+i_dn_na = 1.330305e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.071662e+03
+i_dn_na = 1.250036e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.065491e+03
+i_dn_na = 1.309093e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.057159e+03
+i_dn_na = 1.351715e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.090675e+03
+i_dn_na = 1.268447e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.085670e+03
+i_dn_na = 1.328064e+03
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.078876e+03
+i_dn_na = 1.370974e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_up_na = 9.985000e+02
+i_dn_na = 1.191086e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_up_na = 9.919530e+02
+i_dn_na = 1.243182e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_up_na = 9.833949e+02
+i_dn_na = 1.286593e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+ Reference value :  0.00000e+00Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.014957e+03
+i_dn_na = 1.205650e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.009675e+03
+i_dn_na = 1.258216e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.003126e+03
+i_dn_na = 1.301960e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_up_na = 1.029453e+03
+i_dn_na = 1.218650e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_up_na = 1.025015e+03
+i_dn_na = 1.271647e+03
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+p_lm = 6.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_up_na = 1.019643e+03
+i_dn_na = 1.315701e+03
+ROWEND
+ngspice-42 done
+[safe_ngspice] exit rc=0
