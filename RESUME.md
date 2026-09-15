@@ -269,6 +269,8 @@ ahead of `inverter_buffer`). Open loop, 27 corners x 3 ring settings
   including all nine 125 C combinations at tt, ss and ff** (0-2 mV before).
 - Duty cycle 0.514-0.595. Worst sb input swing 0.287 V (ss/125 C/1.08 V), still
   full-rail output. sb node average tracks the inverter threshold, 0.53-0.75 V.
+- No-clock supply current of the stage (`sb_idle_*.log`): tt 6.5-52.2 uA, ss 1.8-32.2 uA,
+  ff 15.4-78.3 uA (worst ff/125 C/1.32 V).
 - Only zero-swing rows: ss pt1 (vctrl 0.45 V), where `clkraw` is flat. The ring
   isn't oscillating there, the same as before the change; not a clock-path result.
 **Closed loop, nominal tt/27 C/1.2 V PRBS7, stage in the netlist**

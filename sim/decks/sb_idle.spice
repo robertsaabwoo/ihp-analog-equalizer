@@ -1,0 +1,35 @@
+* sb_idle.spice -- supply current of sb_inverter with no clock.  With no input
+* edges the feedback resistor parks the inverter's input at its own switching
+* point, where both devices conduct.  How much does that cost?
+* Run under sim/run_corners.sh.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+.include sb_inverter.inc
+.global sub!
+Vsub sub! 0 0
+VDD VDD 0 1.2
+Vin in 0 0.6
+xsb VDD 0 in out sb_inverter
+.control
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  op
+  let p_temp = $tmp
+  let p_vdd = $vd
+  let idd_uA = -i(VDD)*1e6
+  let v_sbin = v(xsb.sbin)
+  print p_temp p_vdd idd_uA v_sbin
+ end
+end
+quit
+.endc
+.end

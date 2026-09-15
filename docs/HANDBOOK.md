@@ -685,9 +685,13 @@ input is 0.287 V (ss/125 °C/1.08 V). The only rows with no swing are ss at
 **600.633 MHz, +0.0055 %**, `vctrl` settled at 0.597 V, ripple 36.6 mV pp, clock
 swing 1.307 V. Without the stage it was 600.541 MHz with 36.7 mV of ripple.
 
-**Not measured yet:** closed-loop lock at 125 °C; whether the ~55 % duty cycle costs the edge sampler anything; and the
-stage's supply current when no clock is present (a self-biased inverter conducts
-at its threshold).
+**Not measured yet:** closed-loop lock at 125 °C; and whether the ~55 % duty cycle costs the edge sampler anything at the corners.
+
+With no clock the feedback resistor parks the inverter at its threshold, where both
+devices conduct. Measured (`sb_idle_{tt,ss,ff}.log`, DC): **1.8-78.3 µA** across 27
+corners. That's 6.5-52.2 µA at tt, 1.8-32.2 µA at ss and 15.4-78.3 µA at ff, worst at
+ff/125 °C/1.32 V. The parked input sits at 0.546-0.686 V. With a clock running the
+inverter switches and this is not a static cost.
 
 ## 11. What is not working, and what is not known
 
