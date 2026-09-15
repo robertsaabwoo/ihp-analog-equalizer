@@ -378,6 +378,14 @@ pump's mismatch, so it doesn't separate gain from mismatch completely; the wp155
 (mismatch nulled, real bias) still failed, which points at gain. Fix options go to the user
 before any design change.
 
+**ff/125 C/1.32 V with the same ideal nominal pump bias** (`e2e_prbs_ff125_132_idealbias.log`,
+override confirmed, seed 0.489): **603.87 MHz, +0.55 %**, vctrl 0.4916 / 0.4928 /
+**0.5182 V** (last window drifting up), min 0.456, max 0.557, ripple 83.6 mV, clock
+1.385 V. Far better than the 644.5 MHz runaway with the real generator, but **not a
+clean lock** (locked runs read ~0.01 % with a flat vctrl). Fixed pump currents remove the
+runaway; something else at ff still pulls. Pump up/down balance at ff with nominal
+currents is the next suspect; `cp_ibias_pvt_ff.log` will show it.
+
 **Incident, 2026-09-15 (fixed): duplicate bias mirror in the netlist.** A
 `port_from_sky130.py --cells CDR` run re-applied every POST_PORT_EDIT regardless
 of `--cells`, and `add_bias_mirror` had no already-applied guard, so
