@@ -1,0 +1,285 @@
+[safe_ngspice] e2e_ff125_stages.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Using SPARSE 1.3 as Direct Linear Solver
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * end-to-end acquisition on prbs7 -- the run that decides whether the 0101
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+sub!                                         0
+vcoarse!                                  1.32
+vdd                                       1.32
+vss                                          0
+ibias                                 0.439688
+draw                                         0
+dinp                                      0.65
+edinp_int1                                0.65
+dinm                                      0.75
+edinm_int1                                0.75
+cinp                                      0.65
+cinm                                      0.75
+x1.eq_p                               0.911243
+x1.x1.net1                            0.324904
+x1.x1.net2                            0.219796
+x1.eq_m                               0.729763
+x1.x1.sdegm                            0.37157
+x1.x1.xr1.dt                                 0
+x1.x1.xr2.dt                                 0
+x1.x1.xr3.dt                                 0
+x1.x1.xr4.dt                                 0
+x1.x2.x6.src_n                     5.23164e-05
+x1.x2.bias_n                          0.302163
+x1.x2.vctrl                              0.489
+x1.x2.net2                         3.89636e-05
+x1.x2.x6.upb                           1.31999
+x1.x2.x6.src_p                         1.31979
+x1.x2.bias_p                          0.725636
+x1.x2.net1                         3.91442e-05
+x1.x2.x8.res_bot                       1.13285
+x1.x2.x8.xres.mid1                     1.25762
+x1.x2.x8.xres.xr2.dt                         0
+x1.x2.x8.xres.mid0                     1.19524
+x1.x2.x8.xres.xr1.dt                         0
+x1.x2.x8.xres.xr0.dt                         0
+x1.x2.x8.kick                         0.429888
+x1.x2.x8.kick_sw                     0.0075517
+x1.x2.x8.dio_mid                      0.906504
+x1.x2.x2.cap_plus                      0.48898
+x1.x2.x2.xr.xr.dt                            0
+x1.x2.x3.x6.net1                      0.213959
+x1.x2.x3.net1                           1.3183
+x1.x2.x3.net2                      3.00431e-05
+x1.x2.x3.x6.net3                   1.94763e-05
+x1.x2.x3.b-                         2.9815e-05
+x1.x2.x3.x6.net2                       1.31998
+x1.x2.x3.b+                             1.3183
+x1.x2.x3.x6.net4                    1.9626e-05
+x1.x2.x3.x7.net1                      0.213957
+x1.x2.x3.net5                           1.3183
+x1.x2.x3.net6                      2.99922e-05
+x1.x2.x3.x7.net3                   1.95666e-05
+x1.x2.x3.x7.net2                       1.31998
+x1.x2.x3.x7.net4                   1.97163e-05
+x1.x2.x3.x5.x1.net1                   0.346379
+x1.x2.x3.x5.x1.net3                   0.366495
+x1.x2.x3.x5.x1.net4                   0.247651
+x1.x2.x3.x5.x1.net2                    1.20258
+x1.x2.x3.x5.x1.net5                   0.290124
+x1.rclk_m                          1.99544e-05
+x1.rclk_p                              1.31999
+x1.x2.x3.x5.net1                       1.31564
+x1.x2.x3.x5.net2                   0.000318023
+x1.x2.x3.x5.x1.xr3.dt                        0
+x1.x2.x3.x5.x1.xr1.dt                        0
+x1.x2.x3.x5.x2.net1                   0.289108
+x1.x2.x3.x5.x2.net3                    0.24876
+x1.x2.x3.x5.x2.net4                   0.210772
+x1.x2.x3.x5.x2.net2                     1.3199
+x1.x2.x3.x5.x2.net5                   0.289111
+x1.x2.x3.x5.x2.xr3.dt                        0
+x1.x2.x3.x5.x2.xr1.dt                        0
+x1.x2.x3.x1.x1.net1                   0.490775
+x1.x2.x3.x1.x1.net3                   0.299202
+x1.x2.x3.x1.x1.net4                    0.25579
+x1.x2.x3.x1.x1.net2                    1.04835
+x1.x2.x3.x1.x1.net5                   0.490781
+x1.x2.x3.x1.net1                        1.2954
+x1.x2.x3.x1.net2                    0.00594983
+x1.x2.x3.x1.x1.xr3.dt                        0
+x1.x2.x3.x1.x1.xr1.dt                        0
+x1.x2.x3.x1.x2.net1                    0.28903
+x1.x2.x3.x1.x2.net3                    0.28903
+x1.x2.x3.x1.x2.net4                   0.210891
+x1.x2.x3.x1.x2.net2                    1.31974
+x1.x2.x3.x1.x2.net5                   0.248894
+x1.x2.x3.net3                           1.3183
+x1.x2.x3.net4                      2.99596e-05
+x1.x2.x3.x1.x2.xr3.dt                        0
+x1.x2.x3.x1.x2.xr1.dt                        0
+x1.x2.x3.x2.x1.net1                    0.28903
+x1.x2.x3.x2.x1.net3                    0.28903
+x1.x2.x3.x2.x1.net4                   0.210891
+x1.x2.x3.x2.x1.net2                    1.31974
+x1.x2.x3.x2.x1.net5                   0.248894
+x1.x2.x3.x2.net1                        1.3183
+x1.x2.x3.x2.net2                   2.99595e-05
+x1.x2.x3.x2.x1.xr3.dt                        0
+x1.x2.x3.x2.x1.xr1.dt                        0
+x1.x2.x3.x2.x2.net1                    0.28902
+x1.x2.x3.x2.x2.net3                   0.248809
+x1.x2.x3.x2.x2.net4                   0.210816
+x1.x2.x3.x2.x2.net2                     1.3199
+x1.x2.x3.x2.x2.net5                   0.289024
+x1.x2.x3.x2.x2.xr3.dt                        0
+x1.x2.x3.x2.x2.xr1.dt                        0
+x1.x2.x3.x3.x1.net1                    0.28903
+x1.x2.x3.x3.x1.net3                    0.28903
+x1.x2.x3.x3.x1.net4                   0.210891
+x1.x2.x3.x3.x1.net2                    1.31974
+x1.x2.x3.x3.x1.net5                   0.248894
+x1.x2.x3.x3.net1                        1.3183
+x1.x2.x3.x3.net2                   2.99595e-05
+x1.x2.x3.x3.x1.xr3.dt                        0
+x1.x2.x3.x3.x1.xr1.dt                        0
+x1.x2.x3.x3.x2.net1                    0.28902
+x1.x2.x3.x3.x2.net3                   0.248809
+x1.x2.x3.x3.x2.net4                   0.210816
+x1.x2.x3.x3.x2.net2                     1.3199
+x1.x2.x3.x3.x2.net5                   0.289024
+x1.x2.x3.x3.x2.xr3.dt                        0
+x1.x2.x3.x3.x2.xr1.dt                        0
+x1.x2.x1.net2                              0.3
+x1.x2.x1.net8                         0.255748
+x1.x2.x1.x1.net1                      0.362739
+x1.x2.x1.net1                              0.9
+x1.x2.x1.net7                           1.2968
+x1.x2.x1.x1.xr1.dt                           0
+x1.x2.x1.x1.xr2.dt                           0
+x1.x2.x1.net3                          1.27298
+x1.x2.x1.x2.net1                     0.0885286
+x1.x2.x1.net4                         0.342952
+x1.x2.x1.x2.xr1.dt                           0
+x1.x2.x1.x2.xr2.dt                           0
+x1.x2.x1.net6                         0.263978
+x1.x2.x1.x3.net1                      0.103901
+x1.x2.x1.net5                          1.25698
+x1.x2.x1.x3.xr1.dt                           0
+x1.x2.x1.x3.xr2.dt                           0
+x1.x2.x1.net10                         1.29516
+x1.x2.x1.x5.net1                     0.0980155
+x1.x2.x1.net9                         0.260116
+x1.x2.x1.x5.xr1.dt                           0
+x1.x2.x1.x5.xr2.dt                           0
+x1.x2.x1.x4.net1                     0.0984743
+x1.x2.x1.x4.xr1.dt                           0
+x1.x2.x1.x4.xr2.dt                           0
+x1.x2.x1.x6.vo-_temp                  0.773749
+x1.x2.x1.x6.net1                      0.617256
+x1.x2.x1.x6.vo+_temp                   1.31999
+x1.x2.x1.x6.xr3.dt                           0
+x1.x2.x1.x6.xr4.dt                           0
+x1.x2.net4                             1.22761
+x1.x2.x1.x6.net2                      0.482857
+x1.x2.net3                            0.592488
+x1.x2.x1.x6.xr1.dt                           0
+x1.x2.x1.x6.xr2.dt                           0
+x1.x2.x4.vo-_temp                      1.31997
+x1.x2.x4.net1                         0.578997
+x1.x2.x4.vo+_temp                     0.794448
+x1.x2.x4.xr3.dt                              0
+x1.x2.x4.xr4.dt                              0
+x1.x2.clkraw-                         0.599104
+x1.x2.x4.net2                         0.489088
+x1.x2.clkraw+                          1.21337
+x1.x2.x4.xr1.dt                              0
+x1.x2.x4.xr2.dt                              0
+x1.x2.x11.net1                     7.15841e-05
+x1.x2.x20.nrc                      6.92024e-16
+x1.x2.x20.xr1.dt                             0
+x1.x2.x20.pre                          1.31964
+x1.x2.x20.preb                     2.19769e-05
+x1.x2.x20.nbias                       0.500264
+x1.x2.x30.nb1                         0.997948
+x1.x2.x30.nb2                        0.0689827
+x1.x2.x30.vh                          0.792001
+x1.x2.x30.xrlt.dt                            0
+x1.x2.x30.vl                          0.528002
+x1.x2.x30.xrlm.dt                            0
+x1.x2.x30.xrlb.dt                            0
+x1.x2.x30.spu                          1.18498
+x1.x2.x30.snd                         0.738967
+x1.x2.x30.nd                           1.31793
+x1.x2.x30.ne                        0.00246433
+x1.x2.x30.nlo                      0.000172838
+x1.x2.x30.nhi                       0.00358586
+x1.x2.x30.nlon                         1.31999
+x1.x2.x30.rst                      4.03208e-05
+x1.x2.x30.rstn                            1.32
+x1.x2.x30.nas                      2.03056e-05
+x1.x2.x30.nbs                        0.0648444
+x1.x3.net1                         2.13236e-05
+x1.x3.net2                             1.31999
+clkoutp                            1.99305e-05
+x1.x4.net1                             1.31999
+x1.x4.net2                         2.15094e-05
+clkoutm                                1.31999
+bedinm#branch                                0
+bedinp#branch                                0
+edinm#branch                      -1.89984e-11
+edinp#branch                      -6.35533e-12
+vdraw#branch                                 0
+vss#branch                          0.00374457
+vdd#branch                         -0.00372609
+vcrs#branch                       -1.03507e-05
+vsub#branch                                  0
+
+ Reference value :  0.00000e+00 Reference value :  1.54560e-09 Reference value :  3.68560e-09 Reference value :  3.94560e-09 Reference value :  5.18560e-09 Reference value :  6.46560e-09 Reference value :  7.74560e-09 Reference value :  8.80560e-09 Reference value :  1.00798e-08 Reference value :  1.13398e-08 Reference value :  1.24048e-08 Reference value :  1.39448e-08 Reference value :  1.51048e-08 Reference value :  1.72448e-08 Reference value :  1.89048e-08 Reference value :  1.96648e-08 Reference value :  2.07498e-08 Reference value :  2.19498e-08 Reference value :  2.30898e-08 Reference value :  2.43798e-08 Reference value :  2.55998e-08 Reference value :  2.68198e-08 Reference value :  2.85998e-08 Reference value :  3.01398e-08 Reference value :  3.09198e-08 Reference value :  3.19848e-08 Reference value :  3.32848e-08 Reference value :  3.43698e-08 Reference value :  3.56548e-08 Reference value :  3.65548e-08 Reference value :  3.77548e-08 Reference value :  3.93548e-08 Reference value :  4.01048e-08 Reference value :  4.14248e-08 Reference value :  4.24848e-08 Reference value :  4.36048e-08 Reference value :  4.52048e-08 Reference value :  4.58448e-08 Reference value :  4.69298e-08 Reference value :  4.78898e-08 Reference value :  4.90898e-08 Reference value :  5.00798e-08 Reference value :  5.11998e-08 Reference value :  5.21848e-08 Reference value :  5.33848e-08 Reference value :  5.54848e-08 Reference value :  5.67348e-08 Reference value :  5.79348e-08 Reference value :  5.98448e-08
+Error: measure  rclk_p_avg  avg(TRIG) : no such vector as 'v(x1.x2.rclk+)'
+
+Error: measure  rclk_p_pp  pp(TRIG) : no such vector as 'v(x1.x2.rclk+)'
+
+Error: measure  rclk_m_avg  avg(TRIG) : no such vector as 'v(x1.x2.rclk-)'
+
+Error: measure  rclk_m_pp  pp(TRIG) : no such vector as 'v(x1.x2.rclk-)'
+Warning from checkvalid: vector rclk_p_avg is not available or has zero length.
+Warning from checkvalid: vector rclk_m_avg is not available or has zero length.
+
+No. of Data Rows : 3125
+ring7_avg           =  6.779424e-01 from=  2.000000e-08 to=  6.000000e-08
+ring7_pp            =  9.393724e-01 from=  2.000000e-08 to=  6.000000e-08
+ring8_avg           =  6.813808e-01 from=  2.000000e-08 to=  6.000000e-08
+ring8_pp            =  9.386414e-01 from=  2.000000e-08 to=  6.000000e-08
+rout3_avg           =  8.692916e-01 from=  2.000000e-08 to=  6.000000e-08
+rout3_pp            =  5.447411e-01 from=  2.000000e-08 to=  6.000000e-08
+rout4_avg           =  8.722970e-01 from=  2.000000e-08 to=  6.000000e-08
+rout4_pp            =  5.457151e-01 from=  2.000000e-08 to=  6.000000e-08
+craw_p_avg          =  8.717954e-01 from=  2.000000e-08 to=  6.000000e-08
+craw_p_pp           =  5.327994e-01 from=  2.000000e-08 to=  6.000000e-08
+craw_m_avg          =  8.769014e-01 from=  2.000000e-08 to=  6.000000e-08
+craw_m_pp           =  5.741657e-01 from=  2.000000e-08 to=  6.000000e-08
+ meas tran rclk_p_avg avg v(x1.x2.rclk+) from=20n to=60n failed!
+
+ meas tran rclk_p_pp pp v(x1.x2.rclk+) from=20n to=60n failed!
+
+ meas tran rclk_m_avg avg v(x1.x2.rclk-) from=20n to=60n failed!
+
+ meas tran rclk_m_pp pp v(x1.x2.rclk-) from=20n to=60n failed!
+
+x4tail_avg          =  4.746683e-01 from=  2.000000e-08 to=  6.000000e-08
+x4tail_pp           =  2.158116e-01 from=  2.000000e-08 to=  6.000000e-08
+x6tail_avg          =  4.358444e-01 from=  2.000000e-08 to=  6.000000e-08
+x6tail_pp           =  2.718168e-01 from=  2.000000e-08 to=  6.000000e-08
+clkout_avg          =  1.993052e-05 from=  2.000000e-08 to=  6.000000e-08
+clkout_pp           =  5.639067e-08 from=  2.000000e-08 to=  6.000000e-08
+ring7_avg = 6.779424e-01
+ring7_pp = 9.393724e-01
+ring8_avg = 6.813808e-01
+ring8_pp = 9.386414e-01
+rout3_avg = 8.692916e-01
+rout3_pp = 5.447411e-01
+rout4_avg = 8.722970e-01
+rout4_pp = 5.457151e-01
+craw_p_avg = 8.717954e-01
+craw_p_pp = 5.327994e-01
+craw_m_avg = 8.769014e-01
+craw_m_pp = 5.741657e-01
+x4tail_avg = 4.746683e-01
+x4tail_pp = 2.158116e-01
+x6tail_avg = 4.358444e-01
+x6tail_pp = 2.718168e-01
+clkout_avg = 1.993052e-05
+clkout_pp = 5.639067e-08
+ngspice-42 done
+[safe_ngspice] exit rc=0

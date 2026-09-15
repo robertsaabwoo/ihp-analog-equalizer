@@ -199,7 +199,25 @@ restore symmetry, re-run both decks, then adopt.
 1.770 / 1.720 V over 1-300 ns, but `clkoutp` p-p 43-56 nV and PD up/down p-p
 2-13 uV. Precharge releases at 75.9 ns. So the break is between the ring core
 and `rclk` (ring-internal diff_amp_inv -> CDR x4 diff_amp_inv -> inverter_buffer).
-Those cells are unchanged from main. Stage probe queued: `e2e_ff125_stages.spice`.
+Those cells are unchanged from main.
+
+**Main fails identically** (`sim/runners/main_prbs_ff125.sh`, `run_main_ff125.out`):
+main ring seeded at 0.564, `rclk_swing` 49.6 nV, `vctrl` 0.366 -> 0.330 -> 0.293.
+The failure is inherited from main, not introduced by the dual loop.
+
+**Stage probe** (`e2e_ff125_stages.spice`, 20-60 ns, avg / p-p):
+ring core net7/8 0.678 / 0.939 V; ring out net3/4 0.869 / 0.545 V;
+`clkraw+` 0.872 / 0.533 V, `clkraw-` 0.877 / 0.574 V; `clkoutp` 20 uV / 56 nV.
+(`rclk±` probes used the CDR port names and did not resolve; they need re-probing
+as `x1.rclk_p`.) `clkraw` never goes below ~0.60 V, so the working hypothesis is
+that `inverter_buffer`'s trip point at ff/125 C sits below 0.60 V and it reads a
+constant high. The trip-point sweep `inv_trip.spice` is queued to test that.
+
+**Folded pull-up, XMUP2 0.7 um (`coarse_loop_fold2.inc`):** park 1.202 V,
+span 0.122-1.201 V, search 18.40 mV/us, d_680/640/600/560/520 =
+-2.96 / -0.84 / +0.019 / +0.87 / +2.80 mV/us. Original (`coarse_tb.log`):
+-2.46 / -0.67 / +0.059 / +0.77 / +2.39. Symmetric, null at 0.600 V. Passes nominal;
+PVT run (`coarse_tb_fold2_pvt.spice`) queued before adoption.
 
 ## In flight at last checkpoint (2026-09-15)
 
