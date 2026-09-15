@@ -31,26 +31,27 @@ Past the knee the loop has margin against the pump's 11 % current mismatch; on
 the steep rise a 40 mV startup kick is a 50 MHz error, outside the bang-bang
 capture range.
 
-## Pick up here (updated 2026-09-15)
+## Pick up here (updated 2026-09-15, later)
 
-10500 Ω **failed even on 0101** (612.19 MHz, `vctrl` walked to 0.792) — only
-3 % of headroom under its ceiling. Dead end.
+**10000 Ω + charge-pump up-source trimmed 2.0 → 1.8 µm locks on both patterns
+at tt / 27 °C / 1.2 V** — the first branch configuration to do so:
 
-The live test is **10000 Ω + the charge pump's up-source trimmed 2.0 → 1.8 µm**
-(`sim/runners/pump18.sh`, both patterns). PRBS7 failed at 10000 Ω because its
-seven-bit blind runs let the pump mismatch integrate; `cp_mismatch.spice`
-measured that mismatch moving with `vctrl` and showed 1.8 µm nulls it at the
-lock point:
-
-| Wp | @0.60 V | @0.65 V |
+| | 0101 | PRBS7 |
 |---|---|---|
-| 2.0 (was) | 11.7 % | 9.5 % |
-| **1.8** | **2.1 %** | **−0.1 %** |
+| main 0.9 µm / 7355 Ω | 600.614 MHz ✓ | 600.581 MHz ✓ |
+| branch 10000 Ω, pump 2.0 µm | 600.660 ✓ | 609.96 ✗ |
+| **branch 10000 Ω, pump 1.8 µm** | **600.554 ✓** | **600.541 ✓** |
 
-Results land in `sim/results/run_pump18.out`. If PRBS7 locks: re-measure the 27
-corners, then the coarse loop closed-loop (`e2e_dual.spice`), which has still
-never run on a locking configuration. If it does not: the mismatch was
-measured at tt only and at one bias; check it at the PRBS7 run's actual `vctrl`.
+(`sim/results/e2e_lock_pump18.log`, `e2e_prbs_pump18.log`)
+
+**Not established: whether the trim holds across corners.** The DC mismatch
+sweep (`cp_mismatch_pvt.spice`) shows up to +74 % at ff even with the trim,
+which is either a real mismatch or a collapsed down-current making the
+percentage meaningless. `cp_mismatch_pvt2.spice` prints the currents to tell
+which. The trim was chosen at tt only and is not yet a corner result.
+
+**Running:** `sim/runners/dualloop.sh` — the coarse loop closed-loop on this
+configuration, never before run on anything that locks.
 
 ## Before trusting anything after the reboot
 
