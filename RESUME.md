@@ -644,6 +644,21 @@ Candidate: above ~0.7 V the pump's down-side device runs short of headroom, the 
 charge turns positive again, and the loop has a **second, false resting point**. cp_dyn
 only measured to 0.70 V. Running: `cp_dyn2.spice` (vout to 1.00 V).
 
+**No second resting point** (`cp_dyn2_*.log`, vout to 1.00 V): the net charge keeps
+falling monotonically. ff/-40 C/1.32 V: +176.0 / +72.7 / -25.7 / -100.6 / -174.8 / -251.6 nA
+at vout 0.50 / 0.60 / 0.70 / 0.80 / 0.90 / 1.00. **At 0.90 V, where the loop actually sits,
+the pump pulls DOWN 175 nA** -- so the detector must be commanding up hard enough to
+overcome that. Theory retracted.
+
+**The data path is healthy there too**: ctle_swing 0.522 V at ff/-40 C (the largest of any
+corner; 0.454 nominal, 0.387-0.390 at the 125 C corners), input swing identical at 0.195 V
+everywhere. So the detector sees good data and still commands up.
+
+Running: `clkcmp_ffm40.spice` -- ring frequency and clkoutp frequency measured in the same
+run. The 687 MHz is read at the output buffer; if the ring is near 600 MHz while clkoutp
+reads 687, the clock path is double-pulsing at this corner (fastest process, cold, high
+supply) and the detector is being fed a mangled clock.
+
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
 0.45: (no swing) / 531.3 / 581.4; 0.30: - / 564.4 / 637.4; 0.15: - / 632.2 / **700.6**.

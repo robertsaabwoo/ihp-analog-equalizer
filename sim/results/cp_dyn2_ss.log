@@ -1,0 +1,662 @@
+[safe_ngspice] cp_dyn2.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Warning: redefinition of .subckt cp_bias, ignored
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * cp_dyn2.spice -- cp_dyn.spice extended to vout 1.00 v.  ff/-40 c runs away to vctrl
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.73000e-09 Reference value :  5.60500e-09 Reference value :  9.31400e-09 Reference value :  1.22440e-08 Reference value :  1.54900e-08 Reference value :  1.85800e-08 Reference value :  2.17440e-08 Reference value :  2.48490e-08 Reference value :  2.77690e-08 Reference value :  3.12890e-08 Reference value :  3.42430e-08 Reference value :  3.72130e-08 Reference value :  4.06170e-08 Reference value :  4.37090e-08 Reference value :  4.69830e-08 Reference value :  4.97480e-08 Reference value :  5.29720e-08 Reference value :  5.60600e-08 Reference value :  5.91980e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  9.615853e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_net_na = 9.615853e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.00200e-09 Reference value :  6.69500e-09 Reference value :  9.79600e-09 Reference value :  1.31760e-08 Reference value :  1.64600e-08 Reference value :  1.94220e-08 Reference value :  2.23440e-08 Reference value :  2.52740e-08 Reference value :  2.82850e-08 Reference value :  3.09130e-08 Reference value :  3.31100e-08 Reference value :  3.54880e-08 Reference value :  3.79430e-08 Reference value :  3.97840e-08 Reference value :  4.17800e-08 Reference value :  4.38070e-08 Reference value :  4.55720e-08 Reference value :  4.75070e-08 Reference value :  4.92620e-08 Reference value :  5.11370e-08 Reference value :  5.32380e-08 Reference value :  5.54820e-08 Reference value :  5.80590e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  2.549317e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_net_na = 2.549317e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.01000e-10 Reference value :  3.83900e-09 Reference value :  7.44100e-09 Reference value :  1.03710e-08 Reference value :  1.32000e-08 Reference value :  1.59940e-08 Reference value :  1.86260e-08 Reference value :  2.12230e-08 Reference value :  2.38930e-08 Reference value :  2.66200e-08 Reference value :  2.93200e-08 Reference value :  3.18120e-08 Reference value :  3.48190e-08 Reference value :  3.76270e-08 Reference value :  4.02610e-08 Reference value :  4.55400e-08 Reference value :  4.58120e-08 Reference value :  4.90020e-08 Reference value :  5.48150e-08 Reference value :  5.82720e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -4.427574e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_net_na = -4.42757e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.69200e-09 Reference value :  8.76800e-09 Reference value :  1.47570e-08 Reference value :  1.47710e-08 Reference value :  1.87460e-08 Reference value :  2.55240e-08 Reference value :  3.27940e-08 Reference value :  3.36350e-08 Reference value :  3.65600e-08 Reference value :  3.89600e-08 Reference value :  4.17680e-08 Reference value :  4.73090e-08 Reference value :  4.73910e-08 Reference value :  4.99730e-08 Reference value :  5.24560e-08 Reference value :  5.41950e-08 Reference value :  5.66106e-08 Reference value :  5.90820e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -1.236932e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 8.000000e-01
+i_net_na = -1.23693e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.46000e-09 Reference value :  4.98700e-09 Reference value :  6.54300e-09 Reference value :  9.33200e-09 Reference value :  1.29580e-08 Reference value :  1.59400e-08 Reference value :  1.82950e-08 Reference value :  2.01730e-08 Reference value :  2.26940e-08 Reference value :  2.52600e-08 Reference value :  2.77090e-08 Reference value :  3.13750e-08 Reference value :  3.55480e-08 Reference value :  4.02290e-08 Reference value :  4.12690e-08 Reference value :  4.46210e-08 Reference value :  4.77090e-08 Reference value :  4.98980e-08 Reference value :  5.21940e-08 Reference value :  5.78710e-08 Reference value :  5.89120e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -2.106260e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 9.000000e-01
+i_net_na = -2.10626e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.13800e-09 Reference value :  4.53900e-09 Reference value :  7.97700e-09 Reference value :  1.05930e-08 Reference value :  1.40710e-08 Reference value :  1.79150e-08 Reference value :  1.91980e-08 Reference value :  2.16426e-08 Reference value :  2.63460e-08 Reference value :  2.63480e-08 Reference value :  2.85540e-08 Reference value :  3.19740e-08 Reference value :  3.51300e-08 Reference value :  4.03050e-08 Reference value :  4.17820e-08 Reference value :  4.82840e-08 Reference value :  4.82850e-08 Reference value :  5.44230e-08 Reference value :  5.44250e-08 Reference value :  5.91460e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -3.585061e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+p_vout = 1.000000e+00
+i_net_na = -3.58506e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.75300e-09 Reference value :  4.70300e-09 Reference value :  7.59100e-09 Reference value :  1.01110e-08 Reference value :  1.30700e-08 Reference value :  1.64900e-08 Reference value :  1.94920e-08 Reference value :  2.06570e-08 Reference value :  2.28840e-08 Reference value :  2.82850e-08 Reference value :  2.87920e-08 Reference value :  3.18100e-08 Reference value :  3.62000e-08 Reference value :  4.07330e-08 Reference value :  4.12990e-08 Reference value :  4.53920e-08 Reference value :  4.79530e-08 Reference value :  5.29200e-08 Reference value :  5.39190e-08 Reference value :  5.65100e-08 Reference value :  5.91440e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.410871e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_net_na = 1.410871e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.46000e-09 Reference value :  4.96500e-09 Reference value :  8.12700e-09 Reference value :  1.12450e-08 Reference value :  1.42650e-08 Reference value :  1.67590e-08 Reference value :  1.96260e-08 Reference value :  2.24400e-08 Reference value :  2.49555e-08 Reference value :  2.76730e-08 Reference value :  3.00990e-08 Reference value :  3.28580e-08 Reference value :  3.55120e-08 Reference value :  3.83120e-08 Reference value :  4.09010e-08 Reference value :  4.29360e-08 Reference value :  4.55940e-08 Reference value :  4.81870e-08 Reference value :  5.10250e-08 Reference value :  5.36610e-08 Reference value :  5.64100e-08 Reference value :  5.93540e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  8.068700e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_net_na = 8.068700e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-09 Reference value :  5.57900e-09 Reference value :  8.93800e-09 Reference value :  1.15350e-08 Reference value :  1.46150e-08 Reference value :  1.73350e-08 Reference value :  1.98720e-08 Reference value :  2.25040e-08 Reference value :  2.52140e-08 Reference value :  2.77890e-08 Reference value :  3.03550e-08 Reference value :  3.28340e-08 Reference value :  3.55560e-08 Reference value :  3.82756e-08 Reference value :  4.07030e-08 Reference value :  4.33590e-08 Reference value :  4.65000e-08 Reference value :  4.91680e-08 Reference value :  5.19860e-08 Reference value :  5.45970e-08 Reference value :  5.74970e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  2.265153e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_net_na = 2.265153e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.99000e-10 Reference value :  3.82300e-09 Reference value :  6.68060e-09 Reference value :  9.48200e-09 Reference value :  1.21740e-08 Reference value :  1.51460e-08 Reference value :  1.75050e-08 Reference value :  2.03590e-08 Reference value :  2.33106e-08 Reference value :  2.56820e-08 Reference value :  2.86900e-08 Reference value :  3.16500e-08 Reference value :  3.44650e-08 Reference value :  3.73110e-08 Reference value :  4.00690e-08 Reference value :  4.26400e-08 Reference value :  4.50440e-08 Reference value :  4.76070e-08 Reference value :  4.96960e-08 Reference value :  5.20980e-08 Reference value :  5.43810e-08 Reference value :  5.58060e-08 Reference value :  5.75470e-08 Reference value :  5.94180e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -5.108416e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 8.000000e-01
+i_net_na = -5.10842e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.80200e-09 Reference value :  4.43700e-09 Reference value :  7.06900e-09 Reference value :  9.79800e-09 Reference value :  1.27000e-08 Reference value :  1.55340e-08 Reference value :  1.81130e-08 Reference value :  2.12290e-08 Reference value :  2.40230e-08 Reference value :  2.67110e-08 Reference value :  2.97420e-08 Reference value :  3.27560e-08 Reference value :  3.58820e-08 Reference value :  3.76790e-08 Reference value :  3.98300e-08 Reference value :  4.27100e-08 Reference value :  4.51280e-08 Reference value :  4.77490e-08 Reference value :  5.09350e-08 Reference value :  5.41070e-08 Reference value :  5.69250e-08 Reference value :  5.99310e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -1.309077e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 9.000000e-01
+i_net_na = -1.30908e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.20000e-09 Reference value :  6.34700e-09 Reference value :  9.42000e-09 Reference value :  1.28060e-08 Reference value :  1.61060e-08 Reference value :  1.91080e-08 Reference value :  2.17200e-08 Reference value :  2.49900e-08 Reference value :  2.82210e-08 Reference value :  3.08330e-08 Reference value :  3.34250e-08 Reference value :  3.63340e-08 Reference value :  3.91380e-08 Reference value :  4.17340e-08 Reference value :  4.49170e-08 Reference value :  4.79690e-08 Reference value :  5.10370e-08 Reference value :  5.40930e-08 Reference value :  5.72190e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -2.166873e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+p_vout = 1.000000e+00
+i_net_na = -2.16687e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.50000e-11 Reference value :  3.28800e-09 Reference value :  6.40300e-09 Reference value :  9.65800e-09 Reference value :  1.24220e-08 Reference value :  1.50660e-08 Reference value :  1.74070e-08 Reference value :  1.97840e-08 Reference value :  2.20900e-08 Reference value :  2.43050e-08 Reference value :  2.66950e-08 Reference value :  2.94200e-08 Reference value :  3.10110e-08 Reference value :  3.31640e-08 Reference value :  3.52960e-08 Reference value :  3.76610e-08 Reference value :  3.99300e-08 Reference value :  4.23840e-08 Reference value :  4.49552e-08 Reference value :  4.71030e-08 Reference value :  4.96700e-08 Reference value :  5.24360e-08 Reference value :  5.52360e-08 Reference value :  5.79330e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.784248e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_net_na = 1.784248e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.50000e-11 Reference value :  2.24600e-09 Reference value :  4.53300e-09 Reference value :  7.46500e-09 Reference value :  1.01450e-08 Reference value :  1.30660e-08 Reference value :  1.54660e-08 Reference value :  1.82950e-08 Reference value :  2.08830e-08 Reference value :  2.36110e-08 Reference value :  2.61380e-08 Reference value :  2.88620e-08 Reference value :  3.11530e-08 Reference value :  3.34250e-08 Reference value :  3.59940e-08 Reference value :  3.88860e-08 Reference value :  4.14510e-08 Reference value :  4.40210e-08 Reference value :  4.64220e-08 Reference value :  4.82410e-08 Reference value :  4.98960e-08 Reference value :  5.25540e-08 Reference value :  5.47990e-08 Reference value :  5.70690e-08 Reference value :  5.95220e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.253520e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_net_na = 1.253520e+02
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.95800e-09 Reference value :  5.21700e-09 Reference value :  8.56800e-09 Reference value :  1.11450e-08 Reference value :  1.40310e-08 Reference value :  1.60900e-08 Reference value :  1.82070e-08 Reference value :  2.05250e-08 Reference value :  2.27760e-08 Reference value :  2.49686e-08 Reference value :  2.74250e-08 Reference value :  2.95680e-08 Reference value :  3.19960e-08 Reference value :  3.42330e-08 Reference value :  3.66060e-08 Reference value :  3.90880e-08 Reference value :  4.19680e-08 Reference value :  4.43970e-08 Reference value :  4.70430e-08 Reference value :  4.95020e-08 Reference value :  5.21520e-08 Reference value :  5.45910e-08 Reference value :  5.68710e-08 Reference value :  5.86700e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  8.078040e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_net_na = 8.078040e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.07000e-10 Reference value :  4.19500e-09 Reference value :  7.18500e-09 Reference value :  1.00450e-08 Reference value :  1.27880e-08 Reference value :  1.52500e-08 Reference value :  1.74090e-08 Reference value :  1.93380e-08 Reference value :  2.19100e-08 Reference value :  2.46310e-08 Reference value :  2.69010e-08 Reference value :  2.93800e-08 Reference value :  3.16720e-08 Reference value :  3.43810e-08 Reference value :  3.68330e-08 Reference value :  3.92420e-08 Reference value :  4.16280e-08 Reference value :  4.37070e-08 Reference value :  4.61160e-08 Reference value :  4.84820e-08 Reference value :  5.09730e-08 Reference value :  5.26820e-08 Reference value :  5.52040e-08 Reference value :  5.72490e-08 Reference value :  5.93400e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30542
+i_net_na            =  1.621853e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 8.000000e-01
+i_net_na = 1.621853e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.04200e-09 Reference value :  3.92300e-09 Reference value :  5.63900e-09 Reference value :  8.52600e-09 Reference value :  1.11170e-08 Reference value :  1.33430e-08 Reference value :  1.57100e-08 Reference value :  1.80190e-08 Reference value :  2.01870e-08 Reference value :  2.23820e-08 Reference value :  2.48130e-08 Reference value :  2.69010e-08 Reference value :  2.90680e-08 Reference value :  3.07350e-08 Reference value :  3.25980e-08 Reference value :  3.48350e-08 Reference value :  3.66830e-08 Reference value :  3.88620e-08 Reference value :  4.12490e-08 Reference value :  4.35430e-08 Reference value :  4.56720e-08 Reference value :  4.81110e-08 Reference value :  5.02450e-08 Reference value :  5.24180e-08 Reference value :  5.49620e-08 Reference value :  5.72790e-08 Reference value :  5.90000e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -5.757885e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 9.000000e-01
+i_net_na = -5.75789e+01
+ROWEND
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.01900e-09 Reference value :  3.30400e-09 Reference value :  5.57700e-09 Reference value :  8.28900e-09 Reference value :  9.63400e-09 Reference value :  1.17880e-08 Reference value :  1.40490e-08 Reference value :  1.64240e-08 Reference value :  1.87100e-08 Reference value :  2.12230e-08 Reference value :  2.36830e-08 Reference value :  2.59860e-08 Reference value :  2.82850e-08 Reference value :  3.08490e-08 Reference value :  3.32660e-08 Reference value :  3.55020e-08 Reference value :  3.79150e-08 Reference value :  4.06830e-08 Reference value :  4.30260e-08 Reference value :  4.56480e-08 Reference value :  4.81830e-08 Reference value :  5.04370e-08 Reference value :  5.29500e-08 Reference value :  5.50740e-08 Reference value :  5.75430e-08 Reference value :  5.96580e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -1.359334e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+p_vout = 1.000000e+00
+i_net_na = -1.35933e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.11400e-09 Reference value :  4.82900e-09 Reference value :  7.38500e-09 Reference value :  9.51000e-09 Reference value :  1.19660e-08 Reference value :  1.42270e-08 Reference value :  1.65780e-08 Reference value :  1.88520e-08 Reference value :  2.05770e-08 Reference value :  2.25680e-08 Reference value :  2.47850e-08 Reference value :  2.65840e-08 Reference value :  2.88380e-08 Reference value :  3.08850e-08 Reference value :  3.28360e-08 Reference value :  3.46630e-08 Reference value :  3.64060e-08 Reference value :  3.84660e-08 Reference value :  4.01690e-08 Reference value :  4.21740e-08 Reference value :  4.42350e-08 Reference value :  4.63640e-08 Reference value :  4.86380e-08 Reference value :  5.07350e-08 Reference value :  5.28060e-08 Reference value :  5.49464e-08 Reference value :  5.71750e-08 Reference value :  5.91120e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  9.736433e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_net_na = 9.736433e+01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.37500e-09 Reference value :  2.72400e-09 Reference value :  5.44300e-09 Reference value :  8.00500e-09 Reference value :  9.95000e-09 Reference value :  1.21040e-08 Reference value :  1.43230e-08 Reference value :  1.63200e-08 Reference value :  1.83820e-08 Reference value :  2.00870e-08 Reference value :  2.21640e-08 Reference value :  2.42730e-08 Reference value :  2.61800e-08 Reference value :  2.83680e-08 Reference value :  3.05350e-08 Reference value :  3.25560e-08 Reference value :  3.45910e-08 Reference value :  3.64640e-08 Reference value :  3.87360e-08 Reference value :  4.01030e-08 Reference value :  4.19100e-08 Reference value :  4.39110e-08 Reference value :  4.57240e-08 Reference value :  4.75690e-08 Reference value :  4.92380e-08 Reference value :  5.13250e-08 Reference value :  5.31340e-08 Reference value :  5.52660e-08 Reference value :  5.71850e-08 Reference value :  5.91460e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  1.363535e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_net_na = 1.363535e+01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.50900e-09 Reference value :  4.05900e-09 Reference value :  6.74700e-09 Reference value :  9.20600e-09 Reference value :  1.16820e-08 Reference value :  1.38930e-08 Reference value :  1.61560e-08 Reference value :  1.82650e-08 Reference value :  1.97680e-08 Reference value :  2.18460e-08 Reference value :  2.33370e-08 Reference value :  2.51780e-08 Reference value :  2.72230e-08 Reference value :  2.91400e-08 Reference value :  3.12470e-08 Reference value :  3.30900e-08 Reference value :  3.51300e-08 Reference value :  3.72650e-08 Reference value :  3.93560e-08 Reference value :  4.11990e-08 Reference value :  4.29640e-08 Reference value :  4.52220e-08 Reference value :  4.74210e-08 Reference value :  4.96880e-08 Reference value :  5.18520e-08 Reference value :  5.40010e-08 Reference value :  5.60880e-08 Reference value :  5.84520e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -6.342240e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_net_na = -6.34224e+01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.95000e-10 Reference value :  3.34300e-09 Reference value :  6.58100e-09 Reference value :  9.62600e-09 Reference value :  1.24260e-08 Reference value :  1.55740e-08 Reference value :  1.83440e-08 Reference value :  2.12390e-08 Reference value :  2.42370e-08 Reference value :  2.72630e-08 Reference value :  3.00010e-08 Reference value :  3.31820e-08 Reference value :  3.52640e-08 Reference value :  3.79670e-08 Reference value :  4.08170e-08 Reference value :  4.21300e-08 Reference value :  4.36510e-08 Reference value :  4.51200e-08 Reference value :  4.72090e-08 Reference value :  4.91000e-08 Reference value :  5.10870e-08 Reference value :  5.28380e-08 Reference value :  5.51040e-08 Reference value :  5.78730e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -1.403201e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 8.000000e-01
+i_net_na = -1.40320e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.50000e-11 Reference value :  2.66200e-09 Reference value :  5.41300e-09 Reference value :  8.35200e-09 Reference value :  1.15710e-08 Reference value :  1.45910e-08 Reference value :  1.72690e-08 Reference value :  2.03990e-08 Reference value :  2.32900e-08 Reference value :  2.58460e-08 Reference value :  2.83800e-08 Reference value :  3.11330e-08 Reference value :  3.36530e-08 Reference value :  3.65120e-08 Reference value :  3.90160e-08 Reference value :  4.16450e-08 Reference value :  4.43850e-08 Reference value :  4.75410e-08 Reference value :  5.07050e-08 Reference value :  5.36990e-08 Reference value :  5.65340e-08 Reference value :  5.91000e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -2.253607e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 9.000000e-01
+i_net_na = -2.25361e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.71400e-09 Reference value :  5.23900e-09 Reference value :  8.94800e-09 Reference value :  1.16500e-08 Reference value :  1.35930e-08 Reference value :  1.61960e-08 Reference value :  1.81730e-08 Reference value :  2.03390e-08 Reference value :  2.28500e-08doAnalyses: TRAN:  Timestep too small; time = 2.4955e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+i_net_na            =  -2.144299e-07 from=  2.000000e-08 to=  2.495500e-08
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+p_vout = 1.000000e+00
+i_net_na = -2.14430e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.85200e-09 Reference value :  6.00100e-09 Reference value :  9.05200e-09 Reference value :  1.15410e-08 Reference value :  1.41530e-08 Reference value :  1.66140e-08 Reference value :  1.82610e-08 Reference value :  2.01750e-08 Reference value :  2.27600e-08 Reference value :  2.52920e-08 Reference value :  2.77050e-08 Reference value :  3.03890e-08 Reference value :  3.27720e-08 Reference value :  3.57100e-08 Reference value :  3.79270e-08 Reference value :  4.03470e-08 Reference value :  4.28080e-08 Reference value :  4.50380e-08 Reference value :  4.78050e-08 Reference value :  5.06330e-08 Reference value :  5.29900e-08 Reference value :  5.57300e-08 Reference value :  5.77630e-08 Reference value :  5.98880e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.378397e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_net_na = 1.378397e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.82200e-09 Reference value :  5.86100e-09 Reference value :  9.16400e-09 Reference value :  1.16740e-08 Reference value :  1.40170e-08 Reference value :  1.60460e-08 Reference value :  1.86880e-08 Reference value :  2.05830e-08 Reference value :  2.26500e-08 Reference value :  2.49390e-08 Reference value :  2.75790e-08 Reference value :  2.98920e-08 Reference value :  3.21720e-08 Reference value :  3.48310e-08 Reference value :  3.72730e-08 Reference value :  3.98020e-08 Reference value :  4.21900e-08 Reference value :  4.50240e-08 Reference value :  4.73510e-08 Reference value :  4.99790e-08 Reference value :  5.26820e-08 Reference value :  5.46850e-08 Reference value :  5.66470e-08 Reference value :  5.87220e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  6.572678e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_net_na = 6.572678e+01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.77000e-10 Reference value :  2.97800e-09 Reference value :  5.09100e-09 Reference value :  7.16500e-09 Reference value :  9.71800e-09 Reference value :  1.05210e-08 Reference value :  1.27320e-08 Reference value :  1.53740e-08 Reference value :  1.69890e-08 Reference value :  1.89660e-08 Reference value :  2.11570e-08 Reference value :  2.35810e-08 Reference value :  2.53880e-08 Reference value :  2.74990e-08 Reference value :  2.96300e-08 Reference value :  3.21140e-08 Reference value :  3.42310e-08 Reference value :  3.60480e-08 Reference value :  3.84820e-08 Reference value :  4.03810e-08 Reference value :  4.26940e-08 Reference value :  4.47730e-08 Reference value :  4.68290e-08 Reference value :  4.94480e-08 Reference value :  5.20100e-08 Reference value :  5.39230e-08 Reference value :  5.53920e-08 Reference value :  5.68110e-08 Reference value :  5.86480e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -9.776799e-10 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_net_na = -9.77680e-01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.77000e-10 Reference value :  2.85600e-09 Reference value :  5.28300e-09 Reference value :  7.90900e-09 Reference value :  9.94800e-09 Reference value :  1.23320e-08 Reference value :  1.46270e-08 Reference value :  1.67930e-08 Reference value :  1.93000e-08 Reference value :  2.18720e-08 Reference value :  2.46410e-08 Reference value :  2.71310e-08 Reference value :  2.98160e-08 Reference value :  3.24980e-08 Reference value :  3.53080e-08 Reference value :  3.79690e-08 Reference value :  4.08850e-08 Reference value :  4.35890e-08 Reference value :  4.61680e-08 Reference value :  4.87300e-08 Reference value :  5.18520e-08 Reference value :  5.48270e-08 Reference value :  5.77970e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -7.225806e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 8.000000e-01
+i_net_na = -7.22581e+01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.19000e-10 Reference value :  3.86300e-09 Reference value :  6.83300e-09 Reference value :  9.34400e-09 Reference value :  1.02030e-08 Reference value :  1.27540e-08 Reference value :  1.53440e-08 Reference value :  1.80110e-08 Reference value :  2.04010e-08 Reference value :  2.34430e-08 Reference value :  2.62560e-08 Reference value :  2.92060e-08 Reference value :  3.16700e-08 Reference value :  3.46530e-08 Reference value :  3.79370e-08 Reference value :  4.10570e-08 Reference value :  4.40330e-08 Reference value :  4.74390e-08 Reference value :  5.08270e-08 Reference value :  5.35910e-08 Reference value :  5.63960e-08 Reference value :  5.91440e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -1.486347e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 9.000000e-01
+i_net_na = -1.48635e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.72600e-09 Reference value :  4.82900e-09 Reference value :  7.87700e-09 Reference value :  1.11410e-08 Reference value :  1.43570e-08 Reference value :  1.74730e-08 Reference value :  2.05110e-08 Reference value :  2.30840e-08 Reference value :  2.58120e-08 Reference value :  2.87000e-08 Reference value :  3.13250e-08 Reference value :  3.37830e-08 Reference value :  3.64100e-08 Reference value :  3.94480e-08 Reference value :  4.25580e-08 Reference value :  4.51820e-08 Reference value :  4.79690e-08 Reference value :  5.06750e-08 Reference value :  5.33170e-08 Reference value :  5.61900e-08 Reference value :  5.88780e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -2.318649e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+p_vout = 1.000000e+00
+i_net_na = -2.31865e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.81200e-09 Reference value :  4.74500e-09 Reference value :  7.12500e-09 Reference value :  9.68000e-09 Reference value :  1.17020e-08 Reference value :  1.40390e-08 Reference value :  1.63900e-08 Reference value :  1.82950e-08 Reference value :  2.03890e-08 Reference value :  2.26780e-08 Reference value :  2.47910e-08 Reference value :  2.64860e-08 Reference value :  2.82850e-08 Reference value :  3.03010e-08 Reference value :  3.22820e-08 Reference value :  3.42210e-08 Reference value :  3.63740e-08 Reference value :  3.88480e-08 Reference value :  4.08930e-08 Reference value :  4.30520e-08 Reference value :  4.52620e-08 Reference value :  4.72470e-08 Reference value :  4.93420e-08 Reference value :  5.13610e-08 Reference value :  5.33950e-08 Reference value :  5.57000e-08 Reference value :  5.76190e-08 Reference value :  5.91400e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.691667e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_net_na = 1.691667e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.87000e-10 Reference value :  3.07800e-09 Reference value :  5.15900e-09 Reference value :  7.68100e-09 Reference value :  9.78000e-09 Reference value :  1.22540e-08 Reference value :  1.41810e-08 Reference value :  1.65020e-08 Reference value :  1.83560e-08 Reference value :  2.03330e-08 Reference value :  2.27500e-08 Reference value :  2.45890e-08 Reference value :  2.66406e-08 Reference value :  2.90360e-08 Reference value :  3.10070e-08 Reference value :  3.32400e-08 Reference value :  3.58340e-08 Reference value :  3.84500e-08 Reference value :  4.08710e-08 Reference value :  4.29360e-08 Reference value :  4.51520e-08 Reference value :  4.76690e-08 Reference value :  4.93240e-08 Reference value :  5.10370e-08 Reference value :  5.28220e-08 Reference value :  5.44310e-08 Reference value :  5.63280e-08 Reference value :  5.84680e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.065612e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_net_na = 1.065612e+02
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.30000e-11 Reference value :  2.76000e-09 Reference value :  5.40300e-09 Reference value :  8.58800e-09 Reference value :  1.10870e-08 Reference value :  1.40670e-08 Reference value :  1.69050e-08 Reference value :  1.92940e-08 Reference value :  2.15050e-08 Reference value :  2.35650e-08 Reference value :  2.58980e-08 Reference value :  2.83280e-08 Reference value :  3.06750e-08 Reference value :  3.27640e-08 Reference value :  3.51440e-08 Reference value :  3.76930e-08 Reference value :  4.02870e-08 Reference value :  4.27340e-08 Reference value :  4.51520e-08 Reference value :  4.76930e-08 Reference value :  4.98420e-08 Reference value :  5.24940e-08 Reference value :  5.50920e-08 Reference value :  5.69990e-08 Reference value :  5.91340e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  5.298488e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_net_na = 5.298488e+01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.89000e-10 Reference value :  3.96100e-09 Reference value :  7.00500e-09 Reference value :  9.83800e-09 Reference value :  1.24540e-08 Reference value :  1.51860e-08 Reference value :  1.78230e-08 Reference value :  2.04310e-08 Reference value :  2.28160e-08 Reference value :  2.50900e-08 Reference value :  2.78970e-08 Reference value :  3.40570e-08 Reference value :  3.40590e-08 Reference value :  3.66730e-08 Reference value :  3.93480e-08 Reference value :  4.39670e-08 Reference value :  4.48750e-08 Reference value :  4.76910e-08 Reference value :  4.97540e-08 Reference value :  5.24800e-08 Reference value :  5.54600e-08 Reference value :  5.91440e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -9.174576e-09 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 8.000000e-01
+i_net_na = -9.17458e+00
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.24800e-09 Reference value :  7.25100e-09 Reference value :  1.01710e-08 Reference value :  1.22280e-08 Reference value :  1.45730e-08 Reference value :  1.71070e-08 Reference value :  1.90260e-08 Reference value :  2.30120e-08 Reference value :  2.67010e-08 Reference value :  2.89440e-08 Reference value :  3.46070e-08 Reference value :  3.46090e-08 Reference value :  3.67870e-08 Reference value :  3.87040e-08 Reference value :  4.16100e-08 Reference value :  4.36910e-08 Reference value :  4.58520e-08 Reference value :  4.85600e-08 Reference value :  5.13990e-08 Reference value :  5.40950e-08 Reference value :  5.65100e-08 Reference value :  5.87840e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -7.976746e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 9.000000e-01
+i_net_na = -7.97675e+01
+ROWEND
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.34900e-09 Reference value :  4.39900e-09 Reference value :  7.89700e-09 Reference value :  1.05630e-08 Reference value :  1.38930e-08 Reference value :  1.69990e-08 Reference value :  1.94200e-08 Reference value :  2.19420e-08 Reference value :  2.47870e-08 Reference value :  2.76270e-08 Reference value :  3.07810e-08 Reference value :  3.45270e-08 Reference value :  3.78750e-08 Reference value :  4.02850e-08 Reference value :  4.30980e-08 Reference value :  4.58800e-08 Reference value :  4.87720e-08 Reference value :  5.19040e-08 Reference value :  5.46630e-08 Reference value :  5.74290e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -1.549087e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+p_vout = 1.000000e+00
+i_net_na = -1.54909e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.55000e-10 Reference value :  3.35000e-09 Reference value :  5.93500e-09 Reference value :  8.73400e-09 Reference value :  9.94400e-09 Reference value :  1.24760e-08 Reference value :  1.46790e-08 Reference value :  1.68010e-08 Reference value :  1.94060e-08 Reference value :  2.16840e-08 Reference value :  2.41870e-08 Reference value :  2.66930e-08 Reference value :  2.89820e-08 Reference value :  3.05910e-08 Reference value :  3.29440e-08 Reference value :  3.50800e-08 Reference value :  3.72050e-08 Reference value :  3.97660e-08 Reference value :  4.20560e-08 Reference value :  4.43190e-08 Reference value :  4.67210e-08 Reference value :  4.94860e-08 Reference value :  5.17920e-08 Reference value :  5.39770e-08 Reference value :  5.63240e-08 Reference value :  5.90880e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  9.704975e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 5.000000e-01
+i_net_na = 9.704975e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.86600e-09 Reference value :  5.31700e-09 Reference value :  8.84400e-09 Reference value :  1.17580e-08 Reference value :  1.43610e-08 Reference value :  1.69690e-08 Reference value :  1.96660e-08 Reference value :  2.23440e-08 Reference value :  2.47350e-08 Reference value :  2.67550e-08 Reference value :  2.94360e-08 Reference value :  3.22980e-08 Reference value :  3.44330e-08 Reference value :  3.65380e-08 Reference value :  3.90460e-08 Reference value :  4.15450e-08 Reference value :  4.38050e-08 Reference value :  4.58120e-08 Reference value :  4.83050e-08 Reference value :  5.08850e-08 Reference value :  5.30800e-08 Reference value :  5.56140e-08 Reference value :  5.83160e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  1.274705e-09 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 6.000000e-01
+i_net_na = 1.274705e+00
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.07000e-10 Reference value :  4.19100e-09 Reference value :  7.18500e-09 Reference value :  9.20000e-09 Reference value :  1.19840e-08 Reference value :  1.44350e-08 Reference value :  1.64040e-08 Reference value :  1.87780e-08 Reference value :  2.09190e-08 Reference value :  2.32380e-08 Reference value :  2.57100e-08 Reference value :  2.83420e-08 Reference value :  3.09190e-08 Reference value :  3.30640e-08 Reference value :  3.59260e-08 Reference value :  3.88940e-08 Reference value :  4.13230e-08 Reference value :  4.38650e-08 Reference value :  4.52060e-08 Reference value :  4.75790e-08 Reference value :  4.98740e-08 Reference value :  5.21780e-08 Reference value :  5.48570e-08 Reference value :  5.75630e-08 Reference value :  5.99206e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -8.657134e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 7.000000e-01
+i_net_na = -8.65713e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.53800e-09 Reference value :  4.85500e-09 Reference value :  6.61900e-09 Reference value :  9.26800e-09 Reference value :  1.21860e-08 Reference value :  1.53280e-08 Reference value :  1.86320e-08 Reference value :  2.12870e-08 Reference value :  2.44210e-08 Reference value :  2.75330e-08 Reference value :  3.08650e-08 Reference value :  3.38710e-08 Reference value :  3.68930e-08 Reference value :  4.02510e-08 Reference value :  4.34650e-08 Reference value :  4.68010e-08 Reference value :  5.01130e-08 Reference value :  5.32580e-08 Reference value :  5.60400e-08 Reference value :  5.86900e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -1.627956e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 8.000000e-01
+i_net_na = -1.62796e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.48900e-09 Reference value :  4.97100e-09 Reference value :  8.30560e-09 Reference value :  1.12190e-08 Reference value :  1.43150e-08 Reference value :  1.74170e-08 Reference value :  2.04190e-08 Reference value :  2.32900e-08 Reference value :  2.60040e-08 Reference value :  2.89540e-08 Reference value :  3.18720e-08 Reference value :  3.50180e-08 Reference value :  3.81910e-08 Reference value :  4.13070e-08 Reference value :  4.43390e-08 Reference value :  4.74310e-08 Reference value :  5.00330e-08 Reference value :  5.31320e-08 Reference value :  5.61000e-08 Reference value :  5.91780e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -2.494728e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 9.000000e-01
+i_net_na = -2.49473e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.43200e-09 Reference value :  5.58300e-09 Reference value :  8.65600e-09 Reference value :  1.08290e-08 Reference value :  1.41750e-08 Reference value :  1.72490e-08 Reference value :  2.04450e-08 Reference value :  2.32440e-08 Reference value :  2.63620e-08 Reference value :  2.91340e-08 Reference value :  3.23040e-08 Reference value :  3.55060e-08 Reference value :  3.85460e-08 Reference value :  4.11890e-08 Reference value :  4.41030e-08 Reference value :  4.72410e-08 Reference value :  4.94040e-08 Reference value :  5.10390e-08 Reference value :  5.34310e-08 Reference value :  5.59160e-08 Reference value :  5.86920e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30538
+i_net_na            =  -4.376032e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+p_vout = 1.000000e+00
+i_net_na = -4.37603e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.56500e-09 Reference value :  4.78500e-09 Reference value :  7.35100e-09 Reference value :  9.33800e-09 Reference value :  1.15530e-08 Reference value :  1.39870e-08 Reference value :  1.65660e-08 Reference value :  1.89860e-08 Reference value :  2.14690e-08 Reference value :  2.37650e-08 Reference value :  2.59660e-08 Reference value :  2.83820e-08 Reference value :  3.10850e-08 Reference value :  3.37970e-08 Reference value :  3.63180e-08 Reference value :  3.88760e-08 Reference value :  4.16520e-08 Reference value :  4.42430e-08 Reference value :  4.66930e-08 Reference value :  4.93940e-08 Reference value :  5.19320e-08 Reference value :  5.45150e-08 Reference value :  5.62840e-08 Reference value :  5.87040e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.321879e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 5.000000e-01
+i_net_na = 1.321879e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.08500e-09 Reference value :  4.24300e-09 Reference value :  7.24300e-09 Reference value :  9.92800e-09 Reference value :  1.26020e-08 Reference value :  1.57000e-08 Reference value :  1.82930e-08 Reference value :  2.08890e-08 Reference value :  2.35350e-08 Reference value :  2.62260e-08 Reference value :  2.87120e-08 Reference value :  3.10630e-08 Reference value :  3.40210e-08 Reference value :  3.63320e-08 Reference value :  3.91920e-08 Reference value :  4.21160e-08 Reference value :  4.47990e-08 Reference value :  4.72690e-08 Reference value :  5.00550e-08 Reference value :  5.31300e-08 Reference value :  5.56460e-08 Reference value :  5.78750e-08 Reference value :  5.97760e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  4.906565e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 6.000000e-01
+i_net_na = 4.906565e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.55000e-09 Reference value :  5.48900e-09 Reference value :  8.68800e-09 Reference value :  1.13870e-08 Reference value :  1.34510e-08 Reference value :  1.63180e-08 Reference value :  1.90200e-08 Reference value :  2.13930e-08 Reference value :  2.38130e-08 Reference value :  2.63000e-08 Reference value :  2.90480e-08 Reference value :  3.12270e-08 Reference value :  3.32360e-08 Reference value :  3.54820e-08 Reference value :  3.69390e-08 Reference value :  3.88520e-08 Reference value :  4.12250e-08 Reference value :  4.35030e-08 Reference value :  4.58020e-08 Reference value :  4.78690e-08 Reference value :  4.99910e-08 Reference value :  5.20800e-08 Reference value :  5.40430e-08 Reference value :  5.61720e-08 Reference value :  5.87080e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -2.909504e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 7.000000e-01
+i_net_na = -2.90950e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.45000e-10 Reference value :  4.20100e-09 Reference value :  7.21900e-09 Reference value :  9.87400e-09 Reference value :  1.25820e-08 Reference value :  1.51000e-08 Reference value :  1.79350e-08 Reference value :  2.00610e-08 Reference value :  2.23420e-08 Reference value :  2.46270e-08 Reference value :  2.69650e-08 Reference value :  2.94280e-08 Reference value :  3.22520e-08 Reference value :  3.46030e-08 Reference value :  3.72430e-08 Reference value :  3.99530e-08 Reference value :  4.26400e-08 Reference value :  4.53540e-08 Reference value :  4.79390e-08 Reference value :  5.07370e-08 Reference value :  5.33510e-08 Reference value :  5.59400e-08 Reference value :  5.85760e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -9.884809e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 8.000000e-01
+i_net_na = -9.88481e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.97000e-10 Reference value :  3.97500e-09 Reference value :  6.67700e-09 Reference value :  9.52000e-09 Reference value :  1.21600e-08 Reference value :  1.50800e-08 Reference value :  1.82150e-08 Reference value :  2.12750e-08 Reference value :  2.43550e-08 Reference value :  2.71710e-08 Reference value :  2.99502e-08 Reference value :  3.25760e-08 Reference value :  3.53000e-08 Reference value :  3.78430e-08 Reference value :  4.05810e-08 Reference value :  4.32902e-08 Reference value :  4.60680e-08 Reference value :  4.88500e-08 Reference value :  5.17020e-08 Reference value :  5.43670e-08 Reference value :  5.70310e-08 Reference value :  5.96980e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -1.717939e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 9.000000e-01
+i_net_na = -1.71794e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.44600e-09 Reference value :  5.79300e-09 Reference value :  8.96800e-09 Reference value :  1.21960e-08 Reference value :  1.52060e-08 Reference value :  1.82955e-08 Reference value :  2.09570e-08 Reference value :  2.40310e-08 Reference value :  2.69530e-08 Reference value :  3.01090e-08 Reference value :  3.32060e-08 Reference value :  3.59620e-08 Reference value :  3.87280e-08 Reference value :  4.13190e-08 Reference value :  4.43370e-08 Reference value :  4.69190e-08 Reference value :  4.92100e-08 Reference value :  5.17300e-08 Reference value :  5.45290e-08 Reference value :  5.73250e-08 Reference value :  5.95620e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -2.548421e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+p_vout = 1.000000e+00
+i_net_na = -2.54842e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.24200e-09 Reference value :  3.68100e-09 Reference value :  6.09300e-09 Reference value :  8.83200e-09 Reference value :  1.10890e-08 Reference value :  1.35530e-08 Reference value :  1.57520e-08 Reference value :  1.79930e-08 Reference value :  2.02910e-08 Reference value :  2.26720e-08 Reference value :  2.46770e-08 Reference value :  2.69310e-08 Reference value :  2.95400e-08 Reference value :  3.14790e-08 Reference value :  3.32780e-08 Reference value :  3.57420e-08 Reference value :  3.79750e-08 Reference value :  4.03270e-08 Reference value :  4.23700e-08 Reference value :  4.44770e-08 Reference value :  4.70390e-08 Reference value :  4.98660e-08 Reference value :  5.21840e-08 Reference value :  5.39670e-08 Reference value :  5.64260e-08 Reference value :  5.82940e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.562478e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 5.000000e-01
+i_net_na = 1.562478e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.30000e-11 Reference value :  2.30800e-09 Reference value :  5.29500e-09 Reference value :  7.39300e-09 Reference value :  8.87000e-09 Reference value :  1.11850e-08 Reference value :  1.33890e-08 Reference value :  1.56700e-08 Reference value :  1.78470e-08 Reference value :  1.99830e-08 Reference value :  2.17920e-08 Reference value :  2.40250e-08 Reference value :  2.62520e-08 Reference value :  2.89280e-08 Reference value :  3.16350e-08 Reference value :  3.41490e-08 Reference value :  3.69510e-08 Reference value :  3.97700e-08 Reference value :  4.24180e-08 Reference value :  4.50640e-08 Reference value :  4.73870e-08 Reference value :  4.95520e-08 Reference value :  5.17820e-08 Reference value :  5.28700e-08 Reference value :  5.53600e-08 Reference value :  5.74430e-08 Reference value :  5.98820e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  8.511260e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 6.000000e-01
+i_net_na = 8.511260e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.93200e-09 Reference value :  5.67500e-09 Reference value :  8.70800e-09 Reference value :  1.18920e-08 Reference value :  1.47910e-08 Reference value :  1.73330e-08 Reference value :  1.95840e-08 Reference value :  2.22100e-08 Reference value :  2.45750e-08 Reference value :  2.66200e-08 Reference value :  2.94440e-08 Reference value :  3.19000e-08 Reference value :  3.41810e-08 Reference value :  3.65140e-08 Reference value :  3.90520e-08 Reference value :  4.15770e-08 Reference value :  4.40550e-08 Reference value :  4.62180e-08 Reference value :  4.88400e-08 Reference value :  5.14390e-08 Reference value :  5.39970e-08 Reference value :  5.62320e-08 Reference value :  5.87700e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  1.951501e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 7.000000e-01
+i_net_na = 1.951501e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.47000e-10 Reference value :  3.76700e-09 Reference value :  6.65700e-09 Reference value :  9.50400e-09 Reference value :  1.24040e-08 Reference value :  1.50540e-08 Reference value :  1.69070e-08 Reference value :  1.94740e-08 Reference value :  2.18940e-08 Reference value :  2.44130e-08 Reference value :  2.65540e-08 Reference value :  2.88960e-08 Reference value :  3.18500e-08 Reference value :  3.45250e-08 Reference value :  3.73550e-08 Reference value :  3.97280e-08 Reference value :  4.26380e-08 Reference value :  4.55420e-08 Reference value :  4.79250e-08 Reference value :  5.07010e-08 Reference value :  5.34750e-08 Reference value :  5.62500e-08 Reference value :  5.86460e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -4.103180e-08 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 8.000000e-01
+i_net_na = -4.10318e+01
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.29500e-09 Reference value :  4.47300e-09 Reference value :  7.51500e-09 Reference value :  1.03690e-08 Reference value :  1.28040e-08 Reference value :  1.50440e-08 Reference value :  1.72290e-08 Reference value :  1.94420e-08 Reference value :  2.19700e-08 Reference value :  2.46350e-08 Reference value :  2.69370e-08 Reference value :  2.94200e-08 Reference value :  3.23900e-08 Reference value :  3.54960e-08 Reference value :  3.85580e-08 Reference value :  4.14870e-08 Reference value :  4.43510e-08 Reference value :  4.70910e-08 Reference value :  4.95800e-08 Reference value :  5.21840e-08 Reference value :  5.49150e-08 Reference value :  5.76990e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 30539
+i_net_na            =  -1.074399e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 9.000000e-01
+i_net_na = -1.07440e+02
+ROWEND
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.70000e-11 Reference value :  3.51700e-09 Reference value :  6.69900e-09 Reference value :  9.76200e-09 Reference value :  1.30640e-08 Reference value :  1.62060e-08 Reference value :  1.96920e-08 Reference value :  2.30380e-08 Reference value :  2.60960e-08 Reference value :  2.95500e-08 Reference value :  3.28080e-08 Reference value :  3.56600e-08 Reference value :  3.87160e-08 Reference value :  4.15130e-08 Reference value :  4.43670e-08 Reference value :  4.76430e-08 Reference value :  5.08530e-08 Reference value :  5.34010e-08 Reference value :  5.66670e-08 Reference value :  5.99710e-08
+No. of Data Rows : 30539
+i_net_na            =  -1.790487e-07 from=  2.000000e-08 to=  6.000000e-08
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+p_vout = 1.000000e+00
+i_net_na = -1.79049e+02
+ROWEND
+ngspice-42 done
+[safe_ngspice] exit rc=0
