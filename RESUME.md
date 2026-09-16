@@ -551,7 +551,21 @@ Closed loop, PRBS7, **trim pinned off**, sb stage + cp_bias in the netlist:
 Logs: `e2e_prbs_ffm40_132.log`, `e2e_prbs_ttm40_12.log`, seeds in
 `vco_ct_seed_*.log`. The cold failures are the same upward-runaway signature the hot
 corners had before cp_bias, and the clock is healthy there (swing 1.34-1.42 V), so it is
-a loop problem, not a clock one. Cause **not yet identified**.
+a loop problem, not a clock one. Cause **not yet identified**. What is measured so far:
+
+- **Pump balance is not it.** With cp_bias at tt/-40 C/1.2 V the pump is +0.3 % at vout
+  0.60 V and -2.6 % at 0.70 V; at ff/-40 C/1.32 V it is -4.1 % / -8.3 % (slightly
+  *down*-heavy, i.e. pushing the way opposite the observed climb)
+  (`cp_ibias_pvt2_*.log`, Lm 8 / Wp2 1.45).
+- **Ring gain at 600.6 MHz** (from `vco_ct_seed_*.log`): tt/125 C 260 MHz/V (locks),
+  ff/125 C/1.32 V 721 MHz/V (locks), tt/-40 C/1.2 V 600 MHz/V (fails),
+  ff/-40 C/1.32 V 1249 MHz/V (fails). **Gain alone does not separate pass from fail**:
+  ff/125 C locks at a higher ring gain than tt/-40 C fails at, with pump currents within
+  6 % (783 vs 833 nA). A cold-specific second term is likely -- the loop filter's `rhigh`
+  resistor rises as it cools, so each detector decision kicks the frequency harder
+  (proportional path). **Not measured.**
+- Running: `e2e_prbs_ttm40_halfgain.spice` (cp_bias mirror L 8 -> 16 um, ~half pump
+  current, sim-only override) at tt/-40 C/1.2 V. Locks -> loop gain; still fails -> not gain.
 
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
