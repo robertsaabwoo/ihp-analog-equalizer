@@ -132,30 +132,39 @@ x1 cinp cinm ibias clkoutp clkoutm Vdd Vss ctle_cdr_rx
 * out-of-band signature of docs/RING_DUAL_LOOP.md section 2, not a lock.
 .ic v(x1.x2.vctrl)=0.70
 
-* clkcmp_ffm40.spice -- is the recovered clock a faithful copy of the ring at ff/-40 C?
-* The loop parks at vctrl ~0.91 V with clkoutp reading 687 MHz while the pump pulls
-* DOWN 175 nA there (cp_dyn2), so the detector must be commanding up.  If the ring is
-* near 600 MHz while clkoutp reads 687, the clock path is double-pulsing and the
-* detector is being fed a mangled clock.
+* pd_probe_ffm40.spice -- ff/-40 C/1.32 V, seed 0.70, 400 ns.  up/dn duty asymmetry?
+* Phase-detector probe: does the Alexander detector's CML latch resolve?
 .control
-* ngspice keeps ONLY saved vectors: a meas on an unsaved node fails and takes the
-* whole print with it (that is what the first attempt did with vctrl).
-save v(x1.x2.x1.net1) v(x1.x2.x1.net2) v(clkoutp) v(x1.x2.clkraw_sb) v(x1.x2.vctrl)
+save v(x1.x2.x3.x5.x1.net1) v(x1.x2.x3.x5.x1.net2) v(x1.x2.x3.x5.net1) v(x1.x2.x3.net1) v(x1.x2.x3.net3) v(x1.x2.net1) v(x1.x2.net2)
 tran 20p 400n
-let ringd = v(x1.x2.x1.net1) - v(x1.x2.x1.net2)
-meas tran r_t1 WHEN ringd=0 RISE=20 TD=100n
-meas tran r_t2 WHEN ringd=0 RISE=60 TD=100n
-let f_ring = 40/(r_t2-r_t1)
-meas tran c_t1 WHEN v(clkoutp)=0.66 RISE=20 TD=100n
-meas tran c_t2 WHEN v(clkoutp)=0.66 RISE=60 TD=100n
-let f_clk = 40/(c_t2-c_t1)
-meas tran s_t1 WHEN v(x1.x2.clkraw_sb)=0.66 RISE=20 TD=100n
-meas tran s_t2 WHEN v(x1.x2.clkraw_sb)=0.66 RISE=60 TD=100n
-let f_sb = 40/(s_t2-s_t1)
-meas tran vc AVG v(x1.x2.vctrl) FROM=100n TO=400n
-meas tran ring_pp PP ringd FROM=300n TO=400n
-meas tran clk_pp PP v(clkoutp) FROM=300n TO=400n
-print f_ring f_clk f_sb vc ring_pp clk_pp
+meas tran lat_n1_avg AVG v(x1.x2.x3.x5.x1.net1) FROM=200n TO=400n
+meas tran lat_n1_pp  PP  v(x1.x2.x3.x5.x1.net1) FROM=200n TO=400n
+meas tran lat_n2_avg AVG v(x1.x2.x3.x5.x1.net2) FROM=200n TO=400n
+meas tran lat_n2_pp  PP  v(x1.x2.x3.x5.x1.net2) FROM=200n TO=400n
+meas tran lat_out_avg AVG v(x1.x2.x3.x5.net1) FROM=200n TO=400n
+meas tran lat_out_pp  PP  v(x1.x2.x3.x5.net1) FROM=200n TO=400n
+meas tran dff_data_avg AVG v(x1.x2.x3.net1) FROM=200n TO=400n
+meas tran dff_data_pp  PP  v(x1.x2.x3.net1) FROM=200n TO=400n
+meas tran dff_edge_avg AVG v(x1.x2.x3.net3) FROM=200n TO=400n
+meas tran dff_edge_pp  PP  v(x1.x2.x3.net3) FROM=200n TO=400n
+meas tran up_avg AVG v(x1.x2.net1) FROM=200n TO=400n
+meas tran up_pp  PP  v(x1.x2.net1) FROM=200n TO=400n
+meas tran dn_avg AVG v(x1.x2.net2) FROM=200n TO=400n
+meas tran dn_pp  PP  v(x1.x2.net2) FROM=200n TO=400n
+print lat_n1_avg lat_n1_pp
+echo ROWEND
+print lat_n2_avg lat_n2_pp
+echo ROWEND
+print lat_out_avg lat_out_pp
+echo ROWEND
+print dff_data_avg dff_data_pp
+echo ROWEND
+print dff_edge_avg dff_edge_pp
+echo ROWEND
+print up_avg up_pp
+echo ROWEND
+print dn_avg dn_pp
+echo ROWEND
 quit
 .endc
 .end

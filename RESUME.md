@@ -659,6 +659,21 @@ run. The 687 MHz is read at the output buffer; if the ring is near 600 MHz while
 reads 687, the clock path is double-pulsing at this corner (fastest process, cold, high
 supply) and the detector is being fed a mangled clock.
 
+**No double-pulsing** (`clkcmp_ffm40.log`, 100-400 ns): ring 664.01 MHz, clkoutp
+663.94 MHz, sb-stage output 663.95 MHz -- identical to four digits; ring swing 2.07 V,
+clock 1.417 V, vctrl 0.646 V in that window. **The clock is a faithful copy of the ring**;
+the ring really is running fast while the loop pushes it faster. Theory retracted.
+
+**Current best explanation: up/down PULSE-WIDTH asymmetry at the pump.** The detector's
+up and down outputs are not equally active: up_avg / dn_avg is 0.382 / 0.175 V at tt/125 C
+(locks) and 0.287 / 0.193 V at tt/-40 C (`pd_probe_*.log`). The pump's up and down
+*currents* are matched, so unequal widths mean each up decision delivers more charge than
+each down decision. The pump's `up` input passes through `inv_cp` and `down` does not, so
+their widths differ, and the difference is largest where gates are fastest -- ff/-40 C.
+The loop then settles where the pump's own current imbalance cancels the width bias: at
+ff/-40 C that is vctrl ~0.91 V (pump -175 nA), which is 687 MHz, not 600.6.
+Test running: `pd_probe_ffm40.spice`. **Not yet confirmed.**
+
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
 0.45: (no swing) / 531.3 / 581.4; 0.30: - / 564.4 / 637.4; 0.15: - / 632.2 / **700.6**.
