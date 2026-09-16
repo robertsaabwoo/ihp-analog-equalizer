@@ -688,6 +688,42 @@ ring frequency at each point. i > 0 means the loop pushes the ring faster. Zero 
 are equilibria and the slope says whether they are stable. That explains lock or no-lock at
 any corner without guessing a mechanism. tt/125 C is run alongside as the reference that locks.
 
+**RESULT (`loop_scurve_{tt125,ffm40}.log`, both overrides confirmed). The ff/-40 C failure
+is the ring's tuning slope at that corner, not a subtle loop defect.**
+
+Ring frequency vs held vctrl, trim pinned off:
+
+| vctrl | tt/125 C | ff/-40 C/1.32 V |
+|---|---|---|
+| 0.50 | 558.1 MHz | 541.1 MHz |
+| 0.55 | 587.6 | **602.8** |
+| 0.60 | 600.5 | 651.4 |
+| 0.65 | 606.3 | 669.6 |
+| 0.70 | 609.4 | 677.7 |
+| 0.80 | 612.8 | 685.2 |
+| 0.95 | 615.2 | 689.8 |
+
+At ff/-40 C the ring crosses 600.6 MHz at ~0.546 V on a **~1200 MHz/V** slope: 25 mV of
+control-voltage error is 30 MHz (5 %). The loop's own ripple is 30-50 mV there
+(48.4 mV measured in `e2e_prbs_ffm40_seed070.log`), i.e. **+-35 to 60 MHz of frequency
+modulation -- wider than any capture window.** At tt/125 C the slope is ~260 MHz/V, so
+61 mV of ripple is 16 MHz (2.6 %), and that corner locks. tt/-40 C sits between
+(~600 MHz/V) and locks only when seeded above its lock point.
+
+Net current (same runs) is positive across most of the range at both corners, i.e. when
+not phase-locked the loop drifts **up** until the pump's vctrl-dependent imbalance cancels
+it -- tt/125 C balances at ~0.77 V (611 MHz), ff/-40 C above 0.90 V (689 MHz). Those are
+exactly the park points seen closed loop. Caveat: near lock these currents are
+phase-dependent (the 200 ns window catches one phase of a ~10 us beat), so treat the
+near-lock values as indicative; the frequency column is solid.
+
+**Consequence:** with the trim pinned off, the fast-cold corner forces the fine loop to sit
+at the steep bottom of the ring's tuning curve. The coarse trim can only make the ring
+*faster* (RING_DUAL_LOOP.md section 10.1), so it cannot move that corner to a gentler part
+of the curve. Options for the user: lower pump current (less ripple; halving it at tt/-40 C
+moved 625.9 -> 616.0 MHz), a bigger loop-filter capacitor, or a trim that can also slow the
+ring.
+
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
 0.45: (no swing) / 531.3 / 581.4; 0.30: - / 564.4 / 637.4; 0.15: - / 632.2 / **700.6**.
