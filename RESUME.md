@@ -563,6 +563,16 @@ noise). This is what the coarse trim is for (trim-on ceiling at ss/125 C/1.08 V 
 section 7.1 of RING_DUAL_LOOP.md). Next: run those corners with vcoarse free (dual loop),
 e.g. e2e_dual.spice retargeted to the corner and seeded with vcoarse low enough to bracket.
 
+**ss/125 C/1.08 V centring sweep** (`vco_ct_centre_ss125_108.log`), MHz at vctrl
+0.50 / 0.60 / 0.70 V:
+vcoarse 1.20: 516.4 / 564.3 / 576.2; 0.85: 514.4 / 562.6 / 574.5; 0.65: 504.4 / 562.6 / 575.4;
+0.45: 478.2 / 563.5 / 581.5; 0.30: 465.6 / 566.6 / 589.4; 0.15: (no swing) / 577.1 / **602.7**.
+So at this corner the trim is worth only ~+4.5 % at vctrl 0.70 V, and 600.6 MHz is
+reached only with the trim fully on. This does not contradict the 638.2 MHz trim-on
+ceiling in RING_DUAL_LOOP.md section 7.1: that is measured at vctrl = VDD (1.08 V), while
+this sweep stops at 0.70 V. A dual-loop run here has to be seeded near
+vcoarse 0.15-0.30 V with vctrl above 0.70 V; the exact point is **not measured**.
+
 ## In flight at last checkpoint (2026-09-15)
 
 Five jobs, serialised on the ngspice lock. If the machine went down, rerun the
