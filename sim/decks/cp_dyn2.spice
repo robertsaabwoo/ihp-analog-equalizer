@@ -1,0 +1,60 @@
+* cp_dyn2.spice -- cp_dyn.spice extended to vout 1.00 V.  ff/-40 C runs away to vctrl
+* 0.91 V and stays there (e2e_prbs_ffm40_seed070.log), above the 0.67 V where cp_dyn said
+* the net charge crosses zero.  Does it turn positive again high up, giving a second,
+* false resting point?
+* cp_dyn.spice -- the pump's SWITCHING balance, which run_cp_cur.out (DC) cannot see.
+*
+* At tt/-40 C the pump's DC up/down mismatch is +0.3 % (cp_ibias_pvt2_tt.log) yet the
+* closed loop integrates net-up charge and never locks, with the climb only slowed by
+* halving the current (e2e_prbs_ttm40_halfgain.log).  The up path has an extra inverter
+* (inv_cp makes upb from up), so the up and down pulses are skewed in time, and gate
+* delays move with temperature.
+*
+* Drive up and down with equal, alternating, non-overlapping pulses at the baud rate --
+* what an Alexander detector does when locked -- and measure the net average current
+* into the output.  Ideal pump: zero.  i(Vout) is the current INTO the source, so a
+* positive average here means the pump is charging vctrl up.
+* Run under sim/run_corners.sh.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.include cp_bias.inc
+.include ../netlists/blocks.inc
+.global sub!
+Vsub sub! 0 0
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Iref Vdd vbias dc 40u
+xref vbias Vss ibias_mirror
+xb Vdd Vss vbias bn bp cp_bias
+* ui = 1.665 ns.  up high for one UI, down high for the next: equal duty, no overlap.
+.param ui=1.665n
+Vout o 0 0.6
+Vup  u 0 PULSE(0 1.2 0      20p 20p 'ui-40p' '2*ui')
+Vdn  d 0 PULSE(0 1.2 'ui'   20p 20p 'ui-40p' '2*ui')
+x1 Vdd Vdd Vss Vss o u d bn bp tiny_pll_charge_pump
+.control
+foreach tmp -40 27 125
+ foreach vd 1.08 1.2 1.32
+  set temp = $tmp
+  alter VDD = $vd
+  foreach vo 0.50 0.60 0.70 0.80 0.90 1.00
+   alter Vout dc = $vo
+   tran 2p 60n uic
+   meas tran i_net_nA AVG i(Vout) FROM=20n TO=60n
+   let p_temp = $tmp
+   let p_vdd = $vd
+   let p_vout = $vo
+   let i_net_nA = i_net_nA*1e9
+   print p_temp p_vdd p_vout i_net_nA
+   echo ROWEND
+  end
+ end
+end
+quit
+.endc
+.end

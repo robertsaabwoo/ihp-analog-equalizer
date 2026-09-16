@@ -634,8 +634,15 @@ aids it from above. The hot corners lock from below because their lock points
 **not verified**, and the cold-from-below case is a real acquisition limit worth
 recording whatever the mechanism.
 
-Running: `e2e_prbs_ffm40_seed070.spice` -- ff/-40 C/1.32 V from 0.70 V (bare-ring seed
-0.546 V), the same approach-from-above test.
+**ff/-40 C/1.32 V from 0.70 V: still runs away** (`e2e_prbs_ffm40_seed070.log`):
+687.6 MHz (+14.49 %), vctrl 0.845 / 0.881 / 0.912 V (min 0.821, max 0.949), ripple
+48.4 mV, clock 1.417 V. Approach-from-above explains tt/-40 C but **not** this corner: at
+0.70 V the pump should already be pulling down (cp_dyn zero-crossing ~0.67 V there), yet
+vctrl rose to 0.91 V and stayed. Something holds it high.
+
+Candidate: above ~0.7 V the pump's down-side device runs short of headroom, the net
+charge turns positive again, and the loop has a **second, false resting point**. cp_dyn
+only measured to 0.70 V. Running: `cp_dyn2.spice` (vout to 1.00 V).
 
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
