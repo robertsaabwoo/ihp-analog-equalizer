@@ -534,6 +534,31 @@ as at nominal before.
 Neither result is in yet; don't quote the adopted cell's closed-loop numbers until
 they are.
 
+## Corner status after the detached run (2026-09-16 00:37)
+
+Closed loop, PRBS7, **trim pinned off**, sb stage + cp_bias in the netlist:
+
+| corner | f | f_err | vctrl s1 / s2 / s3 | verdict |
+|---|---|---|---|---|
+| tt 27 C 1.2 V | 600.756 MHz | +0.026 % | 0.600 / 0.598 / 0.599 | **locks** |
+| tt 125 C 1.2 V | 600.419 MHz | -0.030 % | 0.605 / 0.603 / 0.600 | **locks** |
+| ff 125 C 1.32 V | 600.604 MHz | +0.0006 % | 0.492 / 0.492 / 0.494 | **locks** |
+| **tt -40 C 1.2 V** | 625.9 MHz | +4.20 % | 0.745 / 0.784 / 0.791 | **no lock**, vctrl climbing (seed 0.637) |
+| **ff -40 C 1.32 V** | 687.0 MHz | +14.39 % | 0.805 / 0.865 / 0.904 | **no lock**, vctrl climbing (seed 0.546) |
+| ss 125 C 1.08 V | - | - | - | trim-off ring too slow; needs the dual loop |
+| ss -40 C 1.08 V | - | - | - | trim-off ring too slow; needs the dual loop |
+
+Logs: `e2e_prbs_ffm40_132.log`, `e2e_prbs_ttm40_12.log`, seeds in
+`vco_ct_seed_*.log`. The cold failures are the same upward-runaway signature the hot
+corners had before cp_bias, and the clock is healthy there (swing 1.34-1.42 V), so it is
+a loop problem, not a clock one. Cause **not yet identified**.
+
+**ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
+vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
+0.45: (no swing) / 531.3 / 581.4; 0.30: - / 564.4 / 637.4; 0.15: - / 632.2 / **700.6**.
+Here the trim is worth +26 % at vctrl 0.70 V, far more than at ss/125 C (+4.5 %).
+A dual-loop run should seed near vcoarse 0.30 V, vctrl ~0.65 V.
+
 ## In flight at shutdown (2026-09-15 19:22) -- restart here
 
 State: design on `ring-coarse-tune` = dual loop + folded coarse pull-up + self-biased
