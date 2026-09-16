@@ -593,6 +593,23 @@ runs show. The severity order fits: ff/-40 C worst (+14.4 %), tt/-40 C milder (+
 hot corners (slowest rings) lock. Test: `pd_probe_ttm40.spice` -- up-dominant while the
 ring is above baud means inverted.
 
+**Result: inconclusive, and the reasoning was wrong.** `pd_probe_ttm40.log` (200-400 ns):
+up 0.287 V vs dn 0.193 V (up-dominant), latch healthy (internal swing 1.15 V, outputs
+full rail). But vctrl dips below its seed early (as it did at tt/125 C), so up-dominant
+may simply be the correct response to a momentarily slow ring -- the window doesn't say
+which. **And a pure clock delay sits inside the loop**, which absorbs it by shifting
+phase; only the mismatch between rclk+ and rclk- (one inverter, ~2-3 % of a UI) escapes
+that, far too little for a 14 % error. Delay is not a good explanation.
+
+**Plainer possibility: the cold corners may never have worked.** No closed-loop run at
+-40 C exists on this branch or on main -- before today main had no 125 C run either.
+Two tests running (`sim/runners/cold_ab.sh`):
+- A: `e2e_prbs_ttm40_nosb.spice` -- sb_inverter replaced (sim-only) by a plain DC-coupled
+  inverter, i.e. the pre-change clock path, which does work at -40 C
+  (clkraw 0.28-1.25 V there). Still fails -> the stage is not implicated.
+- B: `e2e_prbs_ttm40_early.spice` -- vctrl every 100 ns over the first 1 us, plus the CSV:
+  does it ever sit at the lock point?
+
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
 0.45: (no swing) / 531.3 / 581.4; 0.30: - / 564.4 / 637.4; 0.15: - / 632.2 / **700.6**.
