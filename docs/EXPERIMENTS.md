@@ -1,0 +1,213 @@
+# Experiment log and testing method
+
+Every closed-loop run of this receiver costs 9-20 minutes, only one ngspice may
+run at a time (CLAUDE.md §2), and a bang-bang CDR fails in ways that all look
+alike from the outside: the clock is wrong and the control voltage is drifting.
+On the night of 2026-09-15/16 that combination cost **five wrong explanations in
+a row** for one corner, each one a full run to refute.
+
+This file is the response to that. Part 1 is how to test this design so a
+question costs seconds instead of a quarter of an hour. Part 2 is the log: what
+each experiment asked, how it was measured, what came back, and what it settled.
+
+---
+
+## Part 1 — Method
+
+### 1.1 Cheap measurements, in order of cost
+
+| what | deck | cost | answers |
+|---|---|---|---|
+| a resistor or bias current vs temperature | `rhigh_tc.spice`, `cp_ibias_check.spice` | **seconds** (DC `op`) | is a device where I think it is? |
+| pump currents, 27 corners | `cp_ibias_pvt*.spice` | ~1 min | balance and spread |
+| pump charge per decision | `cp_dyn*.spice` | ~2 min | net charge the loop integrates |
+| ring frequency vs a knob | `vco_ct_*.spice` | 1-3 min | tuning slope, ceiling, floor |
+| one block open loop, 27 corners | `clkpath_*.spice` | ~10 min | does this stage work at every corner? |
+| the loop's correction curve | `loop_scurve_*.spice` | ~7 min/corner | every equilibrium and its stability |
+| closed loop, one corner | `e2e_prbs*.spice` | 9-20 min | the answer that counts |
+
+**Work up this table, not down it.** Four of the five wrong explanations below
+would have been refuted by a measurement above the line I actually used.
+
+### 1.2 The screen that predicts lock
+
+A bang-bang loop holds lock only if the frequency wobble from its own ripple is
+small against its capture range. Both terms are measurable cheaply:
+
+```
+ripple_pp  ~=  I_pump * R_filter          (the step each decision kicks)
+             + I_pump * N * UI / C_filter (a run of N same-direction decisions)
+wobble_MHz  =  ripple_pp * Kvco
+```
+
+`N` = 7 for PRBS7 (its longest run), `UI` = 1.665 ns, `C_filter` = cap1 + cap2.
+`I_pump` from `cp_ibias_check.spice`, `R_filter` from `rhigh_tc.spice`, `Kvco`
+from any `vco_ct_*` sweep. Calibration against five measured closed-loop runs
+(2026-09-16): nominal predicted 33 mV against 34.1 measured; tt/-40 C 37 against
+32.1; the hot corners come out ~2x low, so **treat this as an order-of-magnitude
+screen, not a number to quote**. What it gets right is the ranking:
+
+| corner | Kvco MHz/V | wobble | closed loop |
+|---|---|---|---|
+| tt 125 C 1.2 V | 260 | 16 MHz | locks |
+| ff 125 C 1.32 V | 721 | 36 MHz | locks |
+| tt -40 C 1.2 V | 600 | 22 MHz | locks only when seeded from above |
+| ff -40 C 1.32 V | **1200** | **58 MHz** | **does not lock** |
+
+### 1.3 Rules that came out of the wrong turns
+
+1. **Measure the transfer curve before theorising about a mechanism.**
+   `loop_scurve` (hold vctrl, measure net current and ring frequency) explained
+   in one run what five mechanism guesses had not.
+2. **A metric that does not separate pass from fail is not the cause.** Twice a
+   quantity looked damning at the failing corner until the passing corners were
+   checked and were worse (pulse-width asymmetry: 1.63 at the failure, 2.18
+   where it locks).
+3. **Compare against a corner that works**, in the same deck, in the same run.
+4. **State what a run cannot show.** A 200 ns average of a beat whose period is
+   10 us is one phase, not an average.
+5. **`save` gates `meas`.** ngspice keeps only saved vectors; a `meas` on an
+   unsaved node fails and takes the whole `print` with it.
+6. **Detach long runs** (`setsid nohup`). Two 15-minute runs were lost to
+   sessions ending mid-transient before this became a habit.
+7. **Let the unit tests catch geometry.** `test_device_geometry` rejected an
+   L = 16 um mirror (PSP is characterised to 10 um) before it reached a netlist.
+
+---
+
+## Part 2 — The log
+
+Each entry: **question**, deck, method, result, verdict. Logs are in
+`sim/results/`; every number here is traceable to one.
+
+### 2.1 The recovered clock dies at 125 C
+
+- **Question:** why does PRBS7 fail at ff/125 C/1.32 V with a 49 nV clock?
+- `e2e_ff125_early.spice`, then `e2e_ff125_stages.spice`: measure each stage
+  from ring core to output, early in the run.
+- **Result:** the ring oscillates at 1.9 V differential the whole time;
+  `clkraw` (the diff-amp output feeding the buffer) sits 0.62-0.68 V at 125 C
+  against an `inverter_buffer` threshold of 0.50-0.615 V (`inv_trip_*.log`).
+- **Verdict:** the buffer never switches. Confirmed across all 27 corners
+  (`clkpath_pvt_*.log`): **`rclk` swing 0-2 mV at every 125 C combination**, at
+  tt, ss and ff. `main` fails identically, and no closed-loop run at 125 C had
+  ever been done before. Inherited, not caused by the dual loop.
+
+### 2.2 No fixed threshold can fix it
+
+- **Question:** can the buffer be resized, or the diff amp shifted, instead of
+  adding a cell?
+- Read `clkpath_pvt_*.log` across corners: lowest high level vs highest low level.
+- **Result:** lowest high 0.621 V (ff/-40 C/1.08 V); highest low 0.700 V
+  (ss/125 C/1.32 V).
+- **Verdict:** the low level at one corner is *above* the high level at another,
+  so no fixed switching point lies inside the swing everywhere. Resizing is
+  ruled out by arithmetic, before any simulation of a candidate.
+
+### 2.3 Self-biased clock stage (`sb_inverter`)
+
+- **Question:** does an AC-coupled, self-biased inverter fix every corner?
+- `clkpath_sb_pvt.spice`: the same open-loop chain with the stage inserted,
+  27 corners x 3 ring settings.
+- **Result:** `rclk` swings 1.10-1.40 V at **every point where the ring
+  oscillates**, including all 27 at 125 C. Duty 0.51-0.60. Worst input swing
+  0.287 V. Idle current 1.8-78.3 uA (`sb_idle_*.log`).
+- **Verdict:** adopted. Closed loop at nominal: 600.633 MHz, +0.0055 %.
+
+### 2.4 The coarse loop's top rail (folded pull-up)
+
+- **Question:** the coarse trim's pull-up pMOS reverse-conducts onto `vcoarse`
+  (4.3 uA at 1.2 V, `coarse_clamp.log`). Does folding it through mirrors help?
+- `coarse_clamp_fold.spice` (leak), `coarse_tb_fold*.spice` (null, search),
+  `coarse_null_*_pvt_*.log` (27 corners).
+- **Result:** leak at 1.0 V 239 nA -> 0.64 nA. Null at 0.600 V restored, slopes
+  symmetric at XMP2 0.7 um. **At 125 C the original has no null at all** (it
+  sinks at every vctrl from 0.54 to 0.74 V) and runs the trim to the rail at
+  ff/125 C; the folded cell has a null at every 125 C corner (0.55-0.69 V).
+- **Verdict:** adopted (37 devices, was 33).
+
+### 2.5 The 125 C lock failure: four runs to find the bias generator
+
+All at tt/125 C/1.2 V, PRBS7, trim pinned off:
+
+| run | result | verdict |
+|---|---|---|
+| as built (`e2e_prbs_tt125_12.log`) | 615 MHz, vctrl -> 1.0 V | clock now alive, but no lock |
+| `pd_probe_tt125.log` | latch nodes cross their threshold, outputs full swing | detector is fine |
+| `e2e_prbs_tt125_wp155.log` (pump mismatch nulled, sim-only) | 612 MHz, still no lock | mismatch is not it |
+| **`e2e_prbs_tt125_idealbias.log`** (ideal nominal currents, sim-only) | **600.550 MHz, -0.0084 %** | **the bias generator is the cause** |
+
+`tiny_pll_bias_gen` is self-biased: its current, and so the loop gain, is
+2.3x nominal at tt/125 C and ~10x at ff/125 C/1.32 V (`run_cp_cur.out`).
+
+### 2.6 `cp_bias`: pump bias from the chip's `ibias`
+
+- **Question:** what sizes reproduce the ideal currents from the 40 uA reference?
+- `cp_ibias_pvt.spice` then `cp_ibias_pvt2.spice`: DC, 27 corners x 3 output
+  voltages, sweeping the mirror length and the bias_n mirror width. **Two sweeps,
+  ~2 minutes, nine candidate sizings** -- the alternative was a closed-loop run
+  per guess.
+- **Result:** L 8 um / XMP2 1.45 um: nominal 790/806 nA; **715-894 nA across 27
+  corners (1.25x, against 398-5684 nA for the generator)**; mismatch -13.4..+10.3 %
+  (was up to +74 %).
+- **Verdict:** adopted. Closed loop: nominal 600.756 MHz, tt/125 C 600.419 MHz,
+  ff/125 C/1.32 V 600.604 MHz -- **both hot corners lock for the first time.**
+
+### 2.7 ff/-40 C: five refuted explanations
+
+| # | claim | test | why it was wrong |
+|---|---|---|---|
+| 1 | pump DC balance | `cp_ibias_pvt2_*.log` | +0.3 % at tt/-40 C, -4 % at ff/-40 C -- the wrong sign for the observed climb |
+| 2 | loop gain | `e2e_prbs_ttm40_halfgain.log` | halving the current slowed the climb (46 -> 22 mV) but did not stop it |
+| 3 | pump switching balance | `cp_dyn*.log` | net charge is a function of vctrl, same shape at corners that lock; and at 0.90 V, where the loop sat, it pulls **down** 175 nA |
+| 4 | clock-path double-pulsing | `clkcmp_ffm40.log` | ring 664.01 MHz vs clkoutp 663.94 MHz -- faithful to four digits |
+| 5 | up/down pulse-width asymmetry | `pd_probe_ffm40.log` | ratio 1.63 at the failure, 2.18 at tt/125 C which locks |
+
+Also refuted on the way: that the seeds were wrong (tt/-40 C settles at 0.636 V,
+which is what the bare-ring sweep predicted), and that a clock delay could invert
+the detector (a delay inside the loop is absorbed by it).
+
+### 2.8 The measurement that answered it: the loop's correction curve
+
+- **Question, finally asked properly:** where are the loop's equilibria and are
+  they stable?
+- `loop_scurve_{tt125,ffm40}.spice`: replace the loop filter (sim-only) with a
+  link to a forced node, hold vctrl at 0.50-0.95 V, and measure the net current
+  into it and the ring frequency at each point.
+- **Result:**
+
+  | vctrl | tt/125 C | ff/-40 C/1.32 V |
+  |---|---|---|
+  | 0.50 | 558.1 MHz | 541.1 MHz |
+  | 0.55 | 587.6 | **602.8** |
+  | 0.60 | 600.5 | 651.4 |
+  | 0.70 | 609.4 | 677.7 |
+  | 0.95 | 615.2 | 689.8 |
+
+- **Verdict:** at ff/-40 C the ring crosses the baud rate at ~0.546 V on a
+  **~1200 MHz/V** slope, so the loop's own 48 mV of ripple is +-58 MHz -- wider
+  than any capture window. At tt/125 C the slope is 260 MHz/V and 61 mV of ripple
+  is 16 MHz, and it locks. Not a defect in any block: the fast-cold corner forces
+  the fine loop onto the steep bottom of the tuning curve, and the coarse trim can
+  only make the ring *faster* (RING_DUAL_LOOP.md §10.1), so it cannot move it off.
+  Unlocked, the loop drifts up until the pump's vctrl-dependent imbalance cancels
+  the drift -- 0.77 V (611 MHz) at tt/125 C, >0.90 V (689 MHz) at ff/-40 C, which
+  are exactly the park points seen closed loop.
+
+### 2.9 The two ripple fixes (in flight)
+
+- **Question:** does cutting ripple bring ff/-40 C inside its capture range?
+- Screen first (§1.2), then simulate: pump current halved (`cp_bias` mirror
+  W 0.5 -> 0.25 um; **L 16 um was rejected by `test_device_geometry`**, PSP stops
+  at 10 um) and the loop-filter capacitors tripled (m 18 -> 54, m 3 -> 9,
+  +86 um2 in a 146,641 um2 slot).
+- **Measured immediately (seconds):** pump currents 401-458 nA across corners,
+  against 749-890 before (`cp_ibias_check.log`). Predicted wobble at ff/-40 C
+  falls from 58 MHz to ~14 MHz, below tt/125 C's 16 MHz, which locks.
+  **Side effect to watch:** the pump's balance at 0.6 V moved from -2 % to -8 %
+  (down-heavy), because the narrower mirror shifts the operating point; XMP2 can
+  be retrimmed if it matters.
+- **Caution:** the loop is now ~5x slower to acquire (current down, capacitance
+  up). Read `vctrl_s1..s3` for drift before calling a run locked or not, and
+  lengthen the transient rather than declaring failure.
+- **Closed-loop result:** pending (`sim/runners/lowripple.sh`).

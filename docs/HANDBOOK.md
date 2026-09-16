@@ -969,6 +969,12 @@ This block needs **two analog pads** for the differential input, one of the
 
 ---
 
+## 14.5 Testing method
+
+`docs/EXPERIMENTS.md` is the experiment log: what each question cost to answer,
+which cheap measurement answers it, and the verdict of every experiment -- including
+the ones that were wrong.
+
 ## 15. Repository map
 
 | path | what |

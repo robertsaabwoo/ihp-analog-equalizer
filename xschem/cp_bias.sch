@@ -11,7 +11,7 @@ re-run.  Connectivity is by label, one lab_wire on every pin.
 4 devices.  Charge-pump bias from ibias; see docs/HANDBOOK.md.} -260 -200 0 0 0.3 0.3 {}
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} 0 0 0 0 {name=MN1
 l=8.000000e-06
-w=5.000000e-07
+w=2.500000e-07
 ng=1
 m=1
 model=sg13_lv_nmos

@@ -1,0 +1,23 @@
+* rhigh_tc.spice -- the loop filter resistor across temperature, in seconds.
+* The ripple model needs R at each corner; 15 kohm is the nominal drawn value.
+* Same geometry as tiny_pll_loop_filter_res (W 1 um, L 10.475 um).
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.global sub!
+Vsub sub! 0 0
+V1 a 0 dc 0.6
+V2 b 0 dc 0.5
+XR a b sub! rhigh w=1.000000e-06 l=1.047529e-05 m=1 b=0 mm_ok=1
+.control
+foreach tmp -40 27 125
+ set temp = $tmp
+ op
+ let p_temp = $tmp
+ let r_ohm = 0.1/abs(i(V2))
+ print p_temp r_ohm
+end
+quit
+.endc
+.end
