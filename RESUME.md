@@ -551,10 +551,13 @@ Before anything: `tools/netlist.sh` (blocks.inc is gitignored and generated), th
 `grep -c "^x14 Vdd Vss vbias bias_n bias_p cp_bias" sim/netlists/blocks.inc` = 1 and
 `grep -c "^x13 Vdd Vss clkraw- clkraw_sb sb_inverter" sim/netlists/blocks.inc` = 1.
 
-Restart (one at a time; each ~15 min):
+Restart, detached so a session ending cannot kill it (two runs have been lost that way):
 
-    sim/runners/prbs_corner.sh ff -40 1.32   # -> sim/results/run_prbs_ffm40_132.out
-    sim/runners/prbs_corner.sh tt -40 1.2    # -> sim/results/run_prbs_ttm40_12.out
+    setsid nohup sim/runners/finish_corners.sh > sim/results/finish_corners.out 2>&1 &
+
+That does ff/-40 C/1.32 V, then tt/-40 C/1.2 V (both `prbs_corner.sh`, trim pinned off),
+then the ss/-40 C/1.08 V centring sweep, one ngspice at a time, ~35 min total. Watch
+`sim/results/finish_corners.out` for "### ALL DONE".
 
 Why the ss corners don't bracket: **the trim-off ring is too slow** there. ss/125 C/1.08 V
 peaks at 571.6 MHz at vctrl 0.65 V (472-572 MHz over 0.45-0.65 V); ss/-40 C/1.08 V peaks at
