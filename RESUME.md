@@ -672,7 +672,21 @@ each down decision. The pump's `up` input passes through `inv_cp` and `down` doe
 their widths differ, and the difference is largest where gates are fastest -- ff/-40 C.
 The loop then settles where the pump's own current imbalance cancels the width bias: at
 ff/-40 C that is vctrl ~0.91 V (pump -175 nA), which is 687 MHz, not 600.6.
-Test running: `pd_probe_ffm40.spice`. **Not yet confirmed.**
+Test: `pd_probe_ffm40.log` -- up_avg / dn_avg 0.2597 / 0.1597 V at 1.32 V, i.e. duty
+19.7 % / 12.1 %, ratio **1.63**. At tt/125 C (which locks) the ratio is 2.18 (31.8 / 14.6 %)
+and at tt/-40 C 1.49. **ff/-40 C is not the most asymmetric corner, so this does not
+separate pass from fail either. Theory retracted.** (Caveat: these are measured in
+different loop states, so they are not strictly comparable.)
+
+**Stopping the one-hypothesis-at-a-time approach.** Five mechanisms have now been
+proposed and refuted for ff/-40 C: pump DC balance, loop gain, pump switching balance,
+clock-path double-pulsing, up/down pulse-width asymmetry. The systematic measurement
+instead: **the loop's correction curve.** `loop_scurve_{tt125,ffm40}.spice` replaces the
+loop filter (sim-only) with a link to a forced global node, holds vctrl at 0.50-0.95 V in
+0.05 V steps, and measures the net current the detector and pump deliver into it, plus the
+ring frequency at each point. i > 0 means the loop pushes the ring faster. Zero crossings
+are equilibria and the slope says whether they are stable. That explains lock or no-lock at
+any corner without guessing a mechanism. tt/125 C is run alongside as the reference that locks.
 
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
