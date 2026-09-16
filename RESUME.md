@@ -610,6 +610,24 @@ Two tests running (`sim/runners/cold_ab.sh`):
 - B: `e2e_prbs_ttm40_early.spice` -- vctrl every 100 ns over the first 1 us, plus the CSV:
   does it ever sit at the lock point?
 
+**Results, and they point at the testbench.**
+- A (`e2e_prbs_ttm40_nosb.log`, override confirmed): with the **pre-change clock path** tt/-40 C
+  also does not lock -- 576.0 MHz (**-4.09 %**), vctrl parked at 0.6938 / 0.6949 / 0.6951 V,
+  ripple 12.5 mV, clock 1.328 V. Drifts the other way, but no lock either. **The sb stage is
+  not the cause of the cold failures.**
+- B (`e2e_prbs_ttm40_early.log`): vctrl climbs monotonically 0.638 -> 0.725 V over the first
+  1 us (~90 mV/us, about 39 nA into the ~436 fF filter) and never sits anywhere.
+
+**Likely cause: the seeds are wrong at cold.** `vco_ct_seed_*.spice` sweeps the ring
+**alone**; in the macro the ring also drives the clock buffers and is slower at the same
+vctrl. A measures 576 MHz at vctrl 0.695 in the macro where the standalone sweep says
+~620 MHz -- a ~7 % gap. So the cold runs started well below their true lock point and spent
+the 3 us window climbing toward it; in the original tt/-40 C run vctrl was still rising at the
+end (0.745 / 0.784 / 0.791 V), which is acquisition, not a settled failure. The single
+f_long number over that window then reports the middle of the acquisition.
+Test: `e2e_prbs_ttm40_seed080.spice` (seed 0.80 V). If it locks, the cold "failures" were
+mis-seeded runs and `prbs_corner.sh` needs a macro-loaded seed sweep.
+
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
 0.45: (no swing) / 531.3 / 581.4; 0.30: - / 564.4 / 637.4; 0.15: - / 632.2 / **700.6**.
