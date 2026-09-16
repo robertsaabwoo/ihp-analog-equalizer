@@ -566,6 +566,16 @@ a loop problem, not a clock one. Cause **not yet identified**. What is measured 
   (proportional path). **Not measured.**
 - Running: `e2e_prbs_ttm40_halfgain.spice` (cp_bias mirror L 8 -> 16 um, ~half pump
   current, sim-only override) at tt/-40 C/1.2 V. Locks -> loop gain; still fails -> not gain.
+  **Result** (`e2e_prbs_ttm40_halfgain.log`, override confirmed): **still no lock.**
+  616.0 MHz (+2.56 %) against 625.9 MHz (+4.20 %) at full current; vctrl
+  0.672 / 0.692 / 0.694 V, so the climb slows from 46 mV to 22 mV across the windows but
+  does not stop. **Loop gain contributes; it is not the cause.**
+
+**Next suspect: the pump's switching (not DC) balance.** The up path carries an extra
+inverter (`inv_cp` makes `upb`), so up and down pulses are skewed; gate delays move with
+temperature, so each decision can deliver unequal charge even with matched DC currents.
+`cp_dyn.spice` drives up and down with equal alternating 600.6 MHz pulses and measures
+the net average current into the output -- the dynamic equivalent of run_cp_cur.out.
 
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
