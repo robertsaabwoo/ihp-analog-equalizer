@@ -618,15 +618,24 @@ Two tests running (`sim/runners/cold_ab.sh`):
 - B (`e2e_prbs_ttm40_early.log`): vctrl climbs monotonically 0.638 -> 0.725 V over the first
   1 us (~90 mV/us, about 39 nA into the ~436 fF filter) and never sits anywhere.
 
-**Likely cause: the seeds are wrong at cold.** `vco_ct_seed_*.spice` sweeps the ring
-**alone**; in the macro the ring also drives the clock buffers and is slower at the same
-vctrl. A measures 576 MHz at vctrl 0.695 in the macro where the standalone sweep says
-~620 MHz -- a ~7 % gap. So the cold runs started well below their true lock point and spent
-the 3 us window climbing toward it; in the original tt/-40 C run vctrl was still rising at the
-end (0.745 / 0.784 / 0.791 V), which is acquisition, not a settled failure. The single
-f_long number over that window then reports the middle of the acquisition.
-Test: `e2e_prbs_ttm40_seed080.spice` (seed 0.80 V). If it locks, the cold "failures" were
-mis-seeded runs and `prbs_corner.sh` needs a macro-loaded seed sweep.
+**RESOLVED: tt/-40 C locks; it is the direction of approach, not the seed value.**
+`e2e_prbs_ttm40_seed080.log` (seed 0.80 V): **600.510 MHz, -0.015 %**, vctrl
+0.6362 / 0.6357 / 0.6368 V, ripple 32.1 mV, clock 1.336 V.
+
+**It settles at 0.636 V -- essentially the 0.637 V the bare-ring sweep predicted**, so the
+seed was right and the "macro loading makes the seed wrong" reasoning above is
+**retracted**. What matters is which side you start from: seeded *at* the lock point the
+loop drifted up and never captured; seeded *above* it, it came down and locked.
+
+That matches `cp_dyn_*.log`: the pump's net charge pushes vctrl **up** below ~0.66 V and
+**down** above it. With a lock point at 0.636 V the pump opposes capture from below and
+aids it from above. The hot corners lock from below because their lock points
+(0.49-0.60 V) sit where the pump's push is smaller relative to the detector's authority --
+**not verified**, and the cold-from-below case is a real acquisition limit worth
+recording whatever the mechanism.
+
+Running: `e2e_prbs_ffm40_seed070.spice` -- ff/-40 C/1.32 V from 0.70 V (bare-ring seed
+0.546 V), the same approach-from-above test.
 
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
