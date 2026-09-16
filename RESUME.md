@@ -577,6 +577,22 @@ temperature, so each decision can deliver unequal charge even with matched DC cu
 `cp_dyn.spice` drives up and down with equal alternating 600.6 MHz pulses and measures
 the net average current into the output -- the dynamic equivalent of run_cp_cur.out.
 
+**Result** (`cp_dyn_{tt,ss,ff}.log`): the net charge is **not a fixed offset -- it is a
+function of vctrl**, crossing zero near 0.65-0.70 V at every corner. tt/-40 C/1.2 V:
++142.6 / +52.6 / -28.8 nA at vout 0.50 / 0.60 / 0.70. tt/125 C/1.2 V: +125.2 / +28.3 /
+-67.1 nA. ff/-40 C/1.32 V: +176.0 / +72.7 / -25.7. That is +-12 % of the 800 nA pump,
+matching the DC numbers, and **it is not cold-specific** -- the same shape appears at the
+corners that lock. So switching balance does not explain the cold failures either.
+
+**Better candidate, being tested: inverted detector sense from clock delay.** The
+self-biased stage (sb_inverter) adds delay to the recovered clock. The cold corners are
+where the ring is fastest, i.e. the UI is shortest: ring gain 600 MHz/V at tt/-40 C and
+1249 at ff/-40 C. If the added delay pushes the sampling point past half a UI, the
+detector's correction inverts and the loop drives the wrong way -- which is what both cold
+runs show. The severity order fits: ff/-40 C worst (+14.4 %), tt/-40 C milder (+4.2 %),
+hot corners (slowest rings) lock. Test: `pd_probe_ttm40.spice` -- up-dominant while the
+ring is above baud means inverted.
+
 **ss/-40 C/1.08 V centring** (`vco_ct_centre_ssm40_108.log`), MHz at vctrl 0.50 / 0.60 / 0.70 V:
 vcoarse 1.20: 386.8 / 525.6 / 557.2; 0.85: 385.3 / 523.0 / 554.7; 0.65: 375.5 / 522.0 / 554.3;
 0.45: (no swing) / 531.3 / 581.4; 0.30: - / 564.4 / 637.4; 0.15: - / 632.2 / **700.6**.
