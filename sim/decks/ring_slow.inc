@@ -106,6 +106,12 @@
 .param Wtr=4.0 Ltr=1.0
 .param Wres=1u
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
+* slow leg: switch width (um) and capacitor side (um; cap_cmomf is 1.29 fF/um2).
+* Csl_S is resolved here because cap_cmomf will not take arithmetic in w/l -- ngspice
+* answers 'Formula() error / Cannot compute substitute', the same reason coarse_loop.inc
+* resolves Ccrs_S first.
+.param Wsl=2 Csl=2.0
+.param Csl_S='Csl*1e-6'
 
 .subckt ring_inv_slow VDD VSS vin+ vo+ vin- vo- vctrl vcoarse
 XM1 vo+ vin+ st  VSS sg13_lv_nmos w='Win*1u'   l='Lin*1u'   ng=1 m=1 mm_ok=1
@@ -125,8 +131,8 @@ XT2 vo- vcoarse VDD VDD sg13_lv_pmos w='Wtr*1u' l='Ltr*1u' ng=1 m=1 mm_ok=1
 *   vcoarse low  -> trim on  AND no extra load -> fastest
 XS1 vo+ vcoarse nsl1 VSS sg13_lv_nmos w='Wsl*1u' l=0.13u ng=1 m=1 mm_ok=1
 XS2 vo- vcoarse nsl2 VSS sg13_lv_nmos w='Wsl*1u' l=0.13u ng=1 m=1 mm_ok=1
-XCS1 nsl1 VSS cap_cmomf w='Csl*1u' l='Csl*1u' mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
-XCS2 nsl2 VSS cap_cmomf w='Csl*1u' l='Csl*1u' mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
+XCS1 nsl1 VSS cap_cmomf w='Csl_S' l='Csl_S' mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
+XCS2 nsl2 VSS cap_cmomf w='Csl_S' l='Csl_S' mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
 .ends
 
 .subckt ring_slow Vdd Vss vctrl vcoarse vo+ vo-
