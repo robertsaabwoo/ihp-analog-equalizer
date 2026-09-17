@@ -21,6 +21,19 @@ done_marker() { grep -q "$2" "$1" 2>/dev/null; }
 
 say "=== overnight chain starting"
 
+# ---- Step 0: wait for anything already running to finish -----------------------------
+# The flock in safe_ngspice serialises ngspice, but two runners editing the same deck (the
+# corner sed in run_corners.sh) would collide.  So wait for quiet, not just for the lock.
+for i in $(seq 1 240); do
+  if ps -eo args | grep -qE "[r]ing_centre|[c]p_charge|[n]gspice -b"; then
+    [ $((i % 10)) -eq 1 ] && say "0: waiting for running sims to finish"
+    sleep 30
+  else
+    break
+  fi
+done
+say "0: quiet, proceeding"
+
 # ---- Step A: the ring grid (11/12/13 kohm x 4/6 um, vctrl 0.55-1.05) -----------------
 if done_marker $R/ring_centre2.out "RING_CENTRE2 DONE"; then
   say "A: ring grid already complete, skipping"
@@ -85,7 +98,9 @@ fi
 # authority (700.6 MHz at vcoarse 0.15, so ~0.30 at vctrl 0.65).
 for spec in "ss 125 1.08 0.70 0.15" "ss -40 1.08 0.65 0.30"; do
   set -- $spec
-  tag="${1}m${3#-}"; [ "${2#-}" = "$2" ] && tag="${1}$2_$(echo "$3" | tr -d .)" || tag="${1}m${2#-}_$(echo "$3" | tr -d .)"
+  # same tag dual_corner.sh builds, so the skip check matches its output file
+  if [ "${2#-}" = "$2" ]; then tag="${1}${2}_$(echo "$3" | tr -d .)"
+  else tag="${1}m${2#-}_$(echo "$3" | tr -d .)"; fi
   if done_marker "$R/run_dual_$tag.out" "DONE"; then
     say "E: $tag already done, skipping"
   else
