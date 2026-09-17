@@ -534,6 +534,49 @@ as at nominal before.
 Neither result is in yet; don't quote the adopted cell's closed-loop numbers until
 they are.
 
+## Running unattended (started 2026-09-17 02:07) -- read this first
+
+`sim/runners/overnight.sh` (detached, sequential, resumable; **measurement only, it changes
+no design file**), then `sim/runners/after_overnight.sh`. Watch:
+
+    tail -f sim/results/overnight.out
+    cat sim/results/overnight_summary.txt     # written at the end
+    cat sim/results/overnight_choice.txt      # the sizes the rules picked
+
+Steps: finish the ring grid (11/12/13 kohm x trim 4/6 um, vctrl 0.55-1.05 V at ff/-40 C and
+ss/125 C) -> the clean pump charge grid -> `tools/pick_ring_sizing.py` and
+`tools/pick_pump_sizing.py` -> a 27-corner bracket check of the chosen ring sizing
+(`ring_bracket.spice`) -> **the two corners never tested closed loop** (ss/125 C/1.08 V and
+ss/-40 C/1.08 V, dual loop with vcoarse free) -> summary. Then the current-steering pump
+measurement (`cp_steer.spice`) for comparison against the switched one.
+
+**To apply the result afterwards** (a human decision, not the script's): edit `SIZING` in
+`tools/port_from_sky130.py` (`("ring_inverter","R1")` Rload and `TRIM_W`), re-run
+`tools/port_from_sky130.py --src ... --dst xschem --cells ring_inverter`, then
+`tools/netlist.sh`, `python3 -m pytest -q test/`, and the closed-loop runs at the extremes.
+
+## Where the design stands (2026-09-17 02:10)
+
+Adopted on this branch, all verified: folded coarse pull-up, self-biased clock stage
+(`sb_inverter`), pump bias from `ibias` (`cp_bias`), pump current halved and loop-filter
+caps x3. Closed loop on PRBS7 with the trim pinned off: **nominal 600.632 MHz (ripple
+15.1 mV), tt/125 C 600.419, ff/125 C/1.32 V 600.604, tt/-40 C 600.510** (seeded above its
+lock point). **ff/-40 C/1.32 V does not lock** -- 677 MHz, vctrl climbing.
+
+Two causes, both measured, neither fixed yet:
+1. **Ring slope.** At ff/-40 C with the trim off the ring runs ~1200 MHz/V at the vctrl
+   where it hits the baud rate, against 260 MHz/V at tt/125 C. The trim can only speed the
+   ring up, so it cannot move that corner off the steep part. The ring grid says
+   11 kohm/6 um or 12 kohm/4 um puts the baud rate at ~0.63-0.64 V on a ~300 MHz/V slope
+   instead -- a 4x improvement -- **and the slow corner (ss/125 C/1.08 V) is the binding
+   constraint on how far that can go** (only 10 k/4 um cleared the baud rate there in the
+   first grid; a 8 um trim stops the ring oscillating).
+2. **Pump charge imbalance.** An up decision and a down decision do not deliver equal and
+   opposite charge: 0.43 fC worst case, ~130 nA at the baud rate, against the +77 nA
+   phase-average that runs the corner away. Switch width and inverter ratio cannot fix it
+   (0.43 -> 0.42 fC across the whole grid), so the switched topology is the limit; the
+   current-steering variant is queued.
+
 ## Corner status after the detached run (2026-09-16 00:37)
 
 Closed loop, PRBS7, **trim pinned off**, sb stage + cp_bias in the netlist:
