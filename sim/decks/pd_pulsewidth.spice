@@ -1,0 +1,204 @@
+* pd_pulsewidth.spice -- the UP and DOWN pulses AT THE DETECTOR'S OWN OUTPUTS.
+*
+* WHY THIS DECK EXISTS
+* --------------------
+* The loop runs away at ff/-40 C/1.32 V because the detector characteristic's
+* phase-AVERAGE is +77.1 nA there against +10.4 nA at tt/125 C (pd_phase_ffm40.log,
+* pd_phase_tt125.log, EXPERIMENTS 2.10).  The pump is NOT the cause: with EQUAL one-UI
+* pulses on its two inputs cp_charge_ff.log measures q_up +0.660 fC against q_dn
+* -1.211 fC at ff/-40 C/1.32 V -- down-heavy, the opposite sign to the drift.
+*
+* So the imbalance is upstream, in what the detector hands the pump.  Read the two
+* measurements together:
+*
+*   pump, per equal 1-UI decision   q_up/|q_dn| = 0.660/1.211 = 0.55   (down-heavy)
+*   detector lobes, pd_phase_ffm40  +420 nA /  -335 nA        = 1.25   (up-heavy)
+*
+* a factor of ~2.3 between them.  It can only come from the detector asserting `up` for
+* longer, or more often, than `down`.  EXPERIMENTS 2.7 #5 looked at this once
+* (pd_probe_ffm40.log) and got a duty RATIO of 1.63 at the failing corner against 2.18 at
+* tt/125 C, which locks -- so it was refuted.  That probe measured the closed loop at one
+* unknown, drifting phase.  This deck is the isolated version: detector alone, ideal clock,
+* ideal data, a chosen phase, and the pulse width measured directly.
+*
+* WHAT IS ISOLATED, AND WHAT IS STILL REAL
+* ----------------------------------------
+*   isolated : no ring, no CTLE, no loop filter, no channel.  The clock is two ideal
+*              PULSE sources and the data is two ideal PULSE sources.
+*   still real: the alexander_phase_detector cell itself, and the charge pump hung on its
+*              outputs purely AS THE LOAD (out is held by Vout, no current is asked of the
+*              loop).  `up` drives inv_cp's gate (pMOS 2 um + nMOS 1 um, ~5.5 fF) while
+*              `down` drives the pump's nMOS switch gate (0.5 um, ~0.9 fF) -- a 6:1 load
+*              ratio between the two outputs that an unloaded testbench would hide.
+*
+* THE KNOB THAT MATTERS: `dcy`
+* ----------------------------
+* In alexander_phase_detector the three retiming flip-flops x5/x2/x3 clock on RISING clk+,
+* and the edge sampler x1 clocks on RISING clk- = FALLING clk+.  So the edge sample sits
+* dcy*UI after the data sample, not 0.5*UI, and the up decision region is dcy wide against
+* (1-dcy) for down.  The recovered clock is not 50 % duty: clkpath_sb_pvt_ff.log measures
+* 0.5952 at -40 C/1.32 V and clkpath_sb_pvt_tt.log 0.5536 at 125 C/1.20 V.  Those two
+* numbers, put through the measured lobes, give 0.595*420 - 0.405*335 = +114 nA and
+* 0.554*311 - 0.446*345 = +18 nA, against the +77.1 and +10.4 actually measured -- same
+* sign, and the same 0.66x dilution at both corners (the two ~0.1 UI transition regions
+* of the S-curve are not at the plateau).  dcy is swept 0.50 (ideal) and 0.595 (measured)
+* so the deck separates the detector's intrinsic asymmetry from the clock's duty error.
+*
+* DATA PATTERN: 1100, not 0101
+* ----------------------------
+* 0101 transitions every UI, so at a plateau phase the detector asserts one output
+* continuously and there is no pulse left to measure the width of.  A 1100 pattern (the
+* data PULSE has period 2*UI) puts one isolated 1-UI decision between 1-UI gaps, which is
+* what `meas TRIG/TARG` can see.
+*
+* DATA LEVEL
+* ----------
+* Ideal data means rail to rail, and that is the default (damp = vsup, dcm = vsup/2).  In
+* the receiver x5 -- the ONLY flip-flop whose D is the raw CTLE output rather than a
+* full-swing CMOS node, and whose Q feeds the down XOR and not the up XOR -- sees ~0.28 V
+* differential (ctle_swing 0.2773 V, EXPERIMENTS 2.6).  Re-run with
+*   .param damp=0.28 dcm='vsup-0.35'
+* and the difference between the two runs IS the x5 clock-to-Q term, which subtracts from
+* the down pulse and leaves up alone.  One line, one extra run; not swept here to keep the
+* grid at 24 points.
+*
+* TRAPS OBSERVED
+* --------------
+*  2.24  `alter` cannot set a PULSE parameter list.  Every swept quantity -- supply, clock
+*        duty, data phase -- is a .param, set with alterparam and made to take with reset.
+*  2.19  .param does not evaluate inside .control.  Every meas FROM/TO is a literal, and
+*        the 50 % threshold comes in as the loop variable $vh (supply = 2*$vh).
+*  2.9   a meas on an edge index that does not exist fails SILENTLY and takes the whole
+*        print with it.  At a plateau phase only one of up/down pulses at all, so the
+*        widths are printed in their OWN print statements: a missing pulse train blanks
+*        one line instead of the row.  f_up/f_dn (time fraction asserted) never fail and
+*        are the numbers to read first -- they say which output was firing.
+*  2.3   a meas on an unsaved node kills the whole print, so the save list below carries
+*        every node any meas touches.
+*  2.1   loop variables are printed as vectors, never with shell echo.
+*  2.21  no string comparisons; every loop is over numbers only.
+*  2.22  ngspice's own banner can land mid-print-line -- parse with a full numeric pattern
+*        and count the rows (24 expected, 4 ROWEND-terminated lines each).
+*  1.6b  f_clk is printed as a self-check: it must track dcy, or alterparam did not take
+*        and the sweep is measuring one point 24 times.
+*
+* COST: 24 points x 100 ns at 5 ps over ~140 devices.  Expect 15-30 min.  Run ONLY under
+* tools/safe_ngspice.sh.  sim/run_corners.sh sweeps the process corner if wanted.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+
+* ff is the corner that does not lock; run_corners.sh rewrites this line for tt/ss.
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_ff
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+
+.include ../netlists/blocks.inc
+
+* rhigh (the d_latch loads, 1 x 4.122 um = 6.1 kohm) carries its body on sub!, which
+* xschem emits as an ordinary node and never declares.  Without this every latch load
+* floats and the operating point is wrong rather than absent (trap 1.4).
+.global sub!
+Vsub sub! 0 0
+
+.param vsup=1.32
+.param ui=1.665n
+.param dcy=0.5          ; clk+ high fraction; 0.595 is the measured ff/-40 C/1.32 V value
+.param tph=0            ; data phase within the UI
+.param tr=20p
+.param damp='vsup'      ; ideal (rail-to-rail) data; 0.28 for the CTLE-level case
+.param dcm='0.5*vsup'   ; ... with dcm='vsup-0.35'
+
+VDD Vdd 0 'vsup'
+VSS Vss 0 0
+
+* vbias is the gate of ibias_mirror's W4/L1 diode carrying the chip's 40 uA reference --
+* the same node the CML latch tails and the pump bias hang off in CDR.
+Iref Vdd vbias 40u
+xref vbias Vss ibias_mirror
+xb   Vdd Vss vbias bn bp cp_bias
+
+* IDEAL CLOCK.  Vclkn is the exact complement of Vclkp: its RISING edge -- the edge the
+* edge-sampling flip-flop x1 fires on -- lands at dcy*ui, not at ui/2.  That is the
+* mechanism under test, and dcy=0.5 turns it off.
+Vclkp clkp 0 PULSE(0 'vsup' 0 'tr' 'tr' 'dcy*ui-tr' 'ui')
+Vclkn clkn 0 PULSE('vsup' 0 0 'tr' 'tr' 'dcy*ui-tr' 'ui')
+
+* IDEAL DATA, 1100 at the baud rate: period 2*ui, so one isolated decision per 2 UI.
+Vdp dp 0 PULSE('dcm-0.5*damp' 'dcm+0.5*damp' 'tph' 'tr' 'tr' 'ui-tr' '2*ui')
+Vdm dm 0 PULSE('dcm+0.5*damp' 'dcm-0.5*damp' 'tph' 'tr' 'tr' 'ui-tr' '2*ui')
+
+* alexander_phase_detector VDD VSS down up clk+ vin+ clk- vin- vbias
+x1 Vdd Vss dn up clkp dp clkn dm vbias alexander_phase_detector
+
+* The pump is here as the LOAD ON up AND dn only -- out is held, so nothing this deck
+* reports depends on the loop filter.  tiny_pll_charge_pump VPWR VPB VGND VNB out up down
+* bias_n bias_p.  0.546 V is where ff/-40 C's ring crosses the baud rate (loop_scurve).
+Vout o 0 dc 0.546
+xcp Vdd Vdd Vss Vss o up dn bn bp tiny_pll_charge_pump
+
+.options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
+
+.control
+save v(up) v(dn) v(clkp) v(dp) v(dm) i(Vout)
+* dcy 0.50 = ideal clock; 0.595 = the duty measured at ff/-40 C/1.32 V (clkpath_sb_pvt_ff.log)
+foreach dc 0.50 0.595
+ foreach tmp -40 125
+* the loop variable is HALF the supply, so the same $vh serves as the meas threshold --
+* .param does not reach into .control (trap 2.19)
+  foreach vh 0.54 0.60 0.66
+* 0.25 and 0.75 UI sit either side of the sampling instant, one in each lobe; which is
+* which is read off f_up/f_dn rather than assumed
+   foreach tp 0.25 0.75
+    alterparam vsup = {2*$vh}
+    alterparam dcy  = $dc
+    alterparam tph  = {$tp*1.665n}
+    reset
+    set temp = $tmp
+    tran 5p 100n
+
+    let p_temp = $tmp
+    let p_vdd  = 2*$vh
+    let p_dcy  = $dc
+    let p_tph  = $tp
+
+* 36.63 ns to 99.90 ns is exactly 19 data periods, so the averages are unbiased by
+* where the window happens to cut the pattern
+    meas tran up_avg  AVG v(up)   FROM=36.63n TO=99.9n
+    meas tran dn_avg  AVG v(dn)   FROM=36.63n TO=99.9n
+    meas tran clk_avg AVG v(clkp) FROM=36.63n TO=99.9n
+    meas tran q_net   INTEG i(Vout) FROM=36.63n TO=99.9n
+    let f_up    = up_avg/(2*$vh)
+    let f_dn    = dn_avg/(2*$vh)
+    let f_clk   = clk_avg/(2*$vh)
+    let q_net_fC = q_net*1e15
+
+* widths at the 50 % point, two decisions ~33 ns apart that must agree.  ~30 decisions
+* fit in 100 ns, so indices 11 and 21 are inside with margin (trap 2.9).
+    meas tran w_up1 TRIG v(up) VAL=$vh RISE=11 TARG v(up) VAL=$vh FALL=11
+    meas tran w_up2 TRIG v(up) VAL=$vh RISE=21 TARG v(up) VAL=$vh FALL=21
+    meas tran w_dn1 TRIG v(dn) VAL=$vh RISE=11 TARG v(dn) VAL=$vh FALL=11
+    meas tran w_dn2 TRIG v(dn) VAL=$vh RISE=21 TARG v(dn) VAL=$vh FALL=21
+    let w_up1_ps = w_up1*1e12
+    let w_up2_ps = w_up2*1e12
+    let w_dn1_ps = w_dn1*1e12
+    let w_dn2_ps = w_dn2*1e12
+
+* four separate prints: at a plateau phase one of the two outputs never pulses, and its
+* missing meas would otherwise blank the entire row (trap 2.9 / 2.3)
+    print p_temp p_vdd p_dcy p_tph
+    echo ROWEND
+    print f_clk f_up f_dn q_net_fC
+    echo ROWEND
+    print w_up1_ps w_up2_ps
+    echo ROWEND
+    print w_dn1_ps w_dn2_ps
+    echo ROWEND
+   end
+  end
+ end
+end
+quit
+.endc
+.end

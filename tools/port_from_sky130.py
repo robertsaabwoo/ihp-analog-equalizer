@@ -406,7 +406,8 @@ SIZING: dict[tuple[str, str], dict] = {
     # about 26 mV, below the sky130 original's 33.7 mV.  The cost is 43 um2 of
     # extra MOS capacitor, which is nothing next to the 1243 um2 the CTLE's
     # degeneration capacitor already occupies.
-    ("tiny_pll_loop_filter_res", "R"): {"R": 7500},   # was 15000: capture, docs/notes/capture_model.md
+    ("tiny_pll_loop_filter_res", "R"): {"R": 15000},  # 7500 was tried: no help at ff/-40C,
+                                                       # and tt/125C stopped locking (EXPERIMENTS 2.18)
     ("tiny_pll_loop_filter_cap1", "MCAP"): {"m": 54},   # 3x: ripple, docs/EXPERIMENTS.md
     ("tiny_pll_loop_filter_cap2", "MCAP"): {"m": 9},    # 3x, with cap1
     #
@@ -966,10 +967,53 @@ def replace_bias_gen(text: str) -> str:
     return text
 
 
+def balance_clock_phases(text: str) -> str:
+    """CDR: build rclk- from the ring's other phase instead of by inverting rclk+.
+
+    The Alexander detector samples data on rclk+ and the edge on rclk-.  With rclk- made
+    by inverting rclk+ (x12 single_inverter), the edge sample sits at duty x UI after the
+    data sample instead of 0.5 x UI -- and the recovered clock is not 50 % duty: 0.5952 at
+    ff/-40 C/1.32 V, 0.5486-0.5576 at tt/125 C/1.20 V (clkpath_sb_pvt_*.log).  So the up
+    decision region is wider than the down region, and an unlocked loop integrates the
+    difference and drifts up: +77.1 nA at ff/-40 C against +10.4 nA at tt/125 C
+    (pd_phase_*.log).  Those two duty numbers reproduce both currents and their 7:1 ratio,
+    which is why no pump trim helped -- the error is a phase-region ratio, not a current
+    ratio (docs/notes/pd_asymmetry.md).
+
+    `clkraw+` is the ring's other output and was unused.  Giving it its own sb_inverter and
+    inverter_buffer -- identical to the chain on `clkraw-` -- makes both detector clock
+    phases come from a differential source through matched paths, so the duty distortion is
+    common mode.  x16 lands exactly where x12 was, so its supplies and the rclk- pin need no
+    moving.  Net cost: +1 sb_inverter, +1 inverter_buffer, -1 single_inverter.
+
+    Polarity check: sb_inverter inverts and inverter_buffer does not, so
+    rclk+ = inv(clkraw-) and rclk- = inv(clkraw+) -- still complementary, same sense as
+    before, so the detector's data and edge samplers keep their roles.
+    """
+    if "{sb_inverter.sym} 2900 1100" in text:
+        return text                      # already applied; the port is re-run
+    old_inv = "C {single_inverter.sym} 3200 820 0 0 {name=x12}"
+    assert old_inv in text, "CDR.sch: x12 single_inverter not found"
+    text = text.replace(old_inv, "C {inverter_buffer.sym} 3200 820 0 0 {name=x16}")
+    old_lab = "{name=p73 sig_type=std_logic lab=rclk+"
+    assert old_lab in text, "CDR.sch: x12 input label p73 not found"
+    text = text.replace(old_lab, "{name=p73 sig_type=std_logic lab=clkraw_sb2")
+    text = text.rstrip("\n") + "\n"
+    text += "C {sb_inverter.sym} 2900 1100 0 0 {name=x15}\n"
+    for dx, dy, lab in ((-60, -20, "Vdd"), (-60, 0, "Vss"), (-60, 20, "clkraw+"),
+                        (60, 0, "clkraw_sb2")):
+        text += ("C {devices/lab_wire.sym} %d %d 0 0 "
+                 "{name=pSB2%s sig_type=std_logic lab=%s}\n"
+                 % (2900 + dx, 1100 + dy,
+                    lab.replace("+", "p").replace("_", ""), lab))
+    return text
+
+
 POST_PORT_EDITS = {
     "ctle_cdr_rx.sch": add_bias_mirror,
     "ring_inverter.sch": add_coarse_trim,
-    "CDR.sch": lambda t: replace_bias_gen(add_sb_clock_stage(add_coarse_loop(t))),
+    "CDR.sch": lambda t: balance_clock_phases(
+        replace_bias_gen(add_sb_clock_stage(add_coarse_loop(t)))),
     # The LVS wrapper and the symbol only need the pin renamed to match.
     "ctle_cdr_rx_lvs.sch": lambda t: t.replace("lab=vbias", "lab=ibias"),
     "ctle_cdr_rx.sym": lambda t: t.replace("name=vbias", "name=ibias"),
