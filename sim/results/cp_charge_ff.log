@@ -1,0 +1,2196 @@
+[safe_ngspice] cp_charge.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Warning: redefinition of .subckt cp_bias, ignored
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.62110e-10 Reference value :  3.83811e-09 Reference value :  7.03100e-09 Reference value :  1.02250e-08 Reference value :  1.35330e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.93140e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.13316e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.931398e-01
+q_dn_fc = -1.13316e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.26780e-09 Reference value :  6.70700e-09 Reference value :  1.00030e-08 Reference value :  1.32890e-08 Reference value :  1.61490e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.14425e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.21491e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.144253e-01
+q_dn_fc = -1.21491e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.54538e-09 Reference value :  4.47938e-09 Reference value :  7.37500e-09 Reference value :  9.85100e-09 Reference value :  1.26090e-08 Reference value :  1.52510e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.14805e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.80614e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.148054e-01
+q_dn_fc = -6.80614e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.76096e-10 Reference value :  2.33810e-09 Reference value :  4.39010e-09 Reference value :  6.53700e-09 Reference value :  8.51300e-09 Reference value :  1.04770e-08 Reference value :  1.26290e-08 Reference value :  1.46010e-08 Reference value :  1.63870e-08 Reference value :  1.83760e-08 Reference value :  2.00300e-08 Reference value :  2.14500e-08 Reference value :  2.32020e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  4.15919e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.10721e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.159192e-01
+q_dn_fc = -5.10721e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  1.88978e-09 Reference value :  4.13978e-09 Reference value :  6.06900e-09 Reference value :  8.20300e-09 Reference value :  1.02230e-08 Reference value :  1.12130e-08 Reference value :  1.26790e-08 Reference value :  1.44510e-08 Reference value :  1.61770e-08 Reference value :  1.78400e-08 Reference value :  1.98620e-08 Reference value :  2.11480e-08 Reference value :  2.24000e-08 Reference value :  2.45300e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.32520e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.60412e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.325199e-01
+q_dn_fc = -5.60411e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.33359e-10 Reference value :  2.63936e-09 Reference value :  4.79136e-09 Reference value :  6.22300e-09 Reference value :  7.33700e-09 Reference value :  8.53700e-09 Reference value :  9.93500e-09 Reference value :  1.12570e-08 Reference value :  1.26310e-08 Reference value :  1.37130e-08 Reference value :  1.53650e-08 Reference value :  1.67640e-08 Reference value :  1.84380e-08 Reference value :  1.99480e-08 Reference value :  2.11900e-08 Reference value :  2.19500e-08 Reference value :  2.26980e-08 Reference value :  2.44800e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.32927e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.66871e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.329273e-01
+q_dn_fc = -5.66871e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.82056e-10 Reference value :  3.24406e-09 Reference value :  5.19300e-09 Reference value :  6.73700e-09 Reference value :  9.69900e-09 Reference value :  9.96500e-09 Reference value :  1.21030e-08 Reference value :  1.39610e-08 Reference value :  1.52810e-08 Reference value :  1.70500e-08 Reference value :  1.86020e-08 Reference value :  2.00660e-08 Reference value :  2.19860e-08 Reference value :  2.39600e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.60277e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.79185e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.602766e-01
+q_dn_fc = -6.79184e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.59715e-10 Reference value :  2.19771e-09 Reference value :  3.56371e-09 Reference value :  5.12500e-09 Reference value :  7.05900e-09 Reference value :  8.62500e-09 Reference value :  1.01190e-08 Reference value :  1.25170e-08 Reference value :  1.38510e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.69566e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.12197e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.695660e-01
+q_dn_fc = -4.12197e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.12131e-09 Reference value :  6.09100e-09 Reference value :  9.85900e-09 Reference value :  1.05670e-08 Reference value :  1.33230e-08 Reference value :  1.65190e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.70815e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.64757e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.708145e-01
+q_dn_fc = -3.64757e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.57708e-09 Reference value :  5.35500e-09 Reference value :  7.00500e-09 Reference value :  1.15110e-08 Reference value :  1.63810e-08 Reference value :  1.63830e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.95022e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.11068e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.950225e-01
+q_dn_fc = -1.11068e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.03459e-09 Reference value :  4.18859e-09 Reference value :  7.04700e-09 Reference value :  9.76700e-09 Reference value :  1.28830e-08 Reference value :  1.65110e-08 Reference value :  2.11660e-08 Reference value :  2.14840e-08 Reference value :  2.29060e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12562
+q_up_fc             =  6.13751e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.17010e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.137514e-01
+q_dn_fc = -4.17010e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.22500e-09 Reference value :  5.22700e-09 Reference value :  8.43900e-09 Reference value :  1.00230e-08 Reference value :  1.42650e-08 Reference value :  1.44490e-08 Reference value :  1.63450e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.16497e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.36989e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.164969e-01
+q_dn_fc = -6.36989e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.57068e-10 Reference value :  2.96507e-09 Reference value :  4.84707e-09 Reference value :  6.85100e-09 Reference value :  8.89100e-09 Reference value :  1.09250e-08 Reference value :  1.56270e-08 Reference value :  1.63170e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.17089e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -2.54911e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.170887e-01
+q_dn_fc = -2.54911e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.15458e-09 Reference value :  5.94900e-09 Reference value :  6.36500e-09 Reference value :  1.10690e-08 Reference value :  1.34490e-08 Reference value :  1.53370e-08 Reference value :  1.89200e-08 Reference value :  2.07200e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.34217e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.61551e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.342175e-01
+q_dn_fc = -5.61551e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.42829e-09 Reference value :  4.45829e-09 Reference value :  8.70100e-09 Reference value :  8.72900e-09 Reference value :  1.29950e-08 Reference value :  1.36710e-08 Reference value :  1.64970e-08 Reference value :  1.85680e-08 Reference value :  2.11600e-08 Reference value :  2.32080e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.34980e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.68323e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.349802e-01
+q_dn_fc = -5.68323e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.36503e-09 Reference value :  3.75103e-09 Reference value :  6.27900e-09 Reference value :  8.40900e-09 Reference value :  1.25930e-08 Reference value :  1.49470e-08 Reference value :  1.80880e-08 Reference value :  2.09780e-08 Reference value :  2.37540e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.59586e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.78474e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.595864e-01
+q_dn_fc = -6.78474e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.45531e-11 Reference value :  3.20655e-09 Reference value :  3.54855e-09 Reference value :  8.70100e-09 Reference value :  1.14570e-08 Reference value :  1.45390e-08 Reference value :  1.48250e-08 Reference value :  2.17240e-08 Reference value :  2.17740e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.73870e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.99340e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.738702e-01
+q_dn_fc = -6.99340e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  6.64900e-09 Reference value :  7.24500e-09 Reference value :  1.14870e-08 Reference value :  1.87460e-08 Reference value :  1.90060e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.74852e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.99766e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.748517e-01
+q_dn_fc = -6.99766e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  6.58100e-09 Reference value :  1.19770e-08 Reference value :  1.70620e-08 Reference value :  2.04620e-08 Reference value :  2.22380e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.93090e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.66616e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.930898e-01
+q_dn_fc = -3.66615e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  7.62700e-09 Reference value :  7.69300e-09 Reference value :  1.48030e-08 Reference value :  1.52730e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.10421e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.29823e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.104215e-01
+q_dn_fc = -1.29823e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.76550e-09 Reference value :  6.98300e-09 Reference value :  1.05250e-08 Reference value :  1.42770e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.20391e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.11877e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.203912e-01
+q_dn_fc = -6.11877e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.04128e-10 Reference value :  4.45413e-09 Reference value :  9.11700e-09 Reference value :  1.13250e-08 Reference value :  1.64690e-08 Reference value :  1.77160e-08 Reference value :  2.14400e-08 Reference value :  2.49040e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  4.16531e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.09063e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.165311e-01
+q_dn_fc = -5.09063e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.13880e-10 Reference value :  8.65900e-09doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.32428e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -2.75514e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.324283e-01
+q_dn_fc = -2.75514e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.33494e-10 Reference value :  8.92900e-09 Reference value :  9.05900e-09 Reference value :  1.37130e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.36421e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -2.35059e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.364213e-01
+q_dn_fc = -2.35059e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  6.58900e-09 Reference value :  6.64100e-09 Reference value :  1.24850e-08 Reference value :  1.91060e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  4.59535e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.78331e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.595353e-01
+q_dn_fc = -6.78331e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.36700e-09 Reference value :  1.30950e-08 Reference value :  1.30970e-08 Reference value :  1.61890e-08 Reference value :  1.89100e-08 Reference value :  2.12200e-08 Reference value :  2.42580e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  6.74381e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.99952e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.743812e-01
+q_dn_fc = -6.99952e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.06946e-09 Reference value :  5.01100e-09 Reference value :  8.16500e-09 Reference value :  1.03810e-08 Reference value :  1.40250e-08 Reference value :  1.81660e-08 Reference value :  2.09680e-08 Reference value :  2.18140e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  8.75886e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.00952e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.758858e-01
+q_dn_fc = -7.00952e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.47611e-09 Reference value :  8.08500e-09 Reference value :  9.01300e-09 Reference value :  1.29270e-08 Reference value :  1.66050e-08 Reference value :  1.91500e-08 Reference value :  2.08580e-08 Reference value :  2.34920e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  3.93128e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.67988e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.931283e-01
+q_dn_fc = -3.67988e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.56980e-09 Reference value :  5.34900e-09 Reference value :  8.42300e-09 Reference value :  1.11930e-08 Reference value :  1.42490e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.14408e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.47288e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.144082e-01
+q_dn_fc = -3.47288e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.38738e-09 Reference value :  6.57500e-09 Reference value :  9.28100e-09 Reference value :  1.21070e-08 Reference value :  1.55190e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.14669e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  3.90587e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.146692e-01
+q_dn_fc = 3.905870e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.13610e-09 Reference value :  5.49300e-09 Reference value :  8.35700e-09 Reference value :  1.19350e-08 Reference value :  1.53490e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.15959e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.89853e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.159592e-01
+q_dn_fc = -1.89853e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.22378e-09 Reference value :  4.26378e-09 Reference value :  7.04700e-09 Reference value :  1.00150e-08 Reference value :  1.30450e-08 Reference value :  1.66470e-08 Reference value :  1.99660e-08 Reference value :  2.32940e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.32529e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.46750e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.325293e-01
+q_dn_fc = -5.46750e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.55360e-10 Reference value :  4.48536e-09 Reference value :  8.79900e-09 Reference value :  1.19990e-08 Reference value :  1.61890e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.32832e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.30503e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.328316e-01
+q_dn_fc = -1.30503e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.23006e-09 Reference value :  6.56300e-09 Reference value :  1.03870e-08 Reference value :  1.40290e-08 Reference value :  1.72780e-08 Reference value :  2.00840e-08 Reference value :  2.33180e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  4.60137e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.81575e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.601365e-01
+q_dn_fc = -6.81575e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.14572e-09 Reference value :  6.08300e-09 Reference value :  9.79900e-09 Reference value :  1.33850e-08 Reference value :  1.68160e-08 Reference value :  1.99120e-08 Reference value :  2.27860e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.69425e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.90678e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.694250e-01
+q_dn_fc = -6.90678e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.32131e-09 Reference value :  5.19500e-09 Reference value :  8.66100e-09 Reference value :  1.24570e-08 Reference value :  1.64510e-08 Reference value :  1.87760e-08 Reference value :  2.10320e-08 Reference value :  2.49780e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.70668e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.75213e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.706677e-01
+q_dn_fc = -6.75213e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.93708e-09 Reference value :  5.78700e-09 Reference value :  9.49500e-09 Reference value :  1.29310e-08 Reference value :  1.62190e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.95041e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.36009e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.950414e-01
+q_dn_fc = -4.36009e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.66659e-09 Reference value :  4.96659e-09 Reference value :  8.33900e-09 Reference value :  1.18190e-08 Reference value :  1.54090e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.13708e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.04766e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.137084e-01
+q_dn_fc = -4.04766e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.22630e-09 Reference value :  4.68630e-09 Reference value :  7.92900e-09 Reference value :  1.06590e-08 Reference value :  1.38170e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.16490e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  4.34092e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.164900e-01
+q_dn_fc = 4.340923e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.65907e-09 Reference value :  6.87100e-09 Reference value :  1.18330e-08 Reference value :  1.59730e-08 Reference value :  1.94460e-08 Reference value :  2.23780e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.17116e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.10159e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.171159e-01
+q_dn_fc = -5.10159e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.46584e-10 Reference value :  4.17858e-09 Reference value :  7.77300e-09 Reference value :  1.06690e-08 Reference value :  1.42130e-08 Reference value :  1.75620e-08 Reference value :  2.02920e-08 Reference value :  2.23040e-08 Reference value :  2.49600e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.34225e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.47891e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.342245e-01
+q_dn_fc = -5.47891e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.55429e-09 Reference value :  6.69300e-09 Reference value :  1.02670e-08 Reference value :  1.44550e-08 Reference value :  1.74800e-08 Reference value :  2.12820e-08 Reference value :  2.46320e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.34989e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.45176e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.349892e-01
+q_dn_fc = -5.45176e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.46903e-09 Reference value :  6.91900e-09 Reference value :  1.07890e-08 Reference value :  1.43490e-08 Reference value :  1.59530e-08 Reference value :  2.08060e-08 Reference value :  2.14420e-08 Reference value :  2.40020e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  4.59456e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.80853e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.594563e-01
+q_dn_fc = -6.80853e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.55055e-09 Reference value :  8.90100e-09 Reference value :  9.04100e-09 Reference value :  1.68600e-08 Reference value :  1.68660e-08 Reference value :  1.69260e-08 Reference value :  2.29200e-08 Reference value :  2.40160e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.73729e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.88766e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.737285e-01
+q_dn_fc = -6.88766e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.97027e-09 Reference value :  1.14230e-08 Reference value :  1.15090e-08 Reference value :  1.58970e-08 Reference value :  1.78400e-08 Reference value :  1.90500e-08 Reference value :  2.11260e-08 Reference value :  2.30260e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.74710e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.79194e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.747098e-01
+q_dn_fc = -6.79194e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.61355e-11 Reference value :  2.76614e-09 Reference value :  5.52900e-09 Reference value :  8.82300e-09 Reference value :  1.22830e-08 Reference value :  1.55490e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.93052e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.10137e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.930517e-01
+q_dn_fc = -4.10137e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.73789e-09 Reference value :  5.57900e-09 Reference value :  9.01900e-09 Reference value :  1.27650e-08 Reference value :  1.65610e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.10380e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.30615e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.103798e-01
+q_dn_fc = -4.30615e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.80950e-09 Reference value :  9.97100e-09 Reference value :  1.02290e-08 Reference value :  1.56170e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.20384e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  4.59205e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.203837e-01
+q_dn_fc = 4.592051e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.81013e-09 Reference value :  1.06550e-08 Reference value :  1.14250e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.16492e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.88188e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.164922e-01
+q_dn_fc = -1.88188e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  7.37900e-09 Reference value :  7.50700e-09 Reference value :  1.49690e-08 Reference value :  1.49850e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.32437e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.89998e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.324370e-01
+q_dn_fc = -1.89997e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.01349e-09 Reference value :  7.67300e-09 Reference value :  1.15990e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.36430e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.29375e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.364296e-01
+q_dn_fc = -1.29375e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.97010e-09 Reference value :  1.13370e-08 Reference value :  1.13470e-08 Reference value :  1.66310e-08 Reference value :  1.91840e-08 Reference value :  2.25240e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  4.59395e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.80719e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.593951e-01
+q_dn_fc = -6.80720e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.87841e-10 Reference value :  4.33384e-09 Reference value :  7.55900e-09 Reference value :  1.08370e-08 Reference value :  1.44190e-08 Reference value :  1.79980e-08 Reference value :  2.08140e-08 Reference value :  2.41480e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.74239e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.89378e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.742394e-01
+q_dn_fc = -6.89378e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.20546e-09 Reference value :  6.39900e-09 Reference value :  9.36500e-09 Reference value :  1.34810e-08 Reference value :  1.72200e-08 Reference value :  2.02160e-08 Reference value :  2.35060e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.75694e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.80380e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.756937e-01
+q_dn_fc = -6.80380e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.60011e-09 Reference value :  6.07900e-09 Reference value :  1.04790e-08 Reference value :  1.41750e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.93115e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  2.23029e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.931151e-01
+q_dn_fc = 2.230288e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.93806e-10 Reference value :  3.83381e-09 Reference value :  7.82500e-09 Reference value :  1.08970e-08 Reference value :  1.43310e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.14455e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  5.22289e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.144550e-01
+q_dn_fc = 5.222886e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.29379e-10 Reference value :  3.72738e-09 Reference value :  6.88300e-09 Reference value :  1.06610e-08 Reference value :  1.36410e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.14661e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  1.46176e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.146613e-01
+q_dn_fc = 1.461756e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.42410e-09 Reference value :  7.56100e-09 Reference value :  1.08530e-08 Reference value :  1.47610e-08 Reference value :  1.82880e-08 Reference value :  2.09680e-08 Reference value :  2.46980e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.15960e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.07392e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.159598e-01
+q_dn_fc = -5.07393e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.16578e-09 Reference value :  5.78700e-09 Reference value :  9.72900e-09 Reference value :  1.38830e-08 Reference value :  1.72360e-08 Reference value :  2.04020e-08 Reference value :  2.23440e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.32530e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.32701e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.325303e-01
+q_dn_fc = -5.32701e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.36063e-12 Reference value :  3.34336e-09 Reference value :  6.59900e-09 Reference value :  1.02370e-08 Reference value :  1.37430e-08 Reference value :  1.72720e-08 Reference value :  2.06420e-08 Reference value :  2.32020e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12562
+q_up_fc             =  8.32844e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.20544e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.328435e-01
+q_dn_fc = -5.20544e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.59606e-09 Reference value :  4.76206e-09 Reference value :  8.23700e-09 Reference value :  1.17810e-08 Reference value :  1.52310e-08 Reference value :  1.86760e-08 Reference value :  2.15620e-08 Reference value :  2.47860e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  4.59990e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.82306e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.599902e-01
+q_dn_fc = -6.82306e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.15172e-09 Reference value :  6.33700e-09 Reference value :  1.01190e-08 Reference value :  1.53630e-08 Reference value :  1.85880e-08 Reference value :  2.03300e-08 Reference value :  2.36700e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.69273e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.79608e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.692730e-01
+q_dn_fc = -6.79608e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.88931e-09 Reference value :  5.76900e-09 Reference value :  9.65700e-09 Reference value :  1.27030e-08 Reference value :  1.62050e-08 Reference value :  1.95420e-08 Reference value :  2.22640e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.70515e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.54841e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.705148e-01
+q_dn_fc = -6.54841e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.30765e-11 Reference value :  3.70908e-09 Reference value :  7.39700e-09 Reference value :  1.04370e-08 Reference value :  1.42050e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.95003e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  2.45503e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.950029e-01
+q_dn_fc = 2.455027e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.13659e-09 Reference value :  6.66900e-09 Reference value :  9.68500e-09 Reference value :  1.28390e-08 Reference value :  1.64830e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.13696e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  4.64834e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.136961e-01
+q_dn_fc = 4.648336e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.61030e-09 Reference value :  6.67500e-09 Reference value :  1.05490e-08 Reference value :  1.37270e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.16484e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  1.50526e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.164842e-01
+q_dn_fc = 1.505260e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.40107e-09 Reference value :  6.24900e-09 Reference value :  9.44900e-09 Reference value :  1.27830e-08 Reference value :  1.59470e-08 Reference value :  1.89960e-08 Reference value :  2.13060e-08 Reference value :  2.43140e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  4.17117e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.07865e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.171174e-01
+q_dn_fc = -5.07865e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.92458e-09 Reference value :  5.31100e-09 Reference value :  8.63700e-09 Reference value :  1.24070e-08 Reference value :  1.91380e-08 Reference value :  2.02500e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.34231e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.33844e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.342307e-01
+q_dn_fc = -5.33844e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.47500e-09 Reference value :  9.19100e-09 Reference value :  1.65430e-08 Reference value :  1.66110e-08 Reference value :  2.27300e-08 Reference value :  2.28620e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.34990e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.22077e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.349905e-01
+q_dn_fc = -5.22077e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.09025e-10 Reference value :  6.06300e-09 Reference value :  1.00070e-08 Reference value :  1.10990e-08 Reference value :  1.56490e-08 Reference value :  1.93900e-08 Reference value :  2.17520e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  4.59306e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.81586e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.593059e-01
+q_dn_fc = -6.81586e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  7.31900e-09 Reference value :  7.63300e-09 Reference value :  1.25990e-08 Reference value :  1.59370e-08 Reference value :  1.95440e-08 Reference value :  2.04040e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.73576e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.77683e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.735760e-01
+q_dn_fc = -6.77683e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  6.21300e-09 Reference value :  8.90300e-09 Reference value :  1.25930e-08 Reference value :  1.75760e-08 Reference value :  1.85400e-08 Reference value :  2.06140e-08 Reference value :  2.43000e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.74527e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.58835e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.745269e-01
+q_dn_fc = -6.58835e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.12135e-10 Reference value :  3.33214e-09 Reference value :  6.46900e-09 Reference value :  9.59900e-09 Reference value :  1.31290e-08 Reference value :  1.64810e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.93081e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  2.71367e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.930806e-01
+q_dn_fc = 2.713674e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.48989e-09 Reference value :  5.98700e-09 Reference value :  9.60100e-09 Reference value :  1.41730e-08 Reference value :  2.08480e-08 Reference value :  2.35500e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  6.10367e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.89891e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.103674e-01
+q_dn_fc = -3.89891e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.30950e-09 Reference value :  6.03300e-09 Reference value :  9.74100e-09 Reference value :  1.56810e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.20375e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  1.53037e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.203746e-01
+q_dn_fc = 1.530375e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.69813e-09 Reference value :  5.11900e-09 Reference value :  8.76700e-09 Reference value :  1.23690e-08 Reference value :  1.58650e-08 Reference value :  1.91440e-08 Reference value :  2.18840e-08 Reference value :  2.46140e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.16589e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.05733e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.165892e-01
+q_dn_fc = -5.05733e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.51988e-09 Reference value :  6.12900e-09 Reference value :  8.60700e-09 Reference value :  1.44250e-08 Reference value :  1.64250e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.32443e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.04043e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.324430e-01
+q_dn_fc = -1.04043e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.34149e-09 Reference value :  5.17900e-09 Reference value :  8.64900e-09 Reference value :  1.13810e-08 Reference value :  1.47410e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.36438e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -2.34992e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.364379e-01
+q_dn_fc = -2.34992e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.96100e-10 Reference value :  6.32900e-09 Reference value :  8.02100e-09 Reference value :  1.54590e-08 Reference value :  1.55610e-08 Reference value :  1.88120e-08 Reference value :  2.39080e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.59245e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.81453e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.592447e-01
+q_dn_fc = -6.81453e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  7.10700e-09 Reference value :  7.26300e-09 Reference value :  1.38910e-08 Reference value :  1.48730e-08 Reference value :  2.02520e-08 Reference value :  2.06220e-08 Reference value :  2.36340e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.74061e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.78308e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.740611e-01
+q_dn_fc = -6.78308e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.25458e-10 Reference value :  3.60746e-09 Reference value :  6.29900e-09 Reference value :  9.01500e-09 Reference value :  1.45510e-08 Reference value :  1.57170e-08 Reference value :  1.86720e-08 Reference value :  2.09900e-08 Reference value :  2.41580e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  8.75540e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.60008e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.755403e-01
+q_dn_fc = -6.60008e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.83611e-09 Reference value :  5.05300e-09 Reference value :  8.32900e-09 Reference value :  1.13870e-08 Reference value :  1.45250e-08 Reference value :  1.77060e-08 Reference value :  2.11260e-08 Reference value :  2.44660e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  3.93085e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.59258e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.930845e-01
+q_dn_fc = -3.59258e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.78072e-11 Reference value :  3.55381e-09 Reference value :  6.58700e-09 Reference value :  1.02150e-08 Reference value :  1.33050e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.14446e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  1.39284e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.144465e-01
+q_dn_fc = 1.392835e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.40738e-09 Reference value :  7.42900e-09 Reference value :  1.08550e-08 Reference value :  1.48750e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.14654e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  2.53394e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.146541e-01
+q_dn_fc = 2.533944e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.22099e-10 Reference value :  4.04610e-09 Reference value :  7.90500e-09 Reference value :  1.16990e-08 Reference value :  1.47710e-08 Reference value :  1.90460e-08 Reference value :  2.17140e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  4.15960e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.04205e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.159602e-01
+q_dn_fc = -5.04205e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.46578e-09 Reference value :  7.42900e-09 Reference value :  1.14030e-08 Reference value :  1.50590e-08 Reference value :  2.17760e-08 Reference value :  2.39200e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.32624e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.18428e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.326245e-01
+q_dn_fc = -5.18428e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.83336e-09 Reference value :  7.07300e-09 Reference value :  9.39500e-09 Reference value :  1.31390e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.32850e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  8.14149e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.328500e-01
+q_dn_fc = 8.141488e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.77206e-09 Reference value :  8.31100e-09 Reference value :  1.15910e-08 Reference value :  1.50890e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.59832e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -2.38657e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.598322e-01
+q_dn_fc = -2.38657e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.12172e-09 Reference value :  4.49972e-09 Reference value :  8.44900e-09 Reference value :  1.17550e-08 Reference value :  1.51850e-08 Reference value :  1.85620e-08 Reference value :  2.14900e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.69113e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.68247e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.691127e-01
+q_dn_fc = -6.68247e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  4.08531e-09 Reference value :  8.11500e-09 Reference value :  1.20690e-08 Reference value :  1.60050e-08 Reference value :  1.89200e-08 Reference value :  2.07180e-08 Reference value :  2.35940e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.70347e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.34723e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.703467e-01
+q_dn_fc = -6.34723e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.86308e-09 Reference value :  5.06700e-09 Reference value :  8.48700e-09 Reference value :  1.25130e-08 Reference value :  1.59350e-08 Reference value :  2.23580e-08 Reference value :  2.24480e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  3.94991e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.57009e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.949913e-01
+q_dn_fc = -3.57009e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.96590e-10 Reference value :  8.30700e-09 Reference value :  8.53100e-09 Reference value :  1.63730e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.13663e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  1.33538e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.136631e-01
+q_dn_fc = 1.335385e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.83700e-09 Reference value :  1.01310e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.16476e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  2.57745e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.164760e-01
+q_dn_fc = 2.577450e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.74107e-09 Reference value :  7.42300e-09 Reference value :  1.09850e-08 Reference value :  1.44350e-08 Reference value :  1.78560e-08 Reference value :  2.06640e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.17117e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.04677e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.171175e-01
+q_dn_fc = -5.04678e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  4.90058e-09 Reference value :  8.71100e-09 Reference value :  1.36270e-08 Reference value :  1.84540e-08 Reference value :  2.16080e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  6.34236e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.19534e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.342360e-01
+q_dn_fc = -5.19534e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  4.23229e-09 Reference value :  9.31500e-09 Reference value :  1.33170e-08 Reference value :  1.73360e-08 Reference value :  2.35240e-08 Reference value :  2.37520e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12565
+q_up_fc             =  8.34998e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.99054e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.349976e-01
+q_dn_fc = -4.99054e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.01703e-09 Reference value :  8.84900e-09 Reference value :  1.02290e-08 Reference value :  1.59930e-08 Reference value :  1.76220e-08 Reference value :  2.04660e-08 Reference value :  2.44900e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  4.59119e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.81201e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.591194e-01
+q_dn_fc = -6.81201e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.30500e-09 Reference value :  8.35900e-09 Reference value :  1.08910e-08 Reference value :  1.62870e-08 Reference value :  2.28960e-08 Reference value :  2.29060e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  6.73391e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.66336e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.733911e-01
+q_dn_fc = -6.66336e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.14269e-10 Reference value :  7.67300e-09 Reference value :  1.32770e-08 Reference value :  2.01240e-08 Reference value :  2.01300e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  8.74365e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.38702e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.743648e-01
+q_dn_fc = -6.38702e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  4.32214e-09 Reference value :  8.75300e-09 Reference value :  1.62730e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vdd#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  3.93052e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  9.57280e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 3.930524e-01
+q_dn_fc = 9.572799e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.87989e-09 Reference value :  7.73900e-09 Reference value :  1.26510e-08 Reference value :  1.64310e-08 Reference value :  1.81540e-08 Reference value :  2.30220e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  6.10357e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -3.74898e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.103567e-01
+q_dn_fc = -3.74897e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.70550e-09 Reference value :  3.95150e-09 Reference value :  7.02700e-09 Reference value :  1.02990e-08 Reference value :  1.33970e-08 Reference value :  1.66490e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vss#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.20342e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  2.60256e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.203418e-01
+q_dn_fc = 2.602564e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.01413e-09 Reference value :  6.31500e-09 Reference value :  9.78100e-09 Reference value :  1.35010e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.16554e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.56215e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = 4.165537e-01
+q_dn_fc = -5.56215e-02
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.77988e-09 Reference value :  5.43300e-09 Reference value :  8.47300e-09 Reference value :  1.16250e-08 Reference value :  1.47730e-08 Reference value :  1.77860e-08 Reference value :  2.08120e-08 Reference value :  2.34500e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  6.32448e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.22651e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = 6.324483e-01
+q_dn_fc = -5.22651e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.34949e-09 Reference value :  4.38549e-09 Reference value :  9.41300e-09 Reference value :  1.13170e-08 Reference value :  1.53270e-08 Reference value :  2.13440e-08 Reference value :  2.13460e-08 Reference value :  2.43060e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  8.36445e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.96389e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = 8.364446e-01
+q_dn_fc = -4.96389e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.05010e-09 Reference value :  5.99500e-09 Reference value :  8.67100e-09 Reference value :  1.55250e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  4.59091e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -2.37811e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = 4.590911e-01
+q_dn_fc = -2.37811e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  6.26700e-09 Reference value :  1.19070e-08 Reference value :  1.83740e-08 Reference value :  1.90720e-08 Reference value :  2.48860e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  6.73900e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.66947e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = 6.739001e-01
+q_dn_fc = -6.66947e-01
+ROWEND
+Reset re-loads circuit * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Circuit: * cp_charge.spice -- the charge one up decision delivers vs one down decision, pump alone.
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.45790e-12 Reference value :  5.72700e-09 Reference value :  7.63300e-09 Reference value :  1.48090e-08 Reference value :  1.59970e-08 Reference value :  2.05420e-08 Reference value :  2.19860e-08
+No. of Data Rows : 12560
+q_up_fc             =  8.75372e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.39889e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = 8.753723e-01
+q_dn_fc = -6.39889e-01
+ROWEND
+ngspice-42 done
+[safe_ngspice] exit rc=0

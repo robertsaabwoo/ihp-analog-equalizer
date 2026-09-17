@@ -326,5 +326,29 @@ the detector (a delay inside the loop is absorbed by it).
 - **Why these two parameters:** the up path passes through that inverter and the down path
   does not, so the inverter's rise/fall asymmetry sets the up pulse's width, and the switch
   widths set how much charge each injects.
-- **Result:** pending.
+- **Result** (`cp_charge_*.log`, clean run after the amplitude fix):
+
+  | corner | q_up | q_dn | net |
+  |---|---|---|---|
+  | tt 125 C 1.20 V | +0.60 fC | **-0.84 fC** | -0.25 fC |
+  | ff -40 C 1.32 V | +0.82 fC | **+0.05 fC** | **+0.87 fC** |
+
+  **At ff/-40 C the down decision delivers essentially no charge.** A healthy one removes
+  what the up decision added -- 0.84 fC in 1.665 ns is ~500 nA, the pump current. At the
+  failing corner it removes nothing, so the loop integrates up-only charge. That is the
+  +77 nA phase-average (2.10) and the runaway (2.7), reproduced **in the pump alone**, with
+  no ring, no detector and no loop.
+
+  Across the size grid the worst |net| is 0.75-1.08 fC and *rises* with switch width
+  (0.4 um: 0.75; 0.7 um: 1.07), so **no width or inverter ratio fixes it** -- the switched
+  topology is the limit. 0.87 fC per decision pair is ~130 nA at the baud rate if every UI
+  carries a decision, the same order as the drift that breaks the corner.
+
+- **Mechanism, to be confirmed:** in the switched pump each current source is turned off
+  between decisions, so its source node (src_n/src_p) discharges; on the next decision the
+  source must recharge that node before it can deliver current. If recovery is slower than
+  the 1.665 ns a decision lasts, the charge never arrives. `cp_width.spice` tests it by
+  sweeping the decision width (0.5/1/2/4 UI): charge appearing at longer widths means
+  recovery time; charge never appearing means the branch is starved and the bias is at
+  fault. `cp_steer.spice` (2.14) is the fix that follows if it is recovery.
 
