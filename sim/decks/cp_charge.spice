@@ -15,7 +15,7 @@ pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
 pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
 .endc
-.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_ss
 .lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
 .include cp_bias.inc
 .include ../netlists/blocks.inc
@@ -27,7 +27,7 @@ Iref Vdd vbias dc 40u
 xref vbias Vss ibias_mirror
 xb Vdd Vss vbias bn bp cp_bias
 
-.param Wnsw=0.5 Winvp=2 Winvn=1 ui=1.665n
+.param Wnsw=0.5 Winvp=2 Winvn=1 ui=1.665n Vamp=1.2
 .subckt cp_t VPWR VPB VGND VNB out up down bias_n bias_p
 XMNSRC src_n bias_n VGND VNB sg13_lv_nmos w=1u l=1u ng=1 m=1 mm_ok=1
 XMNSW  out   down   src_n VNB sg13_lv_nmos w='Wnsw*1e-6' l=0.13u ng=1 m=1 mm_ok=1
@@ -39,22 +39,25 @@ XMINVN upb   up     VGND VGND sg13_lv_nmos w='Winvn*1e-6' l=0.13u ng=1 m=1 mm_ok
 
 Vout o 0 dc 0.6
 * one UP decision at 5 ns, one DOWN decision at 15 ns, each one UI wide
-Vup  u 0 PULSE(0 1.2 5n  20p 20p 'ui' 100n)
-Vdn  d 0 PULSE(0 1.2 15n 20p 20p 'ui' 100n)
+Vup  u 0 PULSE(0 'Vamp' 5n  20p 20p 'ui' 100n)
+Vdn  d 0 PULSE(0 'Vamp' 15n 20p 20p 'ui' 100n)
 x1 Vdd Vdd Vss Vss o u d bn bp cp_t
 
 .control
+* `alter Vup PULSE(...)` is rejected by ngspice ("Only a single param - value pair
+* supported") and silently leaves the old amplitude, so the gate drive stayed at 1.2 V
+* while VDD moved.  The amplitude goes through a .param instead, and every point does
+* alterparam + reset (reset re-parses, which is what makes the new value take).
 foreach wn 0.4 0.5 0.6 0.7
  foreach ivp 1.0 1.5 2.0
-  alterparam Wnsw = $wn
-  alterparam Winvp = $ivp
-  reset
   foreach tmp -40 27 125
    foreach vd 1.08 1.2 1.32
+    alterparam Wnsw = $wn
+    alterparam Winvp = $ivp
+    alterparam Vamp = $vd
+    reset
     set temp = $tmp
     alter VDD = $vd
-    alter Vup PULSE(0 $vd 5n 20p 20p 1.665n 100n)
-    alter Vdn PULSE(0 $vd 15n 20p 20p 1.665n 100n)
     alter Vout dc = 0.6
     tran 2p 25n uic
     meas tran q_up_fC INTEG i(Vout) FROM=4n  TO=14n

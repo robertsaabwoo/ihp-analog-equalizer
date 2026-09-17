@@ -487,3 +487,27 @@ literal, so overriding a subckt in a deck is the only way to vary one without
 re-porting — and the obvious place to put the override, after `.include
 ../netlists/blocks.inc`, is the one place it cannot work. Put it before, or give
 it a different name.
+
+### 2.24 `alter` cannot set a PULSE source's parameter list
+
+```
+alter Vup PULSE(0 $vd 5n 20p 20p 1.665n 100n)
+```
+
+ngspice answers `Error: Only a single param - value pair supported.` and **leaves the
+source as it was**. In `cp_charge.spice` that meant the gate drive stayed at 1.2 V while
+VDD was swept 1.08-1.32 V, so a third of the grid was measured with the wrong drive and
+looked perfectly plausible.
+
+Put the value in a `.param` and re-parse:
+
+```
+.param Vamp=1.2
+Vup u 0 PULSE(0 'Vamp' 5n 20p 20p 'ui' 100n)
+...
+alterparam Vamp = $vd
+reset
+```
+
+`reset` is what makes the new parameter take. The same applies to any source whose
+definition is a parameter list rather than a single value.
