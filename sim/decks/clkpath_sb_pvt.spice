@@ -38,7 +38,12 @@ x1 VDD VSS vctrl vcoarse vop vom ring_ct
 x4 VDD VSS crm crp vop vom VDD diff_amp_inv
 xsb VDD VSS crm sbo sb_inverter
 x11 VDD VSS sbo rclkp inverter_buffer
-x12 VDD VSS rclkp rclkm single_inverter
+* The design no longer makes rclk- by inverting rclk+: it builds it from the ring's
+* other output through an identical sb_inverter + inverter_buffer, so the clock's duty
+* distortion is common mode (docs/notes/pd_asymmetry.md).  The load this deck puts on
+* the ring has to match that, or the frequencies it reports are not the design's.
+xsb2 VDD VSS crp sbo2 sb_inverter
+x16 VDD VSS sbo2 rclkm inverter_buffer
 .ic v(vop)=1.0 v(vom)=0.4
 .options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
 
