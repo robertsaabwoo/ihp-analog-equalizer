@@ -360,3 +360,39 @@ the detector (a delay inside the loop is absorbed by it).
   recovery time; charge never appearing means the branch is starved and the bias is at
   fault. `cp_steer.spice` (2.14) is the fix that follows if it is recovery.
 
+### 2.14 Current-steering pump: measured and REJECTED
+
+- **Question:** does keeping both current sources conducting and steering their current to a
+  dump node beat switching them off and on?
+- `cp_steer.spice`, identical harness and measurement to `cp_charge.spice`, 27 corners x 12
+  sizings, dump node held at the output's dc by a testbench source (the best case -- a real
+  one needs a replica bias).
+- **Result:** worst |q_up + q_dn| **0.99 fC against 0.87 fC** for the switched pump as built;
+  best-in-grid 0.92 against 0.75. **Worse, not better.** Rejected.
+- Cost of finding out: a few minutes on an isolated deck, against a night of closed-loop
+  runs had it been tried in the receiver.
+
+### 2.15 Ring re-sizing: the 27-corner bracket check
+
+- **Question:** with the load resistors at 11 kohm (trim width unchanged at 4 um), is the
+  baud rate still between the slowest and fastest the ring can be made, at every corner?
+- `ring_bracket.spice` (built by the overnight chain from `vco_ct_pvt.spice` with the chosen
+  sizing), ring only, 27 corners x 2 knob extremes.
+- **Result: bracketed at 24 of 27 corners outright.** The three ss rows flagged otherwise
+  (ss/-40 C/1.08 V, ss/-40 C/1.32 V, ss/27 C/1.08 V) have **zero swing at the slow test
+  point**, i.e. the ring is slower than the measurement can see -- the comfortable direction,
+  and the convention RING_DUAL_LOOP.md 7.2 already uses. Every corner's fast end clears the
+  baud rate with healthy swing (618-1064 MHz).
+- Worst fast-end margin: **ss/125 C/1.08 V at 618.1 MHz, +2.9 %** -- still the binding corner.
+
+### 2.16 The dual loop locks at ss/-40 C/1.08 V
+
+- First closed-loop run ever at an ss corner, and the first with **vcoarse free** rather than
+  pinned (`run_dual_ssm40_108.out`, 0101 stimulus, seeds vctrl 0.65 / vcoarse 0.30):
+  **600.596 MHz, -0.0006 %**, vctrl 0.645 V, ripple 8.0 mV, clock 1.323 V, vcoarse settling
+  at 0.287-0.289 V (the trim partly on, which is what the coarse loop is for).
+- **ss/125 C/1.08 V did not reach lock in the window** (560.0 MHz, -6.8 %) -- but vctrl was
+  still climbing (0.580 -> 0.588 V) with the trim already driven fully on. At ~13 mV/us it
+  needs ~30 us to reach its lock point and the run is 2.5 us. **That is a consequence of the
+  ripple fixes** (pump current halved, filter capacitors tripled) which slowed acquisition
+  ~5x. Re-running seeded at 0.85 V.

@@ -1,0 +1,2156 @@
+[safe_ngspice] cp_steer.spice  memcap=2500MB timeout=2400s floor=2000MB
+Warning: m=xx on .subckt line will override multiplier m hierarchy!
+
+Warning: redefinition of .subckt cp_bias, ignored
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: Compatibility modes selected: hs a
+
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.35408e-09 Reference value :  8.71700e-09 Reference value :  9.02900e-09 Reference value :  1.35070e-08 Reference value :  1.70400e-08 Reference value :  2.20360e-08 Reference value :  2.42100e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.64731e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.40273e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.64731e-01
+q_dn_fc = -4.40273e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.03376e-09 Reference value :  6.90300e-09 Reference value :  9.94100e-09 Reference value :  1.42750e-08 Reference value :  1.55270e-08 Reference value :  1.90240e-08 Reference value :  2.46600e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.04941e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.32666e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.04941e-01
+q_dn_fc = -6.32666e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.23347e-10 Reference value :  4.53335e-09 Reference value :  8.05700e-09 Reference value :  1.35950e-08 Reference value :  1.41990e-08 Reference value :  1.99220e-08 Reference value :  2.27820e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.53247e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.66207e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.53247e-01
+q_dn_fc = -7.66207e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  6.95300e-09 Reference value :  7.36300e-09 Reference value :  1.06950e-08 Reference value :  1.31350e-08 Reference value :  1.79820e-08 Reference value :  1.99140e-08 Reference value :  2.34660e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.70434e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.10533e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.70434e-01
+q_dn_fc = -4.10533e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.95746e-10 Reference value :  6.95100e-09 Reference value :  7.09900e-09 Reference value :  9.76900e-09 Reference value :  1.47690e-08 Reference value :  1.54710e-08 Reference value :  1.84600e-08 Reference value :  2.15960e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.17390e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.57721e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.17390e-01
+q_dn_fc = -5.57721e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.10534e-09 Reference value :  7.52300e-09 Reference value :  9.07100e-09 Reference value :  1.16090e-08 Reference value :  1.47050e-08 Reference value :  1.79160e-08 Reference value :  2.11280e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.70558e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.79215e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.70558e-01
+q_dn_fc = -6.79215e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  4.84403e-09 Reference value :  7.53700e-09 Reference value :  9.14900e-09 Reference value :  1.28050e-08 Reference value :  1.58610e-08 Reference value :  1.89300e-08 Reference value :  2.20420e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.62888e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.98781e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.62888e-01
+q_dn_fc = -4.98782e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.10568e-09 Reference value :  6.00500e-09 Reference value :  9.80300e-09 Reference value :  1.21550e-08 Reference value :  1.56970e-08 Reference value :  1.97600e-08 Reference value :  2.22640e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.12703e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.96467e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -2.12703e-01
+q_dn_fc = -5.96467e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.72848e-11 Reference value :  3.05928e-09 Reference value :  6.79900e-09 Reference value :  1.05150e-08 Reference value :  1.19210e-08 Reference value :  1.50290e-08 Reference value :  2.01880e-08 Reference value :  2.12820e-08 Reference value :  2.44500e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.66914e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.88606e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.66914e-01
+q_dn_fc = -6.88606e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.91275e-09 Reference value :  5.65700e-09 Reference value :  8.66700e-09 Reference value :  1.07730e-08 Reference value :  1.37350e-08 Reference value :  1.65030e-08 Reference value :  2.00260e-08 Reference value :  2.32340e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.49445e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.45562e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.49445e-01
+q_dn_fc = -4.45562e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.92412e-10 Reference value :  3.74241e-09 Reference value :  6.81900e-09 Reference value :  9.51500e-09 Reference value :  1.31470e-08 Reference value :  1.62590e-08 Reference value :  2.02920e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.93360e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.39198e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.93360e-01
+q_dn_fc = -6.39198e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.31900e-09 Reference value :  8.96500e-09 Reference value :  1.45110e-08 Reference value :  1.47710e-08 Reference value :  1.87340e-08 Reference value :  2.08480e-08 Reference value :  2.47340e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.42603e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.75016e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.42603e-01
+q_dn_fc = -7.75016e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.62474e-09 Reference value :  4.87874e-09 Reference value :  9.38500e-09 Reference value :  1.07910e-08 Reference value :  1.36770e-08 Reference value :  1.89900e-08 Reference value :  1.97640e-08 Reference value :  2.28660e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.51045e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.12768e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.51045e-01
+q_dn_fc = -4.12768e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.64408e-10 Reference value :  5.33300e-09 Reference value :  8.44500e-09 Reference value :  1.21310e-08 Reference value :  1.48110e-08 Reference value :  1.72280e-08 Reference value :  2.06080e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.03267e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.70998e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.03267e-01
+q_dn_fc = -5.70998e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.47015e-09 Reference value :  6.29300e-09 Reference value :  1.05110e-08 Reference value :  1.16090e-08 Reference value :  1.67240e-08 Reference value :  2.28160e-08 Reference value :  2.32020e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.59302e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.86467e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.59302e-01
+q_dn_fc = -6.86467e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.04870e-09 Reference value :  6.20900e-09 Reference value :  6.99300e-09 Reference value :  9.97700e-09 Reference value :  1.46550e-08 Reference value :  1.87020e-08 Reference value :  2.28640e-08 Reference value :  2.40580e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.38318e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.00921e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.38318e-01
+q_dn_fc = -5.00921e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.29238e-09 Reference value :  5.98700e-09 Reference value :  8.80900e-09 Reference value :  1.26390e-08 Reference value :  1.50206e-08 Reference value :  1.93200e-08 Reference value :  2.25780e-08 Reference value :  2.44200e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.93263e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.11409e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.93263e-01
+q_dn_fc = -6.11409e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.90213e-09 Reference value :  4.76413e-09 Reference value :  9.14300e-09 Reference value :  1.12290e-08 Reference value :  1.74880e-08 Reference value :  1.74900e-08 Reference value :  2.36920e-08 Reference value :  2.39060e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.50416e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.02017e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.50416e-01
+q_dn_fc = -7.02017e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.08000e-09 Reference value :  5.45700e-09 Reference value :  1.00270e-08 Reference value :  1.25330e-08 Reference value :  1.57210e-08 Reference value :  1.98620e-08 Reference value :  2.31160e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.43322e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.56826e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.43322e-01
+q_dn_fc = -4.56826e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.09568e-09 Reference value :  6.24900e-09 Reference value :  9.04500e-09 Reference value :  1.11630e-08 Reference value :  1.65230e-08 Reference value :  2.25480e-08 Reference value :  2.26460e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.88266e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.41953e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.88266e-01
+q_dn_fc = -6.41953e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.07328e-10 Reference value :  4.42733e-09 Reference value :  8.24500e-09 Reference value :  1.04790e-08 Reference value :  1.21850e-08 Reference value :  1.63950e-08 Reference value :  1.89180e-08 Reference value :  2.32900e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.35670e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.89236e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.35670e-01
+q_dn_fc = -7.89236e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.01399e-09 Reference value :  4.48199e-09 Reference value :  8.09100e-09 Reference value :  1.04650e-08 Reference value :  1.32150e-08 Reference value :  1.77700e-08 Reference value :  1.97460e-08 Reference value :  2.23260e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.42827e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.23242e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.42827e-01
+q_dn_fc = -4.23242e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.09567e-09 Reference value :  7.51100e-09 Reference value :  1.03410e-08 Reference value :  1.28590e-08 Reference value :  1.46690e-08 Reference value :  2.00500e-08 Reference value :  2.15640e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.96291e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.76261e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.96291e-01
+q_dn_fc = -5.76261e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.02500e-09 Reference value :  6.55700e-09 Reference value :  1.05390e-08 Reference value :  1.18130e-08 Reference value :  1.49090e-08 Reference value :  1.79540e-08 Reference value :  2.37720e-08 Reference value :  2.43140e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.51491e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.97282e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.51491e-01
+q_dn_fc = -6.97281e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.46197e-09 Reference value :  4.84197e-09 Reference value :  8.15700e-09 Reference value :  1.03870e-08 Reference value :  1.37190e-08 Reference value :  1.80940e-08 Reference value :  2.13080e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.27079e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.09527e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.27079e-01
+q_dn_fc = -5.09527e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.41100e-09 Reference value :  6.03900e-09 Reference value :  9.34500e-09 Reference value :  1.26730e-08 Reference value :  1.77640e-08 Reference value :  1.84840e-08 Reference value :  2.34160e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.83141e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.22981e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.83141e-01
+q_dn_fc = -6.22981e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  4.08929e-09 Reference value :  5.97700e-09 Reference value :  8.87300e-09 Reference value :  1.51370e-08 Reference value :  1.51390e-08 Reference value :  1.81840e-08 Reference value :  2.13100e-08 Reference value :  2.44280e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.40277e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.08381e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 4.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.40277e-01
+q_dn_fc = -7.08381e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.30808e-09 Reference value :  5.83100e-09 Reference value :  8.90100e-09 Reference value :  1.15870e-08 Reference value :  1.77960e-08 Reference value :  1.78020e-08 Reference value :  2.20880e-08 Reference value :  2.44700e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.64732e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.57791e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.64732e-01
+q_dn_fc = -4.57791e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.66176e-09 Reference value :  5.84900e-09 Reference value :  8.83100e-09 Reference value :  1.09770e-08 Reference value :  1.39630e-08 Reference value :  1.81960e-08 Reference value :  1.98500e-08 Reference value :  2.28600e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.04958e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.69218e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.04958e-01
+q_dn_fc = -6.69218e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.99349e-10 Reference value :  4.45335e-09 Reference value :  6.64100e-09 Reference value :  1.02770e-08 Reference value :  1.16790e-08 Reference value :  1.47030e-08 Reference value :  2.03300e-08 Reference value :  2.35160e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.53281e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.20470e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.53281e-01
+q_dn_fc = -8.20470e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.17007e-09 Reference value :  4.42807e-09 Reference value :  9.75700e-09 Reference value :  1.00990e-08 Reference value :  1.25550e-08 Reference value :  1.69140e-08 Reference value :  1.85860e-08 Reference value :  2.15000e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  -2.70435e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.30196e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.70435e-01
+q_dn_fc = -4.30196e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.77975e-09 Reference value :  8.67300e-09 Reference value :  9.23100e-09 Reference value :  1.39070e-08 Reference value :  1.94080e-08 Reference value :  2.04860e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.17402e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.96283e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.17402e-01
+q_dn_fc = -5.96283e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  4.76134e-09 Reference value :  7.47100e-09 Reference value :  1.01190e-08 Reference value :  1.15790e-08 Reference value :  1.66290e-08 Reference value :  1.90400e-08 Reference value :  2.17980e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.70575e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.33573e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.70574e-01
+q_dn_fc = -7.33573e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.13003e-09 Reference value :  8.96900e-09 Reference value :  8.97100e-09 Reference value :  1.15470e-08 Reference value :  1.41570e-08 Reference value :  1.76880e-08 Reference value :  2.03020e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  -2.62881e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.21681e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.62881e-01
+q_dn_fc = -5.21681e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.25368e-09 Reference value :  8.25100e-09 Reference value :  1.40270e-08 Reference value :  1.40330e-08 Reference value :  1.64910e-08 Reference value :  1.91620e-08 Reference value :  2.19760e-08 Reference value :  2.46340e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.12707e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.36180e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -2.12707e-01
+q_dn_fc = -6.36180e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.35929e-09 Reference value :  3.92729e-09 Reference value :  6.37300e-09 Reference value :  9.25300e-09 Reference value :  1.17310e-08 Reference value :  1.44110e-08 Reference value :  1.70380e-08 Reference value :  1.99260e-08 Reference value :  2.28680e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.66916e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.42315e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.66916e-01
+q_dn_fc = -7.42315e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.67454e-11 Reference value :  2.77275e-09 Reference value :  5.50900e-09 Reference value :  8.40700e-09 Reference value :  1.03730e-08 Reference value :  1.27330e-08 Reference value :  1.57690e-08 Reference value :  1.80360e-08 Reference value :  2.10260e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.49436e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.64193e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.49436e-01
+q_dn_fc = -4.64193e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  6.14500e-09 Reference value :  6.14700e-09 Reference value :  8.88100e-09 Reference value :  1.19410e-08 Reference value :  1.52410e-08 Reference value :  1.66850e-08 Reference value :  2.00920e-08 Reference value :  2.32540e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.93363e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.78082e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.93363e-01
+q_dn_fc = -6.78082e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.49816e-09 Reference value :  4.12216e-09 Reference value :  9.34300e-09 Reference value :  1.18330e-08 Reference value :  1.61910e-08 Reference value :  2.25400e-08 Reference value :  2.25420e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.42603e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.32518e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.42603e-01
+q_dn_fc = -8.32518e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.38738e-10 Reference value :  4.40674e-09 Reference value :  6.58100e-09 Reference value :  1.02530e-08 Reference value :  1.60770e-08 Reference value :  1.61350e-08 Reference value :  2.05960e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.51042e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.34106e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.51042e-01
+q_dn_fc = -4.34106e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.53300e-09 Reference value :  9.26300e-09 Reference value :  1.13110e-08 Reference value :  1.52070e-08 Reference value :  1.82640e-08 Reference value :  2.01440e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.03268e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.12254e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.03268e-01
+q_dn_fc = -6.12254e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.89100e-09 Reference value :  6.36500e-09 Reference value :  9.28900e-09 Reference value :  1.33550e-08 Reference value :  1.49730e-08 Reference value :  1.79280e-08 Reference value :  2.10240e-08 Reference value :  2.45480e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.59302e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.44305e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.59302e-01
+q_dn_fc = -7.44305e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.26670e-09 Reference value :  8.57700e-09 Reference value :  8.58300e-09 Reference value :  1.36870e-08 Reference value :  1.47390e-08 Reference value :  1.80180e-08 Reference value :  2.44180e-08 Reference value :  2.44200e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.38312e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.25900e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.38312e-01
+q_dn_fc = -5.25900e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.29638e-09 Reference value :  6.01700e-09 Reference value :  8.24700e-09 Reference value :  1.11970e-08 Reference value :  1.42830e-08 Reference value :  1.72540e-08 Reference value :  2.11340e-08 Reference value :  2.34400e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.93264e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.54167e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.93264e-01
+q_dn_fc = -6.54167e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.70135e-10 Reference value :  3.85813e-09 Reference value :  6.54900e-09 Reference value :  9.72100e-09 Reference value :  1.37230e-08 Reference value :  1.99680e-08 Reference value :  1.99700e-08 Reference value :  2.31700e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.50417e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.59525e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.50417e-01
+q_dn_fc = -7.59525e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.35997e-10 Reference value :  5.59700e-09 Reference value :  6.94700e-09 Reference value :  1.16390e-08 Reference value :  1.18670e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.43377e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.36309e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.43377e-01
+q_dn_fc = -1.36309e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.17168e-09 Reference value :  6.34100e-09 Reference value :  9.05700e-09 Reference value :  1.11070e-08 Reference value :  1.42890e-08 Reference value :  1.69980e-08 Reference value :  1.99820e-08 Reference value :  2.29460e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.88257e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.83289e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.88257e-01
+q_dn_fc = -6.83289e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.14533e-09 Reference value :  4.25933e-09 Reference value :  7.35500e-09 Reference value :  1.31130e-08 Reference value :  1.31150e-08 Reference value :  1.91600e-08 Reference value :  1.93100e-08 Reference value :  2.24600e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.35666e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.49749e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.35666e-01
+q_dn_fc = -8.49749e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.89991e-10 Reference value :  3.48799e-09 Reference value :  6.61100e-09 Reference value :  9.42300e-09 Reference value :  1.15910e-08 Reference value :  1.76780e-08 Reference value :  2.40440e-08 Reference value :  2.40460e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12563
+q_up_fc             =  -2.42851e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.46430e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.42851e-01
+q_dn_fc = -4.46430e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.63767e-09 Reference value :  6.29500e-09 Reference value :  8.09900e-09 Reference value :  1.20990e-08 Reference value :  1.33930e-08 Reference value :  1.73900e-08 Reference value :  1.96300e-08 Reference value :  2.37980e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vss#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.96291e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.20175e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.96291e-01
+q_dn_fc = -6.20175e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.53217e-11 Reference value :  4.36532e-09 Reference value :  7.14500e-09 Reference value :  9.23700e-09 Reference value :  1.50290e-08 Reference value :  1.51070e-08 Reference value :  2.12820e-08 Reference value :  2.13180e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.51711e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.58293e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.51711e-01
+q_dn_fc = -7.58293e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  5.49700e-09 Reference value :  6.29300e-09 Reference value :  1.22690e-08 Reference value :  1.79040e-08 Reference value :  2.22660e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12561
+q_up_fc             =  -2.27087e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.36570e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.27087e-01
+q_dn_fc = -5.36570e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  3.06163e-09 Reference value :  9.14700e-09 Reference value :  9.14900e-09 Reference value :  1.23110e-08 Reference value :  1.51630e-08 Reference value :  1.80080e-08 Reference value :  2.09720e-08 Reference value :  2.39600e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.83139e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.68743e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.83139e-01
+q_dn_fc = -6.68743e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.09729e-09 Reference value :  3.99129e-09 Reference value :  6.65500e-09 Reference value :  9.56700e-09 Reference value :  1.25050e-08 Reference value :  1.54770e-08 Reference value :  1.83220e-08 Reference value :  2.12620e-08 Reference value :  2.42480e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.40270e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.69490e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 5.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.40270e-01
+q_dn_fc = -7.69490e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.42608e-09 Reference value :  4.39608e-09 Reference value :  7.32100e-09 Reference value :  9.88700e-09 Reference value :  1.20570e-08 Reference value :  1.50170e-08 Reference value :  1.77760e-08 Reference value :  2.07360e-08 Reference value :  2.37280e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.64732e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.75567e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.64732e-01
+q_dn_fc = -4.75567e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.99761e-10 Reference value :  3.90576e-09 Reference value :  6.85700e-09 Reference value :  9.44900e-09 Reference value :  1.16670e-08 Reference value :  1.44950e-08 Reference value :  1.72800e-08 Reference value :  2.02640e-08 Reference value :  2.31820e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.04953e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.07269e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.04953e-01
+q_dn_fc = -7.07269e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.29350e-10 Reference value :  3.34935e-09 Reference value :  6.27100e-09 Reference value :  8.82300e-09 Reference value :  1.09970e-08 Reference value :  1.39490e-08 Reference value :  1.68240e-08 Reference value :  1.96980e-08 Reference value :  2.26520e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.53319e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.77286e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.53319e-01
+q_dn_fc = -8.77286e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.96807e-09 Reference value :  5.91300e-09 Reference value :  8.84100e-09 Reference value :  1.08670e-08 Reference value :  1.35390e-08 Reference value :  1.63850e-08 Reference value :  1.92580e-08 Reference value :  2.21360e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.70435e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.50409e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.70435e-01
+q_dn_fc = -4.50409e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.95175e-09 Reference value :  5.94900e-09 Reference value :  8.87100e-09 Reference value :  1.08730e-08 Reference value :  1.38130e-08 Reference value :  1.66850e-08 Reference value :  1.95560e-08 Reference value :  2.25760e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.17403e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.36763e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.17403e-01
+q_dn_fc = -6.36763e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.87134e-09 Reference value :  5.88300e-09 Reference value :  8.80900e-09 Reference value :  1.10530e-08 Reference value :  1.40210e-08 Reference value :  1.68000e-08 Reference value :  1.97600e-08 Reference value :  2.27480e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.70590e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.90471e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.70590e-01
+q_dn_fc = -7.90471e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.87403e-09 Reference value :  5.74100e-09 Reference value :  8.62500e-09 Reference value :  1.13830e-08 Reference value :  1.43450e-08 Reference value :  1.71540e-08 Reference value :  2.00900e-08 Reference value :  2.30600e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  -2.62881e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.45634e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.62881e-01
+q_dn_fc = -5.45634e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.97686e-10 Reference value :  3.39969e-09 Reference value :  6.14500e-09 Reference value :  9.05500e-09 Reference value :  1.20230e-08 Reference value :  1.49790e-08 Reference value :  1.78620e-08 Reference value :  2.08460e-08 Reference value :  2.38060e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.12709e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.78144e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -2.12709e-01
+q_dn_fc = -6.78144e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.97286e-10 Reference value :  3.64129e-09 Reference value :  6.09700e-09 Reference value :  9.02900e-09 Reference value :  1.18790e-08 Reference value :  1.48610e-08 Reference value :  1.76760e-08 Reference value :  2.05840e-08 Reference value :  2.34120e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.66928e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.98792e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.66928e-01
+q_dn_fc = -7.98792e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  9.50745e-10 Reference value :  3.96075e-09 Reference value :  6.87500e-09 Reference value :  9.39900e-09 Reference value :  1.14590e-08 Reference value :  1.43270e-08 Reference value :  1.70180e-08 Reference value :  1.98860e-08 Reference value :  2.28460e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.49426e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.83584e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.49426e-01
+q_dn_fc = -4.83584e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.04116e-11 Reference value :  2.93241e-09 Reference value :  5.88700e-09 Reference value :  8.81700e-09 Reference value :  1.08670e-08 Reference value :  1.36010e-08 Reference value :  1.65030e-08 Reference value :  1.93800e-08 Reference value :  2.23500e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.93363e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.18826e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.93363e-01
+q_dn_fc = -7.18826e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.90416e-09 Reference value :  5.82700e-09 Reference value :  8.60500e-09 Reference value :  1.06330e-08 Reference value :  1.35470e-08 Reference value :  1.64730e-08 Reference value :  1.93560e-08 Reference value :  2.23100e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.42604e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.92699e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.42604e-01
+q_dn_fc = -8.92698e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.86474e-09 Reference value :  5.81900e-09 Reference value :  8.72900e-09 Reference value :  1.08210e-08 Reference value :  1.35390e-08 Reference value :  1.64930e-08 Reference value :  1.93740e-08 Reference value :  2.23240e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.51038e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.56227e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.51038e-01
+q_dn_fc = -4.56227e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.88441e-09 Reference value :  5.79900e-09 Reference value :  8.75100e-09 Reference value :  1.09030e-08 Reference value :  1.38370e-08 Reference value :  1.67052e-08 Reference value :  1.96880e-08 Reference value :  2.26800e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.03269e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.55694e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.03269e-01
+q_dn_fc = -6.55694e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.38155e-10 Reference value :  3.17415e-09 Reference value :  6.10900e-09 Reference value :  8.95900e-09 Reference value :  1.12690e-08 Reference value :  1.41790e-08 Reference value :  1.70180e-08 Reference value :  1.99360e-08 Reference value :  2.29140e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.59302e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.04827e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.59302e-01
+q_dn_fc = -8.04827e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.56704e-10 Reference value :  3.40670e-09 Reference value :  6.21700e-09 Reference value :  9.17700e-09 Reference value :  1.19370e-08 Reference value :  1.49510e-08 Reference value :  1.78140e-08 Reference value :  2.07780e-08 Reference value :  2.37360e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.38311e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.52182e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.38311e-01
+q_dn_fc = -5.52182e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.25238e-09 Reference value :  4.16638e-09 Reference value :  6.81300e-09 Reference value :  9.72300e-09 Reference value :  1.26870e-08 Reference value :  1.56690e-08 Reference value :  1.85000e-08 Reference value :  2.14360e-08 Reference value :  2.44200e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.93265e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.99458e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.93265e-01
+q_dn_fc = -6.99458e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.53613e-09 Reference value :  4.27613e-09 Reference value :  6.85300e-09 Reference value :  9.70500e-09 Reference value :  1.26910e-08 Reference value :  1.55830e-08 Reference value :  1.84280e-08 Reference value :  2.14200e-08 Reference value :  2.44100e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.50407e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.20005e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.50407e-01
+q_dn_fc = -8.20005e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.87200e-09 Reference value :  4.90400e-09 Reference value :  7.79700e-09 Reference value :  1.02310e-08 Reference value :  1.24430e-08 Reference value :  1.53670e-08 Reference value :  1.82420e-08 Reference value :  2.12580e-08 Reference value :  2.41820e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.43431e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.98549e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.43431e-01
+q_dn_fc = -4.98549e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.34568e-09 Reference value :  4.32968e-09 Reference value :  7.12700e-09 Reference value :  9.46100e-09 Reference value :  1.15850e-08 Reference value :  1.45590e-08 Reference value :  1.73920e-08 Reference value :  2.02980e-08 Reference value :  2.32820e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.88255e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.26702e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.88255e-01
+q_dn_fc = -7.26702e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.17328e-10 Reference value :  3.66333e-09 Reference value :  6.36700e-09 Reference value :  9.21900e-09 Reference value :  1.15130e-08 Reference value :  1.44670e-08 Reference value :  1.72780e-08 Reference value :  2.01760e-08 Reference value :  2.31480e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.35869e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -9.13018e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.35869e-01
+q_dn_fc = -9.13018e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.03991e-10 Reference value :  3.71599e-09 Reference value :  6.63300e-09 Reference value :  9.39100e-09 Reference value :  1.13910e-08 Reference value :  1.43630e-08 Reference value :  1.71540e-08 Reference value :  2.01160e-08 Reference value :  2.30960e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.42877e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.70562e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.42877e-01
+q_dn_fc = -4.70562e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.19667e-10 Reference value :  3.15567e-09 Reference value :  6.10700e-09 Reference value :  8.91300e-09 Reference value :  1.10090e-08 Reference value :  1.39810e-08 Reference value :  1.68160e-08 Reference value :  1.97380e-08 Reference value :  2.26900e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.96293e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.66533e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.96293e-01
+q_dn_fc = -6.66533e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.43322e-10 Reference value :  3.09332e-09 Reference value :  6.03700e-09 Reference value :  8.77700e-09 Reference value :  1.11070e-08 Reference value :  1.41110e-08 Reference value :  1.68860e-08 Reference value :  1.98500e-08 Reference value :  2.27700e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.51710e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.22140e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.51710e-01
+q_dn_fc = -8.22140e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.19967e-10 Reference value :  3.14797e-09 Reference value :  6.03100e-09 Reference value :  8.77100e-09 Reference value :  1.15750e-08 Reference value :  1.44970e-08 Reference value :  1.73260e-08 Reference value :  2.03000e-08 Reference value :  2.32500e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12561
+q_up_fc             =  -2.27096e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.65087e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.27096e-01
+q_dn_fc = -5.65087e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.79629e-10 Reference value :  3.74363e-09 Reference value :  6.49100e-09 Reference value :  9.46500e-09 Reference value :  1.23270e-08 Reference value :  1.52270e-08 Reference value :  1.80640e-08 Reference value :  2.09740e-08 Reference value :  2.39900e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.83138e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.17170e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.83138e-01
+q_dn_fc = -7.17170e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.46529e-09 Reference value :  4.29729e-09 Reference value :  7.04100e-09 Reference value :  9.93500e-09 Reference value :  1.29310e-08 Reference value :  1.59050e-08 Reference value :  1.87760e-08 Reference value :  2.17420e-08 Reference value :  2.47040e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.40269e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.33607e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 6.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.40269e-01
+q_dn_fc = -8.33607e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.19408e-09 Reference value :  5.15100e-09 Reference value :  8.10300e-09 Reference value :  1.04450e-08 Reference value :  1.28110e-08 Reference value :  1.57110e-08 Reference value :  1.85880e-08 Reference value :  2.15400e-08 Reference value :  2.45260e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.64733e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.93356e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.64733e-01
+q_dn_fc = -4.93356e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.72976e-09 Reference value :  4.78576e-09 Reference value :  7.76100e-09 Reference value :  1.00030e-08 Reference value :  1.24450e-08 Reference value :  1.53330e-08 Reference value :  1.81940e-08 Reference value :  2.11400e-08 Reference value :  2.40400e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.04928e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.46365e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.04928e-01
+q_dn_fc = -7.46365e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.54135e-09 Reference value :  4.56335e-09 Reference value :  7.51700e-09 Reference value :  9.66700e-09 Reference value :  1.21730e-08 Reference value :  1.51370e-08 Reference value :  1.79640e-08 Reference value :  2.09400e-08 Reference value :  2.37520e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.53355e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -9.35721e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.53355e-01
+q_dn_fc = -9.35721e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.22407e-09 Reference value :  4.22407e-09 Reference value :  7.11100e-09 Reference value :  9.70700e-09 Reference value :  1.18790e-08 Reference value :  1.48170e-08 Reference value :  1.76440e-08 Reference value :  2.04440e-08 Reference value :  2.32980e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.70435e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.70911e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.70435e-01
+q_dn_fc = -4.70911e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  3.01751e-10 Reference value :  3.22175e-09 Reference value :  6.17900e-09 Reference value :  8.96900e-09 Reference value :  1.10050e-08 Reference value :  1.39250e-08 Reference value :  1.67460e-08 Reference value :  1.97160e-08 Reference value :  2.26960e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.17395e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -6.78538e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.17395e-01
+q_dn_fc = -6.78538e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.84134e-09 Reference value :  5.74900e-09 Reference value :  8.68700e-09 Reference value :  1.08190e-08 Reference value :  1.37830e-08 Reference value :  1.66830e-08 Reference value :  1.95240e-08 Reference value :  2.24420e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.70605e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.49079e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.70605e-01
+q_dn_fc = -8.49079e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.20348e-11 Reference value :  3.01203e-09 Reference value :  5.88500e-09 Reference value :  8.73300e-09 Reference value :  1.15170e-08 Reference value :  1.45290e-08 Reference value :  1.73240e-08 Reference value :  2.02760e-08 Reference value :  2.32800e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12558
+q_up_fc             =  -2.62881e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.70376e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.62881e-01
+q_dn_fc = -5.70376e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.53686e-10 Reference value :  3.88169e-09 Reference value :  6.59900e-09 Reference value :  9.51100e-09 Reference value :  1.24310e-08 Reference value :  1.53450e-08 Reference value :  1.82000e-08 Reference value :  2.11820e-08 Reference value :  2.41020e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.12709e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.21730e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -2.12709e-01
+q_dn_fc = -7.21730e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.18329e-09 Reference value :  3.83929e-09 Reference value :  6.36300e-09 Reference value :  9.29300e-09 Reference value :  1.22050e-08 Reference value :  1.51190e-08 Reference value :  1.79940e-08 Reference value :  2.09760e-08 Reference value :  2.39240e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.66930e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.57312e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.66930e-01
+q_dn_fc = -8.57312e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.07075e-09 Reference value :  4.04875e-09 Reference value :  6.99700e-09 Reference value :  9.46500e-09 Reference value :  1.15050e-08 Reference value :  1.43650e-08 Reference value :  1.71760e-08 Reference value :  2.01280e-08 Reference value :  2.30700e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.49418e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.03154e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.49418e-01
+q_dn_fc = -5.03154e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.92412e-10 Reference value :  3.22841e-09 Reference value :  6.13500e-09 Reference value :  8.91300e-09 Reference value :  1.05970e-08 Reference value :  1.28570e-08 Reference value :  1.51490e-08 Reference value :  1.76820e-08 Reference value :  2.02360e-08 Reference value :  2.26660e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.93361e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.60821e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.93361e-01
+q_dn_fc = -7.60821e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.55216e-09 Reference value :  5.00060e-09 Reference value :  7.63500e-09 Reference value :  9.66700e-09 Reference value :  1.16490e-08 Reference value :  1.42550e-08 Reference value :  1.66050e-08 Reference value :  1.90400e-08 Reference value :  2.13620e-08 Reference value :  2.39020e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.42604e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -9.54665e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.42604e-01
+q_dn_fc = -9.54665e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  8.40738e-10 Reference value :  3.27474e-09 Reference value :  5.98700e-09 Reference value :  8.56300e-09 Reference value :  1.04390e-08 Reference value :  1.26390e-08 Reference value :  1.53950e-08 Reference value :  1.79200e-08 Reference value :  2.04940e-08 Reference value :  2.31660e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.51032e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -4.78999e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.51032e-01
+q_dn_fc = -4.78999e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.02408e-10 Reference value :  2.91641e-09 Reference value :  5.36300e-09 Reference value :  7.99700e-09 Reference value :  1.02670e-08 Reference value :  1.28190e-08 Reference value :  1.53850e-08 Reference value :  1.78260e-08 Reference value :  2.02980e-08 Reference value :  2.26760e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -2.03267e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.00638e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -2.03267e-01
+q_dn_fc = -7.00638e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.34615e-09 Reference value :  4.91215e-09 Reference value :  7.55100e-09 Reference value :  9.88700e-09 Reference value :  1.25330e-08 Reference value :  1.54470e-08 Reference value :  1.82980e-08 Reference value :  2.12640e-08 Reference value :  2.42480e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.59303e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.67125e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.59303e-01
+q_dn_fc = -8.67125e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.63470e-09 Reference value :  4.64270e-09 Reference value :  7.45900e-09 Reference value :  1.02970e-08 Reference value :  1.32870e-08 Reference value :  1.62510e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.38306e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -1.03022e-16 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.38306e-01
+q_dn_fc = -1.03022e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.73638e-09 Reference value :  4.64638e-09 Reference value :  7.40300e-09 Reference value :  1.03170e-08 Reference value :  1.32810e-08 Reference value :  1.62010e-08 Reference value :  1.91280e-08 Reference value :  2.21640e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -1.93266e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.46534e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.93266e-01
+q_dn_fc = -7.46534e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.81813e-09 Reference value :  5.40500e-09 Reference value :  8.30500e-09 Reference value :  1.11930e-08 Reference value :  1.42470e-08 Reference value :  1.71660e-08 Reference value :  2.01800e-08 Reference value :  2.31700e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12559
+q_up_fc             =  -1.50408e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.82522e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 1.500000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.50408e-01
+q_dn_fc = -8.82522e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  6.89997e-10 Reference value :  3.71800e-09 Reference value :  6.59700e-09 Reference value :  9.32500e-09 Reference value :  1.13430e-08 Reference value :  1.41290e-08 Reference value :  1.69320e-08 Reference value :  1.99100e-08 Reference value :  2.28900e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.43476e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.20037e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.43476e-01
+q_dn_fc = -5.20037e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.36752e-11 Reference value :  3.00368e-09 Reference value :  5.94300e-09 Reference value :  8.67500e-09 Reference value :  1.07230e-08 Reference value :  1.34690e-08 Reference value :  1.64110e-08 Reference value :  1.93020e-08 Reference value :  2.22940e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.88263e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.71555e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.88263e-01
+q_dn_fc = -7.71555e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = -40.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.89933e-09 Reference value :  5.86100e-09 Reference value :  8.83300e-09 Reference value :  1.11050e-08 Reference value :  1.41070e-08 Reference value :  1.69620e-08 Reference value :  1.99640e-08 Reference value :  2.28920e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.35870e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -9.78148e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = -4.00000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.35870e-01
+q_dn_fc = -9.78147e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  4.37991e-10 Reference value :  3.46799e-09 Reference value :  6.44100e-09 Reference value :  9.24700e-09 Reference value :  1.12950e-08 Reference value :  1.42070e-08doAnalyses: TRAN:  Timestep too small; time = 1.6685e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.42901e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -2.05765e-17 from=  1.40000e-08 to=  1.66850e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.080000e+00
+q_up_fc = -2.42901e-01
+q_dn_fc = -2.05765e-02
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.00000e-14 Reference value :  2.90367e-09 Reference value :  5.81300e-09 Reference value :  8.77900e-09 Reference value :  1.08150e-08 Reference value :  1.37890e-08 Reference value :  1.66850e-08 Reference value :  1.96160e-08 Reference value :  2.26420e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.96300e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.14539e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.200000e+00
+q_up_fc = -1.96300e-01
+q_dn_fc = -7.14539e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.51322e-10 Reference value :  3.17532e-09 Reference value :  6.16900e-09 Reference value :  9.02900e-09 Reference value :  1.14170e-08 Reference value :  1.43590e-08 Reference value :  1.72740e-08 Reference value :  2.01640e-08 Reference value :  2.31600e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.51709e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.87862e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 2.700000e+01
+p_vdd = 1.320000e+00
+q_up_fc = -1.51709e-01
+q_dn_fc = -8.87862e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  7.03967e-10 Reference value :  3.72597e-09 Reference value :  6.55100e-09 Reference value :  9.25900e-09 Reference value :  1.21810e-08 Reference value :  1.51790e-08 Reference value :  1.80140e-08 Reference value :  2.10540e-08 Reference value :  2.40320e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vdump#branch"
+
+
+tran simulation(s) aborted
+Using SPARSE 1.3 as Direct Linear Solver
+q_up_fc             =  -2.27105e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -5.94689e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.080000e+00
+q_up_fc = -2.27105e-01
+q_dn_fc = -5.94689e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  1.27963e-09 Reference value :  4.24163e-09 Reference value :  7.00700e-09 Reference value :  9.92700e-09 Reference value :  1.29150e-08 Reference value :  1.58530e-08 Reference value :  1.87620e-08 Reference value :  2.17300e-08 Reference value :  2.47360e-08Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 12560
+q_up_fc             =  -1.83138e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -7.67536e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.200000e+00
+q_up_fc = -1.83138e-01
+q_dn_fc = -7.67536e-01
+ROWEND
+Reset re-loads circuit * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Circuit: * cp_steer.spice -- the same isolated charge test as cp_charge.spice, on a current-steering
+
+Doing analysis at TEMP = 125.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  2.14529e-09 Reference value :  4.91329e-09 Reference value :  7.78300e-09 Reference value :  1.07270e-08 Reference value :  1.37250e-08 Reference value :  1.66390e-08 Reference value :  1.95480e-08 Reference value :  2.25560e-08doAnalyses: TRAN:  Timestep too small; time = 2.5e-08, timestep = 2.5e-24: trouble with node "vout#branch"
+
+
+tran simulation(s) aborted
+q_up_fc             =  -1.40272e-16 from=  4.00000e-09 to=  1.40000e-08
+q_dn_fc             =  -8.99800e-16 from=  1.40000e-08 to=  2.40000e-08
+p_wn = 7.000000e-01
+p_ivp = 2.000000e+00
+p_temp = 1.250000e+02
+p_vdd = 1.320000e+00
+q_up_fc = -1.40272e-01
+q_dn_fc = -8.99800e-01
+ROWEND
+ngspice-42 done
+[safe_ngspice] exit rc=0
