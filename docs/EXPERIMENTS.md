@@ -210,4 +210,31 @@ the detector (a delay inside the loop is absorbed by it).
 - **Caution:** the loop is now ~5x slower to acquire (current down, capacitance
   up). Read `vctrl_s1..s3` for drift before calling a run locked or not, and
   lengthen the transient rather than declaring failure.
-- **Closed-loop result:** pending (`sim/runners/lowripple.sh`).
+- **Closed-loop result** (`e2e_prbs_lr.log`, `e2e_prbs_ffm40_lowripple_lr.log`):
+
+  | corner | f | f_err | vctrl s1/s2/s3 | ripple |
+  |---|---|---|---|---|
+  | tt 27 C 1.2 V | 600.632 MHz | +0.0053 % | 0.5970 / 0.5981 / 0.5966 | **15.1 mV** (was 34.1) |
+  | ff -40 C 1.32 V | 677.1 MHz | +12.73 % | 0.6824 / 0.7002 / 0.7161 | **15.5 mV** (was 48.4) |
+
+  **The fixes do what they were meant to -- and ff/-40 C still does not lock.** Ripple is
+  down 3x at both corners, nominal is unharmed, and the wobble at ff/-40 C is now
+  ~19 MHz against tt/125 C's 16 MHz, which locks. **So ripple was not the blocker.**
+  vctrl still climbs there at ~57 mV/us, which needs ~74 nA of net up current into the
+  1308 fF filter, while the pump at that voltage supplies about -13 nA. The push is
+  coming from the detector's decisions, not from the pump.
+
+### 2.10 The detector's characteristic vs phase (in flight)
+
+- **Question, asked the cheap way:** at ff/-40 C, is there *any* clock phase at which the
+  loop is in balance? If not, no amount of ripple or gain work can make it lock.
+- `pd_phase_{tt125,ffm40}.spice`: the ring is replaced (sim-only) by an **ideal clock at
+  exactly the baud rate** with a settable phase, vctrl is held by the forced-node filter
+  override, and the net current is measured at ten phases across one UI. No frequency
+  offset, so there is no beat to average away -- the flaw that made the near-lock points of
+  `loop_scurve` unreliable (§1.3 rule 4).
+- **Reading it:** a zero crossing with the right slope is a lock phase. A curve that never
+  crosses zero means the loop cannot balance at that corner at any phase.
+- **Watch for:** `alterparam tph = {$ph*1.665n}` -- if ngspice does not evaluate that
+  expression, every row comes back identical. Identical rows mean the sweep failed, not
+  that phase has no effect.
