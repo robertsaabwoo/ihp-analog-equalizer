@@ -235,6 +235,36 @@ the detector (a delay inside the loop is absorbed by it).
   `loop_scurve` unreliable (§1.3 rule 4).
 - **Reading it:** a zero crossing with the right slope is a lock phase. A curve that never
   crosses zero means the loop cannot balance at that corner at any phase.
-- **Watch for:** `alterparam tph = {$ph*1.665n}` -- if ngspice does not evaluate that
-  expression, every row comes back identical. Identical rows mean the sweep failed, not
-  that phase has no effect.
+- **Result** (`pd_phase_{tt125,ffm40}.log`, ring override confirmed in both), net nA into
+  vctrl vs clock phase in UI:
+
+  | phase | 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 |
+  |---|---|---|---|---|---|---|---|---|---|---|
+  | tt/125 C | -345 | -165 | -51 | +310 | +311 | +309 | +175 | +54 | -150 | -344 |
+  | ff/-40 C | -335 | -332 | -257 | +197 | +420 | +415 | +408 | +412 | +170 | -328 |
+
+- **Verdict: the detector is fine at both corners** -- a proper bang-bang S-curve with zero
+  crossings near 0.25 and 0.85 UI, so a balanced lock phase exists at ff/-40 C too.
+  **But the phase-AVERAGE is what an unlocked loop integrates**, because a slipping loop
+  sweeps all phases uniformly:
+
+  | corner | phase-average | closed loop |
+  |---|---|---|
+  | tt/125 C | **+10.5 nA** | captures and locks |
+  | ff/-40 C | **+57 nA** | drifts up, never captures |
+
+  That matches the ~74 nA drift measured closed loop (§2.9). The cause is the S-curve's
+  asymmetry: at ff/-40 C the up lobe reaches +420 nA while the down lobe only reaches
+  -335 nA, so slipping integrates **upward** and the loop escapes before it can catch. The
+  earlier "pulse-width asymmetry" guess (§2.7 #5) was the right family of cause measured
+  the wrong way -- duty at one operating point says nothing; the phase-average does.
+
+### 2.11 Trimming the pump against the phase-average (in flight)
+
+- **Question:** what bias_n mirror width makes the phase-average ~0 at the worst corner
+  without breaking the corner that works?
+- `pd_trim_{ffm40,tt125}.spice`: the §2.10 measurement with XMP2 swept 1.00-1.45 um
+  (sim-only parameterised `cp_bias` override), ten phases per width.
+- **Why this is the right metric:** it predicts runaway directly, costs ~5 min per corner,
+  and needs no closed-loop run. Narrower XMP2 = less down current = a *more* positive
+  average, so the null is expected **below** 1.45 um.
