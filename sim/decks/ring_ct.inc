@@ -108,7 +108,7 @@
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
 * slow leg, matching the design (SLOW_W/SLOW_C in tools/port_from_sky130.py).
 * cap_cmomf will not take arithmetic in w/l, hence Csl_S.
-.param Wsl=2 Csl=1.0
+.param Wsl=1 Csl=1.0
 .param Csl_S='Csl*1e-6'
 
 .subckt ring_inv_ct VDD VSS vin+ vo+ vin- vo- vctrl vcoarse

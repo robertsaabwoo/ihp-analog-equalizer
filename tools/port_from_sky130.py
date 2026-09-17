@@ -91,8 +91,11 @@ TRIM_L = 1.0
 # Slow leg: nMOS switch width (um) and cap_cmomf side (um, 1.29 fF/um2).  Sized by
 # sim/decks/ring_slow_sweep.spice against both extremes with the real load -- see
 # docs/EXPERIMENTS.md 2.19.
-SLOW_W = 2.0
-SLOW_C = 1.0
+SLOW_W = 1.0
+SLOW_C = 1.0   # switch 2.0 -> 1.0 um: its drain capacitance loads the ring node even
+               # when off, and at 2 um that cost ss/125 C/1.08 V ~8 % of its reach
+               # (607 -> 560 MHz, ring_vcrs vs ring_loaded).  The cap is isolated
+               # by the off switch, so the parasitic is the switch's alone.
 
 SIZING: dict[tuple[str, str], dict] = {
 

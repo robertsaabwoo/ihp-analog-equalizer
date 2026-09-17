@@ -144,7 +144,7 @@ C {devices/lab_wire.sym} -500 240 0 0 {name=T2_G sig_type=std_logic lab=vcoarse!
 C {devices/lab_wire.sym} -460 240 0 0 {name=T2_B sig_type=std_logic lab=VDD}
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} 60 400 0 0 {name=S1
 l=0.13u
-w=2u
+w=1u
 ng=1
 m=1
 mm_ok=1
@@ -168,7 +168,7 @@ C {devices/lab_wire.sym} 60 490 0 0 {name=CS1_c0 sig_type=std_logic lab=nslow1}
 C {devices/lab_wire.sym} 60 550 0 0 {name=CS1_c1 sig_type=std_logic lab=VSS}
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} -480 400 0 0 {name=S2
 l=0.13u
-w=2u
+w=1u
 ng=1
 m=1
 mm_ok=1
