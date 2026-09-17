@@ -1,0 +1,88 @@
+* ring_slow_sweep.spice -- the SLOW LEG sized against both extremes, loaded.
+* Sweeps the slow-leg capacitor (Csl um square, 1.29 fF/um2) with the trim off, asking how
+* much it slows ff/-40 C (which needs slowing) and what it costs ss/125 C (which needs every
+* MHz it can get).  Same loaded chain as ring_loaded.spice.
+* ring_loaded.spice -- ring frequency vs vctrl WITH THE REAL LOAD, which every earlier ring
+* sweep omitted.  vco_ct_*, ring_centre* and ring_bracket drive only the ring and its own
+* output buffer; in the macro the ring also drives the CDR diff amp, the clock stage and
+* the buffers.  Measured consequence: at ss/125 C/1.08 V the standalone sweep says the trim
+* fully on reaches 602.7 MHz, while the macro reaches 565 MHz closed loop
+* (run_dual_ss125_108.out) -- about 7 % slower.  Every sizing decision made from the
+* unloaded sweeps is therefore optimistic, including the 11 kohm candidate.
+* (original header follows)
+* clkpath_sb_pvt.spice -- clkpath_pvt.spice with the self-biased stage (sb_inverter.inc)
+* inserted between CDR x4 clkraw- and inverter_buffer.  Same corners, same ring
+* settings; adds duty cycle and the self-biased node.
+*
+* (original header follows)
+*
+* e2e_ff125_stages.log: at ff/125C/1.32V the ring runs but clkraw (CDR x4
+* diff_amp_inv output) bottoms at ~0.605 V while inverter_buffer trips at
+* 0.592 V (inv_trip_1.log), so rclk never toggles and the loop is dead.  This
+* deck is the same chain open loop -- ring_ct -> diff_amp_inv (tail at VDD, as
+* in CDR x4) -> inverter_buffer -> single_inverter -- at every temperature and
+* supply, at the ring's slowest and fastest knob settings.
+*
+* Run under sim/run_corners.sh for the three process corners.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
+.endc
+
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib  res_typ
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib  cap_typ
+
+.include ../netlists/blocks.inc
+.include ring_slow.inc
+.include sb_inverter.inc
+
+.global sub!
+Vsub sub! 0 0
+VDD VDD 0 1.2
+VSS VSS 0 0
+Vc   vctrl   0 0.6
+Vcrs vcoarse 0 1.2
+
+x1 VDD VSS vctrl vcoarse vop vom ring_slow
+x4 VDD VSS crm crp vop vom VDD diff_amp_inv
+xsb VDD VSS crm sbo sb_inverter
+x11 VDD VSS sbo rclkp inverter_buffer
+x12 VDD VSS rclkp rclkm single_inverter
+.ic v(vop)=1.0 v(vom)=0.4
+.options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6
+
+.control
+save v(vop) v(vom) v(crp) v(crm) v(rclkp) v(x1.net1)
+foreach csl 0 1.5 2.5 3.5
+ alterparam Csl = $csl
+ reset
+ foreach tmp -40 125
+  foreach vd 1.08 1.32
+   set temp = $tmp
+   alter VDD = $vd
+   alter Vcrs dc = $vd
+   foreach vc 0.50 0.60 0.70 0.80
+    alter Vc dc = $vc
+    tran 5p 120n
+    meas tran t1 when v(vop)=v(vom) rise=6
+    meas tran t2 when v(vop)=v(vom) rise=26
+    let f_MHz = 20/(t2-t1)/1e6
+    meas tran vmax max v(x1.net1) from=60n to=120n
+    meas tran vmin min v(x1.net1) from=60n to=120n
+    let swing = vmax - vmin
+    let p_csl = $csl
+    let p_temp = $tmp
+    let p_vdd = $vd
+    let p_vc = $vc
+    print p_csl p_temp p_vdd p_vc f_MHz swing
+    echo ROWEND
+   end
+  end
+ end
+end
+quit
+.endc
+.end
