@@ -1,0 +1,84 @@
+* cp_width.spice -- why does the DOWN decision deliver no charge at ff/-40 C?
+* cp_charge_*.log: q_dn is +0.05 fC there against -0.84 fC at tt/125 C.  Two candidates:
+*   recovery -- the source node discharges while the switch is off and the source cannot
+*     recharge it inside one UI, so charge arrives late or not at all; OR
+*   starvation -- the branch simply cannot deliver at that bias.
+* Sweeping the decision WIDTH separates them: if charge appears at 2-4 UI it is recovery,
+* if it never appears the bias is at fault.  bias_n and bias_p are printed for the same
+* reason.  Pump alone; a few seconds per point.
+*
+* Why isolated: the loop runs away because the detector characteristic's phase-average is
+* +77 nA at ff/-40 C against +10 nA at tt/125 C (pd_phase_*.log), i.e. an up decision and a
+* down decision do not deliver equal and opposite charge.  That is a property of the pump,
+* so measure the pump alone: fire one up pulse, then one down pulse, and integrate the
+* charge into a held output.  Ideal pump: q_up + q_dn = 0.
+*
+* Sweep, not guesswork: the nMOS switch width and the up-path inverter's P/N ratio are the
+* two things that set the difference (the up path has that inverter; the down path does
+* not).  Each point is a 25 ns transient -- the whole grid costs less than one closed-loop
+* run.  Run under sim/run_corners.sh.
+.control
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+pre_osdi /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+.endc
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /home/ttuser/pdk/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.include cp_bias.inc
+.include ../netlists/blocks.inc
+.global sub!
+Vsub sub! 0 0
+VDD Vdd 0 1.2
+VSS Vss 0 0
+Iref Vdd vbias dc 40u
+xref vbias Vss ibias_mirror
+xb Vdd Vss vbias bn bp cp_bias
+
+.param Wnsw=0.5 Winvp=2 Winvn=1 ui=1.665n Vamp=1.2 Wid=1.665n
+.subckt cp_t VPWR VPB VGND VNB out up down bias_n bias_p
+XMNSRC src_n bias_n VGND VNB sg13_lv_nmos w=1u l=1u ng=1 m=1 mm_ok=1
+XMNSW  out   down   src_n VNB sg13_lv_nmos w='Wnsw*1e-6' l=0.13u ng=1 m=1 mm_ok=1
+XMPSW  out   upb    src_p VPB sg13_lv_pmos w=1u l=0.13u ng=1 m=1 mm_ok=1
+XMPSRC src_p bias_p VPWR VPB sg13_lv_pmos w=1.8u l=1u ng=1 m=1 mm_ok=1
+XMINVP upb   up     VPWR VPWR sg13_lv_pmos w='Winvp*1e-6' l=0.13u ng=1 m=1 mm_ok=1
+XMINVN upb   up     VGND VGND sg13_lv_nmos w='Winvn*1e-6' l=0.13u ng=1 m=1 mm_ok=1
+.ends
+
+Vout o 0 dc 0.6
+* one UP decision at 5 ns, one DOWN decision at 15 ns, each one UI wide
+Vup  u 0 PULSE(0 'Vamp' 5n  20p 20p 'Wid' 100n)
+Vdn  d 0 PULSE(0 'Vamp' 15n 20p 20p 'Wid' 100n)
+x1 Vdd Vdd Vss Vss o u d bn bp cp_t
+
+.control
+* `alter Vup PULSE(...)` is rejected by ngspice ("Only a single param - value pair
+* supported") and silently leaves the old amplitude, so the gate drive stayed at 1.2 V
+* while VDD moved.  The amplitude goes through a .param instead, and every point does
+* alterparam + reset (reset re-parses, which is what makes the new value take).
+foreach wid 0.8325n 1.665n 3.33n 6.66n
+ foreach tmp -40 125
+  foreach vd 1.2 1.32
+   alterparam Wid = $wid
+   alterparam Vamp = $vd
+   reset
+   set temp = $tmp
+   alter VDD = $vd
+   alter Vout dc = 0.6
+   tran 2p 30n uic
+   meas tran q_up_fC INTEG i(Vout) FROM=4n  TO=14n
+   meas tran q_dn_fC INTEG i(Vout) FROM=14n TO=26n
+   meas tran v_bn AVG v(bn) FROM=2n TO=4n
+   meas tran v_bp AVG v(bp) FROM=2n TO=4n
+   let q_up_fC = q_up_fC*1e15
+   let q_dn_fC = q_dn_fC*1e15
+   let p_wid = $wid
+   let p_temp = $tmp
+   let p_vdd = $vd
+   print p_wid p_temp p_vdd q_up_fC q_dn_fC v_bn v_bp
+   echo ROWEND
+  end
+ end
+end
+quit
+.endc
+.end
