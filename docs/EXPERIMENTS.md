@@ -278,3 +278,53 @@ the detector (a delay inside the loop is absorbed by it).
   +419/-357). Reaching tt/125 C's +10 nA would need XMP2 ~2.45 um. **This knob is too weak
   and the asymmetry is not mainly set by the bias current**; the next candidates are the
   pump switches themselves (charge injection, and the up path's extra inverter).
+
+### 2.12 Option 1: can the ring be centred so the trim works both ways?
+
+- **Question:** which (load resistance, trim width) puts 600.6 MHz *inside* the trim's range
+  at both extremes, so the coarse loop can push the ring either way and the fine loop can
+  sit mid-range instead of against an end stop?
+- `ring_centre_{ffm40,ss125}.spice`: **ring only**, a 3x3 grid of Rload (10/12/14 kohm) x
+  trim width (4/8/12 um), frequency and swing with the trim off and fully on. ~4 min per
+  corner. No closed-loop run, no receiver.
+- **Result at ff/-40 C/1.32 V** (the corner that fails): today's 10 k / 4 um gives 654 MHz
+  with the trim *off* at vctrl 0.60 -- above the target, which is why the fine loop is
+  dragged to the steep bottom. 12 k / 8 um gives 537-557 MHz off and ~1000 MHz on, so the
+  target sits inside the range.
+- **Result at ss/125 C/1.08 V** (the slow extreme), and it is the binding constraint:
+
+  | sizing | trim off | trim ON | verdict |
+  |---|---|---|---|
+  | 10 k / 4 um (today) | 564-576 MHz | **607-625 MHz** | only candidate that clears 600.6 |
+  | 12 k / 4 um | 507-517 | 567-589 | short of the target |
+  | 12 k / 8 um | 461-471 | **swing 0.000** | **the ring stops oscillating** |
+
+- **Two things this settled without a single end-to-end run:**
+  1. **A wide trim is unusable at ss/125 C/1.08 V**: fully on, it shunts the load hard
+     enough to stop oscillation. The usable trim range is bounded by swing, not frequency.
+  2. **Widening the trim slows the ring even when it is OFF** (654 -> 597 MHz at ff/-40 C
+     going 4 -> 8 um), because the wider device loads the ring node. Trim width is two
+     knobs at once, so the pair has to be chosen together.
+- **Flaw in this sweep, corrected in sweep 2:** vctrl was capped at 0.70 V. At the slow
+  corner the loop legitimately runs vctrl high (0.9-1.05 V), where the ring is flat and the
+  high Kvco that breaks the fast corner is not a problem. Candidates were therefore being
+  scored against an artificially narrow window. `ring_centre2_*.spice` sweeps vctrl
+  0.55-1.05 V over a finer grid (11/12/13 kohm x 4/6 um), dropping the widths that killed
+  oscillation.
+
+### 2.13 Option 3, isolated: charge per up decision vs per down decision
+
+- **Question:** the detector characteristic's phase-average is +77 nA at ff/-40 C against
+  +10 nA at tt/125 C (§2.10). That means an up decision and a down decision do not deliver
+  equal and opposite charge. Which device sizes fix it?
+- **Isolated by construction** (`cp_charge.spice`): the pump and its bias only -- no ring,
+  no detector, no loop. Fire one up pulse a UI wide, then one down pulse, and integrate the
+  charge into a held output. An ideal pump gives `q_up + q_dn = 0`.
+- **Swept:** nMOS switch width 0.4-0.7 um x the up-path inverter's P/N ratio (1.0/1.5/2.0),
+  at all nine temperature/supply points per process corner. Each point is a 25 ns
+  transient: **the whole grid costs less than one closed-loop run.**
+- **Why these two parameters:** the up path passes through that inverter and the down path
+  does not, so the inverter's rise/fall asymmetry sets the up pulse's width, and the switch
+  widths set how much charge each injects.
+- **Result:** pending.
+
