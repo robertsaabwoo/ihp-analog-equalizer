@@ -1,3 +1,27 @@
+## 2026-09-17 evening: the fast-cold corner LOCKS
+
+**ff/-40 C/1.32 V: 600.621 MHz, +0.0034 %** (`run_dual_ffm40_132.out`), coarse rail settling
+at 0.985 V -- the slow leg engaged.  That corner had never locked in any configuration.
+
+What made it possible: the **bidirectional coarse trim**.  An nMOS-switched cap_cmomf on each
+ring node, gated by the same `vcoarse!` rail but conducting when the rail is HIGH, i.e. when
+the pMOS speed-up legs are off.  One rail now spans slow to fast, and `ring_vcrs_*.log` shows
+the rail can place the loaded ring on 600.6 MHz at **26 of 27 corners at vctrl 0.60**, the
+27th (ss/125 C/1.08 V) at vctrl 0.85.  Before it, the fast-cold corner had no setting at all.
+Switch 1 um, cap 1 um square; the switch loads the ring node even when off, which at 2 um
+cost ss/125 C/1.08 V ~8 % of its reach.
+
+Also in: balanced detector clock phases (rclk- from the ring's other output through its own
+sb_inverter + inverter_buffer, not by inverting rclk+), which halved the unlocked drift
+(+77.1 -> +41.8 nA) and fixed tt/-40 C's approach-from-below.
+
+**Open: the other corners need their seeds refined.** With the trim pinned no longer
+describing the design, every run is dual-loop and needs a per-corner starting rail.  Seeds
+taken from the ring sweep are close but not exact, and where they are off the loop starts
+off-frequency and drifts before it can capture -- e.g. tt/125 C ran at 580 MHz with the rail
+at 0.537 V, so that rail wants to be ~0.1 V lower.  `sim/runners/seed_refine.sh` iterates:
+run, read the error, correct the rail by the measured sensitivity, re-run.
+
 ## Baseline after the 2026-09-17 changes -- read this first
 
 Design now: folded coarse pull-up + self-biased clock stage (`sb_inverter`) + pump bias from
