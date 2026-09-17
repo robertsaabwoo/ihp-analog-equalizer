@@ -144,3 +144,47 @@ class TestCoarseLoopGenerated(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_all_native_cells_regenerate_identically():
+    """Every native cell, not just coarse_loop.
+
+    The generated-vs-include check was written when coarse_loop was the only generated
+    cell; sb_inverter and cp_bias were added later and had no test at all (audit,
+    2026-09-17).  This walks whatever tools/gen_coarse_loop.py knows about, so the next
+    cell is covered for free.
+    """
+    import gen_coarse_loop as g
+    for cell in sorted(g.CELLS):
+        sch = ROOT / "xschem" / f"{cell}.sch"
+        assert sch.exists(), f"{cell}.sch missing"
+        with tempfile.TemporaryDirectory() as d:
+            r = subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "gen_coarse_loop.py"),
+                 "--cell", cell, "--out", d],
+                capture_output=True, text=True, cwd=ROOT)
+            assert r.returncode == 0, r.stderr
+            fresh = (Path(d) / f"{cell}.sch").read_text()
+        assert fresh == sch.read_text(), (
+            f"xschem/{cell}.sch does not match what tools/gen_coarse_loop.py produces "
+            f"from its include.  Re-run: tools/gen_coarse_loop.py --cell {cell}")
+
+
+def test_replaced_cells_are_gone_from_the_netlist():
+    """A POST_PORT_EDIT that silently no-ops must not pass.
+
+    replace_bias_gen removes tiny_pll_bias_gen from CDR and puts cp_bias in its place;
+    add_sb_clock_stage puts sb_inverter between clkraw- and the buffer.  Without this,
+    an edit that did nothing would leave every other test green (audit, 2026-09-17).
+    """
+    blocks = ROOT / "sim" / "netlists" / "blocks.inc"
+    if not blocks.exists():
+        import pytest
+        pytest.skip("blocks.inc not generated")
+    text = blocks.read_text()
+    cdr = text[text.index(".subckt CDR "):]
+    cdr = cdr[:cdr.index(".ends")]
+    assert "cp_bias" in cdr, "CDR does not instantiate cp_bias"
+    assert "tiny_pll_bias_gen" not in cdr, "CDR still instantiates tiny_pll_bias_gen"
+    assert "sb_inverter" in cdr, "CDR does not instantiate sb_inverter"
+    assert "clkraw_sb" in cdr, "the clock buffer is not fed from the sb stage"

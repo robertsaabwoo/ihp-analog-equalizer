@@ -376,10 +376,16 @@ the detector (a delay inside the loop is absorbed by it).
 
 - **Question:** with the load resistors at 11 kohm (trim width unchanged at 4 um), is the
   baud rate still between the slowest and fastest the ring can be made, at every corner?
+- **STATUS: 11 kohm was applied and then REVERTED** (`tools/apply_ring_sizing.py 11000 4`,
+  then `10000 4`). The design is at 10 kohm. Reason in 2.17: this whole sweep, like every
+  other ring sweep, omits the real load and is ~7 % optimistic, and a slower ring makes the
+  binding corner worse.
 - `ring_bracket.spice` (built by the overnight chain from `vco_ct_pvt.spice` with the chosen
   sizing), ring only, 27 corners x 2 knob extremes.
-- **Result: bracketed at 24 of 27 corners outright.** The three ss rows flagged otherwise
-  (ss/-40 C/1.08 V, ss/-40 C/1.32 V, ss/27 C/1.08 V) have **zero swing at the slow test
+- **Result: bracketed at 21 of 27 corners outright** (an earlier note here said 24 of 27 --
+  wrong: my parser dropped rows whose slow point had no usable swing, so I counted three
+  such rows where `ring_bracket.out` has six: ss/-40 C at 1.08 and 1.32 V, ss/27 C at 1.08,
+  1.20 and 1.32 V, and ss/-40 C at 1.20 V). Those rows have **zero swing at the slow test
   point**, i.e. the ring is slower than the measurement can see -- the comfortable direction,
   and the convention RING_DUAL_LOOP.md 7.2 already uses. Every corner's fast end clears the
   baud rate with healthy swing (618-1064 MHz).

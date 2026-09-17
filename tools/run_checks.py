@@ -213,11 +213,7 @@ STAGES: list[Stage] = [
             Check("rclk_swing", 1.0, 1.4, "V", "a dead ring still reports a "
                                                "settled vctrl -- this is the check that catches it"),
         ],
-        known_broken="On ring-coarse-tune this reaches 667.9 MHz, +11.2 %, "
-                     "with vctrl climbing -- the out-of-band signature.  The "
-                     "fine loop does not lock on the re-sized ring; see "
-                     "docs/HANDBOOK.md section 11.1.  Passes on main.",
-        timeout_s=3600,
+                timeout_s=3600,
     ),
     Stage(
         "e2e-prbs", "full", "ngspice", "35 min",
@@ -229,7 +225,6 @@ STAGES: list[Stage] = [
             Check("f_long", 597.0, 604.0, "MHz", ""),
             Check("vctrl_ripp", 0.0, 0.10, "V", "65.3 mV on the old ring, 2.5x the 0101 figure"),
         ],
-        known_broken="Same cause as e2e-lock on this branch.",
         timeout_s=3600,
     ),
 ]

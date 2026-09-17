@@ -266,6 +266,7 @@ def main():
               "%s.  Do not edit: edit the include and\n"
               "re-run.  Connectivity is by label, one lab_wire on every pin.\n"
               "%d devices.  %s" % (a.cell, inc_default, len(insts), see))
+    a.out.mkdir(parents=True, exist_ok=True)   # --out into a fresh dir must work
     (a.out / f"{a.cell}.sch").write_text(emit(ports, insts, env, header, portlist))
     sym = SYM if a.cell == "coarse_loop" else make_sym(portlist)
     (a.out / f"{a.cell}.sym").write_text(sym)
