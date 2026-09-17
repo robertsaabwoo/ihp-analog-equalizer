@@ -250,10 +250,12 @@ the detector (a delay inside the loop is absorbed by it).
 
   | corner | phase-average | closed loop |
   |---|---|---|
-  | tt/125 C | **+10.5 nA** | captures and locks |
-  | ff/-40 C | **+57 nA** | drifts up, never captures |
+  | tt/125 C | **+10.4 nA** | captures and locks |
+  | ff/-40 C | **+77.1 nA** | drifts up, never captures |
 
-  That matches the ~74 nA drift measured closed loop (§2.9). The cause is the S-curve's
+  That matches the ~74 nA drift measured closed loop (§2.9). (An earlier note in this file
+  said +57 nA for ff/-40 C: that was an arithmetic slip on the same ten numbers; the
+  correct average is +77.1 nA, confirmed independently by `pd_trim_ffm40.log`.) The cause is the S-curve's
   asymmetry: at ff/-40 C the up lobe reaches +420 nA while the down lobe only reaches
   -335 nA, so slipping integrates **upward** and the loop escapes before it can catch. The
   earlier "pulse-width asymmetry" guess (§2.7 #5) was the right family of cause measured
@@ -265,6 +267,14 @@ the detector (a delay inside the loop is absorbed by it).
   without breaking the corner that works?
 - `pd_trim_{ffm40,tt125}.spice`: the §2.10 measurement with XMP2 swept 1.00-1.45 um
   (sim-only parameterised `cp_bias` override), ten phases per width.
-- **Why this is the right metric:** it predicts runaway directly, costs ~5 min per corner,
-  and needs no closed-loop run. Narrower XMP2 = less down current = a *more* positive
-  average, so the null is expected **below** 1.45 um.
+- **Why this is the right metric:** it predicts runaway directly and needs no closed-loop
+  run. (Cost in practice: ~40 min per corner, not the ~5 min estimated -- 40 phase points
+  x 300 ns each. Still cheaper than one closed-loop run per candidate size, and it answers
+  a question a closed-loop run cannot.)
+- **Direction:** wider XMP2 = more down current = a more negative average, so the null is
+  **above** 1.45 um. A first sweep went the wrong way (1.00-1.45) and was killed.
+- **Partial result** (`pd_trim_ffm40.log`): +77.1 nA at 1.45 um, +66.7 nA at 1.60 um --
+  about **-10 nA per 0.15 um**, while the lobe extremes barely move (+420/-335 ->
+  +419/-357). Reaching tt/125 C's +10 nA would need XMP2 ~2.45 um. **This knob is too weak
+  and the asymmetry is not mainly set by the bias current**; the next candidates are the
+  pump switches themselves (charge injection, and the up path's extra inverter).
