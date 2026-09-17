@@ -29,7 +29,10 @@ xref vbias Vss ibias_mirror
 xb Vdd Vss vbias bn bp cp_bias
 
 .param Wnsw=0.5 Winvp=2 Winvn=1 ui=1.665n Vamp=1.2
-.subckt cp_t VPWR VPB VGND VNB out up down bias_n bias_p
+* `dump` is a PORT, not an internal node: an internal subckt node cannot be wired from
+* the top level in ngspice (the first version did that and would have silently created
+* a floating node).
+.subckt cp_t VPWR VPB VGND VNB out up down bias_n bias_p dump
 * CURRENT-STEERING variant.  Both sources conduct all the time; the switches steer their
 * current between `out` and `dump`.  In the switched pump (blocks.inc) each source is turned
 * off and on, so its source node (src_p/src_n) charges and discharges and dumps that charge
@@ -57,9 +60,7 @@ Vdump dmp 0 dc 0.6
 * one UP decision at 5 ns, one DOWN decision at 15 ns, each one UI wide
 Vup  u 0 PULSE(0 'Vamp' 5n  20p 20p 'ui' 100n)
 Vdn  d 0 PULSE(0 'Vamp' 15n 20p 20p 'ui' 100n)
-x1 Vdd Vdd Vss Vss o u d bn bp cp_t
-* dump node tied out at the same dc as the output (see the subckt header)
-Rdmp x1.dump dmp 0.001
+x1 Vdd Vdd Vss Vss o u d bn bp dmp cp_t
 
 .control
 * `alter Vup PULSE(...)` is rejected by ngspice ("Only a single param - value pair
