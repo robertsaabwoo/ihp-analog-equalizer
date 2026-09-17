@@ -408,8 +408,8 @@ SIZING: dict[tuple[str, str], dict] = {
     # degeneration capacitor already occupies.
     ("tiny_pll_loop_filter_res", "R"): {"R": 15000},  # 7500 was tried: no help at ff/-40C,
                                                        # and tt/125C stopped locking (EXPERIMENTS 2.18)
-    ("tiny_pll_loop_filter_cap1", "MCAP"): {"m": 54},   # 3x: ripple, docs/EXPERIMENTS.md
-    ("tiny_pll_loop_filter_cap2", "MCAP"): {"m": 9},    # 3x, with cap1
+    ("tiny_pll_loop_filter_cap1", "MCAP"): {"m": 18},   # 54 (3x) slowed acquisition, EXPERIMENTS 2.18
+    ("tiny_pll_loop_filter_cap2", "MCAP"): {"m": 3},    # 9 (3x) reverted with cap1
     #
     # Why 12 kohm, and why not simply copy sky130's update quantum.  What a
     # bang-bang loop cares about is the *phase* step per update:

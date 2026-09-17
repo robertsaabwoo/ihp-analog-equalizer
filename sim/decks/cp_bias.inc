@@ -11,7 +11,8 @@
 * reference.  XMN1 (W 0.25 / L 8 um) mirrors a small fraction into bias_p's pMOS
 * diode; XMP2 (W 1.45 um) copies part of that into bias_n's nMOS diode.
 *
-* W 0.25 um (was 0.5): halving the pump current halves both ripple terms.  L stays 8 um
+* W 0.5 um.  0.25 um (half current) was tried to cut ripple: it did not help ff/-40 C and
+* it cost tt/125 C its lock, because acquisition slows in proportion (EXPERIMENTS 2.18).  L stays 8 um
 * -- L 16 um was tried first and test_device_geometry rejected it, PSP is characterised
 * only to 10 um (the same trap that caught a 15 um device in the coarse loop).  At ff/-40 C/1.32 V
 * the ring runs ~1200 MHz/V (loop_scurve_ffm40.log), so the loop's 48 mV of ripple was
@@ -24,7 +25,7 @@
 * temperature dependence.  Sweep 1 (cp_ibias_pvt_*.log, XMP2 1.8): Lm 6 gave
 * ~1015 nA and -7 .. -27 %.
 .subckt cp_bias VDD VSS vbias bias_n bias_p
-XMN1 bias_p vbias  VSS VSS sg13_lv_nmos w=0.25u l=8u ng=1 m=1 mm_ok=1
+XMN1 bias_p vbias  VSS VSS sg13_lv_nmos w=0.5u  l=8u ng=1 m=1 mm_ok=1
 XMPD bias_p bias_p VDD VDD sg13_lv_pmos w=2u    l=1u ng=1 m=1 mm_ok=1
 XMP2 bias_n bias_p VDD VDD sg13_lv_pmos w=1.45u l=1u ng=1 m=1 mm_ok=1
 XMND bias_n bias_n VSS VSS sg13_lv_nmos w=1u    l=1u ng=1 m=1 mm_ok=1
