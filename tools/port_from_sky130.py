@@ -88,6 +88,11 @@ MIN_W_LV = 0.15  # um
 # for, and keeps the ring node swinging 0.93-1.01 V at every setting.
 TRIM_W = 4.0
 TRIM_L = 1.0
+# Slow leg: nMOS switch width (um) and cap_cmomf side (um, 1.29 fF/um2).  Sized by
+# sim/decks/ring_slow_sweep.spice against both extremes with the real load -- see
+# docs/EXPERIMENTS.md 2.19.
+SLOW_W = 2.0
+SLOW_C = 1.0
 
 SIZING: dict[tuple[str, str], dict] = {
 
@@ -878,6 +883,55 @@ def add_coarse_trim(text: str) -> str:
     return text
 
 
+def add_coarse_slow(text: str) -> str:
+    """ring_inverter: the other half of the coarse trim -- a leg that SLOWS the ring.
+
+    The pMOS legs of add_coarse_trim only ever speed the ring up, so at the fast-cold
+    corner the coarse loop has no authority at all: with the trim off the ring is already
+    at 687.7 MHz at vctrl 0.80 (ff/-40 C/1.32 V, ring_loaded_ff.log), the fine loop is
+    forced down onto the steep part of its tuning curve (~1100 MHz/V), and it cannot hold
+    lock there -- the one corner that still fails (RESUME.md).
+
+    So: an nMOS switch hangs a small capacitor on each ring node, gated by the SAME
+    `vcoarse!` rail, but turning ON when the rail is HIGH -- exactly when the pMOS legs are
+    off.  One rail now spans slow to fast:
+
+        vcoarse high -> pMOS trim off AND extra load on -> slowest
+        vcoarse low  -> pMOS trim on  AND extra load off -> fastest
+
+    Measured with the real load (ring_slow_sweep.spice, trim off, SLOW_C = 1 um):
+    ff/-40 C/1.32 V falls from 687.7 to 564.5 MHz, so the baud rate lands *inside* the
+    coarse range instead of beyond its end.  At ss/125 C/1.08 V -- the corner that needs
+    every MHz -- the loop drives the rail LOW to speed the ring up, which switches this leg
+    off, so it costs that corner nothing in operation.
+
+    Same conventions as add_coarse_trim: a global rail, and connectivity by label.
+    """
+    if "name=S1\n" in text:
+        return text                      # already applied; the port is re-run
+    text = text.rstrip("\n") + "\n"
+    for name, (x, node) in {"S1": (60, "vo+"), "S2": (-480, "vo-")}.items():
+        cap = "nslow" + name[1:]
+        text += (
+            "C {sg13cmos5l_pr/sg13_lv_nmos.sym} %d 400 0 0 {name=%s\n"
+            "l=0.13u\nw=%gu\nng=1\nm=1\nmm_ok=1\n"
+            "model=sg13_lv_nmos\nspiceprefix=X}\n" % (x, name, SLOW_W))
+        for pin, dx, dy, lab in (("D", 20, -30, node), ("G", -20, 0, "vcoarse!"),
+                                 ("S", 20, 30, cap), ("B", 20, 0, "VSS")):
+            text += ("C {devices/lab_wire.sym} %d %d 0 0 "
+                     "{name=%s_%s sig_type=std_logic lab=%s}\n"
+                     % (x + dx, 400 + dy, name, pin, lab))
+        text += (
+            "C {sg13cmos5l_pr/cap_cmomf.sym} %d 520 0 0 {name=C%s\n"
+            "w=%gu\nl=%gu\nmmin=1\nmmax=4\nsubblock=0\nm=1\nmm_ok=1\n"
+            "model=cap_cmomf\nspiceprefix=X}\n" % (x, name, SLOW_C, SLOW_C))
+        for pin, dy, lab in (("c0", -30, cap), ("c1", 30, "VSS")):
+            text += ("C {devices/lab_wire.sym} %d %d 0 0 "
+                     "{name=C%s_%s sig_type=std_logic lab=%s}\n"
+                     % (x, 520 + dy, name, pin, lab))
+    return text
+
+
 def add_coarse_loop(text: str) -> str:
     """CDR: instantiate the coarse loop next to the loop filter.
 
@@ -1011,7 +1065,7 @@ def balance_clock_phases(text: str) -> str:
 
 POST_PORT_EDITS = {
     "ctle_cdr_rx.sch": add_bias_mirror,
-    "ring_inverter.sch": add_coarse_trim,
+    "ring_inverter.sch": lambda t: add_coarse_slow(add_coarse_trim(t)),
     "CDR.sch": lambda t: balance_clock_phases(
         replace_bias_gen(add_sb_clock_stage(add_coarse_loop(t)))),
     # The LVS wrapper and the symbol only need the pin renamed to match.

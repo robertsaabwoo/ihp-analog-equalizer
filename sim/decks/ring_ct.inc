@@ -103,9 +103,13 @@
 .param Win=3 Lin=0.7
 .param Wtail=9 Ltail=0.13
 .param Rload=10000
-.param Wtr=4 Ltr=1.0
+.param Wtr=4.0 Ltr=1.0
 .param Wres=1u
 .param Lload='(Rload - 1.6e-4/Wres) * (Wres - 0.04u) / 1360'
+* slow leg, matching the design (SLOW_W/SLOW_C in tools/port_from_sky130.py).
+* cap_cmomf will not take arithmetic in w/l, hence Csl_S.
+.param Wsl=2 Csl=1.0
+.param Csl_S='Csl*1e-6'
 
 .subckt ring_inv_ct VDD VSS vin+ vo+ vin- vo- vctrl vcoarse
 XM1 vo+ vin+ st  VSS sg13_lv_nmos w='Win*1u'   l='Lin*1u'   ng=1 m=1 mm_ok=1
@@ -115,6 +119,19 @@ XR1 VDD vo+ sub! rhigh w='Wres' l='Lload' m=1 b=0 mm_ok=1
 XR2 VDD vo- sub! rhigh w='Wres' l='Lload' m=1 b=0 mm_ok=1
 XT1 vo+ vcoarse VDD VDD sg13_lv_pmos w='Wtr*1u' l='Ltr*1u' ng=1 m=1 mm_ok=1
 XT2 vo- vcoarse VDD VDD sg13_lv_pmos w='Wtr*1u' l='Ltr*1u' ng=1 m=1 mm_ok=1
+* SLOW LEG (the other half of a bidirectional trim).  The pMOS legs above only ever make
+* the ring FASTER, so at ff/-40 C/1.32 V -- where the ring is at 654 MHz with the trim off
+* (ring_loaded_ff.log) -- the coarse loop has no way to slow it and the fine loop is forced
+* onto the steep part of its curve, ~1100 MHz/V, where it cannot hold lock.
+* These nMOS switches hang a small capacitor on each ring node when vcoarse is HIGH, i.e.
+* exactly when the pMOS trim is off.  One rail then spans slow <-> fast:
+*   vcoarse high -> trim off AND extra load  -> slowest
+*   vcoarse low  -> trim on  AND no extra load -> fastest
+XS1 vo+ vcoarse nsl1 VSS sg13_lv_nmos w='Wsl*1u' l=0.13u ng=1 m=1 mm_ok=1
+XS2 vo- vcoarse nsl2 VSS sg13_lv_nmos w='Wsl*1u' l=0.13u ng=1 m=1 mm_ok=1
+XCS1 nsl1 VSS cap_cmomf w='Csl_S' l='Csl_S' mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
+XCS2 nsl2 VSS cap_cmomf w='Csl_S' l='Csl_S' mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
+
 .ends
 
 .subckt ring_ct Vdd Vss vctrl vcoarse vo+ vo-

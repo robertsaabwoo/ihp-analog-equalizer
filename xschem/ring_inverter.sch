@@ -142,3 +142,51 @@ C {devices/lab_wire.sym} -460 210 0 0 {name=T2_S sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} -460 270 0 0 {name=T2_D sig_type=std_logic lab=vo-}
 C {devices/lab_wire.sym} -500 240 0 0 {name=T2_G sig_type=std_logic lab=vcoarse!}
 C {devices/lab_wire.sym} -460 240 0 0 {name=T2_B sig_type=std_logic lab=VDD}
+C {sg13cmos5l_pr/sg13_lv_nmos.sym} 60 400 0 0 {name=S1
+l=0.13u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_lv_nmos
+spiceprefix=X}
+C {devices/lab_wire.sym} 80 370 0 0 {name=S1_D sig_type=std_logic lab=vo+}
+C {devices/lab_wire.sym} 40 400 0 0 {name=S1_G sig_type=std_logic lab=vcoarse!}
+C {devices/lab_wire.sym} 80 430 0 0 {name=S1_S sig_type=std_logic lab=nslow1}
+C {devices/lab_wire.sym} 80 400 0 0 {name=S1_B sig_type=std_logic lab=VSS}
+C {sg13cmos5l_pr/cap_cmomf.sym} 60 520 0 0 {name=CS1
+w=1u
+l=1u
+mmin=1
+mmax=4
+subblock=0
+m=1
+mm_ok=1
+model=cap_cmomf
+spiceprefix=X}
+C {devices/lab_wire.sym} 60 490 0 0 {name=CS1_c0 sig_type=std_logic lab=nslow1}
+C {devices/lab_wire.sym} 60 550 0 0 {name=CS1_c1 sig_type=std_logic lab=VSS}
+C {sg13cmos5l_pr/sg13_lv_nmos.sym} -480 400 0 0 {name=S2
+l=0.13u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_lv_nmos
+spiceprefix=X}
+C {devices/lab_wire.sym} -460 370 0 0 {name=S2_D sig_type=std_logic lab=vo-}
+C {devices/lab_wire.sym} -500 400 0 0 {name=S2_G sig_type=std_logic lab=vcoarse!}
+C {devices/lab_wire.sym} -460 430 0 0 {name=S2_S sig_type=std_logic lab=nslow2}
+C {devices/lab_wire.sym} -460 400 0 0 {name=S2_B sig_type=std_logic lab=VSS}
+C {sg13cmos5l_pr/cap_cmomf.sym} -480 520 0 0 {name=CS2
+w=1u
+l=1u
+mmin=1
+mmax=4
+subblock=0
+m=1
+mm_ok=1
+model=cap_cmomf
+spiceprefix=X}
+C {devices/lab_wire.sym} -480 490 0 0 {name=CS2_c0 sig_type=std_logic lab=nslow2}
+C {devices/lab_wire.sym} -480 550 0 0 {name=CS2_c1 sig_type=std_logic lab=VSS}
