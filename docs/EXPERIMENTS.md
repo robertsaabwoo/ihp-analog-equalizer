@@ -220,8 +220,9 @@ the detector (a delay inside the loop is absorbed by it).
   **The fixes do what they were meant to -- and ff/-40 C still does not lock.** Ripple is
   down 3x at both corners, nominal is unharmed, and the wobble at ff/-40 C is now
   ~19 MHz against tt/125 C's 16 MHz, which locks. **So ripple was not the blocker.**
-  vctrl still climbs there at ~57 mV/us, which needs ~74 nA of net up current into the
-  1308 fF filter, while the pump at that voltage supplies about -13 nA. The push is
+  vctrl still climbs there at **28.1 mV/us** (an earlier note said ~57 mV/us: the
+  s1..s3 windows span 1200 ns, not 600 -- a factor-2 slip), i.e. **36.7 nA** into the 1308 fF
+  filter, while the pump at that voltage supplies about -13 nA. The push is
   coming from the detector's decisions, not from the pump.
 
 ### 2.10 The detector's characteristic vs phase (in flight)

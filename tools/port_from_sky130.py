@@ -406,7 +406,7 @@ SIZING: dict[tuple[str, str], dict] = {
     # about 26 mV, below the sky130 original's 33.7 mV.  The cost is 43 um2 of
     # extra MOS capacitor, which is nothing next to the 1243 um2 the CTLE's
     # degeneration capacitor already occupies.
-    ("tiny_pll_loop_filter_res", "R"): {"R": 15000},
+    ("tiny_pll_loop_filter_res", "R"): {"R": 7500},   # was 15000: capture, docs/notes/capture_model.md
     ("tiny_pll_loop_filter_cap1", "MCAP"): {"m": 54},   # 3x: ripple, docs/EXPERIMENTS.md
     ("tiny_pll_loop_filter_cap2", "MCAP"): {"m": 9},    # 3x, with cap1
     #
