@@ -326,25 +326,33 @@ the detector (a delay inside the loop is absorbed by it).
 - **Why these two parameters:** the up path passes through that inverter and the down path
   does not, so the inverter's rise/fall asymmetry sets the up pulse's width, and the switch
   widths set how much charge each injects.
-- **Result** (`cp_charge_*.log`, clean run after the amplitude fix):
+- **RETRACTED FIRST READING.** The first pass of this analysis was run while the ff log was
+  still being written, and reported `q_dn = +0.05 fC` at ff/-40 C -- "the down decision
+  delivers no charge" -- which looked like the whole answer. The completed log says
+  **-1.21 fC**. Parsing a log mid-write is precisely what rule 4 of 1.3 warns about, and it
+  cost a wrong conclusion that was committed before it was checked (6200cec).
+
+- **Result** (`cp_charge_*.log`, complete: 108 rows per corner = 12 sizings x 9 T/VDD):
 
   | corner | q_up | q_dn | net |
   |---|---|---|---|
-  | tt 125 C 1.20 V | +0.60 fC | **-0.84 fC** | -0.25 fC |
-  | ff -40 C 1.32 V | +0.82 fC | **+0.05 fC** | **+0.87 fC** |
+  | tt 125 C 1.20 V | +0.60 fC | -0.84 fC | -0.25 fC |
+  | **ff -40 C 1.32 V** (the corner that fails) | +0.66 fC | **-1.21 fC** | **-0.55 fC** |
+  | **ss -40 C 1.32 V** | +0.82 fC | **-0.06 fC** | **+0.76 fC** |
 
-  **At ff/-40 C the down decision delivers essentially no charge.** A healthy one removes
-  what the up decision added -- 0.84 fC in 1.665 ns is ~500 nA, the pump current. At the
-  failing corner it removes nothing, so the loop integrates up-only charge. That is the
-  +77 nA phase-average (2.10) and the runaway (2.7), reproduced **in the pump alone**, with
-  no ring, no detector and no loop.
+  **The pump does not explain the ff/-40 C failure**: there it is slightly *down*-heavy,
+  the opposite sign to the drift that breaks the corner.
 
-  Across the size grid the worst |net| is 0.75-1.08 fC and *rises* with switch width
-  (0.4 um: 0.75; 0.7 um: 1.07), so **no width or inverter ratio fixes it** -- the switched
-  topology is the limit. 0.87 fC per decision pair is ~130 nA at the baud rate if every UI
-  carries a decision, the same order as the drift that breaks the corner.
+  **But the collapsed down branch is real at ss/-40 C/1.32 V**, where the down decision
+  delivers essentially nothing. That corner has never been run closed loop; this predicts
+  it will drift up the way ff/-40 C does. Worst |net| over the whole size grid is
+  0.75-1.08 fC and rises with switch width, so resizing does not fix it.
 
-- **Mechanism, to be confirmed:** in the switched pump each current source is turned off
+  **What does drive ff/-40 C up** is in the detector curve (2.10): its up lobe spans about
+  0.5 UI and its down lobe about 0.4 UI, so a slipping loop spends more time being pushed
+  up. Decision *windows*, not pump charge.
+
+- **Mechanism at ss/-40 C, to be confirmed:** in the switched pump each current source is turned off
   between decisions, so its source node (src_n/src_p) discharges; on the next decision the
   source must recharge that node before it can deliver current. If recovery is slower than
   the 1.665 ns a decision lasts, the charge never arrives. `cp_width.spice` tests it by
