@@ -7,7 +7,9 @@ The rule, in order:
   1. At ff/-40 C/1.32 V the baud rate must be reachable with the trim OFF, at a vctrl
      inside the swept range and with usable swing -- that is what stops the fine loop
      being dragged to the steep bottom of the tuning curve.
-  2. At ss/125 C/1.08 V it must still be reachable with the trim ON, with usable swing.
+  2. At ss/125 C/1.08 V it must still be reachable with the trim ON, with usable swing,
+     by at least MARGIN_MIN MHz.  Without a floor here the rule picks 12 k/4 um, whose
+     margin is +0.1 MHz -- no margin at all (2026-09-17).
      This is the binding constraint: the trim is the only thing that can speed the ring
      up there, and a wide trim stops it oscillating (docs/EXPERIMENTS.md 2.12).
   3. Among survivors, prefer the gentlest slope at the ff/-40 C crossing: the loop's
@@ -21,6 +23,7 @@ from pathlib import Path
 
 BAUD = 600.6
 SWING_MIN = 0.15
+MARGIN_MIN = 8.0  # MHz at ss/125 C/1.08 V, ~1.3 %: below this there is nothing to trim with
 NUM = r'(-?\d\.\d+e[-+]\d{2})'
 KEYS = ('p_rl', 'p_wt', 'p_trim', 'p_vc', 'f_mhz', 'swing')
 ROOT = Path(__file__).resolve().parent.parent
@@ -73,12 +76,12 @@ def main():
               and r['swing'] >= SWING_MIN]
         fmax = max((r['f_mhz'] for r in on), default=float('nan'))
         margin = fmax - BAUD
-        ok = cross is not None and margin > 0
+        ok = cross is not None and margin >= MARGIN_MIN
         note = []
         if cross is None:
             note.append('baud not reachable with trim off at ff/-40C')
-        if not (margin > 0):
-            note.append('slow corner cannot reach baud with trim on')
+        if not (margin >= MARGIN_MIN):
+            note.append(f'slow-corner margin {margin:+.1f} MHz < {MARGIN_MIN:.0f} MHz floor')
         verdict = 'OK' if ok else '; '.join(note)
         cs = f"{cross[0]:9.3f} {cross[1]:7.0f}" if cross else f"{'-':>9} {'-':>7}"
         print(f"{rl:6.0f} {wt:4.0f} | {cs} | {fmax:9.1f} {margin:+8.1f} | {verdict}")
